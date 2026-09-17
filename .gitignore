@@ -1,0 +1,6 @@
+#.gitignore - Cornerstone Agency
+.gradle/
+build/
+app/build/
+local.properties
+*.lock
