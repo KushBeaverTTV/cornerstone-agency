@@ -229,7 +229,7 @@ public final class AssistDeviceActionParser {
                         int minute = numM68int3.intValue();
                         if (hour >= 0 && hour < 24) {
                             if (minute >= 0 && minute < 60) {
-                                return new AssistDeviceAction.SetAlarm(hour, minute, safeText$default(this, obj, "label", "Aurora", 0, 4, null));
+                                return new AssistDeviceAction.SetAlarm(hour, minute, safeText$default(this, obj, "label", "Cornerstone", 0, 4, null));
                             }
                         }
                         return null;
@@ -273,7 +273,7 @@ public final class AssistDeviceActionParser {
                     String str = (String) CollectionsKt.getOrNull(alarm.getGroupValues(), 3);
                     String strTake = StringsKt.take(StringsKt.trim((CharSequence) (str != null ? str : "")).toString(), 80);
                     if (StringsKt.isBlank(strTake)) {
-                        strTake = "Aurora";
+                        strTake = "Cornerstone";
                     }
                     return new AssistDeviceAction.SetAlarm(hour, minute, strTake);
                 }

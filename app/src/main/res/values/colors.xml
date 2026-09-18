@@ -2,11 +2,11 @@
 <resources>
     <color name="androidx_core_ripple_material_light">#1f000000</color>
     <color name="androidx_core_secondary_text_default_material_light">#8a000000</color>
-    <color name="aurora_accent">#ffa47864</color>
-    <color name="aurora_bg">#ff1a1410</color>
+    <color name="aurora_accent">#fffcee0a</color>
+    <color name="aurora_bg">#ff0a0a0a</color>
     <color name="call_notification_answer_color">#ff1d873b</color>
     <color name="call_notification_decline_color">#ffd93025</color>
-    <color name="ic_launcher_background">#ff05060e</color>
+    <color name="ic_launcher_background">#ff0a0a0a</color>
     <color name="notification_action_color_filter">@color/androidx_core_secondary_text_default_material_light</color>
     <color name="notification_icon_bg_color">#ff9e9e9e</color>
 </resources>

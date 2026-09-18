@@ -77,7 +77,7 @@ public interface AssistDeviceAction {
         }
 
         public /* synthetic */ SetAlarm(int i, int i2, String str, int i3, DefaultConstructorMarker defaultConstructorMarker) {
-            this(i, i2, (i3 & 4) != 0 ? "Aurora" : str);
+            this(i, i2, (i3 & 4) != 0 ? "Cornerstone" : str);
         }
 
 

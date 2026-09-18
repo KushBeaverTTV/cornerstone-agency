@@ -585,7 +585,7 @@ final class AssistActivityKt$AssistUi$1$1 implements Function3<BoxWithConstraint
             ComposerKt.sourceInformation($composer, "593@23858L11,593@23835L53,594@23929L10,594@23909L75");
             str2 = str9;
             if (!StringsKt.isBlank(str2)) {
-                ai.nous.aurora.compat.Compat.m3067Text4IGK_g("Aurora", (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3078, 0, 131058);
+                ai.nous.aurora.compat.Compat.m3067Text4IGK_g("Agency", (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3078, 0, 131058);
                 long auroraText3 = AuroraColorSchemeKt.getAuroraText($composer, 0);
                 if (coverLike) {
                     i = 13;
@@ -974,7 +974,7 @@ final class AssistActivityKt$AssistUi$1$1 implements Function3<BoxWithConstraint
         ComposerKt.sourceInformation($composer, "593@23858L11,593@23835L53,594@23929L10,594@23909L75");
         str2 = str9;
         if (!StringsKt.isBlank(str2)) {
-            ai.nous.aurora.compat.Compat.m3067Text4IGK_g("Aurora", (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3078, 0, 131058);
+            ai.nous.aurora.compat.Compat.m3067Text4IGK_g("Agency", (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3078, 0, 131058);
             long auroraText6 = AuroraColorSchemeKt.getAuroraText($composer, 0);
             if (coverLike) {
                 i = 13;

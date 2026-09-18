@@ -107,7 +107,7 @@ public final class SourceBadgeKt {
      */
     /* JADX WARN: Code restructure failed: missing block: B:64:?, code lost:
     
-        return new ai.nous.aurora.presentation.components.SourceVisual(com.cornerstone.agency.R.drawable.ic_source_aurora, ai.nous.aurora.presentation.theme.AuroraColorSchemeKt.getSourceAurora(), "Aurora", null);
+        return new ai.nous.aurora.presentation.components.SourceVisual(com.cornerstone.agency.R.drawable.ic_source_aurora, ai.nous.aurora.presentation.theme.AuroraColorSchemeKt.getSourceAurora(), "Agency", null);
      */
     /* JADX WARN: Failed to restore switch over string. Please report as a decompilation issue */
     /*

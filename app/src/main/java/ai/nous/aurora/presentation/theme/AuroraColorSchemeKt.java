@@ -18,7 +18,7 @@ public final class AuroraColorSchemeKt {
     private static final long SourceDiscord = ColorKt.Color(4286284500L);
     private static final long SourceCli = ColorKt.Color(4287609999L);
     private static final long SourceDesktop = ColorKt.Color(4291077252L);
-    private static final long SourceAurora = ColorKt.Color(4288968804L);
+    private static final long SourceAurora = ColorKt.Color(4294766090L);
     private static final long SourceTool = ColorKt.Color(4289765520L);
     private static final long AuroraPillIdleBg = ColorKt.Color(587202559);
 

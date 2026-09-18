@@ -625,7 +625,7 @@ public final class RazrCoverShellKt {
                     BoxScopeInstance boxScopeInstance = BoxScopeInstance.INSTANCE;
                     int i8 = ((48 >> 6) & 112) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, 760878930, "C105@4520L50,104@4483L210:RazrCoverShell.kt#z0j3je");
-                    ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, $composer, 0), "Aurora", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(28)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, $composer, 432, 120);
+                    ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, $composer, 0), "Cornerstone Agency", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(28)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, $composer, 432, 120);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     $composer.endNode();
@@ -4242,7 +4242,7 @@ public final class RazrCoverShellKt {
                 BoxScopeInstance boxScopeInstance20 = BoxScopeInstance.INSTANCE;
                 int i33 = ((48 >> 6) & 112) | 6;
                 ComposerKt.sourceInformationMarkerStart($composer, 760878930, "C105@4520L50,104@4483L210:RazrCoverShell.kt#z0j3je");
-                ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, $composer, 0), "Aurora", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(28)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, $composer, 432, 120);
+                ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, $composer, 0), "Cornerstone Agency", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(28)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, $composer, 432, 120);
                 ComposerKt.sourceInformationMarkerEnd($composer);
                 ComposerKt.sourceInformationMarkerEnd($composer);
                 $composer.endNode();

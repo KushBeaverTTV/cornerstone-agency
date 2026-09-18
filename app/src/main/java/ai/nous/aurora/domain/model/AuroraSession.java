@@ -239,7 +239,7 @@ public final /* data */ class AuroraSession {
             switch (key.hashCode()) {
                 case -1406381216:
                     if (key.equals("aurora")) {
-                        return "Aurora";
+                        return "Agency";
                     }
                     break;
                 case -1360467711:

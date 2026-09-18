@@ -2999,7 +2999,7 @@ public final class InnerShellKt {
                                 BoxScopeInstance boxScopeInstance3 = BoxScopeInstance.INSTANCE;
                                 int i22 = ((48 >> 6) & 112) | 6;
                                 ComposerKt.sourceInformationMarkerStart(st.$composer$iv, 1259476195, "C781@36449L50,780@36400L258:InnerShell.kt#m1syn");
-                                ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Aurora", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
+                                ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Cornerstone Agency", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
                                 ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                                 ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                                 st.$composer$iv.endNode();
@@ -3658,7 +3658,7 @@ public final class InnerShellKt {
                                     BoxScopeInstance boxScopeInstance6 = BoxScopeInstance.INSTANCE;
                                     int i29 = ((48 >> 6) & 112) | 6;
                                     ComposerKt.sourceInformationMarkerStart(st.$composer$iv, 1259476195, "C781@36449L50,780@36400L258:InnerShell.kt#m1syn");
-                                    ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Aurora", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
+                                    ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Cornerstone Agency", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
                                     ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                                     ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                                     st.$composer$iv.endNode();
@@ -4048,7 +4048,7 @@ public final class InnerShellKt {
                                 BoxScopeInstance boxScopeInstance9 = BoxScopeInstance.INSTANCE;
                                 int i214 = ((48 >> 6) & 112) | 6;
                                 ComposerKt.sourceInformationMarkerStart(st.$composer$iv, 1259476195, "C781@36449L50,780@36400L258:InnerShell.kt#m1syn");
-                                ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Aurora", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
+                                ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Cornerstone Agency", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
                                 ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                                 ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                                 st.$composer$iv.endNode();
@@ -4439,7 +4439,7 @@ public final class InnerShellKt {
                                 BoxScopeInstance boxScopeInstance12 = BoxScopeInstance.INSTANCE;
                                 int i219 = ((48 >> 6) & 112) | 6;
                                 ComposerKt.sourceInformationMarkerStart(st.$composer$iv, 1259476195, "C781@36449L50,780@36400L258:InnerShell.kt#m1syn");
-                                ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Aurora", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
+                                ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Cornerstone Agency", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
                                 ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                                 ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                                 st.$composer$iv.endNode();
@@ -4829,7 +4829,7 @@ public final class InnerShellKt {
                             BoxScopeInstance boxScopeInstance15 = BoxScopeInstance.INSTANCE;
                             int i2114 = ((48 >> 6) & 112) | 6;
                             ComposerKt.sourceInformationMarkerStart(st.$composer$iv, 1259476195, "C781@36449L50,780@36400L258:InnerShell.kt#m1syn");
-                            ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Aurora", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
+                            ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Cornerstone Agency", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
                             ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                             ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                             st.$composer$iv.endNode();
@@ -5575,7 +5575,7 @@ public final class InnerShellKt {
                                 BoxScopeInstance boxScopeInstance18 = BoxScopeInstance.INSTANCE;
                                 int i2119 = ((48 >> 6) & 112) | 6;
                                 ComposerKt.sourceInformationMarkerStart(st.$composer$iv, 1259476195, "C781@36449L50,780@36400L258:InnerShell.kt#m1syn");
-                                ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Aurora", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
+                                ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Cornerstone Agency", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
                                 ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                                 ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                                 st.$composer$iv.endNode();
@@ -5965,7 +5965,7 @@ public final class InnerShellKt {
                             BoxScopeInstance boxScopeInstance111 = BoxScopeInstance.INSTANCE;
                             int i21114 = ((48 >> 6) & 112) | 6;
                             ComposerKt.sourceInformationMarkerStart(st.$composer$iv, 1259476195, "C781@36449L50,780@36400L258:InnerShell.kt#m1syn");
-                            ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Aurora", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
+                            ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Cornerstone Agency", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
                             ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                             ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                             st.$composer$iv.endNode();
@@ -6356,7 +6356,7 @@ public final class InnerShellKt {
                             BoxScopeInstance boxScopeInstance114 = BoxScopeInstance.INSTANCE;
                             int i21119 = ((48 >> 6) & 112) | 6;
                             ComposerKt.sourceInformationMarkerStart(st.$composer$iv, 1259476195, "C781@36449L50,780@36400L258:InnerShell.kt#m1syn");
-                            ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Aurora", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
+                            ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Cornerstone Agency", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
                             ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                             ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                             st.$composer$iv.endNode();
@@ -6746,7 +6746,7 @@ public final class InnerShellKt {
                         BoxScopeInstance boxScopeInstance117 = BoxScopeInstance.INSTANCE;
                         int i211114 = ((48 >> 6) & 112) | 6;
                         ComposerKt.sourceInformationMarkerStart(st.$composer$iv, 1259476195, "C781@36449L50,780@36400L258:InnerShell.kt#m1syn");
-                        ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Aurora", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
+                        ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Cornerstone Agency", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
                         ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                         ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                         st.$composer$iv.endNode();
@@ -7532,7 +7532,7 @@ public final class InnerShellKt {
                                 BoxScopeInstance boxScopeInstance1110 = BoxScopeInstance.INSTANCE;
                                 int i211119 = ((48 >> 6) & 112) | 6;
                                 ComposerKt.sourceInformationMarkerStart(st.$composer$iv, 1259476195, "C781@36449L50,780@36400L258:InnerShell.kt#m1syn");
-                                ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Aurora", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
+                                ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Cornerstone Agency", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
                                 ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                                 ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                                 st.$composer$iv.endNode();
@@ -7922,7 +7922,7 @@ public final class InnerShellKt {
                             BoxScopeInstance boxScopeInstance1113 = BoxScopeInstance.INSTANCE;
                             int i2111114 = ((48 >> 6) & 112) | 6;
                             ComposerKt.sourceInformationMarkerStart(st.$composer$iv, 1259476195, "C781@36449L50,780@36400L258:InnerShell.kt#m1syn");
-                            ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Aurora", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
+                            ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Cornerstone Agency", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
                             ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                             ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                             st.$composer$iv.endNode();
@@ -8313,7 +8313,7 @@ public final class InnerShellKt {
                             BoxScopeInstance boxScopeInstance1116 = BoxScopeInstance.INSTANCE;
                             int i2111119 = ((48 >> 6) & 112) | 6;
                             ComposerKt.sourceInformationMarkerStart(st.$composer$iv, 1259476195, "C781@36449L50,780@36400L258:InnerShell.kt#m1syn");
-                            ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Aurora", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
+                            ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Cornerstone Agency", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
                             ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                             ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                             st.$composer$iv.endNode();
@@ -8703,7 +8703,7 @@ public final class InnerShellKt {
                         BoxScopeInstance boxScopeInstance1119 = BoxScopeInstance.INSTANCE;
                         int i21111114 = ((48 >> 6) & 112) | 6;
                         ComposerKt.sourceInformationMarkerStart(st.$composer$iv, 1259476195, "C781@36449L50,780@36400L258:InnerShell.kt#m1syn");
-                        ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Aurora", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
+                        ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Cornerstone Agency", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
                         ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                         ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                         st.$composer$iv.endNode();
@@ -9450,7 +9450,7 @@ public final class InnerShellKt {
                             BoxScopeInstance boxScopeInstance11112 = BoxScopeInstance.INSTANCE;
                             int i21111119 = ((48 >> 6) & 112) | 6;
                             ComposerKt.sourceInformationMarkerStart(st.$composer$iv, 1259476195, "C781@36449L50,780@36400L258:InnerShell.kt#m1syn");
-                            ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Aurora", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
+                            ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Cornerstone Agency", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
                             ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                             ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                             st.$composer$iv.endNode();
@@ -9840,7 +9840,7 @@ public final class InnerShellKt {
                         BoxScopeInstance boxScopeInstance11115 = BoxScopeInstance.INSTANCE;
                         int i211111114 = ((48 >> 6) & 112) | 6;
                         ComposerKt.sourceInformationMarkerStart(st.$composer$iv, 1259476195, "C781@36449L50,780@36400L258:InnerShell.kt#m1syn");
-                        ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Aurora", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
+                        ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Cornerstone Agency", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
                         ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                         ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                         st.$composer$iv.endNode();
@@ -10231,7 +10231,7 @@ public final class InnerShellKt {
                         BoxScopeInstance boxScopeInstance11118 = BoxScopeInstance.INSTANCE;
                         int i211111119 = ((48 >> 6) & 112) | 6;
                         ComposerKt.sourceInformationMarkerStart(st.$composer$iv, 1259476195, "C781@36449L50,780@36400L258:InnerShell.kt#m1syn");
-                        ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Aurora", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
+                        ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Cornerstone Agency", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
                         ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                         ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                         st.$composer$iv.endNode();
@@ -10621,7 +10621,7 @@ public final class InnerShellKt {
                     BoxScopeInstance boxScopeInstance111111 = BoxScopeInstance.INSTANCE;
                     int i2111111114 = ((48 >> 6) & 112) | 6;
                     ComposerKt.sourceInformationMarkerStart(st.$composer$iv, 1259476195, "C781@36449L50,780@36400L258:InnerShell.kt#m1syn");
-                    ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Aurora", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
+                    ImageKt.Image(PainterResources_androidKt.painterResource(R.drawable.ic_launcher_foreground, st.$composer$iv, 0), "Cornerstone Agency", ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(84)), (Alignment) null, (ContentScale) null, 0.0f, (ColorFilter) null, st.$composer$iv, 432, 120);
                     ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                     ComposerKt.sourceInformationMarkerEnd(st.$composer$iv);
                     st.$composer$iv.endNode();
