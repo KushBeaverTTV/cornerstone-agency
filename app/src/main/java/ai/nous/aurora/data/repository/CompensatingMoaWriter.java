@@ -189,7 +189,7 @@ public final class CompensatingMoaWriter {
                 }
                 responseBody = saved.getBody();
                 if (responseBody != null) {
-                    break;
+                    return responseBody;
                 }
                 c02141.L$0 = null;
                 c02141.L$1 = null;
@@ -214,7 +214,7 @@ public final class CompensatingMoaWriter {
                 }
                 responseBody = saved.getBody();
                 if (responseBody != null) {
-                    break;
+                    return responseBody;
                 }
                 c02141.L$0 = null;
                 c02141.L$1 = null;

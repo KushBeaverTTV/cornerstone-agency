@@ -1211,7 +1211,7 @@ public final class AssistActivity extends ComponentActivity {
                             if (actionResultTryHandle.getHandled()) {
                                 Toast.makeText(AssistActivity.this, actionResultTryHandle.getMessage(), 0).show();
                             }
-                            if (speakReplies) {
+                            if (speakReplies && (audioUrl = dictateResult.getAudioUrl()) != null) {
                                 assistActivity = AssistActivity.this;
                                 this.L$0 = coroutineScope;
                                 this.L$1 = null;
@@ -1295,7 +1295,7 @@ public final class AssistActivity extends ComponentActivity {
                             if (actionResultTryHandle.getHandled()) {
                                 Toast.makeText(AssistActivity.this, actionResultTryHandle.getMessage(), 0).show();
                             }
-                            if (speakReplies) {
+                            if (speakReplies && (audioUrl = dictateResult.getAudioUrl()) != null) {
                                 assistActivity = AssistActivity.this;
                                 this.L$0 = coroutineScope;
                                 this.L$1 = null;
@@ -1320,7 +1320,7 @@ public final class AssistActivity extends ComponentActivity {
                             if (actionResultTryHandle.getHandled()) {
                                 Toast.makeText(AssistActivity.this, actionResultTryHandle.getMessage(), 0).show();
                             }
-                            if (speakReplies) {
+                            if (speakReplies && (audioUrl = dictateResult.getAudioUrl()) != null) {
                                 assistActivity = AssistActivity.this;
                                 this.L$0 = coroutineScope;
                                 this.L$1 = null;
@@ -1372,7 +1372,7 @@ public final class AssistActivity extends ComponentActivity {
                                 if (actionResultTryHandle.getHandled()) {
                                     Toast.makeText(AssistActivity.this, actionResultTryHandle.getMessage(), 0).show();
                                 }
-                                if (speakReplies) {
+                                if (speakReplies && (audioUrl = dictateResult.getAudioUrl()) != null) {
                                     assistActivity = AssistActivity.this;
                                     this.L$0 = coroutineScope;
                                     this.L$1 = null;
@@ -1397,7 +1397,7 @@ public final class AssistActivity extends ComponentActivity {
                                 if (actionResultTryHandle.getHandled()) {
                                     Toast.makeText(AssistActivity.this, actionResultTryHandle.getMessage(), 0).show();
                                 }
-                                if (speakReplies) {
+                                if (speakReplies && (audioUrl = dictateResult.getAudioUrl()) != null) {
                                     assistActivity = AssistActivity.this;
                                     this.L$0 = coroutineScope;
                                     this.L$1 = null;
@@ -1459,7 +1459,7 @@ public final class AssistActivity extends ComponentActivity {
                             if (actionResultTryHandle.getHandled()) {
                                 Toast.makeText(AssistActivity.this, actionResultTryHandle.getMessage(), 0).show();
                             }
-                            if (speakReplies) {
+                            if (speakReplies && (audioUrl = dictateResult.getAudioUrl()) != null) {
                                 assistActivity = AssistActivity.this;
                                 this.L$0 = coroutineScope;
                                 this.L$1 = null;
@@ -1545,6 +1545,7 @@ public final class AssistActivity extends ComponentActivity {
                 }
                 return Unit.INSTANCE;
             }
+            return Unit.INSTANCE;
         }
 
         /* JADX INFO: renamed from: ai.nous.aurora.AssistActivity$stopAndSend$1$1, reason: invalid class name and collision with other inner class name */
@@ -1855,7 +1856,7 @@ public final class AssistActivity extends ComponentActivity {
             }
         } catch (Throwable th) {
             Result.Companion companion2 = Result.Companion;
-            ai.nous.aurora.compat.Compat.m7388constructorimpl(ResultKt.createFailure(th));
+            return ai.nous.aurora.compat.Compat.m7387boximpl(ai.nous.aurora.compat.Compat.m7388constructorimpl(ResultKt.createFailure(th)));
         }
     }
 }

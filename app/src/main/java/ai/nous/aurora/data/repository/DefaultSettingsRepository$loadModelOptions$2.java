@@ -240,7 +240,6 @@ final class DefaultSettingsRepository$loadModelOptions$2 extends SuspendLambda i
                         }
                         objM7388constructorimpl = ai.nous.aurora.compat.Compat.m7388constructorimpl(new ModelOptionsSnapshot(arrayList3, modelSelection, z7));
                         return ai.nous.aurora.compat.Compat.m7387boximpl(objM7388constructorimpl);
-                    Throwable th = null;
                     } catch (Throwable th) {
                         Result.Companion companion2 = Result.Companion;
                         objM7388constructorimpl = ai.nous.aurora.compat.Compat.m7388constructorimpl(ResultKt.createFailure(th));
@@ -275,6 +274,7 @@ final class DefaultSettingsRepository$loadModelOptions$2 extends SuspendLambda i
                         int iCode2 = response.code();
                         if (strTake != null) {
                         }
+                        str = strTake != null ? ": " + strTake : null;
                         if (str == null) {
                             str = "";
                         }
@@ -369,6 +369,7 @@ final class DefaultSettingsRepository$loadModelOptions$2 extends SuspendLambda i
                         int iCode3 = response.code();
                         if (strTake != null) {
                         }
+                        str = strTake != null ? ": " + strTake : null;
                         if (str == null) {
                             str = "";
                         }
@@ -451,6 +452,9 @@ final class DefaultSettingsRepository$loadModelOptions$2 extends SuspendLambda i
                     throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
             }
         } catch (Throwable th2) {
+            Result.Companion companion99 = Result.Companion;
+            return ai.nous.aurora.compat.Compat.m7387boximpl(ai.nous.aurora.compat.Compat.m7388constructorimpl(ResultKt.createFailure(th2)));
         }
+            return objM7388constructorimpl;
     }
 }

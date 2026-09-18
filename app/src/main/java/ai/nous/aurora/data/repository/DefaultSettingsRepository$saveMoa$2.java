@@ -299,6 +299,9 @@ final class DefaultSettingsRepository$saveMoa$2 extends SuspendLambda implements
                     throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
             }
         } catch (Throwable th8) {
+            Result.Companion companion12 = Result.Companion;
+            return ai.nous.aurora.compat.Compat.m7387boximpl(ai.nous.aurora.compat.Compat.m7388constructorimpl(ResultKt.createFailure(th8)));
         }
+            return objM7388constructorimpl;
     }
 }

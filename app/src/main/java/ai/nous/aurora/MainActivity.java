@@ -240,8 +240,8 @@ public final class MainActivity extends ComponentActivity {
                     Object value$iv11;
                     Object value$iv12;
                     Object value$iv13;
-                    MainActivity$onCreate$1$2$2$1 value$iv14;
-                    MainActivity$onCreate$1$2$3$1 value$iv15;
+                    Object value$iv14;
+                    Object value$iv15;
                     Object value$iv16;
                     ComposerKt.sourceInformation($composer, "C:MainActivity.kt#l0z6fd");
                     if (($changed & 3) == 2 && $composer.getSkipping()) {
@@ -469,7 +469,7 @@ public final class MainActivity extends ComponentActivity {
                         $composer.startReplaceGroup(-1819415244);
                         ComposerKt.sourceInformation($composer, "CC(remember):MainActivity.kt#9igjgp");
                         boolean invalid$iv15 = $composer.changedInstance(viewModel14);
-                        MainActivity$onCreate$1$2$15$1 value$iv17 = $composer.rememberedValue();
+                        Object value$iv17 = $composer.rememberedValue();
                         if (invalid$iv15 || value$iv17 == Composer.Companion.getEmpty()) {
                             value$iv17 = new MainActivity$onCreate$1$2$15$1(viewModel14);
                             $composer.updateRememberedValue(value$iv17);
@@ -493,7 +493,7 @@ public final class MainActivity extends ComponentActivity {
                         $composer.startReplaceGroup(-1819410796);
                         ComposerKt.sourceInformation($composer, "CC(remember):MainActivity.kt#9igjgp");
                         boolean invalid$iv17 = $composer.changedInstance(viewModel16);
-                        MainActivity$onCreate$1$2$17$1 value$iv18 = $composer.rememberedValue();
+                        Object value$iv18 = $composer.rememberedValue();
                         if (invalid$iv17 || value$iv18 == Composer.Companion.getEmpty()) {
                             value$iv18 = new MainActivity$onCreate$1$2$17$1(viewModel16);
                             $composer.updateRememberedValue(value$iv18);
@@ -504,7 +504,7 @@ public final class MainActivity extends ComponentActivity {
                         $composer.startReplaceGroup(-1819408653);
                         ComposerKt.sourceInformation($composer, "CC(remember):MainActivity.kt#9igjgp");
                         boolean invalid$iv18 = $composer.changedInstance(viewModel17);
-                        MainActivity$onCreate$1$2$18$1 value$iv19 = $composer.rememberedValue();
+                        Object value$iv19 = $composer.rememberedValue();
                         if (invalid$iv18 || value$iv19 == Composer.Companion.getEmpty()) {
                             value$iv19 = new MainActivity$onCreate$1$2$18$1(viewModel17);
                             $composer.updateRememberedValue(value$iv19);
@@ -515,7 +515,7 @@ public final class MainActivity extends ComponentActivity {
                         $composer.startReplaceGroup(-1819406282);
                         ComposerKt.sourceInformation($composer, "CC(remember):MainActivity.kt#9igjgp");
                         boolean invalid$iv19 = $composer.changedInstance(viewModel18);
-                        MainActivity$onCreate$1$2$19$1 value$iv20 = $composer.rememberedValue();
+                        Object value$iv20 = $composer.rememberedValue();
                         if (invalid$iv19 || value$iv20 == Composer.Companion.getEmpty()) {
                             value$iv20 = new MainActivity$onCreate$1$2$19$1(viewModel18);
                             $composer.updateRememberedValue(value$iv20);
@@ -526,7 +526,7 @@ public final class MainActivity extends ComponentActivity {
                         $composer.startReplaceGroup(-1819403821);
                         ComposerKt.sourceInformation($composer, "CC(remember):MainActivity.kt#9igjgp");
                         boolean invalid$iv20 = $composer.changedInstance(viewModel19);
-                        MainActivity$onCreate$1$2$20$1 value$iv21 = $composer.rememberedValue();
+                        Object value$iv21 = $composer.rememberedValue();
                         if (invalid$iv20 || value$iv21 == Composer.Companion.getEmpty()) {
                             value$iv21 = new MainActivity$onCreate$1$2$20$1(viewModel19);
                             $composer.updateRememberedValue(value$iv21);
@@ -537,7 +537,7 @@ public final class MainActivity extends ComponentActivity {
                         $composer.startReplaceGroup(-1819401354);
                         ComposerKt.sourceInformation($composer, "CC(remember):MainActivity.kt#9igjgp");
                         boolean invalid$iv21 = $composer.changedInstance(viewModel20);
-                        MainActivity$onCreate$1$2$21$1 value$iv22 = $composer.rememberedValue();
+                        Object value$iv22 = $composer.rememberedValue();
                         if (invalid$iv21 || value$iv22 == Composer.Companion.getEmpty()) {
                             value$iv22 = new MainActivity$onCreate$1$2$21$1(viewModel20);
                             $composer.updateRememberedValue(value$iv22);
@@ -548,7 +548,7 @@ public final class MainActivity extends ComponentActivity {
                         $composer.startReplaceGroup(-1819398695);
                         ComposerKt.sourceInformation($composer, "CC(remember):MainActivity.kt#9igjgp");
                         boolean invalid$iv22 = $composer.changedInstance(viewModel21);
-                        MainActivity$onCreate$1$2$22$1 value$iv23 = $composer.rememberedValue();
+                        Object value$iv23 = $composer.rememberedValue();
                         if (invalid$iv22 || value$iv23 == Composer.Companion.getEmpty()) {
                             value$iv23 = new MainActivity$onCreate$1$2$22$1(viewModel21);
                             $composer.updateRememberedValue(value$iv23);
@@ -559,7 +559,7 @@ public final class MainActivity extends ComponentActivity {
                         $composer.startReplaceGroup(-1819396366);
                         ComposerKt.sourceInformation($composer, "CC(remember):MainActivity.kt#9igjgp");
                         boolean invalid$iv23 = $composer.changedInstance(viewModel22);
-                        MainActivity$onCreate$1$2$23$1 value$iv24 = $composer.rememberedValue();
+                        Object value$iv24 = $composer.rememberedValue();
                         if (invalid$iv23 || value$iv24 == Composer.Companion.getEmpty()) {
                             value$iv24 = new MainActivity$onCreate$1$2$23$1(viewModel22);
                             $composer.updateRememberedValue(value$iv24);
@@ -570,7 +570,7 @@ public final class MainActivity extends ComponentActivity {
                         $composer.startReplaceGroup(-1819394128);
                         ComposerKt.sourceInformation($composer, "CC(remember):MainActivity.kt#9igjgp");
                         boolean invalid$iv24 = $composer.changedInstance(viewModel23);
-                        MainActivity$onCreate$1$2$24$1 value$iv25 = $composer.rememberedValue();
+                        Object value$iv25 = $composer.rememberedValue();
                         if (invalid$iv24 || value$iv25 == Composer.Companion.getEmpty()) {
                             value$iv25 = new MainActivity$onCreate$1$2$24$1(viewModel23);
                             $composer.updateRememberedValue(value$iv25);
@@ -581,7 +581,7 @@ public final class MainActivity extends ComponentActivity {
                         $composer.startReplaceGroup(-1819391878);
                         ComposerKt.sourceInformation($composer, "CC(remember):MainActivity.kt#9igjgp");
                         boolean invalid$iv25 = $composer.changedInstance(viewModel24);
-                        MainActivity$onCreate$1$2$25$1 value$iv26 = $composer.rememberedValue();
+                        Object value$iv26 = $composer.rememberedValue();
                         if (invalid$iv25 || value$iv26 == Composer.Companion.getEmpty()) {
                             value$iv26 = new MainActivity$onCreate$1$2$25$1(viewModel24);
                             $composer.updateRememberedValue(value$iv26);
@@ -592,7 +592,7 @@ public final class MainActivity extends ComponentActivity {
                         $composer.startReplaceGroup(-1819389368);
                         ComposerKt.sourceInformation($composer, "CC(remember):MainActivity.kt#9igjgp");
                         boolean invalid$iv26 = $composer.changedInstance(obj);
-                        MainActivity$onCreate$1$2$26$1 value$iv27 = $composer.rememberedValue();
+                        Object value$iv27 = $composer.rememberedValue();
                         if (invalid$iv26 || value$iv27 == Composer.Companion.getEmpty()) {
                             value$iv27 = new MainActivity$onCreate$1$2$26$1(obj);
                             $composer.updateRememberedValue(value$iv27);
@@ -603,7 +603,7 @@ public final class MainActivity extends ComponentActivity {
                         $composer.startReplaceGroup(-1819387407);
                         ComposerKt.sourceInformation($composer, "CC(remember):MainActivity.kt#9igjgp");
                         boolean invalid$iv27 = $composer.changedInstance(viewModel25);
-                        MainActivity$onCreate$1$2$27$1 value$iv28 = $composer.rememberedValue();
+                        Object value$iv28 = $composer.rememberedValue();
                         if (invalid$iv27 || value$iv28 == Composer.Companion.getEmpty()) {
                             value$iv28 = new MainActivity$onCreate$1$2$27$1(viewModel25);
                             $composer.updateRememberedValue(value$iv28);
@@ -614,7 +614,7 @@ public final class MainActivity extends ComponentActivity {
                         $composer.startReplaceGroup(-1819382539);
                         ComposerKt.sourceInformation($composer, "CC(remember):MainActivity.kt#9igjgp");
                         boolean invalid$iv28 = $composer.changedInstance(viewModel26);
-                        MainActivity$onCreate$1$2$28$1 value$iv29 = $composer.rememberedValue();
+                        Object value$iv29 = $composer.rememberedValue();
                         if (invalid$iv28 || value$iv29 == Composer.Companion.getEmpty()) {
                             value$iv29 = new MainActivity$onCreate$1$2$28$1(viewModel26);
                             $composer.updateRememberedValue(value$iv29);
@@ -625,7 +625,7 @@ public final class MainActivity extends ComponentActivity {
                         $composer.startReplaceGroup(-1819380140);
                         ComposerKt.sourceInformation($composer, "CC(remember):MainActivity.kt#9igjgp");
                         boolean invalid$iv29 = $composer.changedInstance(viewModel27);
-                        MainActivity$onCreate$1$2$29$1 value$iv30 = $composer.rememberedValue();
+                        Object value$iv30 = $composer.rememberedValue();
                         if (invalid$iv29 || value$iv30 == Composer.Companion.getEmpty()) {
                             value$iv30 = new MainActivity$onCreate$1$2$29$1(viewModel27);
                             $composer.updateRememberedValue(value$iv30);
@@ -647,7 +647,7 @@ public final class MainActivity extends ComponentActivity {
                         $composer.startReplaceGroup(-1819375824);
                         ComposerKt.sourceInformation($composer, "CC(remember):MainActivity.kt#9igjgp");
                         boolean invalid$iv31 = $composer.changedInstance(viewModel29);
-                        MainActivity$onCreate$1$2$31$1 value$iv32 = $composer.rememberedValue();
+                        Object value$iv32 = $composer.rememberedValue();
                         if (invalid$iv31 || value$iv32 == Composer.Companion.getEmpty()) {
                             value$iv32 = new MainActivity$onCreate$1$2$31$1(viewModel29);
                             $composer.updateRememberedValue(value$iv32);
@@ -658,7 +658,7 @@ public final class MainActivity extends ComponentActivity {
                         $composer.startReplaceGroup(-1819373483);
                         ComposerKt.sourceInformation($composer, "CC(remember):MainActivity.kt#9igjgp");
                         boolean invalid$iv32 = $composer.changedInstance(viewModel30);
-                        MainActivity$onCreate$1$2$32$1 value$iv33 = $composer.rememberedValue();
+                        Object value$iv33 = $composer.rememberedValue();
                         if (invalid$iv32 || value$iv33 == Composer.Companion.getEmpty()) {
                             value$iv33 = new MainActivity$onCreate$1$2$32$1(viewModel30);
                             $composer.updateRememberedValue(value$iv33);
@@ -669,7 +669,7 @@ public final class MainActivity extends ComponentActivity {
                         $composer.startReplaceGroup(-1819370918);
                         ComposerKt.sourceInformation($composer, "CC(remember):MainActivity.kt#9igjgp");
                         boolean invalid$iv33 = $composer.changedInstance(viewModel31);
-                        MainActivity$onCreate$1$2$33$1 value$iv34 = $composer.rememberedValue();
+                        Object value$iv34 = $composer.rememberedValue();
                         if (invalid$iv33 || value$iv34 == Composer.Companion.getEmpty()) {
                             value$iv34 = new MainActivity$onCreate$1$2$33$1(viewModel31);
                             $composer.updateRememberedValue(value$iv34);
@@ -680,7 +680,7 @@ public final class MainActivity extends ComponentActivity {
                         $composer.startReplaceGroup(-1819368264);
                         ComposerKt.sourceInformation($composer, "CC(remember):MainActivity.kt#9igjgp");
                         boolean invalid$iv34 = $composer.changedInstance(viewModel32);
-                        MainActivity$onCreate$1$2$34$1 value$iv35 = $composer.rememberedValue();
+                        Object value$iv35 = $composer.rememberedValue();
                         if (invalid$iv34 || value$iv35 == Composer.Companion.getEmpty()) {
                             value$iv35 = new MainActivity$onCreate$1$2$34$1(viewModel32);
                             $composer.updateRememberedValue(value$iv35);
@@ -691,7 +691,7 @@ public final class MainActivity extends ComponentActivity {
                         $composer.startReplaceGroup(-1819365738);
                         ComposerKt.sourceInformation($composer, "CC(remember):MainActivity.kt#9igjgp");
                         boolean invalid$iv35 = $composer.changedInstance(viewModel33);
-                        MainActivity$onCreate$1$2$35$1 value$iv36 = $composer.rememberedValue();
+                        Object value$iv36 = $composer.rememberedValue();
                         if (invalid$iv35 || value$iv36 == Composer.Companion.getEmpty()) {
                             value$iv36 = new MainActivity$onCreate$1$2$35$1(viewModel33);
                             $composer.updateRememberedValue(value$iv36);
@@ -702,7 +702,7 @@ public final class MainActivity extends ComponentActivity {
                         $composer.startReplaceGroup(-1819357482);
                         ComposerKt.sourceInformation($composer, "CC(remember):MainActivity.kt#9igjgp");
                         boolean invalid$iv36 = $composer.changedInstance(viewModel34);
-                        MainActivity$onCreate$1$2$36$1 value$iv37 = $composer.rememberedValue();
+                        Object value$iv37 = $composer.rememberedValue();
                         if (invalid$iv36 || value$iv37 == Composer.Companion.getEmpty()) {
                             value$iv37 = new MainActivity$onCreate$1$2$36$1(viewModel34);
                             $composer.updateRememberedValue(value$iv37);
@@ -713,7 +713,7 @@ public final class MainActivity extends ComponentActivity {
                         $composer.startReplaceGroup(-1819354988);
                         ComposerKt.sourceInformation($composer, "CC(remember):MainActivity.kt#9igjgp");
                         boolean invalid$iv37 = $composer.changedInstance(viewModel35);
-                        MainActivity$onCreate$1$2$37$1 value$iv38 = $composer.rememberedValue();
+                        Object value$iv38 = $composer.rememberedValue();
                         if (invalid$iv37 || value$iv38 == Composer.Companion.getEmpty()) {
                             value$iv38 = new MainActivity$onCreate$1$2$37$1(viewModel35);
                             $composer.updateRememberedValue(value$iv38);
@@ -724,7 +724,7 @@ public final class MainActivity extends ComponentActivity {
                         $composer.startReplaceGroup(-1819352751);
                         ComposerKt.sourceInformation($composer, "CC(remember):MainActivity.kt#9igjgp");
                         boolean invalid$iv38 = $composer.changedInstance(viewModel36);
-                        MainActivity$onCreate$1$2$38$1 value$iv39 = $composer.rememberedValue();
+                        Object value$iv39 = $composer.rememberedValue();
                         if (invalid$iv38 || value$iv39 == Composer.Companion.getEmpty()) {
                             value$iv39 = new MainActivity$onCreate$1$2$38$1(viewModel36);
                             $composer.updateRememberedValue(value$iv39);
@@ -735,7 +735,7 @@ public final class MainActivity extends ComponentActivity {
                         $composer.startReplaceGroup(-1819350412);
                         ComposerKt.sourceInformation($composer, "CC(remember):MainActivity.kt#9igjgp");
                         boolean invalid$iv39 = $composer.changedInstance(viewModel37);
-                        MainActivity$onCreate$1$2$39$1 value$iv40 = $composer.rememberedValue();
+                        Object value$iv40 = $composer.rememberedValue();
                         if (invalid$iv39 || value$iv40 == Composer.Companion.getEmpty()) {
                             value$iv40 = new MainActivity$onCreate$1$2$39$1(viewModel37);
                             $composer.updateRememberedValue(value$iv40);
@@ -849,39 +849,41 @@ public final class MainActivity extends ComponentActivity {
                     }
                 }
 
-                /* JADX INFO: Access modifiers changed from: private */
-                public static final Unit invoke$lambda$6$lambda$5(MainActivity this$0) {
-                    this$0.getViewModel().requestInnerFromCover();
-                    this$0.getViewModel().createSession();
-                    return Unit.INSTANCE;
-                }
-
-                /* JADX INFO: Access modifiers changed from: private */
-                public static final Unit invoke$lambda$47$lambda$46(CoroutineScope $scope, MainActivity this$0, AuroraSkin next) {
-                    Intrinsics.checkNotNullParameter(next, "next");
-                    ai.nous.aurora.compat.Compat.d_BuildersKt_launch_6($scope, null, null, new MainActivity$onCreate$1$2$43$1$1(this$0, next, null), 3, null);
-                    return Unit.INSTANCE;
-                }
-
-                /* JADX INFO: Access modifiers changed from: private */
-                public static final Unit invoke$lambda$41$lambda$40(MainActivity this$0) {
-                    MainViewModel.refreshSettings$default(this$0.getViewModel(), false, false, 3, null);
-                    return Unit.INSTANCE;
-                }
-
-                /* JADX INFO: Access modifiers changed from: private */
-                public static final Unit invoke$lambda$43$lambda$42(MainActivity this$0) {
-                    this$0.getViewModel().setModelPickerOpen(true);
-                    return Unit.INSTANCE;
-                }
-
-                /* JADX INFO: Access modifiers changed from: private */
-                public static final Unit invoke$lambda$45$lambda$44(MainActivity this$0) {
-                    this$0.getViewModel().setModelPickerOpen(false);
-                    return Unit.INSTANCE;
-                }
             }
         }), 1, null);
+
+    }
+
+    /* JADX INFO: Access modifiers changed from: private */
+    public static final Unit invoke$lambda$6$lambda$5(MainActivity this$0) {
+        this$0.getViewModel().requestInnerFromCover();
+        this$0.getViewModel().createSession();
+        return Unit.INSTANCE;
+    }
+
+    /* JADX INFO: Access modifiers changed from: private */
+    public static final Unit invoke$lambda$47$lambda$46(CoroutineScope $scope, MainActivity this$0, AuroraSkin next) {
+        Intrinsics.checkNotNullParameter(next, "next");
+        ai.nous.aurora.compat.Compat.d_BuildersKt_launch_6($scope, null, null, new MainActivity$onCreate$1$2$43$1$1(this$0, next, null), 3, null);
+        return Unit.INSTANCE;
+    }
+
+    /* JADX INFO: Access modifiers changed from: private */
+    public static final Unit invoke$lambda$41$lambda$40(MainActivity this$0) {
+        MainViewModel.refreshSettings$default(this$0.getViewModel(), false, false, 3, null);
+        return Unit.INSTANCE;
+    }
+
+    /* JADX INFO: Access modifiers changed from: private */
+    public static final Unit invoke$lambda$43$lambda$42(MainActivity this$0) {
+        this$0.getViewModel().setModelPickerOpen(true);
+        return Unit.INSTANCE;
+    }
+
+    /* JADX INFO: Access modifiers changed from: private */
+    public static final Unit invoke$lambda$45$lambda$44(MainActivity this$0) {
+        this$0.getViewModel().setModelPickerOpen(false);
+        return Unit.INSTANCE;
     }
 
     @Override // android.app.Activity

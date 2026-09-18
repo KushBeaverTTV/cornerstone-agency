@@ -193,8 +193,8 @@ final class SettingsScreensKt$SettingsHome$3$1$2 implements Function3<LazyItemSc
                     str = str6;
                     final Function0<Unit> function8 = function4;
                     final Function0<Unit> function9 = function5;
-                    final Function1<String, Unit> function10 = function7;
-                    final Function1<String, Unit> function11 = function6;
+                    final Function1<? super String, Unit> function10 = function7;
+                    final Function1<? super String, Unit> function11 = function6;
                     value$iv = new Function0() { // from class: ai.nous.aurora.presentation.settings.SettingsScreensKt$SettingsHome$3$1$2$$ExternalSyntheticLambda0
                         @Override // kotlin.jvm.functions.Function0
                         public final Object invoke() {
@@ -273,7 +273,7 @@ final class SettingsScreensKt$SettingsHome$3$1$2 implements Function3<LazyItemSc
                     $composer$iv.useNode();
                 }
                 Composer $this$Layout_u24lambda_u240$iv$iv3 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer$iv);
-                Function1<String, Unit> function12 = function6;
+                Function1<? super String, Unit> function12 = function6;
                 ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv3, measurePolicy$iv3, ComposeUiNode.Companion.getSetMeasurePolicy());
                 ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv3, localMap$iv$iv3, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                 Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash3 = ComposeUiNode.Companion.getSetCompositeKeyHash();

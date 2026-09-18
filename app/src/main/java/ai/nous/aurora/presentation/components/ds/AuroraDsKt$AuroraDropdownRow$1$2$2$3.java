@@ -60,7 +60,6 @@ final class AuroraDsKt$AuroraDropdownRow$1$2$2$3 implements Function3<ColumnScop
     }
 
     public final void invoke(ColumnScope DropdownMenu, Composer $composer, int $changed) {
-        final MutableState<Boolean> mutableState;
         Intrinsics.checkNotNullParameter(DropdownMenu, "$this$DropdownMenu");
         ComposerKt.sourceInformation($composer, "C*565@20944L286,572@21270L418,564@20891L824:AuroraDs.kt#rimizs");
         if (($changed & 17) != 16 || !$composer.getSkipping()) {
@@ -117,11 +116,11 @@ final class AuroraDsKt$AuroraDropdownRow$1$2$2$3 implements Function3<ColumnScop
                 ComposerKt.sourceInformation($composer, "CC(remember):AuroraDs.kt#9igjgp");
                 boolean invalid$iv = $composer.changed(z) | $composer.changed(opt) | $composer.changed(str3) | $composer.changed(function1) | $composer.changed(str);
                 Object value$iv = $composer.rememberedValue();
+                final MutableState<Boolean> mutableState = mutableState3;
                 if (invalid$iv || value$iv == Composer.Companion.getEmpty()) {
                     final boolean z2 = z;
                     final String str4 = str3;
-                    final Function1<String, Unit> function2 = function1;
-                    mutableState = mutableState3;
+                    final Function1<? super String, Unit> function2 = function1;
                     final String str5 = str;
                     value$iv = new Function0() { // from class: ai.nous.aurora.presentation.components.ds.AuroraDsKt$AuroraDropdownRow$1$2$2$3$$ExternalSyntheticLambda0
                         @Override // kotlin.jvm.functions.Function0
@@ -131,7 +130,6 @@ final class AuroraDsKt$AuroraDropdownRow$1$2$2$3 implements Function3<ColumnScop
                     };
                     $composer.updateRememberedValue(value$iv);
                 } else {
-                    mutableState = mutableState3;
                 }
                 $composer.endReplaceGroup();
                 AndroidMenu_androidKt.DropdownMenuItem((Function2) composableLambdaRememberComposableLambda, (Function0) value$iv, null, null, null, false, null, null, null, $composer, 6, 508);

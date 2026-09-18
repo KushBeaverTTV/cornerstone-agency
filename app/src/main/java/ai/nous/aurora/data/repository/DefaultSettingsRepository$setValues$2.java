@@ -127,7 +127,7 @@ final class DefaultSettingsRepository$setValues$2 extends SuspendLambda implemen
                 case 0:
                     ResultKt.throwOnFailure(obj);
                     $result = obj;
-                    List<Pair<String, JsonElement>> list5 = this.$pairs;
+                    List list5 = this.$pairs;
                     DefaultSettingsRepository defaultSettingsRepository3 = this.this$0;
                     Result.Companion companion = Result.Companion;
                     i = 0;
@@ -325,9 +325,7 @@ final class DefaultSettingsRepository$setValues$2 extends SuspendLambda implemen
                         int iCode2 = response.code();
                         if (detail != null) {
                         }
-                        if (str == null) {
-                            str = "";
-                        }
+                        str = "";
                         throw new IllegalStateException(("Batch save HTTP " + iCode2 + str).toString());
                     }
                     this.L$0 = list4;
@@ -367,8 +365,9 @@ final class DefaultSettingsRepository$setValues$2 extends SuspendLambda implemen
                     HermesConfigApi hermesConfigApi3 = (HermesConfigApi) $result5;
                     Iterable $this$map$iv3 = list3;
                     destination$iv$iv = new ArrayList(CollectionsKt.collectionSizeOrDefault($this$map$iv3, 10));
-                    while (r13.hasNext()) {
-                        Object item$iv$iv = r13.next();
+                    java.util.Iterator<Object> r13b = $this$map$iv3.iterator();
+                    while (r13b.hasNext()) {
+                        Object item$iv$iv = r13b.next();
                         Pair pair3 = (Pair) item$iv$iv;
                         String path4 = (String) pair3.component1();
                         JsonElement value3 = (JsonElement) pair3.component2();
@@ -399,9 +398,7 @@ final class DefaultSettingsRepository$setValues$2 extends SuspendLambda implemen
                         int iCode3 = response.code();
                         if (detail != null) {
                         }
-                        if (str == null) {
-                            str = "";
-                        }
+                        str = "";
                         throw new IllegalStateException(("Batch save HTTP " + iCode3 + str).toString());
                     }
                     this.L$0 = list4;
@@ -448,9 +445,7 @@ final class DefaultSettingsRepository$setValues$2 extends SuspendLambda implemen
                         int iCode4 = response.code();
                         if (detail != null) {
                         }
-                        if (str == null) {
-                            str = "";
-                        }
+                        str = "";
                         throw new IllegalStateException(("Batch save HTTP " + iCode4 + str).toString());
                     }
                     this.L$0 = list4;
@@ -503,5 +498,6 @@ final class DefaultSettingsRepository$setValues$2 extends SuspendLambda implemen
             }
         } catch (Throwable th4) {
         }
+            return ai.nous.aurora.compat.Compat.m7387boximpl(Unit.INSTANCE);
     }
 }

@@ -198,7 +198,6 @@ public final class AuroraCredentialStore {
             @Override // kotlin.jvm.functions.Function0
             public final Object invoke() {
                 Object f$0 = null;
-                Object f$0 = null;
                 return AuroraCredentialStore.prefs_delegate$lambda$0(AuroraCredentialStore.this);
             }
         });
@@ -747,7 +746,8 @@ public final class AuroraCredentialStore {
                     return coroutine_suspended;
                 }
                 str = "http://100.90.24.39:8642";
-                if (StringsKt.isBlank(str2)) {
+                str2 = getPrefs().getString(KEY_GATEWAY, null);
+                if (!StringsKt.isBlank(str2)) {
                     str = str2;
                 }
                 c02291.L$0 = null;
@@ -760,7 +760,8 @@ public final class AuroraCredentialStore {
                 auroraCredentialStore = (AuroraCredentialStore) c02291.L$0;
                 ResultKt.throwOnFailure($result);
                 str = "http://100.90.24.39:8642";
-                if (StringsKt.isBlank(str2)) {
+                str2 = getPrefs().getString(KEY_GATEWAY, null);
+                if (!StringsKt.isBlank(str2)) {
                     str = str2;
                 }
                 c02291.L$0 = null;

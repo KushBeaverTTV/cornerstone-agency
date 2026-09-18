@@ -52,7 +52,7 @@ final class TerminalScreenKt$TerminalScreen$enqueuePtyOutput$1 extends SuspendLa
     /* JADX WARN: Code duplicated, block: B:60:0x0092  */
     /* JADX WARN: Code duplicated, block: B:91:0x002c A[SYNTHETIC] */
     @Override // kotlin.coroutines.jvm.internal.BaseContinuationImpl
-    public final Object invokeSuspend(Object $result) throws Throwable {
+    public final Object invokeSuspend(Object $result) {
         Object obj;
         boolean[] zArr;
         Object obj2;

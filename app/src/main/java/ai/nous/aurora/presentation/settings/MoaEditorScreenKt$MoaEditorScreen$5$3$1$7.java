@@ -142,7 +142,7 @@ final class MoaEditorScreenKt$MoaEditorScreen$5$3$1$7 implements Function3<LazyI
             }
             Object r5 = null;
             $composer.endReplaceGroup();
-            AuroraDsKt.AuroraPillAction("+ Add reference", (Function0) value$iv, null, false, r5, 6, 12);
+            AuroraDsKt.AuroraPillAction("+ Add reference", (Function0) value$iv, null, false, $composer, 6, 12);
             ComposerKt.sourceInformationMarkerEnd($composer);
             ComposerKt.sourceInformationMarkerEnd($composer);
             $composer.endNode();

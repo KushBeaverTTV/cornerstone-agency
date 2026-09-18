@@ -796,7 +796,6 @@ public final class TerminalEmulator {
                                         Logger.logStackTraceWithMessage(this.mClient, LOG_TAG, "Invalid device termcap/terminfo encoded name \"" + part + "\"", e);
                                     }
                                 } catch (NumberFormatException e2) {
-                                    e = e2;
                                     strArr2 = strArrSplit;
                                 }
                                 i3 += 2;
@@ -1416,7 +1415,7 @@ public final class TerminalEmulator {
                 }
                 this.mAboutToAutoWrap = false;
                 break;
-            case Base64.mimeLineLength /* 76 */:
+            case 76:
                 int linesAfterCursor = this.mBottomMargin - this.mCursorRow;
                 int linesToInsert = Math.min(getArg0(1), linesAfterCursor);
                 this.mScreen.blockCopy(0, this.mCursorRow, this.mColumns, linesAfterCursor - linesToInsert, 0, this.mCursorRow + linesToInsert);

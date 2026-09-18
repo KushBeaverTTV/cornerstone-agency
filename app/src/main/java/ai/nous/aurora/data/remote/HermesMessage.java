@@ -57,7 +57,6 @@ public final /* data */ class HermesMessage {
 
     @Serializable(with = FlexibleStringSerializer.class)
 
-    @Serializable(with = FlexibleStringSerializer.class)
 
     /* JADX INFO: renamed from: component1, reason: from getter */
     public final String getId() {

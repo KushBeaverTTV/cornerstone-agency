@@ -240,17 +240,17 @@ public final class AssistOrbKt {
         String str;
         Modifier modifier2;
         float size2;
-        final Function0<Unit> function1;
-        final String contentDescription2;
+        Function0<Unit> function1;
+        String contentDescription2;
         int i2;
         float size3;
         int i3;
         int i4;
         Continuation continuation;
         Object value$iv;
-        AssistOrbKt$AssistOrb$1$1 value$iv2;
+        Object value$iv2;
         Object value$iv3;
-        AssistOrbKt$AssistOrb$2$1 value$iv4;
+        Object value$iv4;
         Object value$iv5;
         Object value$iv6;
         Object value$iv7;
@@ -464,6 +464,8 @@ public final class AssistOrbKt {
             }
             MutableInteractionSource interaction = (MutableInteractionSource) value$iv6;
             $composer2.endReplaceGroup();
+            final Function0<Unit> function1$cap = function1;
+            final String contentDescription2$cap = contentDescription2;
             Modifier clickMod = function1 != null ? ai.nous.aurora.compat.Compat.m619clickableO2vRcR0(Modifier.Companion, interaction, null, (24 & 4) != 0, (24 & 8) != 0 ? null : null, (24 & 16) != 0 ? null : ai.nous.aurora.compat.Compat.m6282boximpl(ai.nous.aurora.compat.Compat.m6289getButtono7Vup1c(Role.Companion)), function1) : Modifier.Companion;
             Modifier modifierM1079size3ABfNKs = ai.nous.aurora.compat.Compat.m1079size3ABfNKs(modifier4, size3);
             $composer2.startReplaceGroup(623468900);
@@ -474,7 +476,7 @@ public final class AssistOrbKt {
                 value$iv7 = new Function1() { // from class: ai.nous.aurora.presentation.assist.AssistOrbKt$$ExternalSyntheticLambda0
                     @Override // kotlin.jvm.functions.Function1
                     public final Object invoke(Object obj) {
-                        return AssistOrbKt.AssistOrb_jIwJxvA$lambda$11$lambda$10(contentDescription2, function1, (SemanticsPropertyReceiver) obj);
+                        return AssistOrbKt.AssistOrb_jIwJxvA$lambda$11$lambda$10(contentDescription2$cap, function1$cap, (SemanticsPropertyReceiver) obj);
                     }
                 };
                 $composer2.updateRememberedValue(value$iv7);
@@ -637,7 +639,7 @@ public final class AssistOrbKt {
     }
 
     /* JADX INFO: Access modifiers changed from: private */
-    public static final Unit AssistOrb_jIwJxvA$lambda$15$lambda$14$lambda$13(Animatable $settle, AssistOrbPhase $phase, float $doneBloom, AssistOrbPalette $palette, List $dust, State $breath$delegate, State $pulse$delegate, State $spin$delegate, DrawScope Canvas) throws Throwable {
+    public static final Unit AssistOrb_jIwJxvA$lambda$15$lambda$14$lambda$13(Animatable $settle, AssistOrbPhase $phase, float $doneBloom, AssistOrbPalette $palette, List $dust, State $breath$delegate, State $pulse$delegate, State $spin$delegate, DrawScope Canvas) {
         float fAssistOrb_jIwJxvA$lambda$0;
         float energy;
         long center;
@@ -753,9 +755,10 @@ public final class AssistOrbKt {
                 } catch (Throwable th) {
                     $this$withTransform_u24lambda_u246$iv$iv.getCanvas().restore();
                     ai.nous.aurora.compat.Compat.mo5012setSizeuvyYCjk($this$withTransform_u24lambda_u246$iv$iv, previousSize$iv$iv);
-                    throw th;
+                    throw ai.nous.aurora.compat.Compat.sneakyThrow(th);
                 }
             } catch (Throwable th2) {
+                throw ai.nous.aurora.compat.Compat.sneakyThrow(th2);
             }
         } else {
             center = center2;
@@ -861,14 +864,14 @@ public final class AssistOrbKt {
     }
 
     /* JADX INFO: renamed from: drawWorkingSweeps-dmr55fk, reason: not valid java name */
-    private static final void m90drawWorkingSweepsdmr55fk(DrawScope $this$drawWorkingSweeps_u2ddmr55fk, long center, float radius, long color, float spinDeg) throws Throwable {
+    private static final void m90drawWorkingSweepsdmr55fk(DrawScope $this$drawWorkingSweeps_u2ddmr55fk, long center, float radius, long color, float spinDeg) {
         long previousSize$iv$iv;
         DrawContext $this$withTransform_u24lambda_u246$iv$iv;
         long previousSize$iv$iv2;
         DrawContext $this$withTransform_u24lambda_u246$iv$iv2;
         float stroke = 0.014f * ai.nous.aurora.compat.Compat.m4361getMinDimensionimpl(ai.nous.aurora.compat.Compat.mo5090getSizeNHjbRc($this$drawWorkingSweeps_u2ddmr55fk));
         DrawContext $this$withTransform_u24lambda_u246$iv$iv3 = $this$drawWorkingSweeps_u2ddmr55fk.getDrawContext();
-        long previousSize$iv$iv3 = ai.nous.aurora.compat.Compat.mo5011getSizeNHjbRc($this$withTransform_u24lambda_u246$iv$iv);
+        long previousSize$iv$iv3 = ai.nous.aurora.compat.Compat.mo5011getSizeNHjbRc($this$withTransform_u24lambda_u246$iv$iv3);
         $this$withTransform_u24lambda_u246$iv$iv3.getCanvas().save();
         try {
             DrawTransform $this$rotate_Rg1IO4c_u24lambda_u240$iv = $this$withTransform_u24lambda_u246$iv$iv3.getTransform();
@@ -879,7 +882,7 @@ public final class AssistOrbKt {
                 ai.nous.aurora.compat.Compat.mo5012setSizeuvyYCjk($this$withTransform_u24lambda_u246$iv$iv3, previousSize$iv$iv3);
                 float degrees$iv = (-spinDeg) * 1.4f;
                 DrawContext $this$withTransform_u24lambda_u246$iv$iv4 = $this$drawWorkingSweeps_u2ddmr55fk.getDrawContext();
-                long previousSize$iv$iv4 = ai.nous.aurora.compat.Compat.mo5011getSizeNHjbRc($this$withTransform_u24lambda_u246$iv$iv);
+                long previousSize$iv$iv4 = ai.nous.aurora.compat.Compat.mo5011getSizeNHjbRc($this$withTransform_u24lambda_u246$iv$iv4);
                 $this$withTransform_u24lambda_u246$iv$iv4.getCanvas().save();
                 try {
                     DrawTransform $this$rotate_Rg1IO4c_u24lambda_u240$iv2 = $this$withTransform_u24lambda_u246$iv$iv4.getTransform();
@@ -920,13 +923,13 @@ public final class AssistOrbKt {
     }
 
     /* JADX INFO: renamed from: drawListeningArcs-IfIb9nM, reason: not valid java name */
-    private static final void m88drawListeningArcsIfIb9nM(DrawScope $this$drawListeningArcs_u2dIfIb9nM, long center, float radius, long color, float breath, float spinDeg) throws Throwable {
+    private static final void m88drawListeningArcsIfIb9nM(DrawScope $this$drawListeningArcs_u2dIfIb9nM, long center, float radius, long color, float breath, float spinDeg) {
         long previousSize$iv$iv;
         DrawContext $this$withTransform_u24lambda_u246$iv$iv;
         float stroke = 0.011f * ai.nous.aurora.compat.Compat.m4361getMinDimensionimpl(ai.nous.aurora.compat.Compat.mo5090getSizeNHjbRc($this$drawListeningArcs_u2dIfIb9nM));
         float degrees$iv = 0.4f * spinDeg;
         DrawContext $this$withTransform_u24lambda_u246$iv$iv2 = $this$drawListeningArcs_u2dIfIb9nM.getDrawContext();
-        long previousSize$iv$iv2 = ai.nous.aurora.compat.Compat.mo5011getSizeNHjbRc($this$withTransform_u24lambda_u246$iv$iv);
+        long previousSize$iv$iv2 = ai.nous.aurora.compat.Compat.mo5011getSizeNHjbRc($this$withTransform_u24lambda_u246$iv$iv2);
         $this$withTransform_u24lambda_u246$iv$iv2.getCanvas().save();
         try {
             DrawTransform $this$rotate_Rg1IO4c_u24lambda_u240$iv = $this$withTransform_u24lambda_u246$iv$iv2.getTransform();

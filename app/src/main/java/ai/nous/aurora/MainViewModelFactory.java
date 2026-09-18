@@ -43,7 +43,7 @@ public final class MainViewModelFactory implements ViewModelProvider.Factory {
     public <T extends ViewModel> T create(Class<T> modelClass) {
         Intrinsics.checkNotNullParameter(modelClass, "modelClass");
         if (modelClass.isAssignableFrom(MainViewModel.class)) {
-            return new MainViewModel(this.credentialStore, this.gatewayClient, this.sessionRepository, this.settingsRepository, this.notifications);
+            return (T) new MainViewModel(this.credentialStore, this.gatewayClient, this.sessionRepository, this.settingsRepository, this.notifications);
         }
         throw new IllegalStateException(("Unknown ViewModel: " + modelClass.getName()).toString());
     }

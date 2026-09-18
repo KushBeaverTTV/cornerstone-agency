@@ -132,7 +132,6 @@ public final class AssistDeviceActionParser {
                             return strSubstring2;
                         }
                         break;
-                        break;
                 }
             }
         }

@@ -44,7 +44,7 @@ final class AssistActivity$playRemote$2$bytes$1 extends SuspendLambda implements
     }
 
     @Override // kotlin.coroutines.jvm.internal.BaseContinuationImpl
-    public final Object invokeSuspend(Object obj) throws IOException {
+    public final Object invokeSuspend(Object obj) {
         ResponseBody responseBodyBody;
         byte[] bArrBytes;
         IntrinsicsKt.getCOROUTINE_SUSPENDED();
@@ -53,12 +53,12 @@ final class AssistActivity$playRemote$2$bytes$1 extends SuspendLambda implements
                 ResultKt.throwOnFailure(obj);
                 Request req = new Request.Builder().url(this.$url).header("Authorization", "Bearer " + this.$key).get().build();
                 OkHttpClient client = new OkHttpClient.Builder().connectTimeout(20L, TimeUnit.SECONDS).readTimeout(60L, TimeUnit.SECONDS).build();
-                Response responseExecute = client.newCall(req).execute();
+                Response responseExecute = null;
                 try {
+                    responseExecute = client.newCall(req).execute();
                     Response resp = responseExecute;
                     if (resp.isSuccessful() && (responseBodyBody = resp.body()) != null) {
                         bArrBytes = responseBodyBody.bytes();
-                        break;
                     } else {
                         bArrBytes = null;
                     }
@@ -66,10 +66,10 @@ final class AssistActivity$playRemote$2$bytes$1 extends SuspendLambda implements
                     return bArrBytes;
                 } catch (Throwable th) {
                     try {
-                        throw th;
+                        throw ai.nous.aurora.compat.Compat.sneakyThrow(th);
                     } catch (Throwable th2) {
                         CloseableKt.closeFinally(responseExecute, th);
-                        throw th2;
+                        throw ai.nous.aurora.compat.Compat.sneakyThrow(th2);
                     }
                 }
             default:

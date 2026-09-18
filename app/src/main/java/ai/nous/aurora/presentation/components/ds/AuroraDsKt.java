@@ -298,7 +298,7 @@ public final class AuroraDsKt {
     }
 
     public static final void AuroraSectionLabel(final String title, Modifier modifier, Composer $composer, final int $changed, final int i) {
-        final Modifier modifier2;
+        Modifier modifier2;
         Intrinsics.checkNotNullParameter(title, "title");
         Composer $composer2 = $composer.startRestartGroup(522373208);
         ComposerKt.sourceInformation($composer2, "C(AuroraSectionLabel)P(1)111@4895L727:AuroraDs.kt#rimizs");
@@ -380,10 +380,11 @@ public final class AuroraDsKt {
         }
         ScopeUpdateScope scopeUpdateScopeEndRestartGroup = $composer2.endRestartGroup();
         if (scopeUpdateScopeEndRestartGroup != null) {
+            final Modifier modifier2$c386 = modifier2;
             scopeUpdateScopeEndRestartGroup.updateScope(new Function2() { // from class: ai.nous.aurora.presentation.components.ds.AuroraDsKt$$ExternalSyntheticLambda13
                 @Override // kotlin.jvm.functions.Function2
                 public final Object invoke(Object obj, Object obj2) {
-                    return AuroraDsKt.AuroraSectionLabel$lambda$2(title, modifier2, $changed, i, (Composer) obj, ((Integer) obj2).intValue());
+                    return AuroraDsKt.AuroraSectionLabel$lambda$2(title, modifier2$c386, $changed, i, (Composer) obj, ((Integer) obj2).intValue());
                 }
             });
         }
@@ -412,7 +413,7 @@ public final class AuroraDsKt {
     /* JADX WARN: Code duplicated, block: B:286:0x0919  */
     /* JADX WARN: Code duplicated, block: B:287:0x0951  */
     /* JADX WARN: Code duplicated, block: B:290:0x0977  */
-    public static final void AuroraListRow(final String title, String subtitle, String meta, Function0<Unit> function0, Function2<? super Composer, ? super Integer, Unit> function2, Function2<? super Composer, ? super Integer, Unit> function3, boolean showChevron, int subtitleMaxLines, boolean elevated, FontWeight titleWeight, boolean highlighted, Modifier modifier, Composer $composer, final int $changed, final int $changed1, final int i) {
+    public static final void AuroraListRow(String title, String subtitle, String meta, Function0<Unit> function0, Function2<? super Composer, ? super Integer, Unit> function2, Function2<? super Composer, ? super Integer, Unit> function3, boolean showChevron, int subtitleMaxLines, boolean elevated, FontWeight titleWeight, boolean highlighted, Modifier modifier, Composer $composer, final int $changed, final int $changed1, final int i) {
         String str;
         boolean showChevron2;
         Modifier modifier2;
@@ -1192,7 +1193,7 @@ public final class AuroraDsKt {
     }
 
     /* JADX INFO: renamed from: AuroraRowDivider-kHDZbjc, reason: not valid java name */
-    public static final void m128AuroraRowDividerkHDZbjc(final float startInset, Composer $composer, final int $changed, final int i) {
+    public static final void m128AuroraRowDividerkHDZbjc(float startInset, Composer $composer, final int $changed, final int i) {
         Composer $composer2 = $composer.startRestartGroup(210950488);
         ComposerKt.sourceInformation($composer2, "C(AuroraRowDivider)P(0:c#ui.unit.Dp)264@10362L14,264@10336L90:AuroraDs.kt#rimizs");
         int $dirty = $changed;
@@ -1219,10 +1220,11 @@ public final class AuroraDsKt {
         }
         ScopeUpdateScope scopeUpdateScopeEndRestartGroup = $composer2.endRestartGroup();
         if (scopeUpdateScopeEndRestartGroup != null) {
+            final float startInset$c1225 = startInset;
             scopeUpdateScopeEndRestartGroup.updateScope(new Function2() { // from class: ai.nous.aurora.presentation.components.ds.AuroraDsKt$$ExternalSyntheticLambda14
                 @Override // kotlin.jvm.functions.Function2
                 public final Object invoke(Object obj, Object obj2) {
-                    return AuroraDsKt.AuroraRowDivider_kHDZbjc$lambda$7(startInset, $changed, i, (Composer) obj, ((Integer) obj2).intValue());
+                    return AuroraDsKt.AuroraRowDivider_kHDZbjc$lambda$7(startInset$c1225, $changed, i, (Composer) obj, ((Integer) obj2).intValue());
                 }
             });
         }
@@ -1273,8 +1275,8 @@ public final class AuroraDsKt {
         boolean z;
         int $dirty2;
         int i2;
-        final boolean actionEnabled4;
-        final Function0<Unit> function3;
+        boolean actionEnabled4;
+        Function0<Unit> function3;
         Composer $composer2;
         boolean actionEnabled5;
         Function0<Unit> function4;
@@ -1484,10 +1486,12 @@ public final class AuroraDsKt {
                             Object it$iv = $composer3.rememberedValue();
                             if (i4 == 0 || it$iv == Composer.Companion.getEmpty()) {
                                 actionEnabled4 = actionEnabled3;
+                                final boolean actionEnabled4$c1490 = actionEnabled4;
+                                final Function0<Unit> function3$c1490 = function3;
                                 value$iv = new Function0() { // from class: ai.nous.aurora.presentation.components.ds.AuroraDsKt$$ExternalSyntheticLambda11
                                     @Override // kotlin.jvm.functions.Function0
                                     public final Object invoke() {
-                                        return AuroraDsKt.AuroraContextBar$lambda$11$lambda$10$lambda$9(actionEnabled4, function3);
+                                        return AuroraDsKt.AuroraContextBar$lambda$11$lambda$10$lambda$9(actionEnabled4$c1490, function3$c1490);
                                     }
                                 };
                                 $composer3.updateRememberedValue(value$iv);
@@ -1576,19 +1580,23 @@ public final class AuroraDsKt {
                         Object it$iv2 = $composer3.rememberedValue();
                         if (i4 == 0) {
                             actionEnabled4 = actionEnabled3;
+                            final boolean actionEnabled4$c1582 = actionEnabled4;
+                            final Function0<Unit> function3$c1582 = function3;
                             value$iv = new Function0() { // from class: ai.nous.aurora.presentation.components.ds.AuroraDsKt$$ExternalSyntheticLambda11
                                 @Override // kotlin.jvm.functions.Function0
                                 public final Object invoke() {
-                                    return AuroraDsKt.AuroraContextBar$lambda$11$lambda$10$lambda$9(actionEnabled4, function3);
+                                    return AuroraDsKt.AuroraContextBar$lambda$11$lambda$10$lambda$9(actionEnabled4$c1582, function3$c1582);
                                 }
                             };
                             $composer3.updateRememberedValue(value$iv);
                         } else {
                             actionEnabled4 = actionEnabled3;
+                            final boolean actionEnabled4$c1591 = actionEnabled4;
+                            final Function0<Unit> function3$c1591 = function3;
                             value$iv = new Function0() { // from class: ai.nous.aurora.presentation.components.ds.AuroraDsKt$$ExternalSyntheticLambda11
                                 @Override // kotlin.jvm.functions.Function0
                                 public final Object invoke() {
-                                    return AuroraDsKt.AuroraContextBar$lambda$11$lambda$10$lambda$9(actionEnabled4, function3);
+                                    return AuroraDsKt.AuroraContextBar$lambda$11$lambda$10$lambda$9(actionEnabled4$c1591, function3$c1591);
                                 }
                             };
                             $composer3.updateRememberedValue(value$iv);
@@ -1712,19 +1720,23 @@ public final class AuroraDsKt {
                         Object it$iv3 = $composer3.rememberedValue();
                         if (i4 == 0) {
                             actionEnabled4 = actionEnabled3;
+                            final boolean actionEnabled4$c1718 = actionEnabled4;
+                            final Function0<Unit> function3$c1718 = function3;
                             value$iv = new Function0() { // from class: ai.nous.aurora.presentation.components.ds.AuroraDsKt$$ExternalSyntheticLambda11
                                 @Override // kotlin.jvm.functions.Function0
                                 public final Object invoke() {
-                                    return AuroraDsKt.AuroraContextBar$lambda$11$lambda$10$lambda$9(actionEnabled4, function3);
+                                    return AuroraDsKt.AuroraContextBar$lambda$11$lambda$10$lambda$9(actionEnabled4$c1718, function3$c1718);
                                 }
                             };
                             $composer3.updateRememberedValue(value$iv);
                         } else {
                             actionEnabled4 = actionEnabled3;
+                            final boolean actionEnabled4$c1727 = actionEnabled4;
+                            final Function0<Unit> function3$c1727 = function3;
                             value$iv = new Function0() { // from class: ai.nous.aurora.presentation.components.ds.AuroraDsKt$$ExternalSyntheticLambda11
                                 @Override // kotlin.jvm.functions.Function0
                                 public final Object invoke() {
-                                    return AuroraDsKt.AuroraContextBar$lambda$11$lambda$10$lambda$9(actionEnabled4, function3);
+                                    return AuroraDsKt.AuroraContextBar$lambda$11$lambda$10$lambda$9(actionEnabled4$c1727, function3$c1727);
                                 }
                             };
                             $composer3.updateRememberedValue(value$iv);
@@ -1813,19 +1825,23 @@ public final class AuroraDsKt {
                     Object it$iv4 = $composer3.rememberedValue();
                     if (i4 == 0) {
                         actionEnabled4 = actionEnabled3;
+                        final boolean actionEnabled4$c1819 = actionEnabled4;
+                        final Function0<Unit> function3$c1819 = function3;
                         value$iv = new Function0() { // from class: ai.nous.aurora.presentation.components.ds.AuroraDsKt$$ExternalSyntheticLambda11
                             @Override // kotlin.jvm.functions.Function0
                             public final Object invoke() {
-                                return AuroraDsKt.AuroraContextBar$lambda$11$lambda$10$lambda$9(actionEnabled4, function3);
+                                return AuroraDsKt.AuroraContextBar$lambda$11$lambda$10$lambda$9(actionEnabled4$c1819, function3$c1819);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv);
                     } else {
                         actionEnabled4 = actionEnabled3;
+                        final boolean actionEnabled4$c1828 = actionEnabled4;
+                        final Function0<Unit> function3$c1828 = function3;
                         value$iv = new Function0() { // from class: ai.nous.aurora.presentation.components.ds.AuroraDsKt$$ExternalSyntheticLambda11
                             @Override // kotlin.jvm.functions.Function0
                             public final Object invoke() {
-                                return AuroraDsKt.AuroraContextBar$lambda$11$lambda$10$lambda$9(actionEnabled4, function3);
+                                return AuroraDsKt.AuroraContextBar$lambda$11$lambda$10$lambda$9(actionEnabled4$c1828, function3$c1828);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv);
@@ -2255,7 +2271,7 @@ public final class AuroraDsKt {
 
     public static final void AuroraTextFieldRow(final String value, final Function1<? super String, Unit> onValueChange, Modifier modifier, String placeholder, boolean enabled, boolean singleLine, Composer $composer, final int $changed, final int i) {
         Modifier modifier2;
-        final String placeholder2;
+        String placeholder2;
         boolean enabled2;
         boolean singleLine2;
         Modifier modifier3;
@@ -2336,6 +2352,8 @@ public final class AuroraDsKt {
             modifier3 = modifier4;
             placeholder3 = placeholder2;
             $composer2 = $composer3;
+            final String placeholder2$c2363 = placeholder2;
+            final String placeholder2$c2362 = placeholder2;
             BasicTextFieldKt.BasicTextField(value, onValueChange, ai.nous.aurora.compat.Compat.m1035paddingVpY3zN4(ai.nous.aurora.compat.Compat.m600borderxT4_qwU(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(ClipKt.clip(ai.nous.aurora.compat.Compat.d_SizeKt_fillMaxWidth_4(modifier4, 0.0f, 1, null), shape), AuroraColorSchemeKt.getAuroraSurface($composer3, 0), null, 2, null), ai.nous.aurora.compat.Compat.m7016constructorimpl(1), AuroraColorSchemeKt.getAuroraHairline($composer3, 0), shape), ai.nous.aurora.compat.Compat.m7016constructorimpl(14), ai.nous.aurora.compat.Compat.m7016constructorimpl(12)), enabled3, false, ai.nous.aurora.compat.Compat.newTextStyle(AuroraColorSchemeKt.getAuroraText($composer3, 0), TextUnitKt.getSp(15), (FontWeight) null, (FontStyle) null, (FontSynthesis) null, (FontFamily) null, (String) null, 0L, (BaselineShift) null, (TextGeometricTransform) null, (LocaleList) null, 0L, (TextDecoration) null, (Shadow) null, (DrawStyle) null, 0, 0, 0L, (TextIndent) null, (PlatformTextStyle) null, (LineHeightStyle) null, 0, 0, (TextMotion) null, 16777212), (KeyboardOptions) null, (KeyboardActions) null, singleLine3, 0, 0, (VisualTransformation) null, (Function1<? super TextLayoutResult, Unit>) null, (MutableInteractionSource) null, (Brush) ai.nous.aurora.compat.Compat.solidColorBrush(AuroraColorSchemeKt.getAuroraAccent($composer3, 0)), (Function3<? super Function2<? super Composer, ? super Integer, Unit>, ? super Composer, ? super Integer, Unit>) (Function3) ComposableLambdaKt.rememberComposableLambda(829694987, true, new Function3<Function2<? super Composer, ? super Integer, ? extends Unit>, Composer, Integer, Unit>() { // from class: ai.nous.aurora.presentation.components.ds.AuroraDsKt.AuroraTextFieldRow.1
                 @Override // kotlin.jvm.functions.Function3
                 public /* bridge */ /* synthetic */ Unit invoke(Function2<? super Composer, ? super Integer, ? extends Unit> function2, Composer composer, Integer num) {
@@ -2359,8 +2377,8 @@ public final class AuroraDsKt {
                         $composer4.startReplaceGroup(-1764891409);
                         ComposerKt.sourceInformation($composer4, "397@14972L15,397@14946L60");
                         if (value.length() == 0) {
-                            if (placeholder2.length() > 0) {
-                                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(placeholder2, (Modifier) null, AuroraColorSchemeKt.getAuroraTextFaint($composer4, 0), TextUnitKt.getSp(15), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer4, 3072, 0, 131058);
+                            if (placeholder2$c2363.length() > 0) {
+                                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(placeholder2$c2363, (Modifier) null, AuroraColorSchemeKt.getAuroraTextFaint($composer4, 0), TextUnitKt.getSp(15), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer4, 3072, 0, 131058);
                             }
                         }
                         $composer4.endReplaceGroup();
@@ -3097,7 +3115,7 @@ public final class AuroraDsKt {
         Composer $this$Layout_u24lambda_u240$iv$iv4;
         long auroraText;
         Object it$iv2;
-        final MutableState expanded$delegate;
+        MutableState expanded$delegate;
         Object value$iv5;
         Composer $composer2;
         Function0<ComposeUiNode> function4;
@@ -3535,10 +3553,11 @@ public final class AuroraDsKt {
                         it$iv2 = $composer3.rememberedValue();
                         if (it$iv2 == Composer.Companion.getEmpty()) {
                             expanded$delegate = expanded$delegate2;
+                            final MutableState expanded$delegate$c3541 = expanded$delegate;
                             value$iv5 = new Function0() { // from class: ai.nous.aurora.presentation.components.ds.AuroraDsKt$$ExternalSyntheticLambda1
                                 @Override // kotlin.jvm.functions.Function0
                                 public final Object invoke() {
-                                    return AuroraDsKt.AuroraDropdownRow$lambda$50$lambda$44$lambda$43$lambda$42$lambda$41(expanded$delegate);
+                                    return AuroraDsKt.AuroraDropdownRow$lambda$50$lambda$44$lambda$43$lambda$42$lambda$41(expanded$delegate$c3541);
                                 }
                             };
                             $composer3.updateRememberedValue(value$iv5);
@@ -3802,10 +3821,11 @@ public final class AuroraDsKt {
                     it$iv2 = $composer3.rememberedValue();
                     if (it$iv2 == Composer.Companion.getEmpty()) {
                         expanded$delegate = expanded$delegate2;
+                        final MutableState expanded$delegate$c3808 = expanded$delegate;
                         value$iv5 = new Function0() { // from class: ai.nous.aurora.presentation.components.ds.AuroraDsKt$$ExternalSyntheticLambda1
                             @Override // kotlin.jvm.functions.Function0
                             public final Object invoke() {
-                                return AuroraDsKt.AuroraDropdownRow$lambda$50$lambda$44$lambda$43$lambda$42$lambda$41(expanded$delegate);
+                                return AuroraDsKt.AuroraDropdownRow$lambda$50$lambda$44$lambda$43$lambda$42$lambda$41(expanded$delegate$c3808);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv5);
@@ -4018,10 +4038,11 @@ public final class AuroraDsKt {
                     it$iv2 = $composer3.rememberedValue();
                     if (it$iv2 == Composer.Companion.getEmpty()) {
                         expanded$delegate = expanded$delegate2;
+                        final MutableState expanded$delegate$c4024 = expanded$delegate;
                         value$iv5 = new Function0() { // from class: ai.nous.aurora.presentation.components.ds.AuroraDsKt$$ExternalSyntheticLambda1
                             @Override // kotlin.jvm.functions.Function0
                             public final Object invoke() {
-                                return AuroraDsKt.AuroraDropdownRow$lambda$50$lambda$44$lambda$43$lambda$42$lambda$41(expanded$delegate);
+                                return AuroraDsKt.AuroraDropdownRow$lambda$50$lambda$44$lambda$43$lambda$42$lambda$41(expanded$delegate$c4024);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv5);
@@ -4200,10 +4221,11 @@ public final class AuroraDsKt {
                 it$iv2 = $composer3.rememberedValue();
                 if (it$iv2 == Composer.Companion.getEmpty()) {
                     expanded$delegate = expanded$delegate2;
+                    final MutableState expanded$delegate$c4206 = expanded$delegate;
                     value$iv5 = new Function0() { // from class: ai.nous.aurora.presentation.components.ds.AuroraDsKt$$ExternalSyntheticLambda1
                         @Override // kotlin.jvm.functions.Function0
                         public final Object invoke() {
-                            return AuroraDsKt.AuroraDropdownRow$lambda$50$lambda$44$lambda$43$lambda$42$lambda$41(expanded$delegate);
+                            return AuroraDsKt.AuroraDropdownRow$lambda$50$lambda$44$lambda$43$lambda$42$lambda$41(expanded$delegate$c4206);
                         }
                     };
                     $composer3.updateRememberedValue(value$iv5);
@@ -4471,10 +4493,11 @@ public final class AuroraDsKt {
                     it$iv2 = $composer3.rememberedValue();
                     if (it$iv2 == Composer.Companion.getEmpty()) {
                         expanded$delegate = expanded$delegate2;
+                        final MutableState expanded$delegate$c4477 = expanded$delegate;
                         value$iv5 = new Function0() { // from class: ai.nous.aurora.presentation.components.ds.AuroraDsKt$$ExternalSyntheticLambda1
                             @Override // kotlin.jvm.functions.Function0
                             public final Object invoke() {
-                                return AuroraDsKt.AuroraDropdownRow$lambda$50$lambda$44$lambda$43$lambda$42$lambda$41(expanded$delegate);
+                                return AuroraDsKt.AuroraDropdownRow$lambda$50$lambda$44$lambda$43$lambda$42$lambda$41(expanded$delegate$c4477);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv5);
@@ -4653,10 +4676,11 @@ public final class AuroraDsKt {
                 it$iv2 = $composer3.rememberedValue();
                 if (it$iv2 == Composer.Companion.getEmpty()) {
                     expanded$delegate = expanded$delegate2;
+                    final MutableState expanded$delegate$c4659 = expanded$delegate;
                     value$iv5 = new Function0() { // from class: ai.nous.aurora.presentation.components.ds.AuroraDsKt$$ExternalSyntheticLambda1
                         @Override // kotlin.jvm.functions.Function0
                         public final Object invoke() {
-                            return AuroraDsKt.AuroraDropdownRow$lambda$50$lambda$44$lambda$43$lambda$42$lambda$41(expanded$delegate);
+                            return AuroraDsKt.AuroraDropdownRow$lambda$50$lambda$44$lambda$43$lambda$42$lambda$41(expanded$delegate$c4659);
                         }
                     };
                     $composer3.updateRememberedValue(value$iv5);
@@ -4872,10 +4896,11 @@ public final class AuroraDsKt {
                 it$iv2 = $composer3.rememberedValue();
                 if (it$iv2 == Composer.Companion.getEmpty()) {
                     expanded$delegate = expanded$delegate2;
+                    final MutableState expanded$delegate$c4878 = expanded$delegate;
                     value$iv5 = new Function0() { // from class: ai.nous.aurora.presentation.components.ds.AuroraDsKt$$ExternalSyntheticLambda1
                         @Override // kotlin.jvm.functions.Function0
                         public final Object invoke() {
-                            return AuroraDsKt.AuroraDropdownRow$lambda$50$lambda$44$lambda$43$lambda$42$lambda$41(expanded$delegate);
+                            return AuroraDsKt.AuroraDropdownRow$lambda$50$lambda$44$lambda$43$lambda$42$lambda$41(expanded$delegate$c4878);
                         }
                     };
                     $composer3.updateRememberedValue(value$iv5);
@@ -5054,10 +5079,11 @@ public final class AuroraDsKt {
             it$iv2 = $composer3.rememberedValue();
             if (it$iv2 == Composer.Companion.getEmpty()) {
                 expanded$delegate = expanded$delegate2;
+                final MutableState expanded$delegate$c5060 = expanded$delegate;
                 value$iv5 = new Function0() { // from class: ai.nous.aurora.presentation.components.ds.AuroraDsKt$$ExternalSyntheticLambda1
                     @Override // kotlin.jvm.functions.Function0
                     public final Object invoke() {
-                        return AuroraDsKt.AuroraDropdownRow$lambda$50$lambda$44$lambda$43$lambda$42$lambda$41(expanded$delegate);
+                        return AuroraDsKt.AuroraDropdownRow$lambda$50$lambda$44$lambda$43$lambda$42$lambda$41(expanded$delegate$c5060);
                     }
                 };
                 $composer3.updateRememberedValue(value$iv5);

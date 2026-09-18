@@ -308,5 +308,6 @@ final class GatewayClient$getSessions$2 extends SuspendLambda implements Functio
             default:
                 throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
         }
+        return ai.nous.aurora.compat.Compat.m7387boximpl(CollectionsKt.emptyList());
     }
 }

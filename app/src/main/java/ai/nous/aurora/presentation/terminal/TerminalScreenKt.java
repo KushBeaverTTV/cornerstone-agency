@@ -583,7 +583,7 @@ public final class TerminalScreenKt {
                         $geometryEpoch$delegate.setIntValue(TerminalScreenKt.TerminalScreen$lambda$19($geometryEpoch$delegate) + 1);
                         return;
                     }
-                    WebSocket webSocket = $socketRef.get();
+                    WebSocket webSocket = (WebSocket) $socketRef.get();
                     if (webSocket != null) {
                         webSocket.send("{\"type\":\"resize\",\"rows\":" + emu.mRows + ",\"cols\":" + emu.mColumns + "}");
                     }

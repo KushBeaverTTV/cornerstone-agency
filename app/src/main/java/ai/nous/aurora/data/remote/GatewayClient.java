@@ -5,6 +5,7 @@ import ai.nous.aurora.domain.model.AuroraSession;
 import ai.nous.aurora.domain.model.ConnectionState;
 import androidx.core.app.NotificationCompat;
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.KotlinSerializationConverterFactory;
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.TimeUnit;
@@ -129,11 +130,11 @@ public final class GatewayClient {
 
     /* JADX WARN: Multi-variable type inference failed */
     private final GatewayService createService(String url, final String key) {
-        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(null, 1, null);
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT);
         httpLoggingInterceptor.level(this.isDebug ? HttpLoggingInterceptor.Level.BASIC : HttpLoggingInterceptor.Level.NONE);
         Object objCreate = new Retrofit.Builder().baseUrl(url).client(new OkHttpClient.Builder().connectTimeout(20L, TimeUnit.SECONDS).readTimeout(300L, TimeUnit.SECONDS).writeTimeout(60L, TimeUnit.SECONDS).addInterceptor(new Interceptor() { // from class: ai.nous.aurora.data.remote.GatewayClient$$ExternalSyntheticLambda1
             @Override // okhttp3.Interceptor
-            public final Response intercept(Interceptor.Chain chain) {
+            public final Response intercept(Interceptor.Chain chain) throws IOException {
                 return GatewayClient.createService$lambda$2(key, chain);
             }
         }).addInterceptor(httpLoggingInterceptor).build()).addConverterFactory(KotlinSerializationConverterFactory.create(this.json, MediaType.Companion.get("application/json"))).build().create(GatewayService.class);
@@ -142,7 +143,7 @@ public final class GatewayClient {
     }
 
     /* JADX INFO: Access modifiers changed from: private */
-    public static final Response createService$lambda$2(String $key, Interceptor.Chain chain) {
+    public static final Response createService$lambda$2(String $key, Interceptor.Chain chain) throws IOException {
         Intrinsics.checkNotNullParameter(chain, "chain");
         return chain.proceed(chain.request().newBuilder().header("Authorization", "Bearer " + $key).header("Content-Type", "application/json").build());
     }
@@ -412,6 +413,7 @@ public final class GatewayClient {
             default:
                 throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
         }
+        return Unit.INSTANCE;
     }
 
     /* JADX WARN: Code duplicated, block: B:7:0x0014  */
@@ -681,6 +683,9 @@ public final class GatewayClient {
                     strTake = "Chat " + StringsKt.takeLast($this$toModel.getId(), 6);
                 } else {
                     if (StringsKt.isBlank(it)) {
+                        str = null;
+                    } else {
+                        str = it;
                     }
                     if (str != null) {
                         strTake = StringsKt.take(str, 48);

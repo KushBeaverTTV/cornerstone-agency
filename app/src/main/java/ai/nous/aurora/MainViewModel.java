@@ -1134,7 +1134,7 @@ public final class MainViewModel extends ViewModel {
         MutableStateFlow<UiState> mutableStateFlow;
         UiState value;
         UiState it;
-        boolean z2;
+        boolean z2 = false;
         ConnectUiState connectState;
         boolean z3;
         MutableStateFlow<UiState> mutableStateFlow2;
@@ -1360,7 +1360,6 @@ public final class MainViewModel extends ViewModel {
                     mutableStateFlow = mutableStateFlow2;
                     z4 = true;
                 }
-                break;
             case 1:
                 mainViewModel = (MainViewModel) c01811.L$0;
                 ResultKt.throwOnFailure($result);
@@ -1537,7 +1536,6 @@ public final class MainViewModel extends ViewModel {
                     mutableStateFlow = mutableStateFlow2;
                     z4 = true;
                 }
-                break;
             case 2:
                 mainViewModel = (MainViewModel) c01811.L$0;
                 ResultKt.throwOnFailure($result);
@@ -1704,7 +1702,6 @@ public final class MainViewModel extends ViewModel {
                     mutableStateFlow = mutableStateFlow2;
                     z4 = true;
                 }
-                break;
             case 3:
                 mainViewModel = (MainViewModel) c01811.L$0;
                 ResultKt.throwOnFailure($result);
@@ -1865,7 +1862,6 @@ public final class MainViewModel extends ViewModel {
                     mutableStateFlow = mutableStateFlow2;
                     z4 = true;
                 }
-                break;
             case 4:
                 String gateway4 = (String) c01811.L$1;
                 MainViewModel mainViewModel11 = (MainViewModel) c01811.L$0;
@@ -2017,7 +2013,6 @@ public final class MainViewModel extends ViewModel {
                     mutableStateFlow = mutableStateFlow2;
                     z4 = true;
                 }
-                break;
             case 5:
                 apiKey3 = (String) c01811.L$2;
                 gateway = (String) c01811.L$1;
@@ -2145,7 +2140,6 @@ public final class MainViewModel extends ViewModel {
                     mutableStateFlow = mutableStateFlow2;
                     z4 = true;
                 }
-                break;
             case 6:
                 apiKey3 = (String) c01811.L$2;
                 gateway3 = (String) c01811.L$1;
@@ -2776,11 +2770,11 @@ public final class MainViewModel extends ViewModel {
             UiState uiStateCopy$default;
             Iterator it3;
             Object element$iv3;
-            ModelChoice it4;
+            ModelChoice it4 = null;
             ModelChoice choice;
             boolean z;
             ModelChoice it5;
-            boolean z2;
+            boolean z2 = false;
             Throwable thM7391exceptionOrNullimpl;
             String message;
             Object $result6;
@@ -2872,7 +2866,6 @@ public final class MainViewModel extends ViewModel {
                             primary2 = primary;
                         } else {
                             Iterable $this$forEach$iv = ModelCatalogPolicy.INSTANCE.choices(catalog.getProviders());
-                            Object element$iv4 = null;
                             for (Object element$iv4 : $this$forEach$iv) {
                                 CatalogModelChoice choice2 = (CatalogModelChoice) element$iv4;
                                 invokeSuspend$add$default(choices, catalog, choice2.getModel(), choice2.getProvider(), "Available", false, 32, null);
@@ -2941,6 +2934,7 @@ public final class MainViewModel extends ViewModel {
                                             $result5 = $result3;
                                             element$iv2 = null;
                                         }
+                                        break;
                                     }
                                     retained = (ModelChoice) element$iv2;
                                     if (currentChoice == null) {
@@ -2962,7 +2956,7 @@ public final class MainViewModel extends ViewModel {
                                                     Intrinsics.checkNotNullExpressionValue(objFirst, "first(...)");
                                                     currentChoice = (ModelChoice) objFirst;
                                                 }
-                                            } while (!Intrinsics.areEqual(it4.getRole(), "Primary"));
+                                            } while (it4 == null || !Intrinsics.areEqual(it4.getRole(), "Primary"));
                                             currentChoice = (ModelChoice) element$iv3;
                                             if (currentChoice == null) {
                                                 Object objFirst2 = CollectionsKt.first((List<? extends Object>) list);
@@ -3000,6 +2994,7 @@ public final class MainViewModel extends ViewModel {
                                         $result5 = $result3;
                                         element$iv2 = null;
                                     }
+                                    break;
                                 }
                                 retained = (ModelChoice) element$iv2;
                                 if (currentChoice == null) {
@@ -3021,7 +3016,7 @@ public final class MainViewModel extends ViewModel {
                                                 Intrinsics.checkNotNullExpressionValue(objFirst3, "first(...)");
                                                 currentChoice = (ModelChoice) objFirst3;
                                             }
-                                        } while (!Intrinsics.areEqual(it4.getRole(), "Primary"));
+                                        } while (it4 == null || !Intrinsics.areEqual(it4.getRole(), "Primary"));
                                         currentChoice = (ModelChoice) element$iv3;
                                         if (currentChoice == null) {
                                             Object objFirst4 = CollectionsKt.first((List<? extends Object>) list);
@@ -3033,8 +3028,8 @@ public final class MainViewModel extends ViewModel {
                                 ModelChoice retained3 = currentChoice;
                                 List $this$map$iv2 = list;
                                 destination$iv$iv = new ArrayList(CollectionsKt.collectionSizeOrDefault($this$map$iv2, 10));
-                                java.util.Iterator<Object> r13 = collectionValues.iterator();
-                                java.util.Iterator<Object> r13U21 = collectionValues.iterator();
+                                java.util.Iterator<Object> r13 = $this$map$iv2.iterator();
+                                java.util.Iterator<Object> r13U21 = $this$map$iv2.iterator();
                                 while (r13U21.hasNext()) {
     Object item$iv$iv = r13U21.next();
 
@@ -3048,8 +3043,8 @@ public final class MainViewModel extends ViewModel {
                                 return nextValue$iv;
                             }
                             $result3 = $result5;
+                            break;
                         }
-                        break;
                     case 1:
                         $result7 = $result;
                         ResultKt.throwOnFailure($result7);
@@ -3129,8 +3124,8 @@ public final class MainViewModel extends ViewModel {
                             primary2 = primary;
                         } else {
                             Iterable $this$forEach$iv2 = ModelCatalogPolicy.INSTANCE.choices(catalog.getProviders());
-                            java.util.Iterator<Object> r18 = collectionValues.iterator();
-                            java.util.Iterator<Object> r18U22 = collectionValues.iterator();
+                            java.util.Iterator<Object> r18 = $this$forEach$iv2.iterator();
+                            java.util.Iterator<Object> r18U22 = $this$forEach$iv2.iterator();
                             while (r18U22.hasNext()) {
     Object element$iv4 = r18U22.next();
 
@@ -3203,6 +3198,7 @@ public final class MainViewModel extends ViewModel {
                                             $result5 = $result3;
                                             element$iv2 = null;
                                         }
+                                        break;
                                     }
                                     retained = (ModelChoice) element$iv2;
                                     if (currentChoice == null) {
@@ -3224,7 +3220,7 @@ public final class MainViewModel extends ViewModel {
                                                     Intrinsics.checkNotNullExpressionValue(objFirst5, "first(...)");
                                                     currentChoice = (ModelChoice) objFirst5;
                                                 }
-                                            } while (!Intrinsics.areEqual(it4.getRole(), "Primary"));
+                                            } while (it4 == null || !Intrinsics.areEqual(it4.getRole(), "Primary"));
                                             currentChoice = (ModelChoice) element$iv3;
                                             if (currentChoice == null) {
                                                 Object objFirst6 = CollectionsKt.first((List<? extends Object>) list);
@@ -3265,6 +3261,7 @@ public final class MainViewModel extends ViewModel {
                                         $result5 = $result3;
                                         element$iv2 = null;
                                     }
+                                    break;
                                 }
                                 retained = (ModelChoice) element$iv2;
                                 if (currentChoice == null) {
@@ -3286,7 +3283,7 @@ public final class MainViewModel extends ViewModel {
                                                 Intrinsics.checkNotNullExpressionValue(objFirst7, "first(...)");
                                                 currentChoice = (ModelChoice) objFirst7;
                                             }
-                                        } while (!Intrinsics.areEqual(it4.getRole(), "Primary"));
+                                        } while (it4 == null || !Intrinsics.areEqual(it4.getRole(), "Primary"));
                                         currentChoice = (ModelChoice) element$iv3;
                                         if (currentChoice == null) {
                                             Object objFirst8 = CollectionsKt.first((List<? extends Object>) list);
@@ -3312,8 +3309,8 @@ public final class MainViewModel extends ViewModel {
                                 return nextValue$iv2;
                             }
                             $result3 = $result5;
+                            break;
                         }
-                        break;
                     case 2:
                         $result3 = $result;
                         config2 = (HermesSettingsSnapshot) this.L$0;
@@ -3451,6 +3448,7 @@ public final class MainViewModel extends ViewModel {
                                             $result5 = $result3;
                                             element$iv2 = null;
                                         }
+                                        break;
                                     }
                                     retained = (ModelChoice) element$iv2;
                                     if (currentChoice == null) {
@@ -3472,7 +3470,7 @@ public final class MainViewModel extends ViewModel {
                                                     Intrinsics.checkNotNullExpressionValue(objFirst9, "first(...)");
                                                     currentChoice = (ModelChoice) objFirst9;
                                                 }
-                                            } while (!Intrinsics.areEqual(it4.getRole(), "Primary"));
+                                            } while (it4 == null || !Intrinsics.areEqual(it4.getRole(), "Primary"));
                                             currentChoice = (ModelChoice) element$iv3;
                                             if (currentChoice == null) {
                                                 Object objFirst10 = CollectionsKt.first((List<? extends Object>) list);
@@ -3513,6 +3511,7 @@ public final class MainViewModel extends ViewModel {
                                         $result5 = $result3;
                                         element$iv2 = null;
                                     }
+                                    break;
                                 }
                                 retained = (ModelChoice) element$iv2;
                                 if (currentChoice == null) {
@@ -3534,7 +3533,7 @@ public final class MainViewModel extends ViewModel {
                                                 Intrinsics.checkNotNullExpressionValue(objFirst11, "first(...)");
                                                 currentChoice = (ModelChoice) objFirst11;
                                             }
-                                        } while (!Intrinsics.areEqual(it4.getRole(), "Primary"));
+                                        } while (it4 == null || !Intrinsics.areEqual(it4.getRole(), "Primary"));
                                         currentChoice = (ModelChoice) element$iv3;
                                         if (currentChoice == null) {
                                             Object objFirst12 = CollectionsKt.first((List<? extends Object>) list);
@@ -3560,12 +3559,13 @@ public final class MainViewModel extends ViewModel {
                                 return nextValue$iv3;
                             }
                             $result3 = $result5;
+                            break;
                         }
-                        break;
                     default:
                         throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
                 }
             } catch (Throwable th2) {
+                throw ai.nous.aurora.compat.Compat.sneakyThrow(th2);
             }
         }
 
@@ -3628,7 +3628,7 @@ public final class MainViewModel extends ViewModel {
         }
 
         static /* synthetic */ void invokeSuspend$add$default(LinkedHashMap linkedHashMap, ModelOptionsSnapshot modelOptionsSnapshot, String str, String str2, String str3, boolean z, int i, Object obj) {
-            boolean z2;
+            boolean z2 = false;
             if ((i & 32) == 0) {
                 z2 = z;
             } else {
@@ -3860,6 +3860,7 @@ public final class MainViewModel extends ViewModel {
                             return Unit.INSTANCE;
                         }
                         z = true;
+                        break;
                     }
                     break;
                 case 1:
@@ -3937,6 +3938,7 @@ public final class MainViewModel extends ViewModel {
                             return Unit.INSTANCE;
                         }
                         z = true;
+                        break;
                     }
                     break;
                 case 2:
@@ -4008,6 +4010,7 @@ public final class MainViewModel extends ViewModel {
                             return Unit.INSTANCE;
                         }
                         z = true;
+                        break;
                     }
                     break;
                 case 3:
@@ -4072,6 +4075,7 @@ public final class MainViewModel extends ViewModel {
                             return Unit.INSTANCE;
                         }
                         z = true;
+                        break;
                     }
                     break;
                 case 4:
@@ -4132,6 +4136,7 @@ public final class MainViewModel extends ViewModel {
                 default:
                     throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
             }
+            return Unit.INSTANCE;
         }
     }
 
@@ -4723,6 +4728,7 @@ public final class MainViewModel extends ViewModel {
                 default:
                     throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
             }
+            return Unit.INSTANCE;
         }
     }
 
@@ -5319,7 +5325,9 @@ public final class MainViewModel extends ViewModel {
                     ai.nous.aurora.compat.Compat.m7388constructorimpl(ResultKt.createFailure(th6));
                 }
             } catch (Throwable th7) {
+                throw ai.nous.aurora.compat.Compat.sneakyThrow(th7);
             }
+            return Unit.INSTANCE;
         }
     }
 
@@ -5554,6 +5562,7 @@ public final class MainViewModel extends ViewModel {
                                 i3 = i2;
                                 mainViewModel4 = mainViewModel3;
                                 obj3 = obj2;
+                                obj4 = obj3;
                                 Result.Companion companion2 = Result.Companion;
                                 ai.nous.aurora.compat.Compat.m7388constructorimpl(ResultKt.createFailure(th));
                             }
@@ -6419,6 +6428,7 @@ public final class MainViewModel extends ViewModel {
                 default:
                     throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
             }
+            return Unit.INSTANCE;
         }
     }
 
@@ -6757,7 +6767,7 @@ public final class MainViewModel extends ViewModel {
         /* JADX WARN: Not initialized variable reg: 3, insn: 0x03cd: MOVE (r2 I:??[OBJECT, ARRAY]) = (r3 I:??[OBJECT, ARRAY] A[D('$result' java.lang.Object)]) (LINE:885), block:B:100:0x03cd */
         /* JADX WARN: Not initialized variable reg: 3, insn: 0x03d7: MOVE (r2 I:??[OBJECT, ARRAY]) = (r3 I:??[OBJECT, ARRAY] A[D('$result' java.lang.Object)]), block:B:104:0x03d7 */
         @Override // kotlin.coroutines.jvm.internal.BaseContinuationImpl
-        public final Object invokeSuspend(Object $result) throws Throwable {
+        public final Object invokeSuspend(Object $result) {
             CancellationException c;
             Object prevValue$iv;
             UiState it;
@@ -6889,7 +6899,7 @@ public final class MainViewModel extends ViewModel {
                         if (thM7391exceptionOrNullimpl != null) {
                             t = thM7391exceptionOrNullimpl;
                             if (t instanceof CancellationException) {
-                                throw t;
+                                throw ai.nous.aurora.compat.Compat.sneakyThrow(t);
                             }
                             $this$update$iv3 = mainViewModel3._uiState;
                             while (true) {
@@ -6963,7 +6973,7 @@ public final class MainViewModel extends ViewModel {
                             if (thM7391exceptionOrNullimpl != null) {
                                 t = thM7391exceptionOrNullimpl;
                                 if (t instanceof CancellationException) {
-                                    throw t;
+                                    throw ai.nous.aurora.compat.Compat.sneakyThrow(t);
                                 }
                                 $this$update$iv3 = mainViewModel3._uiState;
                                 while (true) {
@@ -7028,6 +7038,7 @@ public final class MainViewModel extends ViewModel {
                             }
                             $this$update$iv = $this$update$iv2;
                             str2 = str3;
+                            break;
                         }
                         break;
                     case 2:
@@ -7059,7 +7070,7 @@ public final class MainViewModel extends ViewModel {
                         if (thM7391exceptionOrNullimpl != null) {
                             t = thM7391exceptionOrNullimpl;
                             if (t instanceof CancellationException) {
-                                throw t;
+                                throw ai.nous.aurora.compat.Compat.sneakyThrow(t);
                             }
                             $this$update$iv3 = mainViewModel3._uiState;
                             while (true) {
@@ -7136,6 +7147,7 @@ public final class MainViewModel extends ViewModel {
                     ai.nous.aurora.compat.Compat.m7388constructorimpl(ResultKt.createFailure(th2));
                 }
             }
+            return Unit.INSTANCE;
         }
     }
 
@@ -7304,25 +7316,18 @@ public final class MainViewModel extends ViewModel {
                                 element$iv = null;
                             }
                             after = (AuroraMessage) element$iv;
-                            if (after == null && !after.getCanRetry()) {
+                            if (after == null || !after.getCanRetry()) {
                                 this.label = 2;
                                 if (MainViewModel.this._toasts.emit(new ToastEvent.Info("Delivery is uncertain — refresh completed. Retry unlocks only if the message is still missing on Hermes."), this) == coroutine_suspended) {
                                     return coroutine_suspended;
                                 }
                                 return Unit.INSTANCE;
                             }
-                            if (after == null && after.getCanRetry()) {
+                            if (after.getCanRetry()) {
                                 MainViewModel.this.doRetry(this.$sessionId, this.$messageId);
                             }
                             return Unit.INSTANCE;
                         } while (!Intrinsics.areEqual(it2.getId(), str));
-                        after = (AuroraMessage) element$iv;
-                        if (after == null) {
-                        }
-                        if (after == null && after.getCanRetry()) {
-                            MainViewModel.this.doRetry(this.$sessionId, this.$messageId);
-                        }
-                        return Unit.INSTANCE;
                     case 1:
                         ResultKt.throwOnFailure($result);
                         objMo55selectSessiongIAlus = ai.nous.aurora.compat.Compat.resultUnbox($result);
@@ -7364,6 +7369,7 @@ public final class MainViewModel extends ViewModel {
                 Result.Companion companion2 = Result.Companion;
                 ai.nous.aurora.compat.Compat.m7388constructorimpl(ResultKt.createFailure(th));
             }
+            return Unit.INSTANCE;
         }
     }
 
@@ -7403,7 +7409,7 @@ public final class MainViewModel extends ViewModel {
         /* JADX WARN: Code duplicated, block: B:41:0x0191 A[Catch: CancellationException -> 0x0034, TRY_LEAVE, TryCatch #0 {CancellationException -> 0x0034, blocks: (B:8:0x0021, B:9:0x0026, B:19:0x00b9, B:21:0x00c2, B:22:0x00cb, B:25:0x0115, B:27:0x011d, B:29:0x0122, B:30:0x0127, B:32:0x0171, B:35:0x017f, B:41:0x0191, B:16:0x0092), top: B:54:0x0008 }] */
         /* JADX WARN: Not initialized variable reg: 3, insn: 0x0035: MOVE (r40 I:??[OBJECT, ARRAY]) = (r3 I:??[OBJECT, ARRAY] A[D('$result' java.lang.Object)]), block:B:12:0x0035 */
         @Override // kotlin.coroutines.jvm.internal.BaseContinuationImpl
-        public final Object invokeSuspend(Object $result) throws Throwable {
+        public final Object invokeSuspend(Object $result) {
             CancellationException c;
             Object prevValue$iv;
             UiState it;
@@ -7449,7 +7455,7 @@ public final class MainViewModel extends ViewModel {
                         t = ai.nous.aurora.compat.Compat.m7391exceptionOrNullimpl(objMo54retryMessageBWLJW6A);
                         if (t != null) {
                             if (!(t instanceof CancellationException)) {
-                                throw t;
+                                throw ai.nous.aurora.compat.Compat.sneakyThrow(t);
                             }
                             $this$update$iv = mainViewModel2._uiState;
                             do {
@@ -7484,7 +7490,7 @@ public final class MainViewModel extends ViewModel {
                         t = ai.nous.aurora.compat.Compat.m7391exceptionOrNullimpl(objMo54retryMessageBWLJW6A);
                         if (t != null) {
                             if (!(t instanceof CancellationException)) {
-                                throw t;
+                                throw ai.nous.aurora.compat.Compat.sneakyThrow(t);
                             }
                             $this$update$iv = mainViewModel2._uiState;
                             do {
@@ -7527,6 +7533,7 @@ public final class MainViewModel extends ViewModel {
                 }
                 c = c2;
             }
+            return Unit.INSTANCE;
         }
     }
 
@@ -7717,7 +7724,7 @@ public final class MainViewModel extends ViewModel {
             String str;
             boolean z;
             String str2;
-            boolean z2;
+            boolean z2 = false;
             String str3;
             String str4;
             List list;
@@ -7876,6 +7883,7 @@ public final class MainViewModel extends ViewModel {
                 Result.Companion companion3 = Result.Companion;
                 ai.nous.aurora.compat.Compat.m7388constructorimpl(ResultKt.createFailure(th));
             }
+            return Unit.INSTANCE;
         }
     }
 
@@ -8145,11 +8153,9 @@ public final class MainViewModel extends ViewModel {
                     }
                     $result = objLoadMoa;
                     break;
-                    break;
                 case 1:
                     $result = obj;
                     ResultKt.throwOnFailure($result);
-                    break;
                 default:
                     throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
             }
@@ -8425,7 +8431,7 @@ public final class MainViewModel extends ViewModel {
         boolean z;
         boolean zBooleanValue2;
         Object assistOrbStyle;
-        boolean z2;
+        boolean z2 = false;
         if (continuation instanceof C01881) {
             c01881 = (C01881) continuation;
             if ((c01881.label & Integer.MIN_VALUE) != 0) {
@@ -8946,6 +8952,7 @@ public final class MainViewModel extends ViewModel {
                         throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
                 }
             } catch (Throwable th2) {
+                throw ai.nous.aurora.compat.Compat.sneakyThrow(th2);
             }
         }
     }
@@ -9069,8 +9076,10 @@ public final class MainViewModel extends ViewModel {
                         }
                         $result3 = $result;
                         $result4 = objLoadAssistSettings;
+                        assist = (AssistSettingsUi) $result4;
                         try {
                             objM7388constructorimpl = ai.nous.aurora.compat.Compat.m7388constructorimpl((AssistSettingsUi) $result4);
+                            $this$update$iv = MainViewModel.this._uiState;
                             while (true) {
                                 prevValue$iv = $this$update$iv.getValue();
                                 it = (UiState) prevValue$iv;
@@ -9179,6 +9188,7 @@ public final class MainViewModel extends ViewModel {
                                 return Unit.INSTANCE;
                             }
                             $this$update$iv = $this$update$iv2;
+                            break;
                         }
                         break;
                     case 2:
@@ -9191,7 +9201,9 @@ public final class MainViewModel extends ViewModel {
                         throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
                 }
             } catch (Throwable th2) {
+                throw ai.nous.aurora.compat.Compat.sneakyThrow(th2);
             }
+            return Unit.INSTANCE;
         }
     }
 
@@ -9219,7 +9231,6 @@ public final class MainViewModel extends ViewModel {
         while (true) {
             String category = "cron";
             if (!it.hasNext()) {
-                break;
             }
             HermesSettingField field = (HermesSettingField) it.next();
             if (!ai.nous.aurora.compat.Compat.d_StringsKt_startsWith_5(field.getPath(), "cron.", false, 2, (Object) null)) {
@@ -9228,6 +9239,7 @@ public final class MainViewModel extends ViewModel {
             String category2 = category;
             Pair pair = TuplesKt.to(field.getPath(), new ConfigFieldMeta(field.getType(), field.getDescription(), category2, field.getOptions(), Boolean.valueOf(field.isSecret())));
             linkedHashMap.put(pair.getFirst(), pair.getSecond());
+            break;
         }
         LinkedHashMap linkedHashMap2 = linkedHashMap;
         final Iterable $this$groupingBy$iv = linkedHashMap2.values();
@@ -9442,6 +9454,7 @@ public final class MainViewModel extends ViewModel {
                             return $result3;
                         }
                         str3 = str4;
+                        break;
                     }
                     break;
                 case 1:
@@ -9533,6 +9546,7 @@ public final class MainViewModel extends ViewModel {
                 default:
                     throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
             }
+            return Unit.INSTANCE;
         }
     }
 
@@ -9790,6 +9804,7 @@ public final class MainViewModel extends ViewModel {
                 default:
                     throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
             }
+            return Unit.INSTANCE;
         }
     }
 

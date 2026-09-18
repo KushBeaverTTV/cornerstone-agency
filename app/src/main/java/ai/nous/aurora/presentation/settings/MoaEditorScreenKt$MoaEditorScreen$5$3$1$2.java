@@ -88,7 +88,7 @@ final class MoaEditorScreenKt$MoaEditorScreen$5$3$1$2 implements Function3<LazyI
         Object value$iv;
         Object value$iv2;
         Function0<ComposeUiNode> function1;
-        Function1<Boolean, Unit> function2;
+        Function1<? super Boolean, Unit> function2;
         boolean invalid$iv;
         Object value$iv3;
         float f;

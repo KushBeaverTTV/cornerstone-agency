@@ -75,7 +75,7 @@ import kotlin.text.StringsKt;
 /* JADX INFO: loaded from: classes11.dex */
 @Metadata(d1 = {"\u0000:\n\u0000\n\u0002\u0010 \n\u0002\u0018\u0002\n\u0000\n\u0002\u0010\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010\u000e\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\u0010\u000b\n\u0002\b\u0003\n\u0002\u0018\u0002\n\u0002\b\u0007\u001ay\u0010\u0003\u001a\u00020\u00042\u0006\u0010\u0005\u001a\u00020\u00062\u0006\u0010\u0007\u001a\u00020\b2\u0006\u0010\t\u001a\u00020\b2\f\u0010\n\u001a\b\u0012\u0004\u0012\u00020\u00040\u000b2\u0012\u0010\f\u001a\u000e\u0012\u0004\u0012\u00020\u000e\u0012\u0004\u0012\u00020\u00040\r2\u0012\u0010\u000f\u001a\u000e\u0012\u0004\u0012\u00020\u000e\u0012\u0004\u0012\u00020\u00040\r2\u0012\u0010\u0010\u001a\u000e\u0012\u0004\u0012\u00020\b\u0012\u0004\u0012\u00020\u00040\r2\b\b\u0002\u0010\u0011\u001a\u00020\u0012H\u0007¢\u0006\u0002\u0010\u0013\u001a+\u0010\u0014\u001a\u00020\u00042\u0006\u0010\u0015\u001a\u00020\b2\u0006\u0010\u0016\u001a\u00020\b2\f\u0010\u0017\u001a\b\u0012\u0004\u0012\u00020\u00040\u000bH\u0003¢\u0006\u0002\u0010\u0018\"\u0014\u0010\u0000\u001a\b\u0012\u0004\u0012\u00020\u00020\u0001X\u0082\u0004¢\u0006\u0002\n\u0000¨\u0006\u0019"}, d2 = {"ORB_CHOICES", "", "Lai/nous/aurora/presentation/settings/OrbChoice;", "AssistantSettingsPane", "", "assist", "Lai/nous/aurora/presentation/settings/AssistSettingsUi;", "sttProvider", "", "ttsProvider", "onBack", "Lkotlin/Function0;", "onSpeakReplies", "Lkotlin/Function1;", "", "onAutoListen", "onOrbStyle", "modifier", "Landroidx/compose/ui/Modifier;", "(Lai/nous/aurora/presentation/settings/AssistSettingsUi;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V", "AssistActionRow", "title", "subtitle", "onClick", "(Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;I)V", "app_debug"}, k = 2, mv = {2, 0, 0}, xi = 48)
 public final class AssistantSettingsPaneKt {
-    private static final List<OrbChoice> ORB_CHOICES = CollectionsKt.listOf(new OrbChoice[]{new OrbChoice("amber", "Amber", ColorKt.Color(4293441645L), null), new OrbChoice("aurora", "Aurora", ColorKt.Color(4291077492L), null), new OrbChoice("cobalt", "Cobalt", ColorKt.Color(4285442303L), null), new OrbChoice("signal", "Signal", ColorKt.Color(4284336805L), null)});
+    static final List<OrbChoice> ORB_CHOICES = CollectionsKt.listOf(new OrbChoice[]{new OrbChoice("amber", "Amber", ColorKt.Color(4293441645L), null), new OrbChoice("aurora", "Aurora", ColorKt.Color(4291077492L), null), new OrbChoice("cobalt", "Cobalt", ColorKt.Color(4285442303L), null), new OrbChoice("signal", "Signal", ColorKt.Color(4284336805L), null)});
 
     /* JADX INFO: Access modifiers changed from: private */
     public static final Unit AssistActionRow$lambda$11(String str, String str2, Function0 function0, int i, Composer composer, int i2) {
@@ -158,7 +158,6 @@ public final class AssistantSettingsPaneKt {
         int i5;
         Modifier modifier3;
         int $dirty;
-        final Context context;
         Iterable $this$firstOrNull$iv;
         int $i$f$firstOrNull;
         Iterator it;
@@ -166,7 +165,6 @@ public final class AssistantSettingsPaneKt {
         Object element$iv;
         OrbChoice activeOrb;
         MeasurePolicy measurePolicy$iv;
-        final OrbChoice activeOrb2;
         int compositeKeyHash$iv$iv;
         CompositionLocalMap localMap$iv$iv;
         Function0<ComposeUiNode> constructor;
@@ -278,8 +276,8 @@ public final class AssistantSettingsPaneKt {
                     $dirty = $dirty2;
                     ComposerKt.sourceInformationMarkerStart($composer3, 2023513938, "CC:CompositionLocal.kt#9igjgp");
                     Object objConsume = $composer3.consume(localContext);
+                    final Context contextC1 = (Context) objConsume;
                     ComposerKt.sourceInformationMarkerEnd($composer3);
-                    context = (Context) objConsume;
                     $this$firstOrNull$iv = ORB_CHOICES;
                     $i$f$firstOrNull = 0;
                     it = $this$firstOrNull$iv.iterator();
@@ -302,6 +300,7 @@ public final class AssistantSettingsPaneKt {
                     if (activeOrb == null) {
                         activeOrb = (OrbChoice) CollectionsKt.first((List) ORB_CHOICES);
                     }
+                        final OrbChoice activeOrb2C1 = activeOrb;
                     Modifier modifier$iv = ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(ai.nous.aurora.compat.Compat.d_SizeKt_fillMaxSize_4(modifier3, 0.0f, 1, null), AuroraColorSchemeKt.getAuroraBackground($composer3, 0), null, 2, null);
                     ComposerKt.sourceInformationMarkerStart($composer3, -483455358, "CC(Column)P(2,3,1)86@4330L61,87@4396L133:Column.kt#2w3rfo");
                     Arrangement.Vertical verticalArrangement$iv = Arrangement.INSTANCE.getTop();
@@ -309,7 +308,6 @@ public final class AssistantSettingsPaneKt {
                     measurePolicy$iv = ColumnKt.columnMeasurePolicy(verticalArrangement$iv, horizontalAlignment$iv, $composer3, ((0 >> 3) & 14) | ((0 >> 3) & 112));
                     int $changed$iv$iv = (0 << 3) & 112;
                     Modifier modifier5 = modifier3;
-                    activeOrb2 = activeOrb;
                     ComposerKt.sourceInformationMarkerStart($composer3, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
                     compositeKeyHash$iv$iv = ComposablesKt.getCurrentCompositeKeyHash($composer3, 0);
                     localMap$iv$iv = $composer3.getCurrentCompositionLocalMap();
@@ -506,7 +504,7 @@ public final class AssistantSettingsPaneKt {
                             PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
                             $composer3.startReplaceGroup(-1637032986);
                             ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-                            boolean zChanged = $composer2.changed(activeOrb2);
+                            boolean zChanged = $composer2.changed(activeOrb2C1);
                             if (($dirty & 14) == 4) {
                                 z = true;
                             } else {
@@ -530,7 +528,7 @@ public final class AssistantSettingsPaneKt {
                             } else {
                                 z4 = false;
                             }
-                            boolean zChangedInstance = z8 | z4 | $composer2.changedInstance(context);
+                            boolean zChangedInstance = z8 | z4 | $composer2.changedInstance(contextC1);
                             if (($dirty & 112) == 32) {
                                 z5 = true;
                             } else {
@@ -542,7 +540,7 @@ public final class AssistantSettingsPaneKt {
                                 value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                                     @Override // kotlin.jvm.functions.Function1
                                     public final Object invoke(Object obj) {
-                                        return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                        return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C1, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC1, sttProvider, ttsProvider, (LazyListScope) obj);
                                     }
                                 };
                                 $composer3.updateRememberedValue(value$iv2);
@@ -687,7 +685,7 @@ public final class AssistantSettingsPaneKt {
                         PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default2 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
                         $composer3.startReplaceGroup(-1637032986);
                         ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-                        boolean zChanged2 = $composer2.changed(activeOrb2);
+                        boolean zChanged2 = $composer2.changed(activeOrb2C1);
                         if (($dirty & 14) == 4) {
                             z = true;
                         } else {
@@ -711,7 +709,7 @@ public final class AssistantSettingsPaneKt {
                         } else {
                             z4 = false;
                         }
-                        boolean zChangedInstance2 = z11 | z4 | $composer2.changedInstance(context);
+                        boolean zChangedInstance2 = z11 | z4 | $composer2.changedInstance(contextC1);
                         if (($dirty & 112) == 32) {
                             z5 = true;
                         } else {
@@ -723,7 +721,7 @@ public final class AssistantSettingsPaneKt {
                             value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                                 @Override // kotlin.jvm.functions.Function1
                                 public final Object invoke(Object obj) {
-                                    return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                    return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C1, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC1, sttProvider, ttsProvider, (LazyListScope) obj);
                                 }
                             };
                             $composer3.updateRememberedValue(value$iv2);
@@ -731,7 +729,7 @@ public final class AssistantSettingsPaneKt {
                             value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                                 @Override // kotlin.jvm.functions.Function1
                                 public final Object invoke(Object obj) {
-                                    return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                    return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C1, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC1, sttProvider, ttsProvider, (LazyListScope) obj);
                                 }
                             };
                             $composer3.updateRememberedValue(value$iv2);
@@ -913,7 +911,7 @@ public final class AssistantSettingsPaneKt {
                         PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default3 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
                         $composer3.startReplaceGroup(-1637032986);
                         ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-                        boolean zChanged3 = $composer2.changed(activeOrb2);
+                        boolean zChanged3 = $composer2.changed(activeOrb2C1);
                         if (($dirty & 14) == 4) {
                             z = true;
                         } else {
@@ -937,7 +935,7 @@ public final class AssistantSettingsPaneKt {
                         } else {
                             z4 = false;
                         }
-                        boolean zChangedInstance3 = z14 | z4 | $composer2.changedInstance(context);
+                        boolean zChangedInstance3 = z14 | z4 | $composer2.changedInstance(contextC1);
                         if (($dirty & 112) == 32) {
                             z5 = true;
                         } else {
@@ -949,7 +947,7 @@ public final class AssistantSettingsPaneKt {
                             value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                                 @Override // kotlin.jvm.functions.Function1
                                 public final Object invoke(Object obj) {
-                                    return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                    return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C1, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC1, sttProvider, ttsProvider, (LazyListScope) obj);
                                 }
                             };
                             $composer3.updateRememberedValue(value$iv2);
@@ -957,7 +955,7 @@ public final class AssistantSettingsPaneKt {
                             value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                                 @Override // kotlin.jvm.functions.Function1
                                 public final Object invoke(Object obj) {
-                                    return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                    return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C1, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC1, sttProvider, ttsProvider, (LazyListScope) obj);
                                 }
                             };
                             $composer3.updateRememberedValue(value$iv2);
@@ -1105,7 +1103,7 @@ public final class AssistantSettingsPaneKt {
                     PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default4 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
                     $composer3.startReplaceGroup(-1637032986);
                     ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-                    boolean zChanged4 = $composer2.changed(activeOrb2);
+                    boolean zChanged4 = $composer2.changed(activeOrb2C1);
                     if (($dirty & 14) == 4) {
                         z = true;
                     } else {
@@ -1129,7 +1127,7 @@ public final class AssistantSettingsPaneKt {
                     } else {
                         z4 = false;
                     }
-                    boolean zChangedInstance4 = z17 | z4 | $composer2.changedInstance(context);
+                    boolean zChangedInstance4 = z17 | z4 | $composer2.changedInstance(contextC1);
                     if (($dirty & 112) == 32) {
                         z5 = true;
                     } else {
@@ -1141,7 +1139,7 @@ public final class AssistantSettingsPaneKt {
                         value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C1, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC1, sttProvider, ttsProvider, (LazyListScope) obj);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv2);
@@ -1149,7 +1147,7 @@ public final class AssistantSettingsPaneKt {
                         value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C1, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC1, sttProvider, ttsProvider, (LazyListScope) obj);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv2);
@@ -1211,8 +1209,8 @@ public final class AssistantSettingsPaneKt {
                 $dirty = $dirty2;
                 ComposerKt.sourceInformationMarkerStart($composer3, 2023513938, "CC:CompositionLocal.kt#9igjgp");
                 Object objConsume2 = $composer3.consume(localContext2);
+                final Context contextC2 = (Context) objConsume2;
                 ComposerKt.sourceInformationMarkerEnd($composer3);
-                context = (Context) objConsume2;
                 $this$firstOrNull$iv = ORB_CHOICES;
                 $i$f$firstOrNull = 0;
                 it = $this$firstOrNull$iv.iterator();
@@ -1227,7 +1225,6 @@ public final class AssistantSettingsPaneKt {
                     $this$firstOrNull$iv2 = $this$firstOrNull$iv;
                     if (Intrinsics.areEqual(it2.getId(), assist.getOrbStyle())) {
                         break;
-                        break;
                     } else {
                         $i$f$firstOrNull = $i$f$firstOrNull2;
                         $this$firstOrNull$iv = $this$firstOrNull$iv2;
@@ -1237,6 +1234,7 @@ public final class AssistantSettingsPaneKt {
                 if (activeOrb == null) {
                     activeOrb = (OrbChoice) CollectionsKt.first((List) ORB_CHOICES);
                 }
+                    final OrbChoice activeOrb2C2 = activeOrb;
                 Modifier modifier$iv12 = ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(ai.nous.aurora.compat.Compat.d_SizeKt_fillMaxSize_4(modifier3, 0.0f, 1, null), AuroraColorSchemeKt.getAuroraBackground($composer3, 0), null, 2, null);
                 ComposerKt.sourceInformationMarkerStart($composer3, -483455358, "CC(Column)P(2,3,1)86@4330L61,87@4396L133:Column.kt#2w3rfo");
                 Arrangement.Vertical verticalArrangement$iv6 = Arrangement.INSTANCE.getTop();
@@ -1244,7 +1242,6 @@ public final class AssistantSettingsPaneKt {
                 measurePolicy$iv = ColumnKt.columnMeasurePolicy(verticalArrangement$iv6, horizontalAlignment$iv6, $composer3, ((0 >> 3) & 14) | ((0 >> 3) & 112));
                 int $changed$iv$iv12 = (0 << 3) & 112;
                 Modifier modifier7 = modifier3;
-                activeOrb2 = activeOrb;
                 ComposerKt.sourceInformationMarkerStart($composer3, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
                 compositeKeyHash$iv$iv = ComposablesKt.getCurrentCompositeKeyHash($composer3, 0);
                 localMap$iv$iv = $composer3.getCurrentCompositionLocalMap();
@@ -1435,7 +1432,7 @@ public final class AssistantSettingsPaneKt {
                         PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default5 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
                         $composer3.startReplaceGroup(-1637032986);
                         ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-                        boolean zChanged5 = $composer2.changed(activeOrb2);
+                        boolean zChanged5 = $composer2.changed(activeOrb2C2);
                         if (($dirty & 14) == 4) {
                             z = true;
                         } else {
@@ -1459,7 +1456,7 @@ public final class AssistantSettingsPaneKt {
                         } else {
                             z4 = false;
                         }
-                        boolean zChangedInstance5 = z110 | z4 | $composer2.changedInstance(context);
+                        boolean zChangedInstance5 = z110 | z4 | $composer2.changedInstance(contextC2);
                         if (($dirty & 112) == 32) {
                             z5 = true;
                         } else {
@@ -1471,7 +1468,7 @@ public final class AssistantSettingsPaneKt {
                             value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                                 @Override // kotlin.jvm.functions.Function1
                                 public final Object invoke(Object obj) {
-                                    return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                    return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C2, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC2, sttProvider, ttsProvider, (LazyListScope) obj);
                                 }
                             };
                             $composer3.updateRememberedValue(value$iv2);
@@ -1479,7 +1476,7 @@ public final class AssistantSettingsPaneKt {
                             value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                                 @Override // kotlin.jvm.functions.Function1
                                 public final Object invoke(Object obj) {
-                                    return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                    return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C2, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC2, sttProvider, ttsProvider, (LazyListScope) obj);
                                 }
                             };
                             $composer3.updateRememberedValue(value$iv2);
@@ -1627,7 +1624,7 @@ public final class AssistantSettingsPaneKt {
                     PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default6 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
                     $composer3.startReplaceGroup(-1637032986);
                     ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-                    boolean zChanged6 = $composer2.changed(activeOrb2);
+                    boolean zChanged6 = $composer2.changed(activeOrb2C2);
                     if (($dirty & 14) == 4) {
                         z = true;
                     } else {
@@ -1651,7 +1648,7 @@ public final class AssistantSettingsPaneKt {
                     } else {
                         z4 = false;
                     }
-                    boolean zChangedInstance6 = z113 | z4 | $composer2.changedInstance(context);
+                    boolean zChangedInstance6 = z113 | z4 | $composer2.changedInstance(contextC2);
                     if (($dirty & 112) == 32) {
                         z5 = true;
                     } else {
@@ -1663,7 +1660,7 @@ public final class AssistantSettingsPaneKt {
                         value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C2, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC2, sttProvider, ttsProvider, (LazyListScope) obj);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv2);
@@ -1671,7 +1668,7 @@ public final class AssistantSettingsPaneKt {
                         value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C2, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC2, sttProvider, ttsProvider, (LazyListScope) obj);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv2);
@@ -1856,7 +1853,7 @@ public final class AssistantSettingsPaneKt {
                     PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default7 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
                     $composer3.startReplaceGroup(-1637032986);
                     ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-                    boolean zChanged7 = $composer2.changed(activeOrb2);
+                    boolean zChanged7 = $composer2.changed(activeOrb2C2);
                     if (($dirty & 14) == 4) {
                         z = true;
                     } else {
@@ -1880,7 +1877,7 @@ public final class AssistantSettingsPaneKt {
                     } else {
                         z4 = false;
                     }
-                    boolean zChangedInstance7 = z116 | z4 | $composer2.changedInstance(context);
+                    boolean zChangedInstance7 = z116 | z4 | $composer2.changedInstance(contextC2);
                     if (($dirty & 112) == 32) {
                         z5 = true;
                     } else {
@@ -1892,7 +1889,7 @@ public final class AssistantSettingsPaneKt {
                         value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C2, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC2, sttProvider, ttsProvider, (LazyListScope) obj);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv2);
@@ -1900,7 +1897,7 @@ public final class AssistantSettingsPaneKt {
                         value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C2, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC2, sttProvider, ttsProvider, (LazyListScope) obj);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv2);
@@ -2048,7 +2045,7 @@ public final class AssistantSettingsPaneKt {
                 PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default8 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
                 $composer3.startReplaceGroup(-1637032986);
                 ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-                boolean zChanged8 = $composer2.changed(activeOrb2);
+                boolean zChanged8 = $composer2.changed(activeOrb2C2);
                 if (($dirty & 14) == 4) {
                     z = true;
                 } else {
@@ -2072,7 +2069,7 @@ public final class AssistantSettingsPaneKt {
                 } else {
                     z4 = false;
                 }
-                boolean zChangedInstance8 = z119 | z4 | $composer2.changedInstance(context);
+                boolean zChangedInstance8 = z119 | z4 | $composer2.changedInstance(contextC2);
                 if (($dirty & 112) == 32) {
                     z5 = true;
                 } else {
@@ -2084,7 +2081,7 @@ public final class AssistantSettingsPaneKt {
                     value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                         @Override // kotlin.jvm.functions.Function1
                         public final Object invoke(Object obj) {
-                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C2, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC2, sttProvider, ttsProvider, (LazyListScope) obj);
                         }
                     };
                     $composer3.updateRememberedValue(value$iv2);
@@ -2092,7 +2089,7 @@ public final class AssistantSettingsPaneKt {
                     value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                         @Override // kotlin.jvm.functions.Function1
                         public final Object invoke(Object obj) {
-                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C2, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC2, sttProvider, ttsProvider, (LazyListScope) obj);
                         }
                     };
                     $composer3.updateRememberedValue(value$iv2);
@@ -2121,8 +2118,8 @@ public final class AssistantSettingsPaneKt {
                 $dirty = $dirty2;
                 ComposerKt.sourceInformationMarkerStart($composer3, 2023513938, "CC:CompositionLocal.kt#9igjgp");
                 Object objConsume3 = $composer3.consume(localContext3);
+                final Context contextC3 = (Context) objConsume3;
                 ComposerKt.sourceInformationMarkerEnd($composer3);
-                context = (Context) objConsume3;
                 $this$firstOrNull$iv = ORB_CHOICES;
                 $i$f$firstOrNull = 0;
                 it = $this$firstOrNull$iv.iterator();
@@ -2137,7 +2134,6 @@ public final class AssistantSettingsPaneKt {
                     $this$firstOrNull$iv2 = $this$firstOrNull$iv;
                     if (Intrinsics.areEqual(it2.getId(), assist.getOrbStyle())) {
                         break;
-                        break;
                     } else {
                         $i$f$firstOrNull = $i$f$firstOrNull2;
                         $this$firstOrNull$iv = $this$firstOrNull$iv2;
@@ -2147,6 +2143,7 @@ public final class AssistantSettingsPaneKt {
                 if (activeOrb == null) {
                     activeOrb = (OrbChoice) CollectionsKt.first((List) ORB_CHOICES);
                 }
+                    final OrbChoice activeOrb2C3 = activeOrb;
                 Modifier modifier$iv113 = ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(ai.nous.aurora.compat.Compat.d_SizeKt_fillMaxSize_4(modifier3, 0.0f, 1, null), AuroraColorSchemeKt.getAuroraBackground($composer3, 0), null, 2, null);
                 ComposerKt.sourceInformationMarkerStart($composer3, -483455358, "CC(Column)P(2,3,1)86@4330L61,87@4396L133:Column.kt#2w3rfo");
                 Arrangement.Vertical verticalArrangement$iv11 = Arrangement.INSTANCE.getTop();
@@ -2154,7 +2151,6 @@ public final class AssistantSettingsPaneKt {
                 measurePolicy$iv = ColumnKt.columnMeasurePolicy(verticalArrangement$iv11, horizontalAlignment$iv11, $composer3, ((0 >> 3) & 14) | ((0 >> 3) & 112));
                 int $changed$iv$iv113 = (0 << 3) & 112;
                 Modifier modifier8 = modifier3;
-                activeOrb2 = activeOrb;
                 ComposerKt.sourceInformationMarkerStart($composer3, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
                 compositeKeyHash$iv$iv = ComposablesKt.getCurrentCompositeKeyHash($composer3, 0);
                 localMap$iv$iv = $composer3.getCurrentCompositionLocalMap();
@@ -2345,7 +2341,7 @@ public final class AssistantSettingsPaneKt {
                         PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default9 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
                         $composer3.startReplaceGroup(-1637032986);
                         ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-                        boolean zChanged9 = $composer2.changed(activeOrb2);
+                        boolean zChanged9 = $composer2.changed(activeOrb2C3);
                         if (($dirty & 14) == 4) {
                             z = true;
                         } else {
@@ -2369,7 +2365,7 @@ public final class AssistantSettingsPaneKt {
                         } else {
                             z4 = false;
                         }
-                        boolean zChangedInstance9 = z1112 | z4 | $composer2.changedInstance(context);
+                        boolean zChangedInstance9 = z1112 | z4 | $composer2.changedInstance(contextC3);
                         if (($dirty & 112) == 32) {
                             z5 = true;
                         } else {
@@ -2381,7 +2377,7 @@ public final class AssistantSettingsPaneKt {
                             value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                                 @Override // kotlin.jvm.functions.Function1
                                 public final Object invoke(Object obj) {
-                                    return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                    return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C3, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC3, sttProvider, ttsProvider, (LazyListScope) obj);
                                 }
                             };
                             $composer3.updateRememberedValue(value$iv2);
@@ -2389,7 +2385,7 @@ public final class AssistantSettingsPaneKt {
                             value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                                 @Override // kotlin.jvm.functions.Function1
                                 public final Object invoke(Object obj) {
-                                    return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                    return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C3, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC3, sttProvider, ttsProvider, (LazyListScope) obj);
                                 }
                             };
                             $composer3.updateRememberedValue(value$iv2);
@@ -2537,7 +2533,7 @@ public final class AssistantSettingsPaneKt {
                     PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default10 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
                     $composer3.startReplaceGroup(-1637032986);
                     ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-                    boolean zChanged10 = $composer2.changed(activeOrb2);
+                    boolean zChanged10 = $composer2.changed(activeOrb2C3);
                     if (($dirty & 14) == 4) {
                         z = true;
                     } else {
@@ -2561,7 +2557,7 @@ public final class AssistantSettingsPaneKt {
                     } else {
                         z4 = false;
                     }
-                    boolean zChangedInstance10 = z1115 | z4 | $composer2.changedInstance(context);
+                    boolean zChangedInstance10 = z1115 | z4 | $composer2.changedInstance(contextC3);
                     if (($dirty & 112) == 32) {
                         z5 = true;
                     } else {
@@ -2573,7 +2569,7 @@ public final class AssistantSettingsPaneKt {
                         value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C3, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC3, sttProvider, ttsProvider, (LazyListScope) obj);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv2);
@@ -2581,7 +2577,7 @@ public final class AssistantSettingsPaneKt {
                         value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C3, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC3, sttProvider, ttsProvider, (LazyListScope) obj);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv2);
@@ -2766,7 +2762,7 @@ public final class AssistantSettingsPaneKt {
                     PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default11 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
                     $composer3.startReplaceGroup(-1637032986);
                     ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-                    boolean zChanged11 = $composer2.changed(activeOrb2);
+                    boolean zChanged11 = $composer2.changed(activeOrb2C3);
                     if (($dirty & 14) == 4) {
                         z = true;
                     } else {
@@ -2790,7 +2786,7 @@ public final class AssistantSettingsPaneKt {
                     } else {
                         z4 = false;
                     }
-                    boolean zChangedInstance11 = z1118 | z4 | $composer2.changedInstance(context);
+                    boolean zChangedInstance11 = z1118 | z4 | $composer2.changedInstance(contextC3);
                     if (($dirty & 112) == 32) {
                         z5 = true;
                     } else {
@@ -2802,7 +2798,7 @@ public final class AssistantSettingsPaneKt {
                         value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C3, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC3, sttProvider, ttsProvider, (LazyListScope) obj);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv2);
@@ -2810,7 +2806,7 @@ public final class AssistantSettingsPaneKt {
                         value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C3, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC3, sttProvider, ttsProvider, (LazyListScope) obj);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv2);
@@ -2958,7 +2954,7 @@ public final class AssistantSettingsPaneKt {
                 PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default12 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
                 $composer3.startReplaceGroup(-1637032986);
                 ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-                boolean zChanged12 = $composer2.changed(activeOrb2);
+                boolean zChanged12 = $composer2.changed(activeOrb2C3);
                 if (($dirty & 14) == 4) {
                     z = true;
                 } else {
@@ -2982,7 +2978,7 @@ public final class AssistantSettingsPaneKt {
                 } else {
                     z4 = false;
                 }
-                boolean zChangedInstance12 = z11111 | z4 | $composer2.changedInstance(context);
+                boolean zChangedInstance12 = z11111 | z4 | $composer2.changedInstance(contextC3);
                 if (($dirty & 112) == 32) {
                     z5 = true;
                 } else {
@@ -2994,7 +2990,7 @@ public final class AssistantSettingsPaneKt {
                     value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                         @Override // kotlin.jvm.functions.Function1
                         public final Object invoke(Object obj) {
-                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C3, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC3, sttProvider, ttsProvider, (LazyListScope) obj);
                         }
                     };
                     $composer3.updateRememberedValue(value$iv2);
@@ -3002,7 +2998,7 @@ public final class AssistantSettingsPaneKt {
                     value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                         @Override // kotlin.jvm.functions.Function1
                         public final Object invoke(Object obj) {
-                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C3, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC3, sttProvider, ttsProvider, (LazyListScope) obj);
                         }
                     };
                     $composer3.updateRememberedValue(value$iv2);
@@ -3068,8 +3064,8 @@ public final class AssistantSettingsPaneKt {
                 $dirty = $dirty2;
                 ComposerKt.sourceInformationMarkerStart($composer3, 2023513938, "CC:CompositionLocal.kt#9igjgp");
                 Object objConsume4 = $composer3.consume(localContext4);
+                final Context contextC4 = (Context) objConsume4;
                 ComposerKt.sourceInformationMarkerEnd($composer3);
-                context = (Context) objConsume4;
                 $this$firstOrNull$iv = ORB_CHOICES;
                 $i$f$firstOrNull = 0;
                 it = $this$firstOrNull$iv.iterator();
@@ -3084,7 +3080,6 @@ public final class AssistantSettingsPaneKt {
                     $this$firstOrNull$iv2 = $this$firstOrNull$iv;
                     if (Intrinsics.areEqual(it2.getId(), assist.getOrbStyle())) {
                         break;
-                        break;
                     } else {
                         $i$f$firstOrNull = $i$f$firstOrNull2;
                         $this$firstOrNull$iv = $this$firstOrNull$iv2;
@@ -3094,6 +3089,7 @@ public final class AssistantSettingsPaneKt {
                 if (activeOrb == null) {
                     activeOrb = (OrbChoice) CollectionsKt.first((List) ORB_CHOICES);
                 }
+                    final OrbChoice activeOrb2C4 = activeOrb;
                 Modifier modifier$iv1114 = ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(ai.nous.aurora.compat.Compat.d_SizeKt_fillMaxSize_4(modifier3, 0.0f, 1, null), AuroraColorSchemeKt.getAuroraBackground($composer3, 0), null, 2, null);
                 ComposerKt.sourceInformationMarkerStart($composer3, -483455358, "CC(Column)P(2,3,1)86@4330L61,87@4396L133:Column.kt#2w3rfo");
                 Arrangement.Vertical verticalArrangement$iv16 = Arrangement.INSTANCE.getTop();
@@ -3101,7 +3097,6 @@ public final class AssistantSettingsPaneKt {
                 measurePolicy$iv = ColumnKt.columnMeasurePolicy(verticalArrangement$iv16, horizontalAlignment$iv16, $composer3, ((0 >> 3) & 14) | ((0 >> 3) & 112));
                 int $changed$iv$iv1114 = (0 << 3) & 112;
                 Modifier modifier10 = modifier3;
-                activeOrb2 = activeOrb;
                 ComposerKt.sourceInformationMarkerStart($composer3, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
                 compositeKeyHash$iv$iv = ComposablesKt.getCurrentCompositeKeyHash($composer3, 0);
                 localMap$iv$iv = $composer3.getCurrentCompositionLocalMap();
@@ -3292,7 +3287,7 @@ public final class AssistantSettingsPaneKt {
                         PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default13 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
                         $composer3.startReplaceGroup(-1637032986);
                         ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-                        boolean zChanged13 = $composer2.changed(activeOrb2);
+                        boolean zChanged13 = $composer2.changed(activeOrb2C4);
                         if (($dirty & 14) == 4) {
                             z = true;
                         } else {
@@ -3316,7 +3311,7 @@ public final class AssistantSettingsPaneKt {
                         } else {
                             z4 = false;
                         }
-                        boolean zChangedInstance13 = z11114 | z4 | $composer2.changedInstance(context);
+                        boolean zChangedInstance13 = z11114 | z4 | $composer2.changedInstance(contextC4);
                         if (($dirty & 112) == 32) {
                             z5 = true;
                         } else {
@@ -3328,7 +3323,7 @@ public final class AssistantSettingsPaneKt {
                             value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                                 @Override // kotlin.jvm.functions.Function1
                                 public final Object invoke(Object obj) {
-                                    return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                    return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C4, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC4, sttProvider, ttsProvider, (LazyListScope) obj);
                                 }
                             };
                             $composer3.updateRememberedValue(value$iv2);
@@ -3336,7 +3331,7 @@ public final class AssistantSettingsPaneKt {
                             value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                                 @Override // kotlin.jvm.functions.Function1
                                 public final Object invoke(Object obj) {
-                                    return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                    return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C4, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC4, sttProvider, ttsProvider, (LazyListScope) obj);
                                 }
                             };
                             $composer3.updateRememberedValue(value$iv2);
@@ -3484,7 +3479,7 @@ public final class AssistantSettingsPaneKt {
                     PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default14 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
                     $composer3.startReplaceGroup(-1637032986);
                     ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-                    boolean zChanged14 = $composer2.changed(activeOrb2);
+                    boolean zChanged14 = $composer2.changed(activeOrb2C4);
                     if (($dirty & 14) == 4) {
                         z = true;
                     } else {
@@ -3508,7 +3503,7 @@ public final class AssistantSettingsPaneKt {
                     } else {
                         z4 = false;
                     }
-                    boolean zChangedInstance14 = z11117 | z4 | $composer2.changedInstance(context);
+                    boolean zChangedInstance14 = z11117 | z4 | $composer2.changedInstance(contextC4);
                     if (($dirty & 112) == 32) {
                         z5 = true;
                     } else {
@@ -3520,7 +3515,7 @@ public final class AssistantSettingsPaneKt {
                         value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C4, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC4, sttProvider, ttsProvider, (LazyListScope) obj);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv2);
@@ -3528,7 +3523,7 @@ public final class AssistantSettingsPaneKt {
                         value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C4, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC4, sttProvider, ttsProvider, (LazyListScope) obj);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv2);
@@ -3713,7 +3708,7 @@ public final class AssistantSettingsPaneKt {
                     PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default15 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
                     $composer3.startReplaceGroup(-1637032986);
                     ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-                    boolean zChanged15 = $composer2.changed(activeOrb2);
+                    boolean zChanged15 = $composer2.changed(activeOrb2C4);
                     if (($dirty & 14) == 4) {
                         z = true;
                     } else {
@@ -3737,7 +3732,7 @@ public final class AssistantSettingsPaneKt {
                     } else {
                         z4 = false;
                     }
-                    boolean zChangedInstance15 = z111110 | z4 | $composer2.changedInstance(context);
+                    boolean zChangedInstance15 = z111110 | z4 | $composer2.changedInstance(contextC4);
                     if (($dirty & 112) == 32) {
                         z5 = true;
                     } else {
@@ -3749,7 +3744,7 @@ public final class AssistantSettingsPaneKt {
                         value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C4, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC4, sttProvider, ttsProvider, (LazyListScope) obj);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv2);
@@ -3757,7 +3752,7 @@ public final class AssistantSettingsPaneKt {
                         value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C4, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC4, sttProvider, ttsProvider, (LazyListScope) obj);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv2);
@@ -3905,7 +3900,7 @@ public final class AssistantSettingsPaneKt {
                 PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default16 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
                 $composer3.startReplaceGroup(-1637032986);
                 ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-                boolean zChanged16 = $composer2.changed(activeOrb2);
+                boolean zChanged16 = $composer2.changed(activeOrb2C4);
                 if (($dirty & 14) == 4) {
                     z = true;
                 } else {
@@ -3929,7 +3924,7 @@ public final class AssistantSettingsPaneKt {
                 } else {
                     z4 = false;
                 }
-                boolean zChangedInstance16 = z111113 | z4 | $composer2.changedInstance(context);
+                boolean zChangedInstance16 = z111113 | z4 | $composer2.changedInstance(contextC4);
                 if (($dirty & 112) == 32) {
                     z5 = true;
                 } else {
@@ -3941,7 +3936,7 @@ public final class AssistantSettingsPaneKt {
                     value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                         @Override // kotlin.jvm.functions.Function1
                         public final Object invoke(Object obj) {
-                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C4, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC4, sttProvider, ttsProvider, (LazyListScope) obj);
                         }
                     };
                     $composer3.updateRememberedValue(value$iv2);
@@ -3949,7 +3944,7 @@ public final class AssistantSettingsPaneKt {
                     value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                         @Override // kotlin.jvm.functions.Function1
                         public final Object invoke(Object obj) {
-                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C4, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC4, sttProvider, ttsProvider, (LazyListScope) obj);
                         }
                     };
                     $composer3.updateRememberedValue(value$iv2);
@@ -3978,8 +3973,8 @@ public final class AssistantSettingsPaneKt {
                 $dirty = $dirty2;
                 ComposerKt.sourceInformationMarkerStart($composer3, 2023513938, "CC:CompositionLocal.kt#9igjgp");
                 Object objConsume5 = $composer3.consume(localContext5);
+                final Context contextC5 = (Context) objConsume5;
                 ComposerKt.sourceInformationMarkerEnd($composer3);
-                context = (Context) objConsume5;
                 $this$firstOrNull$iv = ORB_CHOICES;
                 $i$f$firstOrNull = 0;
                 it = $this$firstOrNull$iv.iterator();
@@ -3994,7 +3989,6 @@ public final class AssistantSettingsPaneKt {
                     $this$firstOrNull$iv2 = $this$firstOrNull$iv;
                     if (Intrinsics.areEqual(it2.getId(), assist.getOrbStyle())) {
                         break;
-                        break;
                     } else {
                         $i$f$firstOrNull = $i$f$firstOrNull2;
                         $this$firstOrNull$iv = $this$firstOrNull$iv2;
@@ -4004,6 +3998,7 @@ public final class AssistantSettingsPaneKt {
                 if (activeOrb == null) {
                     activeOrb = (OrbChoice) CollectionsKt.first((List) ORB_CHOICES);
                 }
+                    final OrbChoice activeOrb2C5 = activeOrb;
                 Modifier modifier$iv11115 = ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(ai.nous.aurora.compat.Compat.d_SizeKt_fillMaxSize_4(modifier3, 0.0f, 1, null), AuroraColorSchemeKt.getAuroraBackground($composer3, 0), null, 2, null);
                 ComposerKt.sourceInformationMarkerStart($composer3, -483455358, "CC(Column)P(2,3,1)86@4330L61,87@4396L133:Column.kt#2w3rfo");
                 Arrangement.Vertical verticalArrangement$iv111 = Arrangement.INSTANCE.getTop();
@@ -4011,7 +4006,6 @@ public final class AssistantSettingsPaneKt {
                 measurePolicy$iv = ColumnKt.columnMeasurePolicy(verticalArrangement$iv111, horizontalAlignment$iv111, $composer3, ((0 >> 3) & 14) | ((0 >> 3) & 112));
                 int $changed$iv$iv11115 = (0 << 3) & 112;
                 Modifier modifier11 = modifier3;
-                activeOrb2 = activeOrb;
                 ComposerKt.sourceInformationMarkerStart($composer3, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
                 compositeKeyHash$iv$iv = ComposablesKt.getCurrentCompositeKeyHash($composer3, 0);
                 localMap$iv$iv = $composer3.getCurrentCompositionLocalMap();
@@ -4202,7 +4196,7 @@ public final class AssistantSettingsPaneKt {
                         PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default17 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
                         $composer3.startReplaceGroup(-1637032986);
                         ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-                        boolean zChanged17 = $composer2.changed(activeOrb2);
+                        boolean zChanged17 = $composer2.changed(activeOrb2C5);
                         if (($dirty & 14) == 4) {
                             z = true;
                         } else {
@@ -4226,7 +4220,7 @@ public final class AssistantSettingsPaneKt {
                         } else {
                             z4 = false;
                         }
-                        boolean zChangedInstance17 = z111116 | z4 | $composer2.changedInstance(context);
+                        boolean zChangedInstance17 = z111116 | z4 | $composer2.changedInstance(contextC5);
                         if (($dirty & 112) == 32) {
                             z5 = true;
                         } else {
@@ -4238,7 +4232,7 @@ public final class AssistantSettingsPaneKt {
                             value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                                 @Override // kotlin.jvm.functions.Function1
                                 public final Object invoke(Object obj) {
-                                    return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                    return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C5, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC5, sttProvider, ttsProvider, (LazyListScope) obj);
                                 }
                             };
                             $composer3.updateRememberedValue(value$iv2);
@@ -4246,7 +4240,7 @@ public final class AssistantSettingsPaneKt {
                             value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                                 @Override // kotlin.jvm.functions.Function1
                                 public final Object invoke(Object obj) {
-                                    return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                    return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C5, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC5, sttProvider, ttsProvider, (LazyListScope) obj);
                                 }
                             };
                             $composer3.updateRememberedValue(value$iv2);
@@ -4394,7 +4388,7 @@ public final class AssistantSettingsPaneKt {
                     PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default18 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
                     $composer3.startReplaceGroup(-1637032986);
                     ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-                    boolean zChanged18 = $composer2.changed(activeOrb2);
+                    boolean zChanged18 = $composer2.changed(activeOrb2C5);
                     if (($dirty & 14) == 4) {
                         z = true;
                     } else {
@@ -4418,7 +4412,7 @@ public final class AssistantSettingsPaneKt {
                     } else {
                         z4 = false;
                     }
-                    boolean zChangedInstance18 = z111119 | z4 | $composer2.changedInstance(context);
+                    boolean zChangedInstance18 = z111119 | z4 | $composer2.changedInstance(contextC5);
                     if (($dirty & 112) == 32) {
                         z5 = true;
                     } else {
@@ -4430,7 +4424,7 @@ public final class AssistantSettingsPaneKt {
                         value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C5, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC5, sttProvider, ttsProvider, (LazyListScope) obj);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv2);
@@ -4438,7 +4432,7 @@ public final class AssistantSettingsPaneKt {
                         value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C5, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC5, sttProvider, ttsProvider, (LazyListScope) obj);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv2);
@@ -4623,7 +4617,7 @@ public final class AssistantSettingsPaneKt {
                     PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default19 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
                     $composer3.startReplaceGroup(-1637032986);
                     ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-                    boolean zChanged19 = $composer2.changed(activeOrb2);
+                    boolean zChanged19 = $composer2.changed(activeOrb2C5);
                     if (($dirty & 14) == 4) {
                         z = true;
                     } else {
@@ -4647,7 +4641,7 @@ public final class AssistantSettingsPaneKt {
                     } else {
                         z4 = false;
                     }
-                    boolean zChangedInstance19 = z1111112 | z4 | $composer2.changedInstance(context);
+                    boolean zChangedInstance19 = z1111112 | z4 | $composer2.changedInstance(contextC5);
                     if (($dirty & 112) == 32) {
                         z5 = true;
                     } else {
@@ -4659,7 +4653,7 @@ public final class AssistantSettingsPaneKt {
                         value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C5, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC5, sttProvider, ttsProvider, (LazyListScope) obj);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv2);
@@ -4667,7 +4661,7 @@ public final class AssistantSettingsPaneKt {
                         value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C5, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC5, sttProvider, ttsProvider, (LazyListScope) obj);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv2);
@@ -4815,7 +4809,7 @@ public final class AssistantSettingsPaneKt {
                 PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default110 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
                 $composer3.startReplaceGroup(-1637032986);
                 ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-                boolean zChanged110 = $composer2.changed(activeOrb2);
+                boolean zChanged110 = $composer2.changed(activeOrb2C5);
                 if (($dirty & 14) == 4) {
                     z = true;
                 } else {
@@ -4839,7 +4833,7 @@ public final class AssistantSettingsPaneKt {
                 } else {
                     z4 = false;
                 }
-                boolean zChangedInstance110 = z1111115 | z4 | $composer2.changedInstance(context);
+                boolean zChangedInstance110 = z1111115 | z4 | $composer2.changedInstance(contextC5);
                 if (($dirty & 112) == 32) {
                     z5 = true;
                 } else {
@@ -4851,7 +4845,7 @@ public final class AssistantSettingsPaneKt {
                     value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                         @Override // kotlin.jvm.functions.Function1
                         public final Object invoke(Object obj) {
-                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C5, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC5, sttProvider, ttsProvider, (LazyListScope) obj);
                         }
                     };
                     $composer3.updateRememberedValue(value$iv2);
@@ -4859,7 +4853,7 @@ public final class AssistantSettingsPaneKt {
                     value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                         @Override // kotlin.jvm.functions.Function1
                         public final Object invoke(Object obj) {
-                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C5, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC5, sttProvider, ttsProvider, (LazyListScope) obj);
                         }
                     };
                     $composer3.updateRememberedValue(value$iv2);
@@ -4917,8 +4911,8 @@ public final class AssistantSettingsPaneKt {
             $dirty = $dirty2;
             ComposerKt.sourceInformationMarkerStart($composer3, 2023513938, "CC:CompositionLocal.kt#9igjgp");
             Object objConsume6 = $composer3.consume(localContext6);
+            final Context contextC6 = (Context) objConsume6;
             ComposerKt.sourceInformationMarkerEnd($composer3);
-            context = (Context) objConsume6;
             $this$firstOrNull$iv = ORB_CHOICES;
             $i$f$firstOrNull = 0;
             it = $this$firstOrNull$iv.iterator();
@@ -4933,7 +4927,6 @@ public final class AssistantSettingsPaneKt {
                 $this$firstOrNull$iv2 = $this$firstOrNull$iv;
                 if (Intrinsics.areEqual(it2.getId(), assist.getOrbStyle())) {
                     break;
-                    break;
                 } else {
                     $i$f$firstOrNull = $i$f$firstOrNull2;
                     $this$firstOrNull$iv = $this$firstOrNull$iv2;
@@ -4943,6 +4936,7 @@ public final class AssistantSettingsPaneKt {
             if (activeOrb == null) {
                 activeOrb = (OrbChoice) CollectionsKt.first((List) ORB_CHOICES);
             }
+                final OrbChoice activeOrb2C6 = activeOrb;
             Modifier modifier$iv111116 = ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(ai.nous.aurora.compat.Compat.d_SizeKt_fillMaxSize_4(modifier3, 0.0f, 1, null), AuroraColorSchemeKt.getAuroraBackground($composer3, 0), null, 2, null);
             ComposerKt.sourceInformationMarkerStart($composer3, -483455358, "CC(Column)P(2,3,1)86@4330L61,87@4396L133:Column.kt#2w3rfo");
             Arrangement.Vertical verticalArrangement$iv116 = Arrangement.INSTANCE.getTop();
@@ -4950,7 +4944,6 @@ public final class AssistantSettingsPaneKt {
             measurePolicy$iv = ColumnKt.columnMeasurePolicy(verticalArrangement$iv116, horizontalAlignment$iv116, $composer3, ((0 >> 3) & 14) | ((0 >> 3) & 112));
             int $changed$iv$iv111116 = (0 << 3) & 112;
             Modifier modifier13 = modifier3;
-            activeOrb2 = activeOrb;
             ComposerKt.sourceInformationMarkerStart($composer3, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
             compositeKeyHash$iv$iv = ComposablesKt.getCurrentCompositeKeyHash($composer3, 0);
             localMap$iv$iv = $composer3.getCurrentCompositionLocalMap();
@@ -5141,7 +5134,7 @@ public final class AssistantSettingsPaneKt {
                     PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default111 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
                     $composer3.startReplaceGroup(-1637032986);
                     ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-                    boolean zChanged111 = $composer2.changed(activeOrb2);
+                    boolean zChanged111 = $composer2.changed(activeOrb2C6);
                     if (($dirty & 14) == 4) {
                         z = true;
                     } else {
@@ -5165,7 +5158,7 @@ public final class AssistantSettingsPaneKt {
                     } else {
                         z4 = false;
                     }
-                    boolean zChangedInstance111 = z1111118 | z4 | $composer2.changedInstance(context);
+                    boolean zChangedInstance111 = z1111118 | z4 | $composer2.changedInstance(contextC6);
                     if (($dirty & 112) == 32) {
                         z5 = true;
                     } else {
@@ -5177,7 +5170,7 @@ public final class AssistantSettingsPaneKt {
                         value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C6, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC6, sttProvider, ttsProvider, (LazyListScope) obj);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv2);
@@ -5185,7 +5178,7 @@ public final class AssistantSettingsPaneKt {
                         value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C6, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC6, sttProvider, ttsProvider, (LazyListScope) obj);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv2);
@@ -5333,7 +5326,7 @@ public final class AssistantSettingsPaneKt {
                 PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default112 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
                 $composer3.startReplaceGroup(-1637032986);
                 ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-                boolean zChanged112 = $composer2.changed(activeOrb2);
+                boolean zChanged112 = $composer2.changed(activeOrb2C6);
                 if (($dirty & 14) == 4) {
                     z = true;
                 } else {
@@ -5357,7 +5350,7 @@ public final class AssistantSettingsPaneKt {
                 } else {
                     z4 = false;
                 }
-                boolean zChangedInstance112 = z11111111 | z4 | $composer2.changedInstance(context);
+                boolean zChangedInstance112 = z11111111 | z4 | $composer2.changedInstance(contextC6);
                 if (($dirty & 112) == 32) {
                     z5 = true;
                 } else {
@@ -5369,7 +5362,7 @@ public final class AssistantSettingsPaneKt {
                     value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                         @Override // kotlin.jvm.functions.Function1
                         public final Object invoke(Object obj) {
-                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C6, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC6, sttProvider, ttsProvider, (LazyListScope) obj);
                         }
                     };
                     $composer3.updateRememberedValue(value$iv2);
@@ -5377,7 +5370,7 @@ public final class AssistantSettingsPaneKt {
                     value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                         @Override // kotlin.jvm.functions.Function1
                         public final Object invoke(Object obj) {
-                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C6, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC6, sttProvider, ttsProvider, (LazyListScope) obj);
                         }
                     };
                     $composer3.updateRememberedValue(value$iv2);
@@ -5562,7 +5555,7 @@ public final class AssistantSettingsPaneKt {
                 PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default113 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
                 $composer3.startReplaceGroup(-1637032986);
                 ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-                boolean zChanged113 = $composer2.changed(activeOrb2);
+                boolean zChanged113 = $composer2.changed(activeOrb2C6);
                 if (($dirty & 14) == 4) {
                     z = true;
                 } else {
@@ -5586,7 +5579,7 @@ public final class AssistantSettingsPaneKt {
                 } else {
                     z4 = false;
                 }
-                boolean zChangedInstance113 = z11111114 | z4 | $composer2.changedInstance(context);
+                boolean zChangedInstance113 = z11111114 | z4 | $composer2.changedInstance(contextC6);
                 if (($dirty & 112) == 32) {
                     z5 = true;
                 } else {
@@ -5598,7 +5591,7 @@ public final class AssistantSettingsPaneKt {
                     value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                         @Override // kotlin.jvm.functions.Function1
                         public final Object invoke(Object obj) {
-                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C6, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC6, sttProvider, ttsProvider, (LazyListScope) obj);
                         }
                     };
                     $composer3.updateRememberedValue(value$iv2);
@@ -5606,7 +5599,7 @@ public final class AssistantSettingsPaneKt {
                     value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                         @Override // kotlin.jvm.functions.Function1
                         public final Object invoke(Object obj) {
-                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C6, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC6, sttProvider, ttsProvider, (LazyListScope) obj);
                         }
                     };
                     $composer3.updateRememberedValue(value$iv2);
@@ -5754,7 +5747,7 @@ public final class AssistantSettingsPaneKt {
             PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default114 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
             $composer3.startReplaceGroup(-1637032986);
             ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-            boolean zChanged114 = $composer2.changed(activeOrb2);
+            boolean zChanged114 = $composer2.changed(activeOrb2C6);
             if (($dirty & 14) == 4) {
                 z = true;
             } else {
@@ -5778,7 +5771,7 @@ public final class AssistantSettingsPaneKt {
             } else {
                 z4 = false;
             }
-            boolean zChangedInstance114 = z11111117 | z4 | $composer2.changedInstance(context);
+            boolean zChangedInstance114 = z11111117 | z4 | $composer2.changedInstance(contextC6);
             if (($dirty & 112) == 32) {
                 z5 = true;
             } else {
@@ -5790,7 +5783,7 @@ public final class AssistantSettingsPaneKt {
                 value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                     @Override // kotlin.jvm.functions.Function1
                     public final Object invoke(Object obj) {
-                        return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                        return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C6, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC6, sttProvider, ttsProvider, (LazyListScope) obj);
                     }
                 };
                 $composer3.updateRememberedValue(value$iv2);
@@ -5798,7 +5791,7 @@ public final class AssistantSettingsPaneKt {
                 value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                     @Override // kotlin.jvm.functions.Function1
                     public final Object invoke(Object obj) {
-                        return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                        return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C6, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC6, sttProvider, ttsProvider, (LazyListScope) obj);
                     }
                 };
                 $composer3.updateRememberedValue(value$iv2);
@@ -5827,8 +5820,8 @@ public final class AssistantSettingsPaneKt {
             $dirty = $dirty2;
             ComposerKt.sourceInformationMarkerStart($composer3, 2023513938, "CC:CompositionLocal.kt#9igjgp");
             Object objConsume7 = $composer3.consume(localContext7);
+            final Context contextC7 = (Context) objConsume7;
             ComposerKt.sourceInformationMarkerEnd($composer3);
-            context = (Context) objConsume7;
             $this$firstOrNull$iv = ORB_CHOICES;
             $i$f$firstOrNull = 0;
             it = $this$firstOrNull$iv.iterator();
@@ -5843,7 +5836,6 @@ public final class AssistantSettingsPaneKt {
                 $this$firstOrNull$iv2 = $this$firstOrNull$iv;
                 if (Intrinsics.areEqual(it2.getId(), assist.getOrbStyle())) {
                     break;
-                    break;
                 } else {
                     $i$f$firstOrNull = $i$f$firstOrNull2;
                     $this$firstOrNull$iv = $this$firstOrNull$iv2;
@@ -5853,6 +5845,7 @@ public final class AssistantSettingsPaneKt {
             if (activeOrb == null) {
                 activeOrb = (OrbChoice) CollectionsKt.first((List) ORB_CHOICES);
             }
+                final OrbChoice activeOrb2C7 = activeOrb;
             Modifier modifier$iv1111117 = ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(ai.nous.aurora.compat.Compat.d_SizeKt_fillMaxSize_4(modifier3, 0.0f, 1, null), AuroraColorSchemeKt.getAuroraBackground($composer3, 0), null, 2, null);
             ComposerKt.sourceInformationMarkerStart($composer3, -483455358, "CC(Column)P(2,3,1)86@4330L61,87@4396L133:Column.kt#2w3rfo");
             Arrangement.Vertical verticalArrangement$iv1111 = Arrangement.INSTANCE.getTop();
@@ -5860,7 +5853,6 @@ public final class AssistantSettingsPaneKt {
             measurePolicy$iv = ColumnKt.columnMeasurePolicy(verticalArrangement$iv1111, horizontalAlignment$iv1111, $composer3, ((0 >> 3) & 14) | ((0 >> 3) & 112));
             int $changed$iv$iv1111117 = (0 << 3) & 112;
             Modifier modifier14 = modifier3;
-            activeOrb2 = activeOrb;
             ComposerKt.sourceInformationMarkerStart($composer3, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
             compositeKeyHash$iv$iv = ComposablesKt.getCurrentCompositeKeyHash($composer3, 0);
             localMap$iv$iv = $composer3.getCurrentCompositionLocalMap();
@@ -6051,7 +6043,7 @@ public final class AssistantSettingsPaneKt {
                     PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default115 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
                     $composer3.startReplaceGroup(-1637032986);
                     ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-                    boolean zChanged115 = $composer2.changed(activeOrb2);
+                    boolean zChanged115 = $composer2.changed(activeOrb2C7);
                     if (($dirty & 14) == 4) {
                         z = true;
                     } else {
@@ -6075,7 +6067,7 @@ public final class AssistantSettingsPaneKt {
                     } else {
                         z4 = false;
                     }
-                    boolean zChangedInstance115 = z111111110 | z4 | $composer2.changedInstance(context);
+                    boolean zChangedInstance115 = z111111110 | z4 | $composer2.changedInstance(contextC7);
                     if (($dirty & 112) == 32) {
                         z5 = true;
                     } else {
@@ -6087,7 +6079,7 @@ public final class AssistantSettingsPaneKt {
                         value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C7, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC7, sttProvider, ttsProvider, (LazyListScope) obj);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv2);
@@ -6095,7 +6087,7 @@ public final class AssistantSettingsPaneKt {
                         value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                                return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C7, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC7, sttProvider, ttsProvider, (LazyListScope) obj);
                             }
                         };
                         $composer3.updateRememberedValue(value$iv2);
@@ -6243,7 +6235,7 @@ public final class AssistantSettingsPaneKt {
                 PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default116 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
                 $composer3.startReplaceGroup(-1637032986);
                 ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-                boolean zChanged116 = $composer2.changed(activeOrb2);
+                boolean zChanged116 = $composer2.changed(activeOrb2C7);
                 if (($dirty & 14) == 4) {
                     z = true;
                 } else {
@@ -6267,7 +6259,7 @@ public final class AssistantSettingsPaneKt {
                 } else {
                     z4 = false;
                 }
-                boolean zChangedInstance116 = z111111113 | z4 | $composer2.changedInstance(context);
+                boolean zChangedInstance116 = z111111113 | z4 | $composer2.changedInstance(contextC7);
                 if (($dirty & 112) == 32) {
                     z5 = true;
                 } else {
@@ -6279,7 +6271,7 @@ public final class AssistantSettingsPaneKt {
                     value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                         @Override // kotlin.jvm.functions.Function1
                         public final Object invoke(Object obj) {
-                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C7, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC7, sttProvider, ttsProvider, (LazyListScope) obj);
                         }
                     };
                     $composer3.updateRememberedValue(value$iv2);
@@ -6287,7 +6279,7 @@ public final class AssistantSettingsPaneKt {
                     value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                         @Override // kotlin.jvm.functions.Function1
                         public final Object invoke(Object obj) {
-                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C7, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC7, sttProvider, ttsProvider, (LazyListScope) obj);
                         }
                     };
                     $composer3.updateRememberedValue(value$iv2);
@@ -6472,7 +6464,7 @@ public final class AssistantSettingsPaneKt {
                 PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default117 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
                 $composer3.startReplaceGroup(-1637032986);
                 ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-                boolean zChanged117 = $composer2.changed(activeOrb2);
+                boolean zChanged117 = $composer2.changed(activeOrb2C7);
                 if (($dirty & 14) == 4) {
                     z = true;
                 } else {
@@ -6496,7 +6488,7 @@ public final class AssistantSettingsPaneKt {
                 } else {
                     z4 = false;
                 }
-                boolean zChangedInstance117 = z111111116 | z4 | $composer2.changedInstance(context);
+                boolean zChangedInstance117 = z111111116 | z4 | $composer2.changedInstance(contextC7);
                 if (($dirty & 112) == 32) {
                     z5 = true;
                 } else {
@@ -6508,7 +6500,7 @@ public final class AssistantSettingsPaneKt {
                     value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                         @Override // kotlin.jvm.functions.Function1
                         public final Object invoke(Object obj) {
-                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C7, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC7, sttProvider, ttsProvider, (LazyListScope) obj);
                         }
                     };
                     $composer3.updateRememberedValue(value$iv2);
@@ -6516,7 +6508,7 @@ public final class AssistantSettingsPaneKt {
                     value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                         @Override // kotlin.jvm.functions.Function1
                         public final Object invoke(Object obj) {
-                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                            return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C7, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC7, sttProvider, ttsProvider, (LazyListScope) obj);
                         }
                     };
                     $composer3.updateRememberedValue(value$iv2);
@@ -6664,7 +6656,7 @@ public final class AssistantSettingsPaneKt {
             PaddingValues paddingValuesM1031PaddingValuesa9UjIt4$default118 = ai.nous.aurora.compat.Compat.m1031PaddingValuesa9UjIt4$default(0.0f, 0.0f, 0.0f, AuroraSpacing.INSTANCE.m243getXxlD9Ej5fM(), 7, null);
             $composer3.startReplaceGroup(-1637032986);
             ComposerKt.sourceInformation($composer3, "CC(remember):AssistantSettingsPane.kt#9igjgp");
-            boolean zChanged118 = $composer2.changed(activeOrb2);
+            boolean zChanged118 = $composer2.changed(activeOrb2C7);
             if (($dirty & 14) == 4) {
                 z = true;
             } else {
@@ -6688,7 +6680,7 @@ public final class AssistantSettingsPaneKt {
             } else {
                 z4 = false;
             }
-            boolean zChangedInstance118 = z111111119 | z4 | $composer2.changedInstance(context);
+            boolean zChangedInstance118 = z111111119 | z4 | $composer2.changedInstance(contextC7);
             if (($dirty & 112) == 32) {
                 z5 = true;
             } else {
@@ -6700,7 +6692,7 @@ public final class AssistantSettingsPaneKt {
                 value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                     @Override // kotlin.jvm.functions.Function1
                     public final Object invoke(Object obj) {
-                        return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                        return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C7, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC7, sttProvider, ttsProvider, (LazyListScope) obj);
                     }
                 };
                 $composer3.updateRememberedValue(value$iv2);
@@ -6708,7 +6700,7 @@ public final class AssistantSettingsPaneKt {
                 value$iv2 = new Function1() { // from class: ai.nous.aurora.presentation.settings.AssistantSettingsPaneKt$$ExternalSyntheticLambda2
                     @Override // kotlin.jvm.functions.Function1
                     public final Object invoke(Object obj) {
-                        return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2, assist, onOrbStyle, onAutoListen, onSpeakReplies, context, sttProvider, ttsProvider, (LazyListScope) obj);
+                        return AssistantSettingsPaneKt.AssistantSettingsPane$lambda$8$lambda$7$lambda$6(activeOrb2C7, assist, onOrbStyle, onAutoListen, onSpeakReplies, contextC7, sttProvider, ttsProvider, (LazyListScope) obj);
                     }
                 };
                 $composer3.updateRememberedValue(value$iv2);

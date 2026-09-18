@@ -95,6 +95,13 @@ public final class Compat {
         throw (T) t;
     }
 
+    /* Re-throw any throwable without declaring it (preserves identity,
+       so CancellationException still propagates as-is). Use for `throw th`
+       sites where precise-rethrow analysis fails due to checked exceptions. */
+    public static RuntimeException sneakyThrow(Throwable t) {
+        return Compat.<RuntimeException, RuntimeException>sneaky(t);
+    }
+
     private static Object call(Method m, Object recv, Object... args) {
         try {
             return m.invoke(recv, args);
@@ -397,9 +404,9 @@ public final class Compat {
     public static void m2741CircularProgressIndicatorLxG7B9w(androidx.compose.ui.Modifier a0, long a1, float a2, long a3, int a4, androidx.compose.runtime.Composer a5, int a6, int a7) {
         call(M_m2741CircularProgressIndicatorLxG7B9w, null, a0, a1, a2, a3, a4, a5, a6, a7);
     }
-    private static final Method M_m2750LinearProgressIndicatorrIrjwxo = find("androidx.compose.material3.ProgressIndicatorKt", "LinearProgressIndicator-RIQooxk", androidx.compose.ui.Modifier.class, long.class, long.class, androidx.compose.runtime.Composer.class, int.class, int.class);
-    public static void m2750LinearProgressIndicatorrIrjwxo(androidx.compose.ui.Modifier a0, long a1, long a2, androidx.compose.runtime.Composer a3, int a4, int a5) {
-        call(M_m2750LinearProgressIndicatorrIrjwxo, null, a0, a1, a2, a3, a4, a5);
+    private static final Method M_m2750LinearProgressIndicatorrIrjwxo = find("androidx.compose.material3.ProgressIndicatorKt", "LinearProgressIndicator-rIrjwxo", androidx.compose.ui.Modifier.class, long.class, long.class, int.class, float.class, androidx.compose.runtime.Composer.class, int.class, int.class);
+    public static void m2750LinearProgressIndicatorrIrjwxo(androidx.compose.ui.Modifier a0, long a1, long a2, int a3, float a4, androidx.compose.runtime.Composer a5, int a6, int a7) {
+        call(M_m2750LinearProgressIndicatorrIrjwxo, null, a0, a1, a2, a3, a4, a5, a6, a7);
     }
     private static final Method M_m2135AlertDialogOix01E0 = find("androidx.compose.material3.AndroidAlertDialog_androidKt", "AlertDialog-Oix01E0", kotlin.jvm.functions.Function0.class, kotlin.jvm.functions.Function2.class, androidx.compose.ui.Modifier.class, kotlin.jvm.functions.Function2.class, kotlin.jvm.functions.Function2.class, kotlin.jvm.functions.Function2.class, kotlin.jvm.functions.Function2.class, androidx.compose.ui.graphics.Shape.class, long.class, long.class, long.class, long.class, float.class, androidx.compose.ui.window.DialogProperties.class, androidx.compose.runtime.Composer.class, int.class, int.class, int.class);
     public static void m2135AlertDialogOix01E0(kotlin.jvm.functions.Function0 a0, kotlin.jvm.functions.Function2 a1, androidx.compose.ui.Modifier a2, kotlin.jvm.functions.Function2 a3, kotlin.jvm.functions.Function2 a4, kotlin.jvm.functions.Function2 a5, kotlin.jvm.functions.Function2 a6, androidx.compose.ui.graphics.Shape a7, long a8, long a9, long a10, long a11, float a12, androidx.compose.ui.window.DialogProperties a13, androidx.compose.runtime.Composer a14, int a15, int a16, int a17) {
@@ -802,10 +809,22 @@ public final class Compat {
         return (androidx.compose.material3.Typography) construct(C_Typography32, c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, mask | 1073709056, null);
     }
 
+    private static java.lang.reflect.Constructor<?> C_KeyboardOptions9;
+    public static androidx.compose.foundation.text.KeyboardOptions newKeyboardOptions(int c0, Boolean c1, int c2, int c3, androidx.compose.ui.text.input.PlatformImeOptions c4, Boolean c5, androidx.compose.ui.text.intl.LocaleList c6, int mask) {
+        if (C_KeyboardOptions9 == null) C_KeyboardOptions9 = ctorOf("androidx.compose.foundation.text.KeyboardOptions", int.class, Boolean.class, int.class, int.class, androidx.compose.ui.text.input.PlatformImeOptions.class, Boolean.class, androidx.compose.ui.text.intl.LocaleList.class, int.class, kotlin.jvm.internal.DefaultConstructorMarker.class);
+        return (androidx.compose.foundation.text.KeyboardOptions) construct(C_KeyboardOptions9, c0, c1, c2, c3, c4, c5, c6, mask, null);
+    }
+
     private static java.lang.reflect.Constructor<?> C_Shadow5;
     public static androidx.compose.ui.graphics.Shadow newShadow(long color, long offset, float blur, int mask) {
         if (C_Shadow5 == null) C_Shadow5 = ctorOf("androidx.compose.ui.graphics.Shadow", long.class, long.class, float.class, int.class, kotlin.jvm.internal.DefaultConstructorMarker.class);
         return (androidx.compose.ui.graphics.Shadow) construct(C_Shadow5, color, offset, blur, mask, null);
+    }
+
+    private static Method C_d_ArraysKt_copyInto_7;
+    public static byte[] d_ArraysKt_copyInto_7(byte[] a0, byte[] a1, int a2, int a3, int a4, int a5, Object a6) {
+        if (C_d_ArraysKt_copyInto_7 == null) C_d_ArraysKt_copyInto_7 = flex("kotlin.collections.ArraysKt", "copyInto$default", 7, a0, a1, a2, a3, a4, a5, a6);
+        return (byte[]) call(C_d_ArraysKt_copyInto_7, null, a0, a1, a2, a3, a4, a5, a6);
     }
 
     private static java.lang.reflect.Constructor<?> C_SolidColor2;

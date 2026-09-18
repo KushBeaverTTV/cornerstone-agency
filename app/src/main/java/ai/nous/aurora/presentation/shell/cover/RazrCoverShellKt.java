@@ -176,9 +176,9 @@ public final class RazrCoverShellKt {
             String preview2 = string;
             Modifier modifierFillMaxSize$default = ai.nous.aurora.compat.Compat.d_SizeKt_fillMaxSize_4(modifier4, 0.0f, 1, null);
             modifier3 = modifier4;
-            ComposableLambda composableLambdaRememberComposableLambda = (Function2) ComposableLambdaKt.rememberComposableLambda(2105080434, true, new AnonymousClass1(online, status, thread, preview2, state, context, latest, onOpenLatest, onNewChat), $composer3, 54);
+            ComposableLambda composableLambdaRememberComposableLambda = ComposableLambdaKt.rememberComposableLambda(2105080434, true, new AnonymousClass1(online, status, thread, preview2, state, context, latest, onOpenLatest, onNewChat), $composer3, 54);
             $composer2 = $composer3;
-            AuroraBackdropKt.AuroraBackdrop(modifierFillMaxSize$default, 0, composableLambdaRememberComposableLambda, $composer2, 384, 2);
+            AuroraBackdropKt.AuroraBackdrop(modifierFillMaxSize$default, 0, (Function3) composableLambdaRememberComposableLambda, $composer2, 384, 2);
             if (ComposerKt.isTraceInProgress()) {
                 ComposerKt.traceEventEnd();
             }
@@ -369,6 +369,95 @@ public final class RazrCoverShellKt {
             boolean z;
             Intrinsics.checkNotNullParameter(AuroraBackdrop, "$this$AuroraBackdrop");
             ComposerKt.sourceInformation($composer, "C83@3614L9774:RazrCoverShell.kt#z0j3je");
+            CoverInvokeState st = new CoverInvokeState();
+            CoverInvokeR1(AuroraBackdrop, $composer, $changed, st);
+            CoverInvokeR2(AuroraBackdrop, $composer, $changed, st);
+            $composer.skipToGroupEnd();
+        }
+
+        private static final class CoverInvokeState {
+            public String str2;
+            public String str3;
+            public AuroraSession auroraSession;
+            public Function0<Unit> function13;
+            public Function0<Unit> function14;
+            public MeasurePolicy measurePolicy$iv8;
+            public int compositeKeyHash$iv$iv14;
+            public Modifier materialized$iv$iv3;
+            public int $changed$iv$iv$iv3;
+            public Composer $this$Layout_u24lambda_u240$iv$iv14;
+            public Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash3;
+            public boolean z2;
+            public String str4;
+            public MainViewModel.UiState uiState;
+            public Context context;
+            public Function0<ComposeUiNode> function0;
+            public Function0<ComposeUiNode> function1;
+            public Function0<ComposeUiNode> function2;
+            public MeasurePolicy measurePolicy$iv;
+            public int compositeKeyHash$iv$iv;
+            public Function0<ComposeUiNode> constructor;
+            public Function0<ComposeUiNode> function3;
+            public Composer $this$Layout_u24lambda_u240$iv$iv;
+            public int compositeKeyHash$iv$iv2;
+            public Function0<ComposeUiNode> constructor2;
+            public Function0<ComposeUiNode> function4;
+            public Composer $this$Layout_u24lambda_u240$iv$iv2;
+            public MeasurePolicy measurePolicy$iv2;
+            public int compositeKeyHash$iv$iv3;
+            public Function0<ComposeUiNode> constructor3;
+            public Function0<ComposeUiNode> function5;
+            public Composer $this$Layout_u24lambda_u240$iv$iv3;
+            public MeasurePolicy measurePolicy$iv3;
+            public long auroraTextMuted;
+            public long auroraText;
+            public MeasurePolicy measurePolicy$iv4;
+            public int compositeKeyHash$iv$iv4;
+            public CompositionLocalMap localMap$iv$iv;
+            public Function0<ComposeUiNode> constructor4;
+            public Function0<ComposeUiNode> function6;
+            public Composer $this$Layout_u24lambda_u240$iv$iv4;
+            public MeasurePolicy measurePolicy$iv5;
+            public CompositionLocalMap localMap$iv$iv2;
+            public int compositeKeyHash$iv$iv5;
+            public CompositionLocalMap localMap$iv$iv3;
+            public Function0<ComposeUiNode> constructor5;
+            public Function0<ComposeUiNode> function7;
+            public Composer $this$Layout_u24lambda_u240$iv$iv5;
+            public CompositionLocalMap localMap$iv$iv4;
+            public int compositeKeyHash$iv$iv6;
+            public Function0<ComposeUiNode> constructor6;
+            public Function0<ComposeUiNode> function8;
+            public Composer $this$Layout_u24lambda_u240$iv$iv6;
+            public RowScope $this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244;
+            public int compositeKeyHash$iv$iv7;
+            public Function0<ComposeUiNode> constructor7;
+            public Function0<ComposeUiNode> function9;
+            public Composer $this$Layout_u24lambda_u240$iv$iv7;
+            public int compositeKeyHash$iv$iv8;
+            public Function0<ComposeUiNode> constructor8;
+            public Function0<ComposeUiNode> function10;
+            public Composer $this$Layout_u24lambda_u240$iv$iv8;
+            public boolean invalid$iv;
+            public Object value$iv;
+            public boolean invalid$iv2;
+            public Object value$iv2;
+            public int compositeKeyHash$iv$iv9;
+            public Function0<ComposeUiNode> constructor9;
+            public Function0<ComposeUiNode> function11;
+            public Composer $this$Layout_u24lambda_u240$iv$iv9;
+            public long auroraTextMuted2;
+            public String str;
+            public int compositeKeyHash$iv$iv10;
+            public Function0<ComposeUiNode> constructor10;
+            public Composer $this$Layout_u24lambda_u240$iv$iv10;
+            public int compositeKeyHash$iv$iv11;
+            public Function0<ComposeUiNode> constructor11;
+            public Function0<ComposeUiNode> function12;
+            public Composer $this$Layout_u24lambda_u240$iv$iv11;
+            public boolean z;
+        }
+        private final void CoverInvokeR1( BoxScope AuroraBackdrop, Composer $composer, int $changed, CoverInvokeState st ) {
             if (($changed & 17) != 16 || !$composer.getSkipping()) {
                 if (ComposerKt.isTraceInProgress()) {
                     ComposerKt.traceEventStart(2105080434, $changed, -1, "ai.nous.aurora.presentation.shell.cover.RazrCoverShell.<anonymous> (RazrCoverShell.kt:83)");
@@ -376,15 +465,15 @@ public final class RazrCoverShellKt {
                 Modifier modifier$iv = ai.nous.aurora.compat.Compat.m1034padding3ABfNKs(ai.nous.aurora.compat.Compat.d_SizeKt_fillMaxSize_4(Modifier.Companion, 0.0f, 1, null), AuroraSpacing.INSTANCE.m238getMdD9Ej5fM());
                 Arrangement.Vertical verticalArrangement$iv = Arrangement.INSTANCE.getSpaceBetween();
                 Alignment.Horizontal horizontalAlignment$iv = Alignment.Companion.getCenterHorizontally();
-                final boolean z2 = this.$online;
-                String str2 = this.$status;
-                String str3 = this.$thread;
-                String str4 = this.$preview;
-                MainViewModel.UiState uiState = this.$state;
-                final Context context = this.$context;
-                AuroraSession auroraSession = this.$latest;
-                Function0<Unit> function13 = this.$onOpenLatest;
-                Function0<Unit> function14 = this.$onNewChat;
+                st.z2 = this.$online;
+                st.str2 = this.$status;
+                st.str3 = this.$thread;
+                st.str4 = this.$preview;
+                st.uiState = this.$state;
+                st.context = this.$context;
+                st.auroraSession = this.$latest;
+                st.function13 = this.$onOpenLatest;
+                st.function14 = this.$onNewChat;
                 ComposerKt.sourceInformationMarkerStart($composer, -483455358, "CC(Column)P(2,3,1)86@4330L61,87@4396L133:Column.kt#2w3rfo");
                 MeasurePolicy measurePolicy$iv6 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv, horizontalAlignment$iv, $composer, ((438 >> 3) & 14) | ((438 >> 3) & 112));
                 int $changed$iv$iv = (438 << 3) & 112;
@@ -400,10 +489,10 @@ public final class RazrCoverShellKt {
                 }
                 $composer.startReusableNode();
                 if ($composer.getInserting()) {
-                    function0 = constructor12;
-                    $composer.createNode(function0);
+                    st.function0 = constructor12;
+                    $composer.createNode(st.function0);
                 } else {
-                    function0 = constructor12;
+                    st.function0 = constructor12;
                     $composer.useNode();
                 }
                 Composer $this$Layout_u24lambda_u240$iv$iv12 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
@@ -438,10 +527,10 @@ public final class RazrCoverShellKt {
                 }
                 $composer.startReusableNode();
                 if ($composer.getInserting()) {
-                    function1 = constructor13;
-                    $composer.createNode(function1);
+                    st.function1 = constructor13;
+                    $composer.createNode(st.function1);
                 } else {
-                    function1 = constructor13;
+                    st.function1 = constructor13;
                     $composer.useNode();
                 }
                 Composer $this$Layout_u24lambda_u240$iv$iv13 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
@@ -462,36 +551,36 @@ public final class RazrCoverShellKt {
                 Alignment.Vertical verticalAlignment$iv = Alignment.Companion.getCenterVertically();
                 ComposerKt.sourceInformationMarkerStart($composer, 693286680, "CC(Row)P(2,1,3)99@5018L58,100@5081L130:Row.kt#2w3rfo");
                 Arrangement.Horizontal horizontalArrangement$iv = Arrangement.INSTANCE.getStart();
-                MeasurePolicy measurePolicy$iv8 = RowKt.rowMeasurePolicy(horizontalArrangement$iv, verticalAlignment$iv, $composer, ((390 >> 3) & 14) | ((390 >> 3) & 112));
+                st.measurePolicy$iv8 = RowKt.rowMeasurePolicy(horizontalArrangement$iv, verticalAlignment$iv, $composer, ((390 >> 3) & 14) | ((390 >> 3) & 112));
                 int $changed$iv$iv3 = (390 << 3) & 112;
                 ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                int compositeKeyHash$iv$iv14 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                st.compositeKeyHash$iv$iv14 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                 CompositionLocalMap localMap$iv$iv7 = $composer.getCurrentCompositionLocalMap();
-                Modifier materialized$iv$iv3 = ComposedModifierKt.materializeModifier($composer, modifier$iv3);
+                st.materialized$iv$iv3 = ComposedModifierKt.materializeModifier($composer, modifier$iv3);
                 Function0<ComposeUiNode> constructor14 = ComposeUiNode.Companion.getConstructor();
-                int $changed$iv$iv$iv3 = (($changed$iv$iv3 << 6) & 896) | 6;
+                st.$changed$iv$iv$iv3 = (($changed$iv$iv3 << 6) & 896) | 6;
                 ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                 if (!($composer.getApplier() instanceof Applier)) {
                     ComposablesKt.invalidApplier();
                 }
                 $composer.startReusableNode();
                 if ($composer.getInserting()) {
-                    function2 = constructor14;
-                    $composer.createNode(function2);
+                    st.function2 = constructor14;
+                    $composer.createNode(st.function2);
                 } else {
-                    function2 = constructor14;
+                    st.function2 = constructor14;
                     $composer.useNode();
                 }
-                Composer $this$Layout_u24lambda_u240$iv$iv14 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv14, measurePolicy$iv8, ComposeUiNode.Companion.getSetMeasurePolicy());
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv14, localMap$iv$iv7, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
-                Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash3 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                if (!$this$Layout_u24lambda_u240$iv$iv14.getInserting()) {
-                    measurePolicy$iv = measurePolicy$iv8;
-                    if (!Intrinsics.areEqual($this$Layout_u24lambda_u240$iv$iv14.rememberedValue(), Integer.valueOf(compositeKeyHash$iv$iv14))) {
+                st.$this$Layout_u24lambda_u240$iv$iv14 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv14, st.measurePolicy$iv8, ComposeUiNode.Companion.getSetMeasurePolicy());
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv14, localMap$iv$iv7, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                st.setCompositeKeyHash3 = ComposeUiNode.Companion.getSetCompositeKeyHash();
+                if (!st.$this$Layout_u24lambda_u240$iv$iv14.getInserting()) {
+                    st.measurePolicy$iv = st.measurePolicy$iv8;
+                    if (!Intrinsics.areEqual(st.$this$Layout_u24lambda_u240$iv$iv14.rememberedValue(), Integer.valueOf(st.compositeKeyHash$iv$iv14))) {
                     }
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv14, materialized$iv$iv3, ComposeUiNode.Companion.getSetModifier());
-                    int i5 = ($changed$iv$iv$iv3 >> 6) & 14;
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv14, st.materialized$iv$iv3, ComposeUiNode.Companion.getSetModifier());
+                    int i5 = (st.$changed$iv$iv$iv3 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                     int i6 = ((390 >> 6) & 112) | 6;
                     RowScope $this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u243 = RowScopeInstance.INSTANCE;
@@ -505,10 +594,10 @@ public final class RazrCoverShellKt {
                     MeasurePolicy measurePolicy$iv9 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv, false);
                     int $changed$iv$iv4 = (48 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv8 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv4 = ComposedModifierKt.materializeModifier($composer, modifier$iv4);
-                    constructor = ComposeUiNode.Companion.getConstructor();
+                    st.constructor = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv4 = (($changed$iv$iv4 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -516,21 +605,21 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function3 = constructor;
-                        $composer.createNode(function3);
+                        st.function3 = st.constructor;
+                        $composer.createNode(st.function3);
                     } else {
-                        function3 = constructor;
+                        st.function3 = st.constructor;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv, measurePolicy$iv9, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv, localMap$iv$iv8, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv, measurePolicy$iv9, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv, localMap$iv$iv8, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash4 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv.getInserting() || !Intrinsics.areEqual($this$Layout_u24lambda_u240$iv$iv.rememberedValue(), Integer.valueOf(compositeKeyHash$iv$iv))) {
-                        $this$Layout_u24lambda_u240$iv$iv.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv));
-                        $this$Layout_u24lambda_u240$iv$iv.apply(Integer.valueOf(compositeKeyHash$iv$iv), setCompositeKeyHash4);
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv.getInserting() || !Intrinsics.areEqual(st.$this$Layout_u24lambda_u240$iv$iv.rememberedValue(), Integer.valueOf(st.compositeKeyHash$iv$iv))) {
+                        st.$this$Layout_u24lambda_u240$iv$iv.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv));
+                        st.$this$Layout_u24lambda_u240$iv$iv.apply(Integer.valueOf(st.compositeKeyHash$iv$iv), setCompositeKeyHash4);
                     }
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv, materialized$iv$iv4, ComposeUiNode.Companion.getSetModifier());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv, materialized$iv$iv4, ComposeUiNode.Companion.getSetModifier());
                     int i7 = ($changed$iv$iv$iv4 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                     BoxScopeInstance boxScopeInstance = BoxScopeInstance.INSTANCE;
@@ -551,10 +640,10 @@ public final class RazrCoverShellKt {
                     MeasurePolicy measurePolicy$iv10 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv3, horizontalAlignment$iv3, $composer, ((0 >> 3) & 14) | ((0 >> 3) & 112));
                     int $changed$iv$iv5 = (0 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv2 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv2 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv9 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv5 = ComposedModifierKt.materializeModifier($composer, modifier$iv5);
-                    constructor2 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor2 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv5 = (($changed$iv$iv5 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -562,21 +651,21 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function4 = constructor2;
-                        $composer.createNode(function4);
+                        st.function4 = st.constructor2;
+                        $composer.createNode(st.function4);
                     } else {
-                        function4 = constructor2;
+                        st.function4 = st.constructor2;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv2 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv2, measurePolicy$iv10, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv2, localMap$iv$iv9, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv2 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv2, measurePolicy$iv10, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv2, localMap$iv$iv9, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash5 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv2.getInserting() || !Intrinsics.areEqual($this$Layout_u24lambda_u240$iv$iv2.rememberedValue(), Integer.valueOf(compositeKeyHash$iv$iv2))) {
-                        $this$Layout_u24lambda_u240$iv$iv2.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv2));
-                        $this$Layout_u24lambda_u240$iv$iv2.apply(Integer.valueOf(compositeKeyHash$iv$iv2), setCompositeKeyHash5);
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv2.getInserting() || !Intrinsics.areEqual(st.$this$Layout_u24lambda_u240$iv$iv2.rememberedValue(), Integer.valueOf(st.compositeKeyHash$iv$iv2))) {
+                        st.$this$Layout_u24lambda_u240$iv$iv2.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv2));
+                        st.$this$Layout_u24lambda_u240$iv$iv2.apply(Integer.valueOf(st.compositeKeyHash$iv$iv2), setCompositeKeyHash5);
                     }
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv2, materialized$iv$iv5, ComposeUiNode.Companion.getSetModifier());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv2, materialized$iv$iv5, ComposeUiNode.Companion.getSetModifier());
                     int i9 = ($changed$iv$iv$iv5 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                     ColumnScopeInstance columnScopeInstance3 = ColumnScopeInstance.INSTANCE;
@@ -595,13 +684,13 @@ public final class RazrCoverShellKt {
                     Alignment.Vertical verticalAlignment$iv2 = Alignment.Companion.getCenterVertically();
                     ComposerKt.sourceInformationMarkerStart($composer, 693286680, "CC(Row)P(2,1,3)99@5018L58,100@5081L130:Row.kt#2w3rfo");
                     Arrangement.Horizontal horizontalArrangement$iv2 = Arrangement.INSTANCE.getStart();
-                    measurePolicy$iv2 = RowKt.rowMeasurePolicy(horizontalArrangement$iv2, verticalAlignment$iv2, $composer, ((384 >> 3) & 14) | ((384 >> 3) & 112));
+                    st.measurePolicy$iv2 = RowKt.rowMeasurePolicy(horizontalArrangement$iv2, verticalAlignment$iv2, $composer, ((384 >> 3) & 14) | ((384 >> 3) & 112));
                     int $changed$iv$iv6 = (384 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv3 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv3 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv10 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv6 = ComposedModifierKt.materializeModifier($composer, modifier$iv6);
-                    constructor3 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor3 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv6 = (($changed$iv$iv6 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -609,50 +698,50 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function5 = constructor3;
-                        $composer.createNode(function5);
+                        st.function5 = st.constructor3;
+                        $composer.createNode(st.function5);
                     } else {
-                        function5 = constructor3;
+                        st.function5 = st.constructor3;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv3 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv3, measurePolicy$iv2, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv3, localMap$iv$iv10, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv3 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv3, st.measurePolicy$iv2, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv3, localMap$iv$iv10, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash6 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv3.getInserting()) {
-                        measurePolicy$iv3 = measurePolicy$iv2;
-                        if (!Intrinsics.areEqual($this$Layout_u24lambda_u240$iv$iv3.rememberedValue(), Integer.valueOf(compositeKeyHash$iv$iv3))) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv3.getInserting()) {
+                        st.measurePolicy$iv3 = st.measurePolicy$iv2;
+                        if (!Intrinsics.areEqual(st.$this$Layout_u24lambda_u240$iv$iv3.rememberedValue(), Integer.valueOf(st.compositeKeyHash$iv$iv3))) {
                         }
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv3, materialized$iv$iv6, ComposeUiNode.Companion.getSetModifier());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv3, materialized$iv$iv6, ComposeUiNode.Companion.getSetModifier());
                         int i11 = ($changed$iv$iv$iv6 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                         RowScopeInstance rowScopeInstance = RowScopeInstance.INSTANCE;
                         int i12 = ((384 >> 6) & 112) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, 762306201, "C139@5911L223,145@6151L28,146@6196L270:RazrCoverShell.kt#z0j3je");
                         Modifier modifierClip2 = ClipKt.clip(ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(7)), RoundedCornerShapeKt.getCircleShape());
-                        if (z2) {
+                        if (st.z2) {
                             $composer.startReplaceGroup(-529593847);
                             ComposerKt.sourceInformation($composer, "143@6083L10");
-                            auroraTextMuted = AuroraColorSchemeKt.getAuroraLive($composer, 0);
+                            st.auroraTextMuted = AuroraColorSchemeKt.getAuroraLive($composer, 0);
                         } else {
                             $composer.startReplaceGroup(-529593330);
                             ComposerKt.sourceInformation($composer, "143@6099L15");
-                            auroraTextMuted = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
+                            st.auroraTextMuted = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
                         }
                         $composer.endReplaceGroup();
-                        BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip2, auroraTextMuted, null, 2, null), $composer, 0);
+                        BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip2, st.auroraTextMuted, null, 2, null), $composer, 0);
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1084width3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(6)), $composer, 6);
-                        if (z2) {
+                        if (st.z2) {
                             $composer.startReplaceGroup(-529587638);
                             ComposerKt.sourceInformation($composer, "148@6277L11");
-                            auroraText = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
+                            st.auroraText = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
                         } else {
                             $composer.startReplaceGroup(-529587095);
                             ComposerKt.sourceInformation($composer, "148@6294L10");
-                            auroraText = AuroraColorSchemeKt.getAuroraText($composer, 0);
+                            st.auroraText = AuroraColorSchemeKt.getAuroraText($composer, 0);
                         }
                         $composer.endReplaceGroup();
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str2, (Modifier) null, auroraText, TextUnitKt.getSp(11), (FontStyle) null, FontWeight.Companion.getBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str2, (Modifier) null, st.auroraText, TextUnitKt.getSp(11), (FontStyle) null, FontWeight.Companion.getBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         $composer.endNode();
@@ -669,13 +758,13 @@ public final class RazrCoverShellKt {
                         Modifier modifier$iv7 = ai.nous.aurora.compat.Compat.m1035paddingVpY3zN4(ai.nous.aurora.compat.Compat.m600borderxT4_qwU(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(ClipKt.clip(ai.nous.aurora.compat.Compat.d_SizeKt_fillMaxWidth_4(Modifier.Companion, 0.0f, 1, null), ai.nous.aurora.compat.Compat.m1317RoundedCornerShape0680j_4(ai.nous.aurora.compat.Compat.m7016constructorimpl(16))), AuroraColorSchemeKt.getAuroraSurface($composer, 0), null, 2, null), ai.nous.aurora.compat.Compat.m7016constructorimpl(1), AuroraColorSchemeKt.getAuroraHairline($composer, 0), ai.nous.aurora.compat.Compat.m1317RoundedCornerShape0680j_4(ai.nous.aurora.compat.Compat.m7016constructorimpl(16))), ai.nous.aurora.compat.Compat.m7016constructorimpl(14), ai.nous.aurora.compat.Compat.m7016constructorimpl(13));
                         ComposerKt.sourceInformationMarkerStart($composer, 733328855, "CC(Box)P(2,1,3)72@3384L130:Box.kt#2w3rfo");
                         Alignment contentAlignment$iv2 = Alignment.Companion.getTopStart();
-                        measurePolicy$iv4 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv2, false);
+                        st.measurePolicy$iv4 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv2, false);
                         int $changed$iv$iv7 = (0 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv4 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
-                        localMap$iv$iv = $composer.getCurrentCompositionLocalMap();
+                        st.compositeKeyHash$iv$iv4 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.localMap$iv$iv = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv7 = ComposedModifierKt.materializeModifier($composer, modifier$iv7);
-                        constructor4 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor4 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv7 = (($changed$iv$iv7 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -683,22 +772,22 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function6 = constructor4;
-                            $composer.createNode(function6);
+                            st.function6 = st.constructor4;
+                            $composer.createNode(st.function6);
                         } else {
-                            function6 = constructor4;
+                            st.function6 = st.constructor4;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv4 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv4, measurePolicy$iv4, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv4, localMap$iv$iv, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv4 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv4, st.measurePolicy$iv4, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv4, st.localMap$iv$iv, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash7 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv4.getInserting()) {
-                            measurePolicy$iv5 = measurePolicy$iv4;
-                            localMap$iv$iv2 = localMap$iv$iv;
-                            if (!Intrinsics.areEqual($this$Layout_u24lambda_u240$iv$iv4.rememberedValue(), Integer.valueOf(compositeKeyHash$iv$iv4))) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv4.getInserting()) {
+                            st.measurePolicy$iv5 = st.measurePolicy$iv4;
+                            st.localMap$iv$iv2 = st.localMap$iv$iv;
+                            if (!Intrinsics.areEqual(st.$this$Layout_u24lambda_u240$iv$iv4.rememberedValue(), Integer.valueOf(st.compositeKeyHash$iv$iv4))) {
                             }
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv4, materialized$iv$iv7, ComposeUiNode.Companion.getSetModifier());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv4, materialized$iv$iv7, ComposeUiNode.Companion.getSetModifier());
                             int i13 = ($changed$iv$iv$iv7 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                             BoxScopeInstance boxScopeInstance2 = BoxScopeInstance.INSTANCE;
@@ -712,10 +801,10 @@ public final class RazrCoverShellKt {
                             MeasurePolicy measurePolicy$iv11 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv4, horizontalAlignment$iv4, $composer, $i$f$Column);
                             int $changed$iv$iv8 = (6 << 3) & 112;
                             ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                            compositeKeyHash$iv$iv5 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
-                            localMap$iv$iv3 = $composer.getCurrentCompositionLocalMap();
+                            st.compositeKeyHash$iv$iv5 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                            st.localMap$iv$iv3 = $composer.getCurrentCompositionLocalMap();
                             Modifier materialized$iv$iv8 = ComposedModifierKt.materializeModifier($composer, modifier$iv8);
-                            constructor5 = ComposeUiNode.Companion.getConstructor();
+                            st.constructor5 = ComposeUiNode.Companion.getConstructor();
                             int $changed$iv$iv$iv8 = (($changed$iv$iv8 << 6) & 896) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                             if (!($composer.getApplier() instanceof Applier)) {
@@ -723,21 +812,21 @@ public final class RazrCoverShellKt {
                             }
                             $composer.startReusableNode();
                             if ($composer.getInserting()) {
-                                function7 = constructor5;
-                                $composer.createNode(function7);
+                                st.function7 = st.constructor5;
+                                $composer.createNode(st.function7);
                             } else {
-                                function7 = constructor5;
+                                st.function7 = st.constructor5;
                                 $composer.useNode();
                             }
-                            $this$Layout_u24lambda_u240$iv$iv5 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, measurePolicy$iv11, ComposeUiNode.Companion.getSetMeasurePolicy());
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, localMap$iv$iv3, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                            st.$this$Layout_u24lambda_u240$iv$iv5 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, measurePolicy$iv11, ComposeUiNode.Companion.getSetMeasurePolicy());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, st.localMap$iv$iv3, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                             Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash8 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                            if (!$this$Layout_u24lambda_u240$iv$iv5.getInserting()) {
-                                localMap$iv$iv4 = localMap$iv$iv3;
-                                if (!Intrinsics.areEqual($this$Layout_u24lambda_u240$iv$iv5.rememberedValue(), Integer.valueOf(compositeKeyHash$iv$iv5))) {
+                            if (!st.$this$Layout_u24lambda_u240$iv$iv5.getInserting()) {
+                                st.localMap$iv$iv4 = st.localMap$iv$iv3;
+                                if (!Intrinsics.areEqual(st.$this$Layout_u24lambda_u240$iv$iv5.rememberedValue(), Integer.valueOf(st.compositeKeyHash$iv$iv5))) {
                                 }
-                                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv8, ComposeUiNode.Companion.getSetModifier());
+                                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv8, ComposeUiNode.Companion.getSetModifier());
                                 int i15 = ($changed$iv$iv$iv8 >> 6) & 14;
                                 ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                                 ColumnScopeInstance columnScopeInstance4 = ColumnScopeInstance.INSTANCE;
@@ -745,12 +834,12 @@ public final class RazrCoverShellKt {
                                 ComposerKt.sourceInformationMarkerStart($composer, 763412498, "C170@7030L15,168@6959L293,176@7269L29,179@7384L10,177@7315L278,195@7997L29,200@8202L14,196@8043L193,202@8253L29,203@8299L1366:RazrCoverShell.kt#z0j3je");
                                 ai.nous.aurora.compat.Compat.m3067Text4IGK_g("LATEST THREAD", (Modifier) null, AuroraColorSchemeKt.getAuroraTextFaint($composer, 0), TextUnitKt.getSp(9), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), TextUnitKt.getSp(1), (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 12782598, 0, 130834);
                                 SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(5)), $composer, 6);
-                                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
+                                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
                                 $composer.startReplaceGroup(-529544623);
                                 ComposerKt.sourceInformation($composer, "186@7658L29,189@7786L15,187@7708L254");
-                                if (!StringsKt.isBlank(str4)) {
+                                if (!StringsKt.isBlank(st.str4)) {
                                     SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(3)), $composer, 6);
-                                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                                 }
                                 $composer.endReplaceGroup();
                                 SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(9)), $composer, 6);
@@ -764,10 +853,10 @@ public final class RazrCoverShellKt {
                                 MeasurePolicy measurePolicy$iv12 = RowKt.rowMeasurePolicy(horizontalArrangement$iv3, verticalAlignment$iv3, $composer, $changed$iv);
                                 int $changed$iv$iv9 = (390 << 3) & 112;
                                 ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                                compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                                st.compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                                 CompositionLocalMap localMap$iv$iv11 = $composer.getCurrentCompositionLocalMap();
                                 Modifier materialized$iv$iv9 = ComposedModifierKt.materializeModifier($composer, modifier$iv9);
-                                constructor6 = ComposeUiNode.Companion.getConstructor();
+                                st.constructor6 = ComposeUiNode.Companion.getConstructor();
                                 int $changed$iv$iv$iv9 = (($changed$iv$iv9 << 6) & 896) | 6;
                                 ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                                 if (!($composer.getApplier() instanceof Applier)) {
@@ -775,38 +864,38 @@ public final class RazrCoverShellKt {
                                 }
                                 $composer.startReusableNode();
                                 if ($composer.getInserting()) {
-                                    function8 = constructor6;
-                                    $composer.createNode(function8);
+                                    st.function8 = st.constructor6;
+                                    $composer.createNode(st.function8);
                                 } else {
-                                    function8 = constructor6;
+                                    st.function8 = st.constructor6;
                                     $composer.useNode();
                                 }
-                                $this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv12, ComposeUiNode.Companion.getSetMeasurePolicy());
-                                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv11, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                                st.$this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv12, ComposeUiNode.Companion.getSetMeasurePolicy());
+                                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv11, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                                 Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash9 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                                if (!$this$Layout_u24lambda_u240$iv$iv6.getInserting() || !Intrinsics.areEqual($this$Layout_u24lambda_u240$iv$iv6.rememberedValue(), Integer.valueOf(compositeKeyHash$iv$iv6))) {
-                                    $this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv6));
-                                    $this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(compositeKeyHash$iv$iv6), setCompositeKeyHash9);
+                                if (!st.$this$Layout_u24lambda_u240$iv$iv6.getInserting() || !Intrinsics.areEqual(st.$this$Layout_u24lambda_u240$iv$iv6.rememberedValue(), Integer.valueOf(st.compositeKeyHash$iv$iv6))) {
+                                    st.$this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv6));
+                                    st.$this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(st.compositeKeyHash$iv$iv6), setCompositeKeyHash9);
                                 }
-                                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv9, ComposeUiNode.Companion.getSetModifier());
+                                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv9, ComposeUiNode.Companion.getSetModifier());
                                 int i17 = ($changed$iv$iv$iv9 >> 6) & 14;
                                 ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                                 int i18 = ((390 >> 6) & 112) | 6;
-                                $this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
+                                st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
                                 ComposerKt.sourceInformationMarkerStart($composer, -1980267798, "C220@9102L15,218@8996L282:RazrCoverShell.kt#z0j3je");
                                 $composer.startReplaceGroup(-618069607);
                                 ComposerKt.sourceInformation($composer, "210@8649L11,208@8527L373,216@8925L28");
-                                if (uiState.getSelectedModel() != null) {
-                                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
+                                if (st.uiState.getSelectedModel() != null) {
+                                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(st.uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
                                     SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1084width3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(8)), $composer, 6);
                                 }
                                 $composer.endReplaceGroup();
-                                ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                                ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + st.uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                                 $composer.startReplaceGroup(-618043174);
                                 ComposerKt.sourceInformation($composer, "226@9344L27,229@9479L11,227@9396L229");
-                                if (uiState.getSending()) {
-                                    SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
+                                if (st.uiState.getSending()) {
+                                    SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6(st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
                                     ai.nous.aurora.compat.Compat.m3067Text4IGK_g("thinking…", (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199686, 0, 131026);
                                 }
                                 $composer.endReplaceGroup();
@@ -836,10 +925,10 @@ public final class RazrCoverShellKt {
                                 MeasurePolicy measurePolicy$iv13 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv5, horizontalAlignment$iv5, $composer, ((384 >> 3) & 14) | ((384 >> 3) & 112));
                                 int $changed$iv$iv10 = (384 << 3) & 112;
                                 ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                                compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                                st.compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                                 CompositionLocalMap localMap$iv$iv12 = $composer.getCurrentCompositionLocalMap();
                                 Modifier materialized$iv$iv10 = ComposedModifierKt.materializeModifier($composer, modifier$iv10);
-                                constructor7 = ComposeUiNode.Companion.getConstructor();
+                                st.constructor7 = ComposeUiNode.Companion.getConstructor();
                                 int $i$f$Column2 = $changed$iv$iv10 << 6;
                                 int $changed$iv$iv$iv10 = ($i$f$Column2 & 896) | 6;
                                 ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
@@ -848,21 +937,21 @@ public final class RazrCoverShellKt {
                                 }
                                 $composer.startReusableNode();
                                 if ($composer.getInserting()) {
-                                    function9 = constructor7;
-                                    $composer.createNode(function9);
+                                    st.function9 = st.constructor7;
+                                    $composer.createNode(st.function9);
                                 } else {
-                                    function9 = constructor7;
+                                    st.function9 = st.constructor7;
                                     $composer.useNode();
                                 }
-                                $this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv13, ComposeUiNode.Companion.getSetMeasurePolicy());
-                                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv12, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                                st.$this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv13, ComposeUiNode.Companion.getSetMeasurePolicy());
+                                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv12, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                                 Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash10 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                                if (!$this$Layout_u24lambda_u240$iv$iv7.getInserting() || !Intrinsics.areEqual($this$Layout_u24lambda_u240$iv$iv7.rememberedValue(), Integer.valueOf(compositeKeyHash$iv$iv7))) {
-                                    $this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv7));
-                                    $this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(compositeKeyHash$iv$iv7), setCompositeKeyHash10);
+                                if (!st.$this$Layout_u24lambda_u240$iv$iv7.getInserting() || !Intrinsics.areEqual(st.$this$Layout_u24lambda_u240$iv$iv7.rememberedValue(), Integer.valueOf(st.compositeKeyHash$iv$iv7))) {
+                                    st.$this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv7));
+                                    st.$this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(st.compositeKeyHash$iv$iv7), setCompositeKeyHash10);
                                 }
-                                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv10, ComposeUiNode.Companion.getSetModifier());
+                                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv10, ComposeUiNode.Companion.getSetModifier());
                                 int i19 = ($changed$iv$iv$iv10 >> 6) & 14;
                                 ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                                 ColumnScopeInstance columnScopeInstance5 = ColumnScopeInstance.INSTANCE;
@@ -874,10 +963,10 @@ public final class RazrCoverShellKt {
                                 MeasurePolicy measurePolicy$iv14 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv3, false);
                                 int $changed$iv$iv11 = (48 << 3) & 112;
                                 ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                                compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                                st.compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                                 CompositionLocalMap localMap$iv$iv13 = $composer.getCurrentCompositionLocalMap();
                                 Modifier materialized$iv$iv11 = ComposedModifierKt.materializeModifier($composer, modifier$iv11);
-                                constructor8 = ComposeUiNode.Companion.getConstructor();
+                                st.constructor8 = ComposeUiNode.Companion.getConstructor();
                                 int $changed$iv$iv$iv11 = (($changed$iv$iv11 << 6) & 896) | 6;
                                 ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                                 if (!($composer.getApplier() instanceof Applier)) {
@@ -885,21 +974,21 @@ public final class RazrCoverShellKt {
                                 }
                                 $composer.startReusableNode();
                                 if ($composer.getInserting()) {
-                                    function10 = constructor8;
-                                    $composer.createNode(function10);
+                                    st.function10 = st.constructor8;
+                                    $composer.createNode(st.function10);
                                 } else {
-                                    function10 = constructor8;
+                                    st.function10 = st.constructor8;
                                     $composer.useNode();
                                 }
-                                $this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv14, ComposeUiNode.Companion.getSetMeasurePolicy());
-                                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv13, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                                st.$this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv14, ComposeUiNode.Companion.getSetMeasurePolicy());
+                                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv13, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                                 Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash11 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                                if (!$this$Layout_u24lambda_u240$iv$iv8.getInserting() || !Intrinsics.areEqual($this$Layout_u24lambda_u240$iv$iv8.rememberedValue(), Integer.valueOf(compositeKeyHash$iv$iv8))) {
-                                    $this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv8));
-                                    $this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(compositeKeyHash$iv$iv8), setCompositeKeyHash11);
+                                if (!st.$this$Layout_u24lambda_u240$iv$iv8.getInserting() || !Intrinsics.areEqual(st.$this$Layout_u24lambda_u240$iv$iv8.rememberedValue(), Integer.valueOf(st.compositeKeyHash$iv$iv8))) {
+                                    st.$this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv8));
+                                    st.$this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(st.compositeKeyHash$iv$iv8), setCompositeKeyHash11);
                                 }
-                                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv11, ComposeUiNode.Companion.getSetModifier());
+                                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv11, ComposeUiNode.Companion.getSetModifier());
                                 int i21 = ($changed$iv$iv$iv11 >> 6) & 14;
                                 ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                                 BoxScopeInstance boxScopeInstance3 = BoxScopeInstance.INSTANCE;
@@ -914,48 +1003,48 @@ public final class RazrCoverShellKt {
                                 Modifier modifierM600borderxT4_qwU = ai.nous.aurora.compat.Compat.m600borderxT4_qwU(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip3, ai.nous.aurora.compat.Compat.m4532copywmQWz5c(auroraAmber2, (14 & 1) != 0 ? ai.nous.aurora.compat.Compat.m4536getAlphaimpl(auroraAmber2) : 0.22f, (14 & 2) != 0 ? ai.nous.aurora.compat.Compat.m4540getRedimpl(auroraAmber2) : 0.0f, (14 & 4) != 0 ? ai.nous.aurora.compat.Compat.m4539getGreenimpl(auroraAmber2) : 0.0f, (14 & 8) != 0 ? ai.nous.aurora.compat.Compat.m4537getBlueimpl(auroraAmber2) : 0.0f), null, 2, null), ai.nous.aurora.compat.Compat.m7016constructorimpl(2), AuroraColorSchemeKt.getAuroraAmber($composer, 0), RoundedCornerShapeKt.getCircleShape());
                                 $composer.startReplaceGroup(-529441171);
                                 ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                                invalid$iv = $composer.changed(z2);
+                                st.invalid$iv = $composer.changed(st.z2);
                                 Object it$iv = $composer.rememberedValue();
-                                if (!invalid$iv || it$iv == Composer.Companion.getEmpty()) {
-                                    value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
+                                if (!st.invalid$iv || it$iv == Composer.Companion.getEmpty()) {
+                                    st.value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
                                         @Override // kotlin.jvm.functions.Function1
                                         public final Object invoke(Object obj) {
-                                            return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(z2, (SemanticsPropertyReceiver) obj);
+                                            return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(st.z2, (SemanticsPropertyReceiver) obj);
                                         }
                                     };
-                                    $composer.updateRememberedValue(value$iv);
+                                    $composer.updateRememberedValue(st.value$iv);
                                 } else {
-                                    value$iv = it$iv;
+                                    st.value$iv = it$iv;
                                 }
                                 $composer.endReplaceGroup();
-                                Modifier modifierSemantics$default = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU, false, (Function1) value$iv, 1, null);
-                                boolean zCanTalk = CoverShellPolicy.INSTANCE.canTalk(z2);
+                                Modifier modifierSemantics$default = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU, false, (Function1) st.value$iv, 1, null);
+                                boolean zCanTalk = CoverShellPolicy.INSTANCE.canTalk(st.z2);
                                 $composer.startReplaceGroup(-529427629);
                                 ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                                invalid$iv2 = $composer.changedInstance(context);
+                                st.invalid$iv2 = $composer.changedInstance(st.context);
                                 Object it$iv2 = $composer.rememberedValue();
-                                if (!invalid$iv2 || it$iv2 == Composer.Companion.getEmpty()) {
-                                    value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
+                                if (!st.invalid$iv2 || it$iv2 == Composer.Companion.getEmpty()) {
+                                    st.value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
                                         @Override // kotlin.jvm.functions.Function0
                                         public final Object invoke() {
-                                            return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(context);
+                                            return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(st.context);
                                         }
                                     };
-                                    $composer.updateRememberedValue(value$iv2);
+                                    $composer.updateRememberedValue(st.value$iv2);
                                 } else {
-                                    value$iv2 = it$iv2;
+                                    st.value$iv2 = it$iv2;
                                 }
                                 $composer.endReplaceGroup();
-                                Modifier modifier$iv12 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default, zCanTalk, "Start voice Assist", null, (Function0) value$iv2, 4, null);
+                                Modifier modifier$iv12 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default, zCanTalk, "Start voice Assist", null, (Function0) st.value$iv2, 4, null);
                                 Alignment contentAlignment$iv4 = Alignment.Companion.getCenter();
                                 ComposerKt.sourceInformationMarkerStart($composer, 733328855, "CC(Box)P(2,1,3)72@3384L130:Box.kt#2w3rfo");
                                 MeasurePolicy measurePolicy$iv15 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv4, false);
                                 int $changed$iv$iv12 = (48 << 3) & 112;
                                 ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                                compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                                st.compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                                 CompositionLocalMap localMap$iv$iv14 = $composer.getCurrentCompositionLocalMap();
                                 Modifier materialized$iv$iv12 = ComposedModifierKt.materializeModifier($composer, modifier$iv12);
-                                constructor9 = ComposeUiNode.Companion.getConstructor();
+                                st.constructor9 = ComposeUiNode.Companion.getConstructor();
                                 int $changed$iv$iv$iv12 = (($changed$iv$iv12 << 6) & 896) | 6;
                                 ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                                 if (!($composer.getApplier() instanceof Applier)) {
@@ -963,38 +1052,38 @@ public final class RazrCoverShellKt {
                                 }
                                 $composer.startReusableNode();
                                 if ($composer.getInserting()) {
-                                    function11 = constructor9;
-                                    $composer.createNode(function11);
+                                    st.function11 = st.constructor9;
+                                    $composer.createNode(st.function11);
                                 } else {
-                                    function11 = constructor9;
+                                    st.function11 = st.constructor9;
                                     $composer.useNode();
                                 }
-                                $this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv15, ComposeUiNode.Companion.getSetMeasurePolicy());
-                                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv14, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                                st.$this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv15, ComposeUiNode.Companion.getSetMeasurePolicy());
+                                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv14, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                                 Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash12 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                                if (!$this$Layout_u24lambda_u240$iv$iv9.getInserting() || !Intrinsics.areEqual($this$Layout_u24lambda_u240$iv$iv9.rememberedValue(), Integer.valueOf(compositeKeyHash$iv$iv9))) {
-                                    $this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv9));
-                                    $this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(compositeKeyHash$iv$iv9), setCompositeKeyHash12);
+                                if (!st.$this$Layout_u24lambda_u240$iv$iv9.getInserting() || !Intrinsics.areEqual(st.$this$Layout_u24lambda_u240$iv$iv9.rememberedValue(), Integer.valueOf(st.compositeKeyHash$iv$iv9))) {
+                                    st.$this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv9));
+                                    st.$this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(st.compositeKeyHash$iv$iv9), setCompositeKeyHash12);
                                 }
-                                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv12, ComposeUiNode.Companion.getSetModifier());
+                                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv12, ComposeUiNode.Companion.getSetModifier());
                                 int i23 = ($changed$iv$iv$iv12 >> 6) & 14;
                                 ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                                 BoxScopeInstance boxScopeInstance4 = BoxScopeInstance.INSTANCE;
                                 int i24 = ((48 >> 6) & 112) | 6;
                                 ComposerKt.sourceInformationMarkerStart($composer, -1977158684, "C281@11632L225:RazrCoverShell.kt#z0j3je");
                                 Modifier modifierClip4 = ClipKt.clip(ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(56)), RoundedCornerShapeKt.getCircleShape());
-                                if (z2) {
+                                if (st.z2) {
                                     $composer.startReplaceGroup(-617963319);
                                     ComposerKt.sourceInformation($composer, "285@11805L11");
-                                    auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
+                                    st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
                                 } else {
                                     $composer.startReplaceGroup(-617962771);
                                     ComposerKt.sourceInformation($composer, "285@11822L15");
-                                    auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
+                                    st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
                                 }
                                 $composer.endReplaceGroup();
-                                BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip4, auroraTextMuted2, null, 2, null), $composer, 0);
+                                BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip4, st.auroraTextMuted2, null, 2, null), $composer, 0);
                                 ComposerKt.sourceInformationMarkerEnd($composer);
                                 ComposerKt.sourceInformationMarkerEnd($composer);
                                 $composer.endNode();
@@ -1008,12 +1097,12 @@ public final class RazrCoverShellKt {
                                 ComposerKt.sourceInformationMarkerEnd($composer);
                                 ComposerKt.sourceInformationMarkerEnd($composer);
                                 SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(6)), $composer, 6);
-                                if (z2) {
-                                    str = "TALK · tap orb or power";
+                                if (st.z2) {
+                                    st.str = "TALK · tap orb or power";
                                 } else {
-                                    str = "Offline";
+                                    st.str = "Offline";
                                 }
-                                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
+                                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
                                 ComposerKt.sourceInformationMarkerEnd($composer);
                                 ComposerKt.sourceInformationMarkerEnd($composer);
                                 $composer.endNode();
@@ -1033,10 +1122,10 @@ public final class RazrCoverShellKt {
                                 MeasurePolicy measurePolicy$iv16 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv6, horizontalAlignment$iv6, $composer, ((390 >> 3) & 14) | ((390 >> 3) & 112));
                                 int $changed$iv$iv13 = (390 << 3) & 112;
                                 ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                                compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                                st.compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                                 CompositionLocalMap localMap$iv$iv15 = $composer.getCurrentCompositionLocalMap();
                                 Modifier materialized$iv$iv13 = ComposedModifierKt.materializeModifier($composer, modifier$iv13);
-                                constructor10 = ComposeUiNode.Companion.getConstructor();
+                                st.constructor10 = ComposeUiNode.Companion.getConstructor();
                                 int $changed$iv$iv$iv13 = (($changed$iv$iv13 << 6) & 896) | 6;
                                 ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                                 if (!($composer.getApplier() instanceof Applier)) {
@@ -1044,19 +1133,19 @@ public final class RazrCoverShellKt {
                                 }
                                 $composer.startReusableNode();
                                 if ($composer.getInserting()) {
-                                    $composer.createNode(constructor10);
+                                    $composer.createNode(st.constructor10);
                                 } else {
                                     $composer.useNode();
                                 }
-                                $this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv16, ComposeUiNode.Companion.getSetMeasurePolicy());
-                                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv15, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                                st.$this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv16, ComposeUiNode.Companion.getSetMeasurePolicy());
+                                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv15, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                                 Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash13 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                                if (!$this$Layout_u24lambda_u240$iv$iv10.getInserting() || !Intrinsics.areEqual($this$Layout_u24lambda_u240$iv$iv10.rememberedValue(), Integer.valueOf(compositeKeyHash$iv$iv10))) {
-                                    $this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv10));
-                                    $this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(compositeKeyHash$iv$iv10), setCompositeKeyHash13);
+                                if (!st.$this$Layout_u24lambda_u240$iv$iv10.getInserting() || !Intrinsics.areEqual(st.$this$Layout_u24lambda_u240$iv$iv10.rememberedValue(), Integer.valueOf(st.compositeKeyHash$iv$iv10))) {
+                                    st.$this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv10));
+                                    st.$this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(st.compositeKeyHash$iv$iv10), setCompositeKeyHash13);
                                 }
-                                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv13, ComposeUiNode.Companion.getSetModifier());
+                                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv13, ComposeUiNode.Companion.getSetModifier());
                                 int i25 = ($changed$iv$iv$iv13 >> 6) & 14;
                                 ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                                 ColumnScopeInstance columnScopeInstance6 = ColumnScopeInstance.INSTANCE;
@@ -1069,10 +1158,10 @@ public final class RazrCoverShellKt {
                                 MeasurePolicy measurePolicy$iv17 = RowKt.rowMeasurePolicy(horizontalArrangement$iv4, verticalAlignment$iv4, $composer, ((54 >> 3) & 14) | ((54 >> 3) & 112));
                                 int $changed$iv$iv14 = (54 << 3) & 112;
                                 ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                                compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                                st.compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                                 CompositionLocalMap localMap$iv$iv16 = $composer.getCurrentCompositionLocalMap();
                                 Modifier materialized$iv$iv14 = ComposedModifierKt.materializeModifier($composer, modifier$iv14);
-                                constructor11 = ComposeUiNode.Companion.getConstructor();
+                                st.constructor11 = ComposeUiNode.Companion.getConstructor();
                                 int $changed$iv$iv$iv14 = (($changed$iv$iv14 << 6) & 896) | 6;
                                 ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                                 if (!($composer.getApplier() instanceof Applier)) {
@@ -1080,34 +1169,34 @@ public final class RazrCoverShellKt {
                                 }
                                 $composer.startReusableNode();
                                 if ($composer.getInserting()) {
-                                    function12 = constructor11;
-                                    $composer.createNode(function12);
+                                    st.function12 = st.constructor11;
+                                    $composer.createNode(st.function12);
                                 } else {
-                                    function12 = constructor11;
+                                    st.function12 = st.constructor11;
                                     $composer.useNode();
                                 }
-                                $this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv17, ComposeUiNode.Companion.getSetMeasurePolicy());
-                                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv16, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                                st.$this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv17, ComposeUiNode.Companion.getSetMeasurePolicy());
+                                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv16, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                                 Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash14 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                                if (!$this$Layout_u24lambda_u240$iv$iv11.getInserting() || !Intrinsics.areEqual($this$Layout_u24lambda_u240$iv$iv11.rememberedValue(), Integer.valueOf(compositeKeyHash$iv$iv11))) {
-                                    $this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv11));
-                                    $this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(compositeKeyHash$iv$iv11), setCompositeKeyHash14);
+                                if (!st.$this$Layout_u24lambda_u240$iv$iv11.getInserting() || !Intrinsics.areEqual(st.$this$Layout_u24lambda_u240$iv$iv11.rememberedValue(), Integer.valueOf(st.compositeKeyHash$iv$iv11))) {
+                                    st.$this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv11));
+                                    st.$this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(st.compositeKeyHash$iv$iv11), setCompositeKeyHash14);
                                 }
-                                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv14, ComposeUiNode.Companion.getSetModifier());
+                                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv14, ComposeUiNode.Companion.getSetModifier());
                                 int i27 = ($changed$iv$iv$iv14 >> 6) & 14;
                                 ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                                 int i28 = ((54 >> 6) & 112) | 6;
                                 RowScope $this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u2415 = RowScopeInstance.INSTANCE;
                                 ComposerKt.sourceInformationMarkerStart($composer, -404697066, "C309@12543L264,316@12820L248:RazrCoverShell.kt#z0j3je");
                                 CoverShellPolicy coverShellPolicy = CoverShellPolicy.INSTANCE;
-                                if (auroraSession != null) {
-                                    z = true;
+                                if (st.auroraSession != null) {
+                                    st.z = true;
                                 } else {
-                                    z = false;
+                                    st.z = false;
                                 }
-                                RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy.canOpenLatest(z), function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u2415, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
-                                RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(z2), function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u2415, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                                RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy.canOpenLatest(st.z), st.function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u2415, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                                RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(st.z2), st.function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u2415, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
                                 ComposerKt.sourceInformationMarkerEnd($composer);
                                 ComposerKt.sourceInformationMarkerEnd($composer);
                                 $composer.endNode();
@@ -1134,10 +1223,10 @@ public final class RazrCoverShellKt {
                                 }
                                 return;
                             }
-                            localMap$iv$iv4 = localMap$iv$iv3;
-                            $this$Layout_u24lambda_u240$iv$iv5.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv5));
-                            $this$Layout_u24lambda_u240$iv$iv5.apply(Integer.valueOf(compositeKeyHash$iv$iv5), setCompositeKeyHash8);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv8, ComposeUiNode.Companion.getSetModifier());
+                            st.localMap$iv$iv4 = st.localMap$iv$iv3;
+                            st.$this$Layout_u24lambda_u240$iv$iv5.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv5));
+                            st.$this$Layout_u24lambda_u240$iv$iv5.apply(Integer.valueOf(st.compositeKeyHash$iv$iv5), setCompositeKeyHash8);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv8, ComposeUiNode.Companion.getSetModifier());
                             int i110 = ($changed$iv$iv$iv8 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                             ColumnScopeInstance columnScopeInstance7 = ColumnScopeInstance.INSTANCE;
@@ -1145,12 +1234,12 @@ public final class RazrCoverShellKt {
                             ComposerKt.sourceInformationMarkerStart($composer, 763412498, "C170@7030L15,168@6959L293,176@7269L29,179@7384L10,177@7315L278,195@7997L29,200@8202L14,196@8043L193,202@8253L29,203@8299L1366:RazrCoverShell.kt#z0j3je");
                             ai.nous.aurora.compat.Compat.m3067Text4IGK_g("LATEST THREAD", (Modifier) null, AuroraColorSchemeKt.getAuroraTextFaint($composer, 0), TextUnitKt.getSp(9), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), TextUnitKt.getSp(1), (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 12782598, 0, 130834);
                             SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(5)), $composer, 6);
-                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
+                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
                             $composer.startReplaceGroup(-529544623);
                             ComposerKt.sourceInformation($composer, "186@7658L29,189@7786L15,187@7708L254");
-                            if (!StringsKt.isBlank(str4)) {
+                            if (!StringsKt.isBlank(st.str4)) {
                                 SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(3)), $composer, 6);
-                                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                             }
                             $composer.endReplaceGroup();
                             SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(9)), $composer, 6);
@@ -1164,10 +1253,10 @@ public final class RazrCoverShellKt {
                             MeasurePolicy measurePolicy$iv18 = RowKt.rowMeasurePolicy(horizontalArrangement$iv5, verticalAlignment$iv5, $composer, $changed$iv2);
                             int $changed$iv$iv15 = (390 << 3) & 112;
                             ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                            compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                            st.compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                             CompositionLocalMap localMap$iv$iv17 = $composer.getCurrentCompositionLocalMap();
                             Modifier materialized$iv$iv15 = ComposedModifierKt.materializeModifier($composer, modifier$iv15);
-                            constructor6 = ComposeUiNode.Companion.getConstructor();
+                            st.constructor6 = ComposeUiNode.Companion.getConstructor();
                             int $changed$iv$iv$iv15 = (($changed$iv$iv15 << 6) & 896) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                             if (!($composer.getApplier() instanceof Applier)) {
@@ -1175,38 +1264,38 @@ public final class RazrCoverShellKt {
                             }
                             $composer.startReusableNode();
                             if ($composer.getInserting()) {
-                                function8 = constructor6;
-                                $composer.createNode(function8);
+                                st.function8 = st.constructor6;
+                                $composer.createNode(st.function8);
                             } else {
-                                function8 = constructor6;
+                                st.function8 = st.constructor6;
                                 $composer.useNode();
                             }
-                            $this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv18, ComposeUiNode.Companion.getSetMeasurePolicy());
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv17, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                            st.$this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv18, ComposeUiNode.Companion.getSetMeasurePolicy());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv17, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                             Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash15 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                            if (!$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
+                            if (!st.$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
                             }
-                            $this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv6));
-                            $this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(compositeKeyHash$iv$iv6), setCompositeKeyHash15);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv15, ComposeUiNode.Companion.getSetModifier());
+                            st.$this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv6));
+                            st.$this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(st.compositeKeyHash$iv$iv6), setCompositeKeyHash15);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv15, ComposeUiNode.Companion.getSetModifier());
                             int i112 = ($changed$iv$iv$iv15 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                             int i113 = ((390 >> 6) & 112) | 6;
-                            $this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
+                            st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
                             ComposerKt.sourceInformationMarkerStart($composer, -1980267798, "C220@9102L15,218@8996L282:RazrCoverShell.kt#z0j3je");
                             $composer.startReplaceGroup(-618069607);
                             ComposerKt.sourceInformation($composer, "210@8649L11,208@8527L373,216@8925L28");
-                            if (uiState.getSelectedModel() != null) {
-                                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
+                            if (st.uiState.getSelectedModel() != null) {
+                                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(st.uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
                                 SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1084width3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(8)), $composer, 6);
                             }
                             $composer.endReplaceGroup();
-                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + st.uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                             $composer.startReplaceGroup(-618043174);
                             ComposerKt.sourceInformation($composer, "226@9344L27,229@9479L11,227@9396L229");
-                            if (uiState.getSending()) {
-                                SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
+                            if (st.uiState.getSending()) {
+                                SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6(st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
                                 ai.nous.aurora.compat.Compat.m3067Text4IGK_g("thinking…", (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199686, 0, 131026);
                             }
                             $composer.endReplaceGroup();
@@ -1236,10 +1325,10 @@ public final class RazrCoverShellKt {
                             MeasurePolicy measurePolicy$iv19 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv7, horizontalAlignment$iv7, $composer, ((384 >> 3) & 14) | ((384 >> 3) & 112));
                             int $changed$iv$iv16 = (384 << 3) & 112;
                             ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                            compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                            st.compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                             CompositionLocalMap localMap$iv$iv18 = $composer.getCurrentCompositionLocalMap();
                             Modifier materialized$iv$iv16 = ComposedModifierKt.materializeModifier($composer, modifier$iv16);
-                            constructor7 = ComposeUiNode.Companion.getConstructor();
+                            st.constructor7 = ComposeUiNode.Companion.getConstructor();
                             int $i$f$Column3 = $changed$iv$iv16 << 6;
                             int $changed$iv$iv$iv16 = ($i$f$Column3 & 896) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
@@ -1248,21 +1337,21 @@ public final class RazrCoverShellKt {
                             }
                             $composer.startReusableNode();
                             if ($composer.getInserting()) {
-                                function9 = constructor7;
-                                $composer.createNode(function9);
+                                st.function9 = st.constructor7;
+                                $composer.createNode(st.function9);
                             } else {
-                                function9 = constructor7;
+                                st.function9 = st.constructor7;
                                 $composer.useNode();
                             }
-                            $this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv19, ComposeUiNode.Companion.getSetMeasurePolicy());
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv18, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                            st.$this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv19, ComposeUiNode.Companion.getSetMeasurePolicy());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv18, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                             Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash16 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                            if (!$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
+                            if (!st.$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
                             }
-                            $this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv7));
-                            $this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(compositeKeyHash$iv$iv7), setCompositeKeyHash16);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv16, ComposeUiNode.Companion.getSetModifier());
+                            st.$this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv7));
+                            st.$this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(st.compositeKeyHash$iv$iv7), setCompositeKeyHash16);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv16, ComposeUiNode.Companion.getSetModifier());
                             int i114 = ($changed$iv$iv$iv16 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                             ColumnScopeInstance columnScopeInstance8 = ColumnScopeInstance.INSTANCE;
@@ -1274,10 +1363,10 @@ public final class RazrCoverShellKt {
                             MeasurePolicy measurePolicy$iv110 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv5, false);
                             int $changed$iv$iv17 = (48 << 3) & 112;
                             ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                            compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                            st.compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                             CompositionLocalMap localMap$iv$iv19 = $composer.getCurrentCompositionLocalMap();
                             Modifier materialized$iv$iv17 = ComposedModifierKt.materializeModifier($composer, modifier$iv17);
-                            constructor8 = ComposeUiNode.Companion.getConstructor();
+                            st.constructor8 = ComposeUiNode.Companion.getConstructor();
                             int $changed$iv$iv$iv17 = (($changed$iv$iv17 << 6) & 896) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                             if (!($composer.getApplier() instanceof Applier)) {
@@ -1285,21 +1374,21 @@ public final class RazrCoverShellKt {
                             }
                             $composer.startReusableNode();
                             if ($composer.getInserting()) {
-                                function10 = constructor8;
-                                $composer.createNode(function10);
+                                st.function10 = st.constructor8;
+                                $composer.createNode(st.function10);
                             } else {
-                                function10 = constructor8;
+                                st.function10 = st.constructor8;
                                 $composer.useNode();
                             }
-                            $this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv110, ComposeUiNode.Companion.getSetMeasurePolicy());
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv19, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                            st.$this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv110, ComposeUiNode.Companion.getSetMeasurePolicy());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv19, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                             Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash17 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                            if (!$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
+                            if (!st.$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
                             }
-                            $this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv8));
-                            $this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(compositeKeyHash$iv$iv8), setCompositeKeyHash17);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv17, ComposeUiNode.Companion.getSetModifier());
+                            st.$this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv8));
+                            st.$this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(st.compositeKeyHash$iv$iv8), setCompositeKeyHash17);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv17, ComposeUiNode.Companion.getSetModifier());
                             int i210 = ($changed$iv$iv$iv17 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                             BoxScopeInstance boxScopeInstance5 = BoxScopeInstance.INSTANCE;
@@ -1314,44 +1403,44 @@ public final class RazrCoverShellKt {
                             Modifier modifierM600borderxT4_qwU2 = ai.nous.aurora.compat.Compat.m600borderxT4_qwU(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip5, ai.nous.aurora.compat.Compat.m4532copywmQWz5c(auroraAmber4, (14 & 1) != 0 ? ai.nous.aurora.compat.Compat.m4536getAlphaimpl(auroraAmber4) : 0.22f, (14 & 2) != 0 ? ai.nous.aurora.compat.Compat.m4540getRedimpl(auroraAmber4) : 0.0f, (14 & 4) != 0 ? ai.nous.aurora.compat.Compat.m4539getGreenimpl(auroraAmber4) : 0.0f, (14 & 8) != 0 ? ai.nous.aurora.compat.Compat.m4537getBlueimpl(auroraAmber4) : 0.0f), null, 2, null), ai.nous.aurora.compat.Compat.m7016constructorimpl(2), AuroraColorSchemeKt.getAuroraAmber($composer, 0), RoundedCornerShapeKt.getCircleShape());
                             $composer.startReplaceGroup(-529441171);
                             ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                            invalid$iv = $composer.changed(z2);
+                            st.invalid$iv = $composer.changed(st.z2);
                             Object it$iv3 = $composer.rememberedValue();
-                            if (!invalid$iv) {
+                            if (!st.invalid$iv) {
                             }
-                            value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
+                            st.value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
                                 @Override // kotlin.jvm.functions.Function1
                                 public final Object invoke(Object obj) {
-                                    return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(z2, (SemanticsPropertyReceiver) obj);
+                                    return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(st.z2, (SemanticsPropertyReceiver) obj);
                                 }
                             };
-                            $composer.updateRememberedValue(value$iv);
+                            $composer.updateRememberedValue(st.value$iv);
                             $composer.endReplaceGroup();
-                            Modifier modifierSemantics$default2 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU2, false, (Function1) value$iv, 1, null);
-                            boolean zCanTalk2 = CoverShellPolicy.INSTANCE.canTalk(z2);
+                            Modifier modifierSemantics$default2 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU2, false, (Function1) st.value$iv, 1, null);
+                            boolean zCanTalk2 = CoverShellPolicy.INSTANCE.canTalk(st.z2);
                             $composer.startReplaceGroup(-529427629);
                             ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                            invalid$iv2 = $composer.changedInstance(context);
+                            st.invalid$iv2 = $composer.changedInstance(st.context);
                             Object it$iv4 = $composer.rememberedValue();
-                            if (!invalid$iv2) {
+                            if (!st.invalid$iv2) {
                             }
-                            value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
+                            st.value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
                                 @Override // kotlin.jvm.functions.Function0
                                 public final Object invoke() {
-                                    return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(context);
+                                    return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(st.context);
                                 }
                             };
-                            $composer.updateRememberedValue(value$iv2);
+                            $composer.updateRememberedValue(st.value$iv2);
                             $composer.endReplaceGroup();
-                            Modifier modifier$iv18 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default2, zCanTalk2, "Start voice Assist", null, (Function0) value$iv2, 4, null);
+                            Modifier modifier$iv18 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default2, zCanTalk2, "Start voice Assist", null, (Function0) st.value$iv2, 4, null);
                             Alignment contentAlignment$iv6 = Alignment.Companion.getCenter();
                             ComposerKt.sourceInformationMarkerStart($composer, 733328855, "CC(Box)P(2,1,3)72@3384L130:Box.kt#2w3rfo");
                             MeasurePolicy measurePolicy$iv111 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv6, false);
                             int $changed$iv$iv18 = (48 << 3) & 112;
                             ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                            compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                            st.compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                             CompositionLocalMap localMap$iv$iv110 = $composer.getCurrentCompositionLocalMap();
                             Modifier materialized$iv$iv18 = ComposedModifierKt.materializeModifier($composer, modifier$iv18);
-                            constructor9 = ComposeUiNode.Companion.getConstructor();
+                            st.constructor9 = ComposeUiNode.Companion.getConstructor();
                             int $changed$iv$iv$iv18 = (($changed$iv$iv18 << 6) & 896) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                             if (!($composer.getApplier() instanceof Applier)) {
@@ -1359,38 +1448,38 @@ public final class RazrCoverShellKt {
                             }
                             $composer.startReusableNode();
                             if ($composer.getInserting()) {
-                                function11 = constructor9;
-                                $composer.createNode(function11);
+                                st.function11 = st.constructor9;
+                                $composer.createNode(st.function11);
                             } else {
-                                function11 = constructor9;
+                                st.function11 = st.constructor9;
                                 $composer.useNode();
                             }
-                            $this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv111, ComposeUiNode.Companion.getSetMeasurePolicy());
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv110, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                            st.$this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv111, ComposeUiNode.Companion.getSetMeasurePolicy());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv110, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                             Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash18 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                            if (!$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
+                            if (!st.$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
                             }
-                            $this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv9));
-                            $this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(compositeKeyHash$iv$iv9), setCompositeKeyHash18);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv18, ComposeUiNode.Companion.getSetModifier());
+                            st.$this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv9));
+                            st.$this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(st.compositeKeyHash$iv$iv9), setCompositeKeyHash18);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv18, ComposeUiNode.Companion.getSetModifier());
                             int i212 = ($changed$iv$iv$iv18 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                             BoxScopeInstance boxScopeInstance6 = BoxScopeInstance.INSTANCE;
                             int i213 = ((48 >> 6) & 112) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -1977158684, "C281@11632L225:RazrCoverShell.kt#z0j3je");
                             Modifier modifierClip6 = ClipKt.clip(ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(56)), RoundedCornerShapeKt.getCircleShape());
-                            if (z2) {
+                            if (st.z2) {
                                 $composer.startReplaceGroup(-617963319);
                                 ComposerKt.sourceInformation($composer, "285@11805L11");
-                                auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
+                                st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
                             } else {
                                 $composer.startReplaceGroup(-617962771);
                                 ComposerKt.sourceInformation($composer, "285@11822L15");
-                                auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
+                                st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
                             }
                             $composer.endReplaceGroup();
-                            BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip6, auroraTextMuted2, null, 2, null), $composer, 0);
+                            BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip6, st.auroraTextMuted2, null, 2, null), $composer, 0);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             $composer.endNode();
@@ -1404,12 +1493,12 @@ public final class RazrCoverShellKt {
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(6)), $composer, 6);
-                            if (z2) {
-                                str = "TALK · tap orb or power";
+                            if (st.z2) {
+                                st.str = "TALK · tap orb or power";
                             } else {
-                                str = "Offline";
+                                st.str = "Offline";
                             }
-                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
+                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             $composer.endNode();
@@ -1429,10 +1518,10 @@ public final class RazrCoverShellKt {
                             MeasurePolicy measurePolicy$iv112 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv8, horizontalAlignment$iv8, $composer, ((390 >> 3) & 14) | ((390 >> 3) & 112));
                             int $changed$iv$iv19 = (390 << 3) & 112;
                             ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                            compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                            st.compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                             CompositionLocalMap localMap$iv$iv111 = $composer.getCurrentCompositionLocalMap();
                             Modifier materialized$iv$iv19 = ComposedModifierKt.materializeModifier($composer, modifier$iv19);
-                            constructor10 = ComposeUiNode.Companion.getConstructor();
+                            st.constructor10 = ComposeUiNode.Companion.getConstructor();
                             int $changed$iv$iv$iv19 = (($changed$iv$iv19 << 6) & 896) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                             if (!($composer.getApplier() instanceof Applier)) {
@@ -1440,19 +1529,19 @@ public final class RazrCoverShellKt {
                             }
                             $composer.startReusableNode();
                             if ($composer.getInserting()) {
-                                $composer.createNode(constructor10);
+                                $composer.createNode(st.constructor10);
                             } else {
                                 $composer.useNode();
                             }
-                            $this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv112, ComposeUiNode.Companion.getSetMeasurePolicy());
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv111, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                            st.$this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv112, ComposeUiNode.Companion.getSetMeasurePolicy());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv111, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                             Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash19 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                            if (!$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
+                            if (!st.$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
                             }
-                            $this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv10));
-                            $this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(compositeKeyHash$iv$iv10), setCompositeKeyHash19);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv19, ComposeUiNode.Companion.getSetModifier());
+                            st.$this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv10));
+                            st.$this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(st.compositeKeyHash$iv$iv10), setCompositeKeyHash19);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv19, ComposeUiNode.Companion.getSetModifier());
                             int i214 = ($changed$iv$iv$iv19 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                             ColumnScopeInstance columnScopeInstance9 = ColumnScopeInstance.INSTANCE;
@@ -1465,10 +1554,10 @@ public final class RazrCoverShellKt {
                             MeasurePolicy measurePolicy$iv113 = RowKt.rowMeasurePolicy(horizontalArrangement$iv6, verticalAlignment$iv6, $composer, ((54 >> 3) & 14) | ((54 >> 3) & 112));
                             int $changed$iv$iv110 = (54 << 3) & 112;
                             ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                            compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                            st.compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                             CompositionLocalMap localMap$iv$iv112 = $composer.getCurrentCompositionLocalMap();
                             Modifier materialized$iv$iv110 = ComposedModifierKt.materializeModifier($composer, modifier$iv110);
-                            constructor11 = ComposeUiNode.Companion.getConstructor();
+                            st.constructor11 = ComposeUiNode.Companion.getConstructor();
                             int $changed$iv$iv$iv110 = (($changed$iv$iv110 << 6) & 896) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                             if (!($composer.getApplier() instanceof Applier)) {
@@ -1476,34 +1565,34 @@ public final class RazrCoverShellKt {
                             }
                             $composer.startReusableNode();
                             if ($composer.getInserting()) {
-                                function12 = constructor11;
-                                $composer.createNode(function12);
+                                st.function12 = st.constructor11;
+                                $composer.createNode(st.function12);
                             } else {
-                                function12 = constructor11;
+                                st.function12 = st.constructor11;
                                 $composer.useNode();
                             }
-                            $this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv113, ComposeUiNode.Companion.getSetMeasurePolicy());
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv112, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                            st.$this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv113, ComposeUiNode.Companion.getSetMeasurePolicy());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv112, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                             Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash110 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                            if (!$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
+                            if (!st.$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
                             }
-                            $this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv11));
-                            $this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(compositeKeyHash$iv$iv11), setCompositeKeyHash110);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv110, ComposeUiNode.Companion.getSetModifier());
+                            st.$this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv11));
+                            st.$this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(st.compositeKeyHash$iv$iv11), setCompositeKeyHash110);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv110, ComposeUiNode.Companion.getSetModifier());
                             int i216 = ($changed$iv$iv$iv110 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                             int i217 = ((54 >> 6) & 112) | 6;
                             RowScope $this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u2416 = RowScopeInstance.INSTANCE;
                             ComposerKt.sourceInformationMarkerStart($composer, -404697066, "C309@12543L264,316@12820L248:RazrCoverShell.kt#z0j3je");
                             CoverShellPolicy coverShellPolicy2 = CoverShellPolicy.INSTANCE;
-                            if (auroraSession != null) {
-                                z = true;
+                            if (st.auroraSession != null) {
+                                st.z = true;
                             } else {
-                                z = false;
+                                st.z = false;
                             }
-                            RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy2.canOpenLatest(z), function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u2416, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
-                            RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(z2), function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u2416, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                            RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy2.canOpenLatest(st.z), st.function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u2416, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                            RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(st.z2), st.function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u2416, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             $composer.endNode();
@@ -1530,11 +1619,11 @@ public final class RazrCoverShellKt {
                             }
                             return;
                         }
-                        measurePolicy$iv5 = measurePolicy$iv4;
-                        localMap$iv$iv2 = localMap$iv$iv;
-                        $this$Layout_u24lambda_u240$iv$iv4.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv4));
-                        $this$Layout_u24lambda_u240$iv$iv4.apply(Integer.valueOf(compositeKeyHash$iv$iv4), setCompositeKeyHash7);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv4, materialized$iv$iv7, ComposeUiNode.Companion.getSetModifier());
+                        st.measurePolicy$iv5 = st.measurePolicy$iv4;
+                        st.localMap$iv$iv2 = st.localMap$iv$iv;
+                        st.$this$Layout_u24lambda_u240$iv$iv4.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv4));
+                        st.$this$Layout_u24lambda_u240$iv$iv4.apply(Integer.valueOf(st.compositeKeyHash$iv$iv4), setCompositeKeyHash7);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv4, materialized$iv$iv7, ComposeUiNode.Companion.getSetModifier());
                         int i115 = ($changed$iv$iv$iv7 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                         BoxScopeInstance boxScopeInstance7 = BoxScopeInstance.INSTANCE;
@@ -1548,10 +1637,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv114 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv9, horizontalAlignment$iv9, $composer, $i$f$Column4);
                         int $changed$iv$iv20 = (6 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv5 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
-                        localMap$iv$iv3 = $composer.getCurrentCompositionLocalMap();
+                        st.compositeKeyHash$iv$iv5 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.localMap$iv$iv3 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv20 = ComposedModifierKt.materializeModifier($composer, modifier$iv20);
-                        constructor5 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor5 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv20 = (($changed$iv$iv20 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -1559,21 +1648,21 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function7 = constructor5;
-                            $composer.createNode(function7);
+                            st.function7 = st.constructor5;
+                            $composer.createNode(st.function7);
                         } else {
-                            function7 = constructor5;
+                            st.function7 = st.constructor5;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv5 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, measurePolicy$iv114, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, localMap$iv$iv3, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv5 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, measurePolicy$iv114, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, st.localMap$iv$iv3, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash20 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv5.getInserting()) {
-                            localMap$iv$iv4 = localMap$iv$iv3;
-                            if (!Intrinsics.areEqual($this$Layout_u24lambda_u240$iv$iv5.rememberedValue(), Integer.valueOf(compositeKeyHash$iv$iv5))) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv5.getInserting()) {
+                            st.localMap$iv$iv4 = st.localMap$iv$iv3;
+                            if (!Intrinsics.areEqual(st.$this$Layout_u24lambda_u240$iv$iv5.rememberedValue(), Integer.valueOf(st.compositeKeyHash$iv$iv5))) {
                             }
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv20, ComposeUiNode.Companion.getSetModifier());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv20, ComposeUiNode.Companion.getSetModifier());
                             int i117 = ($changed$iv$iv$iv20 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                             ColumnScopeInstance columnScopeInstance10 = ColumnScopeInstance.INSTANCE;
@@ -1581,12 +1670,12 @@ public final class RazrCoverShellKt {
                             ComposerKt.sourceInformationMarkerStart($composer, 763412498, "C170@7030L15,168@6959L293,176@7269L29,179@7384L10,177@7315L278,195@7997L29,200@8202L14,196@8043L193,202@8253L29,203@8299L1366:RazrCoverShell.kt#z0j3je");
                             ai.nous.aurora.compat.Compat.m3067Text4IGK_g("LATEST THREAD", (Modifier) null, AuroraColorSchemeKt.getAuroraTextFaint($composer, 0), TextUnitKt.getSp(9), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), TextUnitKt.getSp(1), (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 12782598, 0, 130834);
                             SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(5)), $composer, 6);
-                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
+                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
                             $composer.startReplaceGroup(-529544623);
                             ComposerKt.sourceInformation($composer, "186@7658L29,189@7786L15,187@7708L254");
-                            if (!StringsKt.isBlank(str4)) {
+                            if (!StringsKt.isBlank(st.str4)) {
                                 SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(3)), $composer, 6);
-                                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                             }
                             $composer.endReplaceGroup();
                             SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(9)), $composer, 6);
@@ -1600,10 +1689,10 @@ public final class RazrCoverShellKt {
                             MeasurePolicy measurePolicy$iv115 = RowKt.rowMeasurePolicy(horizontalArrangement$iv7, verticalAlignment$iv7, $composer, $changed$iv3);
                             int $changed$iv$iv111 = (390 << 3) & 112;
                             ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                            compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                            st.compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                             CompositionLocalMap localMap$iv$iv113 = $composer.getCurrentCompositionLocalMap();
                             Modifier materialized$iv$iv111 = ComposedModifierKt.materializeModifier($composer, modifier$iv111);
-                            constructor6 = ComposeUiNode.Companion.getConstructor();
+                            st.constructor6 = ComposeUiNode.Companion.getConstructor();
                             int $changed$iv$iv$iv111 = (($changed$iv$iv111 << 6) & 896) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                             if (!($composer.getApplier() instanceof Applier)) {
@@ -1611,38 +1700,38 @@ public final class RazrCoverShellKt {
                             }
                             $composer.startReusableNode();
                             if ($composer.getInserting()) {
-                                function8 = constructor6;
-                                $composer.createNode(function8);
+                                st.function8 = st.constructor6;
+                                $composer.createNode(st.function8);
                             } else {
-                                function8 = constructor6;
+                                st.function8 = st.constructor6;
                                 $composer.useNode();
                             }
-                            $this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv115, ComposeUiNode.Companion.getSetMeasurePolicy());
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv113, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                            st.$this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv115, ComposeUiNode.Companion.getSetMeasurePolicy());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv113, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                             Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash111 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                            if (!$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
+                            if (!st.$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
                             }
-                            $this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv6));
-                            $this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(compositeKeyHash$iv$iv6), setCompositeKeyHash111);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv111, ComposeUiNode.Companion.getSetModifier());
+                            st.$this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv6));
+                            st.$this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(st.compositeKeyHash$iv$iv6), setCompositeKeyHash111);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv111, ComposeUiNode.Companion.getSetModifier());
                             int i119 = ($changed$iv$iv$iv111 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                             int i1110 = ((390 >> 6) & 112) | 6;
-                            $this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
+                            st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
                             ComposerKt.sourceInformationMarkerStart($composer, -1980267798, "C220@9102L15,218@8996L282:RazrCoverShell.kt#z0j3je");
                             $composer.startReplaceGroup(-618069607);
                             ComposerKt.sourceInformation($composer, "210@8649L11,208@8527L373,216@8925L28");
-                            if (uiState.getSelectedModel() != null) {
-                                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
+                            if (st.uiState.getSelectedModel() != null) {
+                                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(st.uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
                                 SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1084width3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(8)), $composer, 6);
                             }
                             $composer.endReplaceGroup();
-                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + st.uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                             $composer.startReplaceGroup(-618043174);
                             ComposerKt.sourceInformation($composer, "226@9344L27,229@9479L11,227@9396L229");
-                            if (uiState.getSending()) {
-                                SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
+                            if (st.uiState.getSending()) {
+                                SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6(st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
                                 ai.nous.aurora.compat.Compat.m3067Text4IGK_g("thinking…", (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199686, 0, 131026);
                             }
                             $composer.endReplaceGroup();
@@ -1672,10 +1761,10 @@ public final class RazrCoverShellKt {
                             MeasurePolicy measurePolicy$iv116 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv10, horizontalAlignment$iv10, $composer, ((384 >> 3) & 14) | ((384 >> 3) & 112));
                             int $changed$iv$iv112 = (384 << 3) & 112;
                             ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                            compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                            st.compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                             CompositionLocalMap localMap$iv$iv114 = $composer.getCurrentCompositionLocalMap();
                             Modifier materialized$iv$iv112 = ComposedModifierKt.materializeModifier($composer, modifier$iv112);
-                            constructor7 = ComposeUiNode.Companion.getConstructor();
+                            st.constructor7 = ComposeUiNode.Companion.getConstructor();
                             int $i$f$Column5 = $changed$iv$iv112 << 6;
                             int $changed$iv$iv$iv112 = ($i$f$Column5 & 896) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
@@ -1684,21 +1773,21 @@ public final class RazrCoverShellKt {
                             }
                             $composer.startReusableNode();
                             if ($composer.getInserting()) {
-                                function9 = constructor7;
-                                $composer.createNode(function9);
+                                st.function9 = st.constructor7;
+                                $composer.createNode(st.function9);
                             } else {
-                                function9 = constructor7;
+                                st.function9 = st.constructor7;
                                 $composer.useNode();
                             }
-                            $this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv116, ComposeUiNode.Companion.getSetMeasurePolicy());
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv114, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                            st.$this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv116, ComposeUiNode.Companion.getSetMeasurePolicy());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv114, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                             Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash112 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                            if (!$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
+                            if (!st.$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
                             }
-                            $this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv7));
-                            $this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(compositeKeyHash$iv$iv7), setCompositeKeyHash112);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv112, ComposeUiNode.Companion.getSetModifier());
+                            st.$this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv7));
+                            st.$this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(st.compositeKeyHash$iv$iv7), setCompositeKeyHash112);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv112, ComposeUiNode.Companion.getSetModifier());
                             int i1111 = ($changed$iv$iv$iv112 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                             ColumnScopeInstance columnScopeInstance11 = ColumnScopeInstance.INSTANCE;
@@ -1710,10 +1799,10 @@ public final class RazrCoverShellKt {
                             MeasurePolicy measurePolicy$iv117 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv7, false);
                             int $changed$iv$iv113 = (48 << 3) & 112;
                             ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                            compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                            st.compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                             CompositionLocalMap localMap$iv$iv115 = $composer.getCurrentCompositionLocalMap();
                             Modifier materialized$iv$iv113 = ComposedModifierKt.materializeModifier($composer, modifier$iv113);
-                            constructor8 = ComposeUiNode.Companion.getConstructor();
+                            st.constructor8 = ComposeUiNode.Companion.getConstructor();
                             int $changed$iv$iv$iv113 = (($changed$iv$iv113 << 6) & 896) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                             if (!($composer.getApplier() instanceof Applier)) {
@@ -1721,21 +1810,21 @@ public final class RazrCoverShellKt {
                             }
                             $composer.startReusableNode();
                             if ($composer.getInserting()) {
-                                function10 = constructor8;
-                                $composer.createNode(function10);
+                                st.function10 = st.constructor8;
+                                $composer.createNode(st.function10);
                             } else {
-                                function10 = constructor8;
+                                st.function10 = st.constructor8;
                                 $composer.useNode();
                             }
-                            $this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv117, ComposeUiNode.Companion.getSetMeasurePolicy());
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv115, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                            st.$this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv117, ComposeUiNode.Companion.getSetMeasurePolicy());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv115, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                             Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash113 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                            if (!$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
+                            if (!st.$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
                             }
-                            $this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv8));
-                            $this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(compositeKeyHash$iv$iv8), setCompositeKeyHash113);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv113, ComposeUiNode.Companion.getSetModifier());
+                            st.$this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv8));
+                            st.$this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(st.compositeKeyHash$iv$iv8), setCompositeKeyHash113);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv113, ComposeUiNode.Companion.getSetModifier());
                             int i219 = ($changed$iv$iv$iv113 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                             BoxScopeInstance boxScopeInstance8 = BoxScopeInstance.INSTANCE;
@@ -1750,44 +1839,44 @@ public final class RazrCoverShellKt {
                             Modifier modifierM600borderxT4_qwU3 = ai.nous.aurora.compat.Compat.m600borderxT4_qwU(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip7, ai.nous.aurora.compat.Compat.m4532copywmQWz5c(auroraAmber6, (14 & 1) != 0 ? ai.nous.aurora.compat.Compat.m4536getAlphaimpl(auroraAmber6) : 0.22f, (14 & 2) != 0 ? ai.nous.aurora.compat.Compat.m4540getRedimpl(auroraAmber6) : 0.0f, (14 & 4) != 0 ? ai.nous.aurora.compat.Compat.m4539getGreenimpl(auroraAmber6) : 0.0f, (14 & 8) != 0 ? ai.nous.aurora.compat.Compat.m4537getBlueimpl(auroraAmber6) : 0.0f), null, 2, null), ai.nous.aurora.compat.Compat.m7016constructorimpl(2), AuroraColorSchemeKt.getAuroraAmber($composer, 0), RoundedCornerShapeKt.getCircleShape());
                             $composer.startReplaceGroup(-529441171);
                             ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                            invalid$iv = $composer.changed(z2);
+                            st.invalid$iv = $composer.changed(st.z2);
                             Object it$iv5 = $composer.rememberedValue();
-                            if (!invalid$iv) {
+                            if (!st.invalid$iv) {
                             }
-                            value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
+                            st.value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
                                 @Override // kotlin.jvm.functions.Function1
                                 public final Object invoke(Object obj) {
-                                    return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(z2, (SemanticsPropertyReceiver) obj);
+                                    return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(st.z2, (SemanticsPropertyReceiver) obj);
                                 }
                             };
-                            $composer.updateRememberedValue(value$iv);
+                            $composer.updateRememberedValue(st.value$iv);
                             $composer.endReplaceGroup();
-                            Modifier modifierSemantics$default3 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU3, false, (Function1) value$iv, 1, null);
-                            boolean zCanTalk3 = CoverShellPolicy.INSTANCE.canTalk(z2);
+                            Modifier modifierSemantics$default3 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU3, false, (Function1) st.value$iv, 1, null);
+                            boolean zCanTalk3 = CoverShellPolicy.INSTANCE.canTalk(st.z2);
                             $composer.startReplaceGroup(-529427629);
                             ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                            invalid$iv2 = $composer.changedInstance(context);
+                            st.invalid$iv2 = $composer.changedInstance(st.context);
                             Object it$iv6 = $composer.rememberedValue();
-                            if (!invalid$iv2) {
+                            if (!st.invalid$iv2) {
                             }
-                            value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
+                            st.value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
                                 @Override // kotlin.jvm.functions.Function0
                                 public final Object invoke() {
-                                    return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(context);
+                                    return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(st.context);
                                 }
                             };
-                            $composer.updateRememberedValue(value$iv2);
+                            $composer.updateRememberedValue(st.value$iv2);
                             $composer.endReplaceGroup();
-                            Modifier modifier$iv114 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default3, zCanTalk3, "Start voice Assist", null, (Function0) value$iv2, 4, null);
+                            Modifier modifier$iv114 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default3, zCanTalk3, "Start voice Assist", null, (Function0) st.value$iv2, 4, null);
                             Alignment contentAlignment$iv8 = Alignment.Companion.getCenter();
                             ComposerKt.sourceInformationMarkerStart($composer, 733328855, "CC(Box)P(2,1,3)72@3384L130:Box.kt#2w3rfo");
                             MeasurePolicy measurePolicy$iv118 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv8, false);
                             int $changed$iv$iv114 = (48 << 3) & 112;
                             ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                            compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                            st.compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                             CompositionLocalMap localMap$iv$iv116 = $composer.getCurrentCompositionLocalMap();
                             Modifier materialized$iv$iv114 = ComposedModifierKt.materializeModifier($composer, modifier$iv114);
-                            constructor9 = ComposeUiNode.Companion.getConstructor();
+                            st.constructor9 = ComposeUiNode.Companion.getConstructor();
                             int $changed$iv$iv$iv114 = (($changed$iv$iv114 << 6) & 896) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                             if (!($composer.getApplier() instanceof Applier)) {
@@ -1795,38 +1884,38 @@ public final class RazrCoverShellKt {
                             }
                             $composer.startReusableNode();
                             if ($composer.getInserting()) {
-                                function11 = constructor9;
-                                $composer.createNode(function11);
+                                st.function11 = st.constructor9;
+                                $composer.createNode(st.function11);
                             } else {
-                                function11 = constructor9;
+                                st.function11 = st.constructor9;
                                 $composer.useNode();
                             }
-                            $this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv118, ComposeUiNode.Companion.getSetMeasurePolicy());
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv116, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                            st.$this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv118, ComposeUiNode.Companion.getSetMeasurePolicy());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv116, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                             Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash114 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                            if (!$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
+                            if (!st.$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
                             }
-                            $this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv9));
-                            $this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(compositeKeyHash$iv$iv9), setCompositeKeyHash114);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv114, ComposeUiNode.Companion.getSetModifier());
+                            st.$this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv9));
+                            st.$this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(st.compositeKeyHash$iv$iv9), setCompositeKeyHash114);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv114, ComposeUiNode.Companion.getSetModifier());
                             int i2111 = ($changed$iv$iv$iv114 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                             BoxScopeInstance boxScopeInstance9 = BoxScopeInstance.INSTANCE;
                             int i2112 = ((48 >> 6) & 112) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -1977158684, "C281@11632L225:RazrCoverShell.kt#z0j3je");
                             Modifier modifierClip8 = ClipKt.clip(ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(56)), RoundedCornerShapeKt.getCircleShape());
-                            if (z2) {
+                            if (st.z2) {
                                 $composer.startReplaceGroup(-617963319);
                                 ComposerKt.sourceInformation($composer, "285@11805L11");
-                                auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
+                                st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
                             } else {
                                 $composer.startReplaceGroup(-617962771);
                                 ComposerKt.sourceInformation($composer, "285@11822L15");
-                                auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
+                                st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
                             }
                             $composer.endReplaceGroup();
-                            BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip8, auroraTextMuted2, null, 2, null), $composer, 0);
+                            BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip8, st.auroraTextMuted2, null, 2, null), $composer, 0);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             $composer.endNode();
@@ -1840,12 +1929,12 @@ public final class RazrCoverShellKt {
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(6)), $composer, 6);
-                            if (z2) {
-                                str = "TALK · tap orb or power";
+                            if (st.z2) {
+                                st.str = "TALK · tap orb or power";
                             } else {
-                                str = "Offline";
+                                st.str = "Offline";
                             }
-                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
+                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             $composer.endNode();
@@ -1865,10 +1954,10 @@ public final class RazrCoverShellKt {
                             MeasurePolicy measurePolicy$iv119 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv11, horizontalAlignment$iv11, $composer, ((390 >> 3) & 14) | ((390 >> 3) & 112));
                             int $changed$iv$iv115 = (390 << 3) & 112;
                             ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                            compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                            st.compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                             CompositionLocalMap localMap$iv$iv117 = $composer.getCurrentCompositionLocalMap();
                             Modifier materialized$iv$iv115 = ComposedModifierKt.materializeModifier($composer, modifier$iv115);
-                            constructor10 = ComposeUiNode.Companion.getConstructor();
+                            st.constructor10 = ComposeUiNode.Companion.getConstructor();
                             int $changed$iv$iv$iv115 = (($changed$iv$iv115 << 6) & 896) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                             if (!($composer.getApplier() instanceof Applier)) {
@@ -1876,19 +1965,19 @@ public final class RazrCoverShellKt {
                             }
                             $composer.startReusableNode();
                             if ($composer.getInserting()) {
-                                $composer.createNode(constructor10);
+                                $composer.createNode(st.constructor10);
                             } else {
                                 $composer.useNode();
                             }
-                            $this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv119, ComposeUiNode.Companion.getSetMeasurePolicy());
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv117, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                            st.$this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv119, ComposeUiNode.Companion.getSetMeasurePolicy());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv117, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                             Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash115 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                            if (!$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
+                            if (!st.$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
                             }
-                            $this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv10));
-                            $this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(compositeKeyHash$iv$iv10), setCompositeKeyHash115);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv115, ComposeUiNode.Companion.getSetModifier());
+                            st.$this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv10));
+                            st.$this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(st.compositeKeyHash$iv$iv10), setCompositeKeyHash115);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv115, ComposeUiNode.Companion.getSetModifier());
                             int i2113 = ($changed$iv$iv$iv115 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                             ColumnScopeInstance columnScopeInstance12 = ColumnScopeInstance.INSTANCE;
@@ -1901,10 +1990,10 @@ public final class RazrCoverShellKt {
                             MeasurePolicy measurePolicy$iv1110 = RowKt.rowMeasurePolicy(horizontalArrangement$iv8, verticalAlignment$iv8, $composer, ((54 >> 3) & 14) | ((54 >> 3) & 112));
                             int $changed$iv$iv116 = (54 << 3) & 112;
                             ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                            compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                            st.compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                             CompositionLocalMap localMap$iv$iv118 = $composer.getCurrentCompositionLocalMap();
                             Modifier materialized$iv$iv116 = ComposedModifierKt.materializeModifier($composer, modifier$iv116);
-                            constructor11 = ComposeUiNode.Companion.getConstructor();
+                            st.constructor11 = ComposeUiNode.Companion.getConstructor();
                             int $changed$iv$iv$iv116 = (($changed$iv$iv116 << 6) & 896) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                             if (!($composer.getApplier() instanceof Applier)) {
@@ -1912,34 +2001,34 @@ public final class RazrCoverShellKt {
                             }
                             $composer.startReusableNode();
                             if ($composer.getInserting()) {
-                                function12 = constructor11;
-                                $composer.createNode(function12);
+                                st.function12 = st.constructor11;
+                                $composer.createNode(st.function12);
                             } else {
-                                function12 = constructor11;
+                                st.function12 = st.constructor11;
                                 $composer.useNode();
                             }
-                            $this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv1110, ComposeUiNode.Companion.getSetMeasurePolicy());
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv118, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                            st.$this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv1110, ComposeUiNode.Companion.getSetMeasurePolicy());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv118, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                             Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash116 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                            if (!$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
+                            if (!st.$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
                             }
-                            $this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv11));
-                            $this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(compositeKeyHash$iv$iv11), setCompositeKeyHash116);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv116, ComposeUiNode.Companion.getSetModifier());
+                            st.$this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv11));
+                            st.$this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(st.compositeKeyHash$iv$iv11), setCompositeKeyHash116);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv116, ComposeUiNode.Companion.getSetModifier());
                             int i2115 = ($changed$iv$iv$iv116 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                             int i2116 = ((54 >> 6) & 112) | 6;
                             RowScope $this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u2417 = RowScopeInstance.INSTANCE;
                             ComposerKt.sourceInformationMarkerStart($composer, -404697066, "C309@12543L264,316@12820L248:RazrCoverShell.kt#z0j3je");
                             CoverShellPolicy coverShellPolicy3 = CoverShellPolicy.INSTANCE;
-                            if (auroraSession != null) {
-                                z = true;
+                            if (st.auroraSession != null) {
+                                st.z = true;
                             } else {
-                                z = false;
+                                st.z = false;
                             }
-                            RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy3.canOpenLatest(z), function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u2417, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
-                            RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(z2), function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u2417, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                            RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy3.canOpenLatest(st.z), st.function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u2417, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                            RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(st.z2), st.function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u2417, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             $composer.endNode();
@@ -1966,10 +2055,10 @@ public final class RazrCoverShellKt {
                             }
                             return;
                         }
-                        localMap$iv$iv4 = localMap$iv$iv3;
-                        $this$Layout_u24lambda_u240$iv$iv5.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv5));
-                        $this$Layout_u24lambda_u240$iv$iv5.apply(Integer.valueOf(compositeKeyHash$iv$iv5), setCompositeKeyHash20);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv20, ComposeUiNode.Companion.getSetModifier());
+                        st.localMap$iv$iv4 = st.localMap$iv$iv3;
+                        st.$this$Layout_u24lambda_u240$iv$iv5.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv5));
+                        st.$this$Layout_u24lambda_u240$iv$iv5.apply(Integer.valueOf(st.compositeKeyHash$iv$iv5), setCompositeKeyHash20);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv20, ComposeUiNode.Companion.getSetModifier());
                         int i1112 = ($changed$iv$iv$iv20 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                         ColumnScopeInstance columnScopeInstance13 = ColumnScopeInstance.INSTANCE;
@@ -1977,12 +2066,12 @@ public final class RazrCoverShellKt {
                         ComposerKt.sourceInformationMarkerStart($composer, 763412498, "C170@7030L15,168@6959L293,176@7269L29,179@7384L10,177@7315L278,195@7997L29,200@8202L14,196@8043L193,202@8253L29,203@8299L1366:RazrCoverShell.kt#z0j3je");
                         ai.nous.aurora.compat.Compat.m3067Text4IGK_g("LATEST THREAD", (Modifier) null, AuroraColorSchemeKt.getAuroraTextFaint($composer, 0), TextUnitKt.getSp(9), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), TextUnitKt.getSp(1), (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 12782598, 0, 130834);
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(5)), $composer, 6);
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
                         $composer.startReplaceGroup(-529544623);
                         ComposerKt.sourceInformation($composer, "186@7658L29,189@7786L15,187@7708L254");
-                        if (!StringsKt.isBlank(str4)) {
+                        if (!StringsKt.isBlank(st.str4)) {
                             SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(3)), $composer, 6);
-                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                         }
                         $composer.endReplaceGroup();
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(9)), $composer, 6);
@@ -1996,10 +2085,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv1111 = RowKt.rowMeasurePolicy(horizontalArrangement$iv9, verticalAlignment$iv9, $composer, $changed$iv4);
                         int $changed$iv$iv117 = (390 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv119 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv117 = ComposedModifierKt.materializeModifier($composer, modifier$iv117);
-                        constructor6 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor6 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv117 = (($changed$iv$iv117 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -2007,38 +2096,38 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function8 = constructor6;
-                            $composer.createNode(function8);
+                            st.function8 = st.constructor6;
+                            $composer.createNode(st.function8);
                         } else {
-                            function8 = constructor6;
+                            st.function8 = st.constructor6;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv1111, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv119, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv1111, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv119, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash117 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv6));
-                        $this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(compositeKeyHash$iv$iv6), setCompositeKeyHash117);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv117, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv6));
+                        st.$this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(st.compositeKeyHash$iv$iv6), setCompositeKeyHash117);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv117, ComposeUiNode.Companion.getSetModifier());
                         int i1114 = ($changed$iv$iv$iv117 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                         int i1115 = ((390 >> 6) & 112) | 6;
-                        $this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
+                        st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
                         ComposerKt.sourceInformationMarkerStart($composer, -1980267798, "C220@9102L15,218@8996L282:RazrCoverShell.kt#z0j3je");
                         $composer.startReplaceGroup(-618069607);
                         ComposerKt.sourceInformation($composer, "210@8649L11,208@8527L373,216@8925L28");
-                        if (uiState.getSelectedModel() != null) {
-                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
+                        if (st.uiState.getSelectedModel() != null) {
+                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(st.uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
                             SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1084width3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(8)), $composer, 6);
                         }
                         $composer.endReplaceGroup();
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + st.uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                         $composer.startReplaceGroup(-618043174);
                         ComposerKt.sourceInformation($composer, "226@9344L27,229@9479L11,227@9396L229");
-                        if (uiState.getSending()) {
-                            SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
+                        if (st.uiState.getSending()) {
+                            SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6(st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
                             ai.nous.aurora.compat.Compat.m3067Text4IGK_g("thinking…", (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199686, 0, 131026);
                         }
                         $composer.endReplaceGroup();
@@ -2068,10 +2157,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv1112 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv12, horizontalAlignment$iv12, $composer, ((384 >> 3) & 14) | ((384 >> 3) & 112));
                         int $changed$iv$iv118 = (384 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv1110 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv118 = ComposedModifierKt.materializeModifier($composer, modifier$iv118);
-                        constructor7 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor7 = ComposeUiNode.Companion.getConstructor();
                         int $i$f$Column6 = $changed$iv$iv118 << 6;
                         int $changed$iv$iv$iv118 = ($i$f$Column6 & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
@@ -2080,21 +2169,21 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function9 = constructor7;
-                            $composer.createNode(function9);
+                            st.function9 = st.constructor7;
+                            $composer.createNode(st.function9);
                         } else {
-                            function9 = constructor7;
+                            st.function9 = st.constructor7;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv1112, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv1110, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv1112, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv1110, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash118 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv7));
-                        $this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(compositeKeyHash$iv$iv7), setCompositeKeyHash118);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv118, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv7));
+                        st.$this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(st.compositeKeyHash$iv$iv7), setCompositeKeyHash118);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv118, ComposeUiNode.Companion.getSetModifier());
                         int i1116 = ($changed$iv$iv$iv118 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                         ColumnScopeInstance columnScopeInstance14 = ColumnScopeInstance.INSTANCE;
@@ -2106,10 +2195,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv1113 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv9, false);
                         int $changed$iv$iv119 = (48 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv1111 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv119 = ComposedModifierKt.materializeModifier($composer, modifier$iv119);
-                        constructor8 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor8 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv119 = (($changed$iv$iv119 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -2117,21 +2206,21 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function10 = constructor8;
-                            $composer.createNode(function10);
+                            st.function10 = st.constructor8;
+                            $composer.createNode(st.function10);
                         } else {
-                            function10 = constructor8;
+                            st.function10 = st.constructor8;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv1113, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv1111, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv1113, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv1111, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash119 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv8));
-                        $this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(compositeKeyHash$iv$iv8), setCompositeKeyHash119);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv119, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv8));
+                        st.$this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(st.compositeKeyHash$iv$iv8), setCompositeKeyHash119);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv119, ComposeUiNode.Companion.getSetModifier());
                         int i2118 = ($changed$iv$iv$iv119 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                         BoxScopeInstance boxScopeInstance10 = BoxScopeInstance.INSTANCE;
@@ -2146,44 +2235,44 @@ public final class RazrCoverShellKt {
                         Modifier modifierM600borderxT4_qwU4 = ai.nous.aurora.compat.Compat.m600borderxT4_qwU(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip9, ai.nous.aurora.compat.Compat.m4532copywmQWz5c(auroraAmber8, (14 & 1) != 0 ? ai.nous.aurora.compat.Compat.m4536getAlphaimpl(auroraAmber8) : 0.22f, (14 & 2) != 0 ? ai.nous.aurora.compat.Compat.m4540getRedimpl(auroraAmber8) : 0.0f, (14 & 4) != 0 ? ai.nous.aurora.compat.Compat.m4539getGreenimpl(auroraAmber8) : 0.0f, (14 & 8) != 0 ? ai.nous.aurora.compat.Compat.m4537getBlueimpl(auroraAmber8) : 0.0f), null, 2, null), ai.nous.aurora.compat.Compat.m7016constructorimpl(2), AuroraColorSchemeKt.getAuroraAmber($composer, 0), RoundedCornerShapeKt.getCircleShape());
                         $composer.startReplaceGroup(-529441171);
                         ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                        invalid$iv = $composer.changed(z2);
+                        st.invalid$iv = $composer.changed(st.z2);
                         Object it$iv7 = $composer.rememberedValue();
-                        if (!invalid$iv) {
+                        if (!st.invalid$iv) {
                         }
-                        value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
+                        st.value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(z2, (SemanticsPropertyReceiver) obj);
+                                return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(st.z2, (SemanticsPropertyReceiver) obj);
                             }
                         };
-                        $composer.updateRememberedValue(value$iv);
+                        $composer.updateRememberedValue(st.value$iv);
                         $composer.endReplaceGroup();
-                        Modifier modifierSemantics$default4 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU4, false, (Function1) value$iv, 1, null);
-                        boolean zCanTalk4 = CoverShellPolicy.INSTANCE.canTalk(z2);
+                        Modifier modifierSemantics$default4 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU4, false, (Function1) st.value$iv, 1, null);
+                        boolean zCanTalk4 = CoverShellPolicy.INSTANCE.canTalk(st.z2);
                         $composer.startReplaceGroup(-529427629);
                         ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                        invalid$iv2 = $composer.changedInstance(context);
+                        st.invalid$iv2 = $composer.changedInstance(st.context);
                         Object it$iv8 = $composer.rememberedValue();
-                        if (!invalid$iv2) {
+                        if (!st.invalid$iv2) {
                         }
-                        value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
+                        st.value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
                             @Override // kotlin.jvm.functions.Function0
                             public final Object invoke() {
-                                return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(context);
+                                return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(st.context);
                             }
                         };
-                        $composer.updateRememberedValue(value$iv2);
+                        $composer.updateRememberedValue(st.value$iv2);
                         $composer.endReplaceGroup();
-                        Modifier modifier$iv1110 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default4, zCanTalk4, "Start voice Assist", null, (Function0) value$iv2, 4, null);
+                        Modifier modifier$iv1110 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default4, zCanTalk4, "Start voice Assist", null, (Function0) st.value$iv2, 4, null);
                         Alignment contentAlignment$iv10 = Alignment.Companion.getCenter();
                         ComposerKt.sourceInformationMarkerStart($composer, 733328855, "CC(Box)P(2,1,3)72@3384L130:Box.kt#2w3rfo");
                         MeasurePolicy measurePolicy$iv1114 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv10, false);
                         int $changed$iv$iv1110 = (48 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv1112 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv1110 = ComposedModifierKt.materializeModifier($composer, modifier$iv1110);
-                        constructor9 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor9 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv1110 = (($changed$iv$iv1110 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -2191,38 +2280,38 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function11 = constructor9;
-                            $composer.createNode(function11);
+                            st.function11 = st.constructor9;
+                            $composer.createNode(st.function11);
                         } else {
-                            function11 = constructor9;
+                            st.function11 = st.constructor9;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv1114, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv1112, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv1114, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv1112, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1110 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv9));
-                        $this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(compositeKeyHash$iv$iv9), setCompositeKeyHash1110);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv1110, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv9));
+                        st.$this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(st.compositeKeyHash$iv$iv9), setCompositeKeyHash1110);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv1110, ComposeUiNode.Companion.getSetModifier());
                         int i21110 = ($changed$iv$iv$iv1110 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                         BoxScopeInstance boxScopeInstance11 = BoxScopeInstance.INSTANCE;
                         int i21111 = ((48 >> 6) & 112) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -1977158684, "C281@11632L225:RazrCoverShell.kt#z0j3je");
                         Modifier modifierClip10 = ClipKt.clip(ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(56)), RoundedCornerShapeKt.getCircleShape());
-                        if (z2) {
+                        if (st.z2) {
                             $composer.startReplaceGroup(-617963319);
                             ComposerKt.sourceInformation($composer, "285@11805L11");
-                            auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
+                            st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
                         } else {
                             $composer.startReplaceGroup(-617962771);
                             ComposerKt.sourceInformation($composer, "285@11822L15");
-                            auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
+                            st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
                         }
                         $composer.endReplaceGroup();
-                        BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip10, auroraTextMuted2, null, 2, null), $composer, 0);
+                        BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip10, st.auroraTextMuted2, null, 2, null), $composer, 0);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         $composer.endNode();
@@ -2236,12 +2325,12 @@ public final class RazrCoverShellKt {
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(6)), $composer, 6);
-                        if (z2) {
-                            str = "TALK · tap orb or power";
+                        if (st.z2) {
+                            st.str = "TALK · tap orb or power";
                         } else {
-                            str = "Offline";
+                            st.str = "Offline";
                         }
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         $composer.endNode();
@@ -2261,10 +2350,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv1115 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv13, horizontalAlignment$iv13, $composer, ((390 >> 3) & 14) | ((390 >> 3) & 112));
                         int $changed$iv$iv1111 = (390 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv1113 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv1111 = ComposedModifierKt.materializeModifier($composer, modifier$iv1111);
-                        constructor10 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor10 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv1111 = (($changed$iv$iv1111 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -2272,19 +2361,19 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            $composer.createNode(constructor10);
+                            $composer.createNode(st.constructor10);
                         } else {
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv1115, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv1113, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv1115, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv1113, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1111 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv10));
-                        $this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(compositeKeyHash$iv$iv10), setCompositeKeyHash1111);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv1111, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv10));
+                        st.$this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(st.compositeKeyHash$iv$iv10), setCompositeKeyHash1111);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv1111, ComposeUiNode.Companion.getSetModifier());
                         int i21112 = ($changed$iv$iv$iv1111 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                         ColumnScopeInstance columnScopeInstance15 = ColumnScopeInstance.INSTANCE;
@@ -2297,10 +2386,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv1116 = RowKt.rowMeasurePolicy(horizontalArrangement$iv10, verticalAlignment$iv10, $composer, ((54 >> 3) & 14) | ((54 >> 3) & 112));
                         int $changed$iv$iv1112 = (54 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv1114 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv1112 = ComposedModifierKt.materializeModifier($composer, modifier$iv1112);
-                        constructor11 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor11 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv1112 = (($changed$iv$iv1112 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -2308,34 +2397,34 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function12 = constructor11;
-                            $composer.createNode(function12);
+                            st.function12 = st.constructor11;
+                            $composer.createNode(st.function12);
                         } else {
-                            function12 = constructor11;
+                            st.function12 = st.constructor11;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv1116, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv1114, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv1116, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv1114, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1112 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv11));
-                        $this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(compositeKeyHash$iv$iv11), setCompositeKeyHash1112);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv1112, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv11));
+                        st.$this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(st.compositeKeyHash$iv$iv11), setCompositeKeyHash1112);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv1112, ComposeUiNode.Companion.getSetModifier());
                         int i21114 = ($changed$iv$iv$iv1112 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                         int i21115 = ((54 >> 6) & 112) | 6;
                         RowScope $this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u2418 = RowScopeInstance.INSTANCE;
                         ComposerKt.sourceInformationMarkerStart($composer, -404697066, "C309@12543L264,316@12820L248:RazrCoverShell.kt#z0j3je");
                         CoverShellPolicy coverShellPolicy4 = CoverShellPolicy.INSTANCE;
-                        if (auroraSession != null) {
-                            z = true;
+                        if (st.auroraSession != null) {
+                            st.z = true;
                         } else {
-                            z = false;
+                            st.z = false;
                         }
-                        RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy4.canOpenLatest(z), function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u2418, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
-                        RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(z2), function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u2418, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                        RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy4.canOpenLatest(st.z), st.function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u2418, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                        RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(st.z2), st.function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u2418, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         $composer.endNode();
@@ -2362,39 +2451,39 @@ public final class RazrCoverShellKt {
                         }
                         return;
                     }
-                    measurePolicy$iv3 = measurePolicy$iv2;
-                    $this$Layout_u24lambda_u240$iv$iv3.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv3));
-                    $this$Layout_u24lambda_u240$iv$iv3.apply(Integer.valueOf(compositeKeyHash$iv$iv3), setCompositeKeyHash6);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv3, materialized$iv$iv6, ComposeUiNode.Companion.getSetModifier());
+                    st.measurePolicy$iv3 = st.measurePolicy$iv2;
+                    st.$this$Layout_u24lambda_u240$iv$iv3.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv3));
+                    st.$this$Layout_u24lambda_u240$iv$iv3.apply(Integer.valueOf(st.compositeKeyHash$iv$iv3), setCompositeKeyHash6);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv3, materialized$iv$iv6, ComposeUiNode.Companion.getSetModifier());
                     int i120 = ($changed$iv$iv$iv6 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                     RowScopeInstance rowScopeInstance2 = RowScopeInstance.INSTANCE;
                     int i121 = ((384 >> 6) & 112) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, 762306201, "C139@5911L223,145@6151L28,146@6196L270:RazrCoverShell.kt#z0j3je");
                     Modifier modifierClip11 = ClipKt.clip(ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(7)), RoundedCornerShapeKt.getCircleShape());
-                    if (z2) {
+                    if (st.z2) {
                         $composer.startReplaceGroup(-529593847);
                         ComposerKt.sourceInformation($composer, "143@6083L10");
-                        auroraTextMuted = AuroraColorSchemeKt.getAuroraLive($composer, 0);
+                        st.auroraTextMuted = AuroraColorSchemeKt.getAuroraLive($composer, 0);
                     } else {
                         $composer.startReplaceGroup(-529593330);
                         ComposerKt.sourceInformation($composer, "143@6099L15");
-                        auroraTextMuted = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
+                        st.auroraTextMuted = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
                     }
                     $composer.endReplaceGroup();
-                    BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip11, auroraTextMuted, null, 2, null), $composer, 0);
+                    BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip11, st.auroraTextMuted, null, 2, null), $composer, 0);
                     SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1084width3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(6)), $composer, 6);
-                    if (z2) {
+                    if (st.z2) {
                         $composer.startReplaceGroup(-529587638);
                         ComposerKt.sourceInformation($composer, "148@6277L11");
-                        auroraText = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
+                        st.auroraText = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
                     } else {
                         $composer.startReplaceGroup(-529587095);
                         ComposerKt.sourceInformation($composer, "148@6294L10");
-                        auroraText = AuroraColorSchemeKt.getAuroraText($composer, 0);
+                        st.auroraText = AuroraColorSchemeKt.getAuroraText($composer, 0);
                     }
                     $composer.endReplaceGroup();
-                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str2, (Modifier) null, auroraText, TextUnitKt.getSp(11), (FontStyle) null, FontWeight.Companion.getBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
+                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str2, (Modifier) null, st.auroraText, TextUnitKt.getSp(11), (FontStyle) null, FontWeight.Companion.getBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     $composer.endNode();
@@ -2411,13 +2500,13 @@ public final class RazrCoverShellKt {
                     Modifier modifier$iv21 = ai.nous.aurora.compat.Compat.m1035paddingVpY3zN4(ai.nous.aurora.compat.Compat.m600borderxT4_qwU(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(ClipKt.clip(ai.nous.aurora.compat.Compat.d_SizeKt_fillMaxWidth_4(Modifier.Companion, 0.0f, 1, null), ai.nous.aurora.compat.Compat.m1317RoundedCornerShape0680j_4(ai.nous.aurora.compat.Compat.m7016constructorimpl(16))), AuroraColorSchemeKt.getAuroraSurface($composer, 0), null, 2, null), ai.nous.aurora.compat.Compat.m7016constructorimpl(1), AuroraColorSchemeKt.getAuroraHairline($composer, 0), ai.nous.aurora.compat.Compat.m1317RoundedCornerShape0680j_4(ai.nous.aurora.compat.Compat.m7016constructorimpl(16))), ai.nous.aurora.compat.Compat.m7016constructorimpl(14), ai.nous.aurora.compat.Compat.m7016constructorimpl(13));
                     ComposerKt.sourceInformationMarkerStart($composer, 733328855, "CC(Box)P(2,1,3)72@3384L130:Box.kt#2w3rfo");
                     Alignment contentAlignment$iv11 = Alignment.Companion.getTopStart();
-                    measurePolicy$iv4 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv11, false);
+                    st.measurePolicy$iv4 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv11, false);
                     int $changed$iv$iv21 = (0 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv4 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
-                    localMap$iv$iv = $composer.getCurrentCompositionLocalMap();
+                    st.compositeKeyHash$iv$iv4 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.localMap$iv$iv = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv21 = ComposedModifierKt.materializeModifier($composer, modifier$iv21);
-                    constructor4 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor4 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv21 = (($changed$iv$iv21 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -2425,22 +2514,22 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function6 = constructor4;
-                        $composer.createNode(function6);
+                        st.function6 = st.constructor4;
+                        $composer.createNode(st.function6);
                     } else {
-                        function6 = constructor4;
+                        st.function6 = st.constructor4;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv4 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv4, measurePolicy$iv4, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv4, localMap$iv$iv, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv4 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv4, st.measurePolicy$iv4, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv4, st.localMap$iv$iv, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash21 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv4.getInserting()) {
-                        measurePolicy$iv5 = measurePolicy$iv4;
-                        localMap$iv$iv2 = localMap$iv$iv;
-                        if (!Intrinsics.areEqual($this$Layout_u24lambda_u240$iv$iv4.rememberedValue(), Integer.valueOf(compositeKeyHash$iv$iv4))) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv4.getInserting()) {
+                        st.measurePolicy$iv5 = st.measurePolicy$iv4;
+                        st.localMap$iv$iv2 = st.localMap$iv$iv;
+                        if (!Intrinsics.areEqual(st.$this$Layout_u24lambda_u240$iv$iv4.rememberedValue(), Integer.valueOf(st.compositeKeyHash$iv$iv4))) {
                         }
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv4, materialized$iv$iv21, ComposeUiNode.Companion.getSetModifier());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv4, materialized$iv$iv21, ComposeUiNode.Companion.getSetModifier());
                         int i1117 = ($changed$iv$iv$iv21 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                         BoxScopeInstance boxScopeInstance12 = BoxScopeInstance.INSTANCE;
@@ -2454,10 +2543,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv1117 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv14, horizontalAlignment$iv14, $composer, $i$f$Column7);
                         int $changed$iv$iv22 = (6 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv5 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
-                        localMap$iv$iv3 = $composer.getCurrentCompositionLocalMap();
+                        st.compositeKeyHash$iv$iv5 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.localMap$iv$iv3 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv22 = ComposedModifierKt.materializeModifier($composer, modifier$iv22);
-                        constructor5 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor5 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv22 = (($changed$iv$iv22 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -2465,21 +2554,21 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function7 = constructor5;
-                            $composer.createNode(function7);
+                            st.function7 = st.constructor5;
+                            $composer.createNode(st.function7);
                         } else {
-                            function7 = constructor5;
+                            st.function7 = st.constructor5;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv5 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, measurePolicy$iv1117, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, localMap$iv$iv3, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv5 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, measurePolicy$iv1117, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, st.localMap$iv$iv3, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash22 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv5.getInserting()) {
-                            localMap$iv$iv4 = localMap$iv$iv3;
-                            if (!Intrinsics.areEqual($this$Layout_u24lambda_u240$iv$iv5.rememberedValue(), Integer.valueOf(compositeKeyHash$iv$iv5))) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv5.getInserting()) {
+                            st.localMap$iv$iv4 = st.localMap$iv$iv3;
+                            if (!Intrinsics.areEqual(st.$this$Layout_u24lambda_u240$iv$iv5.rememberedValue(), Integer.valueOf(st.compositeKeyHash$iv$iv5))) {
                             }
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv22, ComposeUiNode.Companion.getSetModifier());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv22, ComposeUiNode.Companion.getSetModifier());
                             int i1119 = ($changed$iv$iv$iv22 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                             ColumnScopeInstance columnScopeInstance16 = ColumnScopeInstance.INSTANCE;
@@ -2487,12 +2576,12 @@ public final class RazrCoverShellKt {
                             ComposerKt.sourceInformationMarkerStart($composer, 763412498, "C170@7030L15,168@6959L293,176@7269L29,179@7384L10,177@7315L278,195@7997L29,200@8202L14,196@8043L193,202@8253L29,203@8299L1366:RazrCoverShell.kt#z0j3je");
                             ai.nous.aurora.compat.Compat.m3067Text4IGK_g("LATEST THREAD", (Modifier) null, AuroraColorSchemeKt.getAuroraTextFaint($composer, 0), TextUnitKt.getSp(9), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), TextUnitKt.getSp(1), (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 12782598, 0, 130834);
                             SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(5)), $composer, 6);
-                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
+                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
                             $composer.startReplaceGroup(-529544623);
                             ComposerKt.sourceInformation($composer, "186@7658L29,189@7786L15,187@7708L254");
-                            if (!StringsKt.isBlank(str4)) {
+                            if (!StringsKt.isBlank(st.str4)) {
                                 SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(3)), $composer, 6);
-                                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                             }
                             $composer.endReplaceGroup();
                             SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(9)), $composer, 6);
@@ -2506,10 +2595,10 @@ public final class RazrCoverShellKt {
                             MeasurePolicy measurePolicy$iv1118 = RowKt.rowMeasurePolicy(horizontalArrangement$iv11, verticalAlignment$iv11, $composer, $changed$iv5);
                             int $changed$iv$iv1113 = (390 << 3) & 112;
                             ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                            compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                            st.compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                             CompositionLocalMap localMap$iv$iv1115 = $composer.getCurrentCompositionLocalMap();
                             Modifier materialized$iv$iv1113 = ComposedModifierKt.materializeModifier($composer, modifier$iv1113);
-                            constructor6 = ComposeUiNode.Companion.getConstructor();
+                            st.constructor6 = ComposeUiNode.Companion.getConstructor();
                             int $changed$iv$iv$iv1113 = (($changed$iv$iv1113 << 6) & 896) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                             if (!($composer.getApplier() instanceof Applier)) {
@@ -2517,38 +2606,38 @@ public final class RazrCoverShellKt {
                             }
                             $composer.startReusableNode();
                             if ($composer.getInserting()) {
-                                function8 = constructor6;
-                                $composer.createNode(function8);
+                                st.function8 = st.constructor6;
+                                $composer.createNode(st.function8);
                             } else {
-                                function8 = constructor6;
+                                st.function8 = st.constructor6;
                                 $composer.useNode();
                             }
-                            $this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv1118, ComposeUiNode.Companion.getSetMeasurePolicy());
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv1115, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                            st.$this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv1118, ComposeUiNode.Companion.getSetMeasurePolicy());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv1115, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                             Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1113 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                            if (!$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
+                            if (!st.$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
                             }
-                            $this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv6));
-                            $this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(compositeKeyHash$iv$iv6), setCompositeKeyHash1113);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv1113, ComposeUiNode.Companion.getSetModifier());
+                            st.$this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv6));
+                            st.$this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(st.compositeKeyHash$iv$iv6), setCompositeKeyHash1113);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv1113, ComposeUiNode.Companion.getSetModifier());
                             int i11111 = ($changed$iv$iv$iv1113 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                             int i11112 = ((390 >> 6) & 112) | 6;
-                            $this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
+                            st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
                             ComposerKt.sourceInformationMarkerStart($composer, -1980267798, "C220@9102L15,218@8996L282:RazrCoverShell.kt#z0j3je");
                             $composer.startReplaceGroup(-618069607);
                             ComposerKt.sourceInformation($composer, "210@8649L11,208@8527L373,216@8925L28");
-                            if (uiState.getSelectedModel() != null) {
-                                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
+                            if (st.uiState.getSelectedModel() != null) {
+                                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(st.uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
                                 SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1084width3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(8)), $composer, 6);
                             }
                             $composer.endReplaceGroup();
-                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + st.uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                             $composer.startReplaceGroup(-618043174);
                             ComposerKt.sourceInformation($composer, "226@9344L27,229@9479L11,227@9396L229");
-                            if (uiState.getSending()) {
-                                SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
+                            if (st.uiState.getSending()) {
+                                SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6(st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
                                 ai.nous.aurora.compat.Compat.m3067Text4IGK_g("thinking…", (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199686, 0, 131026);
                             }
                             $composer.endReplaceGroup();
@@ -2578,10 +2667,10 @@ public final class RazrCoverShellKt {
                             MeasurePolicy measurePolicy$iv1119 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv15, horizontalAlignment$iv15, $composer, ((384 >> 3) & 14) | ((384 >> 3) & 112));
                             int $changed$iv$iv1114 = (384 << 3) & 112;
                             ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                            compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                            st.compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                             CompositionLocalMap localMap$iv$iv1116 = $composer.getCurrentCompositionLocalMap();
                             Modifier materialized$iv$iv1114 = ComposedModifierKt.materializeModifier($composer, modifier$iv1114);
-                            constructor7 = ComposeUiNode.Companion.getConstructor();
+                            st.constructor7 = ComposeUiNode.Companion.getConstructor();
                             int $i$f$Column8 = $changed$iv$iv1114 << 6;
                             int $changed$iv$iv$iv1114 = ($i$f$Column8 & 896) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
@@ -2590,21 +2679,21 @@ public final class RazrCoverShellKt {
                             }
                             $composer.startReusableNode();
                             if ($composer.getInserting()) {
-                                function9 = constructor7;
-                                $composer.createNode(function9);
+                                st.function9 = st.constructor7;
+                                $composer.createNode(st.function9);
                             } else {
-                                function9 = constructor7;
+                                st.function9 = st.constructor7;
                                 $composer.useNode();
                             }
-                            $this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv1119, ComposeUiNode.Companion.getSetMeasurePolicy());
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv1116, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                            st.$this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv1119, ComposeUiNode.Companion.getSetMeasurePolicy());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv1116, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                             Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1114 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                            if (!$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
+                            if (!st.$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
                             }
-                            $this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv7));
-                            $this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(compositeKeyHash$iv$iv7), setCompositeKeyHash1114);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv1114, ComposeUiNode.Companion.getSetModifier());
+                            st.$this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv7));
+                            st.$this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(st.compositeKeyHash$iv$iv7), setCompositeKeyHash1114);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv1114, ComposeUiNode.Companion.getSetModifier());
                             int i11113 = ($changed$iv$iv$iv1114 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                             ColumnScopeInstance columnScopeInstance17 = ColumnScopeInstance.INSTANCE;
@@ -2616,10 +2705,10 @@ public final class RazrCoverShellKt {
                             MeasurePolicy measurePolicy$iv11110 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv12, false);
                             int $changed$iv$iv1115 = (48 << 3) & 112;
                             ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                            compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                            st.compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                             CompositionLocalMap localMap$iv$iv1117 = $composer.getCurrentCompositionLocalMap();
                             Modifier materialized$iv$iv1115 = ComposedModifierKt.materializeModifier($composer, modifier$iv1115);
-                            constructor8 = ComposeUiNode.Companion.getConstructor();
+                            st.constructor8 = ComposeUiNode.Companion.getConstructor();
                             int $changed$iv$iv$iv1115 = (($changed$iv$iv1115 << 6) & 896) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                             if (!($composer.getApplier() instanceof Applier)) {
@@ -2627,21 +2716,21 @@ public final class RazrCoverShellKt {
                             }
                             $composer.startReusableNode();
                             if ($composer.getInserting()) {
-                                function10 = constructor8;
-                                $composer.createNode(function10);
+                                st.function10 = st.constructor8;
+                                $composer.createNode(st.function10);
                             } else {
-                                function10 = constructor8;
+                                st.function10 = st.constructor8;
                                 $composer.useNode();
                             }
-                            $this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv11110, ComposeUiNode.Companion.getSetMeasurePolicy());
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv1117, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                            st.$this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv11110, ComposeUiNode.Companion.getSetMeasurePolicy());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv1117, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                             Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1115 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                            if (!$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
+                            if (!st.$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
                             }
-                            $this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv8));
-                            $this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(compositeKeyHash$iv$iv8), setCompositeKeyHash1115);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv1115, ComposeUiNode.Companion.getSetModifier());
+                            st.$this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv8));
+                            st.$this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(st.compositeKeyHash$iv$iv8), setCompositeKeyHash1115);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv1115, ComposeUiNode.Companion.getSetModifier());
                             int i21117 = ($changed$iv$iv$iv1115 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                             BoxScopeInstance boxScopeInstance13 = BoxScopeInstance.INSTANCE;
@@ -2656,44 +2745,44 @@ public final class RazrCoverShellKt {
                             Modifier modifierM600borderxT4_qwU5 = ai.nous.aurora.compat.Compat.m600borderxT4_qwU(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip12, ai.nous.aurora.compat.Compat.m4532copywmQWz5c(auroraAmber10, (14 & 1) != 0 ? ai.nous.aurora.compat.Compat.m4536getAlphaimpl(auroraAmber10) : 0.22f, (14 & 2) != 0 ? ai.nous.aurora.compat.Compat.m4540getRedimpl(auroraAmber10) : 0.0f, (14 & 4) != 0 ? ai.nous.aurora.compat.Compat.m4539getGreenimpl(auroraAmber10) : 0.0f, (14 & 8) != 0 ? ai.nous.aurora.compat.Compat.m4537getBlueimpl(auroraAmber10) : 0.0f), null, 2, null), ai.nous.aurora.compat.Compat.m7016constructorimpl(2), AuroraColorSchemeKt.getAuroraAmber($composer, 0), RoundedCornerShapeKt.getCircleShape());
                             $composer.startReplaceGroup(-529441171);
                             ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                            invalid$iv = $composer.changed(z2);
+                            st.invalid$iv = $composer.changed(st.z2);
                             Object it$iv9 = $composer.rememberedValue();
-                            if (!invalid$iv) {
+                            if (!st.invalid$iv) {
                             }
-                            value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
+                            st.value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
                                 @Override // kotlin.jvm.functions.Function1
                                 public final Object invoke(Object obj) {
-                                    return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(z2, (SemanticsPropertyReceiver) obj);
+                                    return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(st.z2, (SemanticsPropertyReceiver) obj);
                                 }
                             };
-                            $composer.updateRememberedValue(value$iv);
+                            $composer.updateRememberedValue(st.value$iv);
                             $composer.endReplaceGroup();
-                            Modifier modifierSemantics$default5 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU5, false, (Function1) value$iv, 1, null);
-                            boolean zCanTalk5 = CoverShellPolicy.INSTANCE.canTalk(z2);
+                            Modifier modifierSemantics$default5 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU5, false, (Function1) st.value$iv, 1, null);
+                            boolean zCanTalk5 = CoverShellPolicy.INSTANCE.canTalk(st.z2);
                             $composer.startReplaceGroup(-529427629);
                             ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                            invalid$iv2 = $composer.changedInstance(context);
+                            st.invalid$iv2 = $composer.changedInstance(st.context);
                             Object it$iv10 = $composer.rememberedValue();
-                            if (!invalid$iv2) {
+                            if (!st.invalid$iv2) {
                             }
-                            value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
+                            st.value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
                                 @Override // kotlin.jvm.functions.Function0
                                 public final Object invoke() {
-                                    return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(context);
+                                    return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(st.context);
                                 }
                             };
-                            $composer.updateRememberedValue(value$iv2);
+                            $composer.updateRememberedValue(st.value$iv2);
                             $composer.endReplaceGroup();
-                            Modifier modifier$iv1116 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default5, zCanTalk5, "Start voice Assist", null, (Function0) value$iv2, 4, null);
+                            Modifier modifier$iv1116 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default5, zCanTalk5, "Start voice Assist", null, (Function0) st.value$iv2, 4, null);
                             Alignment contentAlignment$iv13 = Alignment.Companion.getCenter();
                             ComposerKt.sourceInformationMarkerStart($composer, 733328855, "CC(Box)P(2,1,3)72@3384L130:Box.kt#2w3rfo");
                             MeasurePolicy measurePolicy$iv11111 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv13, false);
                             int $changed$iv$iv1116 = (48 << 3) & 112;
                             ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                            compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                            st.compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                             CompositionLocalMap localMap$iv$iv1118 = $composer.getCurrentCompositionLocalMap();
                             Modifier materialized$iv$iv1116 = ComposedModifierKt.materializeModifier($composer, modifier$iv1116);
-                            constructor9 = ComposeUiNode.Companion.getConstructor();
+                            st.constructor9 = ComposeUiNode.Companion.getConstructor();
                             int $changed$iv$iv$iv1116 = (($changed$iv$iv1116 << 6) & 896) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                             if (!($composer.getApplier() instanceof Applier)) {
@@ -2701,38 +2790,38 @@ public final class RazrCoverShellKt {
                             }
                             $composer.startReusableNode();
                             if ($composer.getInserting()) {
-                                function11 = constructor9;
-                                $composer.createNode(function11);
+                                st.function11 = st.constructor9;
+                                $composer.createNode(st.function11);
                             } else {
-                                function11 = constructor9;
+                                st.function11 = st.constructor9;
                                 $composer.useNode();
                             }
-                            $this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv11111, ComposeUiNode.Companion.getSetMeasurePolicy());
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv1118, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                            st.$this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv11111, ComposeUiNode.Companion.getSetMeasurePolicy());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv1118, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                             Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1116 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                            if (!$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
+                            if (!st.$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
                             }
-                            $this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv9));
-                            $this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(compositeKeyHash$iv$iv9), setCompositeKeyHash1116);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv1116, ComposeUiNode.Companion.getSetModifier());
+                            st.$this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv9));
+                            st.$this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(st.compositeKeyHash$iv$iv9), setCompositeKeyHash1116);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv1116, ComposeUiNode.Companion.getSetModifier());
                             int i21119 = ($changed$iv$iv$iv1116 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                             BoxScopeInstance boxScopeInstance14 = BoxScopeInstance.INSTANCE;
                             int i211110 = ((48 >> 6) & 112) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -1977158684, "C281@11632L225:RazrCoverShell.kt#z0j3je");
                             Modifier modifierClip13 = ClipKt.clip(ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(56)), RoundedCornerShapeKt.getCircleShape());
-                            if (z2) {
+                            if (st.z2) {
                                 $composer.startReplaceGroup(-617963319);
                                 ComposerKt.sourceInformation($composer, "285@11805L11");
-                                auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
+                                st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
                             } else {
                                 $composer.startReplaceGroup(-617962771);
                                 ComposerKt.sourceInformation($composer, "285@11822L15");
-                                auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
+                                st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
                             }
                             $composer.endReplaceGroup();
-                            BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip13, auroraTextMuted2, null, 2, null), $composer, 0);
+                            BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip13, st.auroraTextMuted2, null, 2, null), $composer, 0);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             $composer.endNode();
@@ -2746,12 +2835,12 @@ public final class RazrCoverShellKt {
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(6)), $composer, 6);
-                            if (z2) {
-                                str = "TALK · tap orb or power";
+                            if (st.z2) {
+                                st.str = "TALK · tap orb or power";
                             } else {
-                                str = "Offline";
+                                st.str = "Offline";
                             }
-                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
+                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             $composer.endNode();
@@ -2771,10 +2860,10 @@ public final class RazrCoverShellKt {
                             MeasurePolicy measurePolicy$iv11112 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv16, horizontalAlignment$iv16, $composer, ((390 >> 3) & 14) | ((390 >> 3) & 112));
                             int $changed$iv$iv1117 = (390 << 3) & 112;
                             ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                            compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                            st.compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                             CompositionLocalMap localMap$iv$iv1119 = $composer.getCurrentCompositionLocalMap();
                             Modifier materialized$iv$iv1117 = ComposedModifierKt.materializeModifier($composer, modifier$iv1117);
-                            constructor10 = ComposeUiNode.Companion.getConstructor();
+                            st.constructor10 = ComposeUiNode.Companion.getConstructor();
                             int $changed$iv$iv$iv1117 = (($changed$iv$iv1117 << 6) & 896) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                             if (!($composer.getApplier() instanceof Applier)) {
@@ -2782,19 +2871,19 @@ public final class RazrCoverShellKt {
                             }
                             $composer.startReusableNode();
                             if ($composer.getInserting()) {
-                                $composer.createNode(constructor10);
+                                $composer.createNode(st.constructor10);
                             } else {
                                 $composer.useNode();
                             }
-                            $this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv11112, ComposeUiNode.Companion.getSetMeasurePolicy());
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv1119, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                            st.$this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv11112, ComposeUiNode.Companion.getSetMeasurePolicy());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv1119, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                             Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1117 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                            if (!$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
+                            if (!st.$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
                             }
-                            $this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv10));
-                            $this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(compositeKeyHash$iv$iv10), setCompositeKeyHash1117);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv1117, ComposeUiNode.Companion.getSetModifier());
+                            st.$this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv10));
+                            st.$this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(st.compositeKeyHash$iv$iv10), setCompositeKeyHash1117);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv1117, ComposeUiNode.Companion.getSetModifier());
                             int i211111 = ($changed$iv$iv$iv1117 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                             ColumnScopeInstance columnScopeInstance18 = ColumnScopeInstance.INSTANCE;
@@ -2807,10 +2896,10 @@ public final class RazrCoverShellKt {
                             MeasurePolicy measurePolicy$iv11113 = RowKt.rowMeasurePolicy(horizontalArrangement$iv12, verticalAlignment$iv12, $composer, ((54 >> 3) & 14) | ((54 >> 3) & 112));
                             int $changed$iv$iv1118 = (54 << 3) & 112;
                             ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                            compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                            st.compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                             CompositionLocalMap localMap$iv$iv11110 = $composer.getCurrentCompositionLocalMap();
                             Modifier materialized$iv$iv1118 = ComposedModifierKt.materializeModifier($composer, modifier$iv1118);
-                            constructor11 = ComposeUiNode.Companion.getConstructor();
+                            st.constructor11 = ComposeUiNode.Companion.getConstructor();
                             int $changed$iv$iv$iv1118 = (($changed$iv$iv1118 << 6) & 896) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                             if (!($composer.getApplier() instanceof Applier)) {
@@ -2818,34 +2907,34 @@ public final class RazrCoverShellKt {
                             }
                             $composer.startReusableNode();
                             if ($composer.getInserting()) {
-                                function12 = constructor11;
-                                $composer.createNode(function12);
+                                st.function12 = st.constructor11;
+                                $composer.createNode(st.function12);
                             } else {
-                                function12 = constructor11;
+                                st.function12 = st.constructor11;
                                 $composer.useNode();
                             }
-                            $this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv11113, ComposeUiNode.Companion.getSetMeasurePolicy());
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv11110, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                            st.$this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv11113, ComposeUiNode.Companion.getSetMeasurePolicy());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv11110, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                             Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1118 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                            if (!$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
+                            if (!st.$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
                             }
-                            $this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv11));
-                            $this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(compositeKeyHash$iv$iv11), setCompositeKeyHash1118);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv1118, ComposeUiNode.Companion.getSetModifier());
+                            st.$this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv11));
+                            st.$this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(st.compositeKeyHash$iv$iv11), setCompositeKeyHash1118);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv1118, ComposeUiNode.Companion.getSetModifier());
                             int i211113 = ($changed$iv$iv$iv1118 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                             int i211114 = ((54 >> 6) & 112) | 6;
                             RowScope $this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u2419 = RowScopeInstance.INSTANCE;
                             ComposerKt.sourceInformationMarkerStart($composer, -404697066, "C309@12543L264,316@12820L248:RazrCoverShell.kt#z0j3je");
                             CoverShellPolicy coverShellPolicy5 = CoverShellPolicy.INSTANCE;
-                            if (auroraSession != null) {
-                                z = true;
+                            if (st.auroraSession != null) {
+                                st.z = true;
                             } else {
-                                z = false;
+                                st.z = false;
                             }
-                            RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy5.canOpenLatest(z), function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u2419, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
-                            RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(z2), function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u2419, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                            RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy5.canOpenLatest(st.z), st.function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u2419, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                            RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(st.z2), st.function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u2419, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             $composer.endNode();
@@ -2872,10 +2961,10 @@ public final class RazrCoverShellKt {
                             }
                             return;
                         }
-                        localMap$iv$iv4 = localMap$iv$iv3;
-                        $this$Layout_u24lambda_u240$iv$iv5.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv5));
-                        $this$Layout_u24lambda_u240$iv$iv5.apply(Integer.valueOf(compositeKeyHash$iv$iv5), setCompositeKeyHash22);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv22, ComposeUiNode.Companion.getSetModifier());
+                        st.localMap$iv$iv4 = st.localMap$iv$iv3;
+                        st.$this$Layout_u24lambda_u240$iv$iv5.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv5));
+                        st.$this$Layout_u24lambda_u240$iv$iv5.apply(Integer.valueOf(st.compositeKeyHash$iv$iv5), setCompositeKeyHash22);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv22, ComposeUiNode.Companion.getSetModifier());
                         int i11114 = ($changed$iv$iv$iv22 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                         ColumnScopeInstance columnScopeInstance19 = ColumnScopeInstance.INSTANCE;
@@ -2883,12 +2972,12 @@ public final class RazrCoverShellKt {
                         ComposerKt.sourceInformationMarkerStart($composer, 763412498, "C170@7030L15,168@6959L293,176@7269L29,179@7384L10,177@7315L278,195@7997L29,200@8202L14,196@8043L193,202@8253L29,203@8299L1366:RazrCoverShell.kt#z0j3je");
                         ai.nous.aurora.compat.Compat.m3067Text4IGK_g("LATEST THREAD", (Modifier) null, AuroraColorSchemeKt.getAuroraTextFaint($composer, 0), TextUnitKt.getSp(9), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), TextUnitKt.getSp(1), (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 12782598, 0, 130834);
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(5)), $composer, 6);
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
                         $composer.startReplaceGroup(-529544623);
                         ComposerKt.sourceInformation($composer, "186@7658L29,189@7786L15,187@7708L254");
-                        if (!StringsKt.isBlank(str4)) {
+                        if (!StringsKt.isBlank(st.str4)) {
                             SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(3)), $composer, 6);
-                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                         }
                         $composer.endReplaceGroup();
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(9)), $composer, 6);
@@ -2902,10 +2991,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv11114 = RowKt.rowMeasurePolicy(horizontalArrangement$iv13, verticalAlignment$iv13, $composer, $changed$iv6);
                         int $changed$iv$iv1119 = (390 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv11111 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv1119 = ComposedModifierKt.materializeModifier($composer, modifier$iv1119);
-                        constructor6 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor6 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv1119 = (($changed$iv$iv1119 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -2913,38 +3002,38 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function8 = constructor6;
-                            $composer.createNode(function8);
+                            st.function8 = st.constructor6;
+                            $composer.createNode(st.function8);
                         } else {
-                            function8 = constructor6;
+                            st.function8 = st.constructor6;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv11114, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv11111, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv11114, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv11111, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1119 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv6));
-                        $this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(compositeKeyHash$iv$iv6), setCompositeKeyHash1119);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv1119, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv6));
+                        st.$this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(st.compositeKeyHash$iv$iv6), setCompositeKeyHash1119);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv1119, ComposeUiNode.Companion.getSetModifier());
                         int i11116 = ($changed$iv$iv$iv1119 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                         int i11117 = ((390 >> 6) & 112) | 6;
-                        $this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
+                        st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
                         ComposerKt.sourceInformationMarkerStart($composer, -1980267798, "C220@9102L15,218@8996L282:RazrCoverShell.kt#z0j3je");
                         $composer.startReplaceGroup(-618069607);
                         ComposerKt.sourceInformation($composer, "210@8649L11,208@8527L373,216@8925L28");
-                        if (uiState.getSelectedModel() != null) {
-                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
+                        if (st.uiState.getSelectedModel() != null) {
+                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(st.uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
                             SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1084width3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(8)), $composer, 6);
                         }
                         $composer.endReplaceGroup();
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + st.uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                         $composer.startReplaceGroup(-618043174);
                         ComposerKt.sourceInformation($composer, "226@9344L27,229@9479L11,227@9396L229");
-                        if (uiState.getSending()) {
-                            SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
+                        if (st.uiState.getSending()) {
+                            SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6(st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
                             ai.nous.aurora.compat.Compat.m3067Text4IGK_g("thinking…", (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199686, 0, 131026);
                         }
                         $composer.endReplaceGroup();
@@ -2974,10 +3063,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv11115 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv17, horizontalAlignment$iv17, $composer, ((384 >> 3) & 14) | ((384 >> 3) & 112));
                         int $changed$iv$iv11110 = (384 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv11112 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv11110 = ComposedModifierKt.materializeModifier($composer, modifier$iv11110);
-                        constructor7 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor7 = ComposeUiNode.Companion.getConstructor();
                         int $i$f$Column9 = $changed$iv$iv11110 << 6;
                         int $changed$iv$iv$iv11110 = ($i$f$Column9 & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
@@ -2986,21 +3075,21 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function9 = constructor7;
-                            $composer.createNode(function9);
+                            st.function9 = st.constructor7;
+                            $composer.createNode(st.function9);
                         } else {
-                            function9 = constructor7;
+                            st.function9 = st.constructor7;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv11115, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv11112, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv11115, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv11112, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash11110 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv7));
-                        $this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(compositeKeyHash$iv$iv7), setCompositeKeyHash11110);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv11110, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv7));
+                        st.$this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(st.compositeKeyHash$iv$iv7), setCompositeKeyHash11110);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv11110, ComposeUiNode.Companion.getSetModifier());
                         int i11118 = ($changed$iv$iv$iv11110 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                         ColumnScopeInstance columnScopeInstance110 = ColumnScopeInstance.INSTANCE;
@@ -3012,10 +3101,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv11116 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv14, false);
                         int $changed$iv$iv11111 = (48 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv11113 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv11111 = ComposedModifierKt.materializeModifier($composer, modifier$iv11111);
-                        constructor8 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor8 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv11111 = (($changed$iv$iv11111 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -3023,21 +3112,21 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function10 = constructor8;
-                            $composer.createNode(function10);
+                            st.function10 = st.constructor8;
+                            $composer.createNode(st.function10);
                         } else {
-                            function10 = constructor8;
+                            st.function10 = st.constructor8;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv11116, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv11113, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv11116, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv11113, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash11111 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv8));
-                        $this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(compositeKeyHash$iv$iv8), setCompositeKeyHash11111);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv11111, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv8));
+                        st.$this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(st.compositeKeyHash$iv$iv8), setCompositeKeyHash11111);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv11111, ComposeUiNode.Companion.getSetModifier());
                         int i211116 = ($changed$iv$iv$iv11111 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                         BoxScopeInstance boxScopeInstance15 = BoxScopeInstance.INSTANCE;
@@ -3052,44 +3141,44 @@ public final class RazrCoverShellKt {
                         Modifier modifierM600borderxT4_qwU6 = ai.nous.aurora.compat.Compat.m600borderxT4_qwU(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip14, ai.nous.aurora.compat.Compat.m4532copywmQWz5c(auroraAmber12, (14 & 1) != 0 ? ai.nous.aurora.compat.Compat.m4536getAlphaimpl(auroraAmber12) : 0.22f, (14 & 2) != 0 ? ai.nous.aurora.compat.Compat.m4540getRedimpl(auroraAmber12) : 0.0f, (14 & 4) != 0 ? ai.nous.aurora.compat.Compat.m4539getGreenimpl(auroraAmber12) : 0.0f, (14 & 8) != 0 ? ai.nous.aurora.compat.Compat.m4537getBlueimpl(auroraAmber12) : 0.0f), null, 2, null), ai.nous.aurora.compat.Compat.m7016constructorimpl(2), AuroraColorSchemeKt.getAuroraAmber($composer, 0), RoundedCornerShapeKt.getCircleShape());
                         $composer.startReplaceGroup(-529441171);
                         ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                        invalid$iv = $composer.changed(z2);
+                        st.invalid$iv = $composer.changed(st.z2);
                         Object it$iv11 = $composer.rememberedValue();
-                        if (!invalid$iv) {
+                        if (!st.invalid$iv) {
                         }
-                        value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
+                        st.value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(z2, (SemanticsPropertyReceiver) obj);
+                                return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(st.z2, (SemanticsPropertyReceiver) obj);
                             }
                         };
-                        $composer.updateRememberedValue(value$iv);
+                        $composer.updateRememberedValue(st.value$iv);
                         $composer.endReplaceGroup();
-                        Modifier modifierSemantics$default6 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU6, false, (Function1) value$iv, 1, null);
-                        boolean zCanTalk6 = CoverShellPolicy.INSTANCE.canTalk(z2);
+                        Modifier modifierSemantics$default6 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU6, false, (Function1) st.value$iv, 1, null);
+                        boolean zCanTalk6 = CoverShellPolicy.INSTANCE.canTalk(st.z2);
                         $composer.startReplaceGroup(-529427629);
                         ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                        invalid$iv2 = $composer.changedInstance(context);
+                        st.invalid$iv2 = $composer.changedInstance(st.context);
                         Object it$iv12 = $composer.rememberedValue();
-                        if (!invalid$iv2) {
+                        if (!st.invalid$iv2) {
                         }
-                        value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
+                        st.value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
                             @Override // kotlin.jvm.functions.Function0
                             public final Object invoke() {
-                                return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(context);
+                                return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(st.context);
                             }
                         };
-                        $composer.updateRememberedValue(value$iv2);
+                        $composer.updateRememberedValue(st.value$iv2);
                         $composer.endReplaceGroup();
-                        Modifier modifier$iv11112 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default6, zCanTalk6, "Start voice Assist", null, (Function0) value$iv2, 4, null);
+                        Modifier modifier$iv11112 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default6, zCanTalk6, "Start voice Assist", null, (Function0) st.value$iv2, 4, null);
                         Alignment contentAlignment$iv15 = Alignment.Companion.getCenter();
                         ComposerKt.sourceInformationMarkerStart($composer, 733328855, "CC(Box)P(2,1,3)72@3384L130:Box.kt#2w3rfo");
                         MeasurePolicy measurePolicy$iv11117 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv15, false);
                         int $changed$iv$iv11112 = (48 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv11114 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv11112 = ComposedModifierKt.materializeModifier($composer, modifier$iv11112);
-                        constructor9 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor9 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv11112 = (($changed$iv$iv11112 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -3097,38 +3186,38 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function11 = constructor9;
-                            $composer.createNode(function11);
+                            st.function11 = st.constructor9;
+                            $composer.createNode(st.function11);
                         } else {
-                            function11 = constructor9;
+                            st.function11 = st.constructor9;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv11117, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv11114, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv11117, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv11114, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash11112 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv9));
-                        $this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(compositeKeyHash$iv$iv9), setCompositeKeyHash11112);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv11112, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv9));
+                        st.$this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(st.compositeKeyHash$iv$iv9), setCompositeKeyHash11112);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv11112, ComposeUiNode.Companion.getSetModifier());
                         int i211118 = ($changed$iv$iv$iv11112 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                         BoxScopeInstance boxScopeInstance16 = BoxScopeInstance.INSTANCE;
                         int i211119 = ((48 >> 6) & 112) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -1977158684, "C281@11632L225:RazrCoverShell.kt#z0j3je");
                         Modifier modifierClip15 = ClipKt.clip(ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(56)), RoundedCornerShapeKt.getCircleShape());
-                        if (z2) {
+                        if (st.z2) {
                             $composer.startReplaceGroup(-617963319);
                             ComposerKt.sourceInformation($composer, "285@11805L11");
-                            auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
+                            st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
                         } else {
                             $composer.startReplaceGroup(-617962771);
                             ComposerKt.sourceInformation($composer, "285@11822L15");
-                            auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
+                            st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
                         }
                         $composer.endReplaceGroup();
-                        BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip15, auroraTextMuted2, null, 2, null), $composer, 0);
+                        BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip15, st.auroraTextMuted2, null, 2, null), $composer, 0);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         $composer.endNode();
@@ -3142,12 +3231,12 @@ public final class RazrCoverShellKt {
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(6)), $composer, 6);
-                        if (z2) {
-                            str = "TALK · tap orb or power";
+                        if (st.z2) {
+                            st.str = "TALK · tap orb or power";
                         } else {
-                            str = "Offline";
+                            st.str = "Offline";
                         }
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         $composer.endNode();
@@ -3167,10 +3256,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv11118 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv18, horizontalAlignment$iv18, $composer, ((390 >> 3) & 14) | ((390 >> 3) & 112));
                         int $changed$iv$iv11113 = (390 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv11115 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv11113 = ComposedModifierKt.materializeModifier($composer, modifier$iv11113);
-                        constructor10 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor10 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv11113 = (($changed$iv$iv11113 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -3178,19 +3267,19 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            $composer.createNode(constructor10);
+                            $composer.createNode(st.constructor10);
                         } else {
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv11118, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv11115, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv11118, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv11115, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash11113 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv10));
-                        $this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(compositeKeyHash$iv$iv10), setCompositeKeyHash11113);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv11113, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv10));
+                        st.$this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(st.compositeKeyHash$iv$iv10), setCompositeKeyHash11113);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv11113, ComposeUiNode.Companion.getSetModifier());
                         int i2111110 = ($changed$iv$iv$iv11113 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                         ColumnScopeInstance columnScopeInstance111 = ColumnScopeInstance.INSTANCE;
@@ -3203,10 +3292,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv11119 = RowKt.rowMeasurePolicy(horizontalArrangement$iv14, verticalAlignment$iv14, $composer, ((54 >> 3) & 14) | ((54 >> 3) & 112));
                         int $changed$iv$iv11114 = (54 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv11116 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv11114 = ComposedModifierKt.materializeModifier($composer, modifier$iv11114);
-                        constructor11 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor11 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv11114 = (($changed$iv$iv11114 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -3214,34 +3303,34 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function12 = constructor11;
-                            $composer.createNode(function12);
+                            st.function12 = st.constructor11;
+                            $composer.createNode(st.function12);
                         } else {
-                            function12 = constructor11;
+                            st.function12 = st.constructor11;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv11119, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv11116, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv11119, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv11116, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash11114 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv11));
-                        $this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(compositeKeyHash$iv$iv11), setCompositeKeyHash11114);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv11114, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv11));
+                        st.$this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(st.compositeKeyHash$iv$iv11), setCompositeKeyHash11114);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv11114, ComposeUiNode.Companion.getSetModifier());
                         int i2111112 = ($changed$iv$iv$iv11114 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                         int i2111113 = ((54 >> 6) & 112) | 6;
                         RowScope $this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24110 = RowScopeInstance.INSTANCE;
                         ComposerKt.sourceInformationMarkerStart($composer, -404697066, "C309@12543L264,316@12820L248:RazrCoverShell.kt#z0j3je");
                         CoverShellPolicy coverShellPolicy6 = CoverShellPolicy.INSTANCE;
-                        if (auroraSession != null) {
-                            z = true;
+                        if (st.auroraSession != null) {
+                            st.z = true;
                         } else {
-                            z = false;
+                            st.z = false;
                         }
-                        RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy6.canOpenLatest(z), function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24110, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
-                        RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(z2), function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24110, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                        RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy6.canOpenLatest(st.z), st.function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24110, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                        RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(st.z2), st.function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24110, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         $composer.endNode();
@@ -3268,11 +3357,11 @@ public final class RazrCoverShellKt {
                         }
                         return;
                     }
-                    measurePolicy$iv5 = measurePolicy$iv4;
-                    localMap$iv$iv2 = localMap$iv$iv;
-                    $this$Layout_u24lambda_u240$iv$iv4.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv4));
-                    $this$Layout_u24lambda_u240$iv$iv4.apply(Integer.valueOf(compositeKeyHash$iv$iv4), setCompositeKeyHash21);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv4, materialized$iv$iv21, ComposeUiNode.Companion.getSetModifier());
+                    st.measurePolicy$iv5 = st.measurePolicy$iv4;
+                    st.localMap$iv$iv2 = st.localMap$iv$iv;
+                    st.$this$Layout_u24lambda_u240$iv$iv4.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv4));
+                    st.$this$Layout_u24lambda_u240$iv$iv4.apply(Integer.valueOf(st.compositeKeyHash$iv$iv4), setCompositeKeyHash21);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv4, materialized$iv$iv21, ComposeUiNode.Companion.getSetModifier());
                     int i11119 = ($changed$iv$iv$iv21 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                     BoxScopeInstance boxScopeInstance17 = BoxScopeInstance.INSTANCE;
@@ -3286,10 +3375,10 @@ public final class RazrCoverShellKt {
                     MeasurePolicy measurePolicy$iv11120 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv19, horizontalAlignment$iv19, $composer, $i$f$Column10);
                     int $changed$iv$iv23 = (6 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv5 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
-                    localMap$iv$iv3 = $composer.getCurrentCompositionLocalMap();
+                    st.compositeKeyHash$iv$iv5 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.localMap$iv$iv3 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv23 = ComposedModifierKt.materializeModifier($composer, modifier$iv23);
-                    constructor5 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor5 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv23 = (($changed$iv$iv23 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -3297,21 +3386,21 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function7 = constructor5;
-                        $composer.createNode(function7);
+                        st.function7 = st.constructor5;
+                        $composer.createNode(st.function7);
                     } else {
-                        function7 = constructor5;
+                        st.function7 = st.constructor5;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv5 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, measurePolicy$iv11120, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, localMap$iv$iv3, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv5 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, measurePolicy$iv11120, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, st.localMap$iv$iv3, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash23 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv5.getInserting()) {
-                        localMap$iv$iv4 = localMap$iv$iv3;
-                        if (!Intrinsics.areEqual($this$Layout_u24lambda_u240$iv$iv5.rememberedValue(), Integer.valueOf(compositeKeyHash$iv$iv5))) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv5.getInserting()) {
+                        st.localMap$iv$iv4 = st.localMap$iv$iv3;
+                        if (!Intrinsics.areEqual(st.$this$Layout_u24lambda_u240$iv$iv5.rememberedValue(), Integer.valueOf(st.compositeKeyHash$iv$iv5))) {
                         }
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv23, ComposeUiNode.Companion.getSetModifier());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv23, ComposeUiNode.Companion.getSetModifier());
                         int i111110 = ($changed$iv$iv$iv23 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                         ColumnScopeInstance columnScopeInstance112 = ColumnScopeInstance.INSTANCE;
@@ -3319,12 +3408,12 @@ public final class RazrCoverShellKt {
                         ComposerKt.sourceInformationMarkerStart($composer, 763412498, "C170@7030L15,168@6959L293,176@7269L29,179@7384L10,177@7315L278,195@7997L29,200@8202L14,196@8043L193,202@8253L29,203@8299L1366:RazrCoverShell.kt#z0j3je");
                         ai.nous.aurora.compat.Compat.m3067Text4IGK_g("LATEST THREAD", (Modifier) null, AuroraColorSchemeKt.getAuroraTextFaint($composer, 0), TextUnitKt.getSp(9), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), TextUnitKt.getSp(1), (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 12782598, 0, 130834);
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(5)), $composer, 6);
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
                         $composer.startReplaceGroup(-529544623);
                         ComposerKt.sourceInformation($composer, "186@7658L29,189@7786L15,187@7708L254");
-                        if (!StringsKt.isBlank(str4)) {
+                        if (!StringsKt.isBlank(st.str4)) {
                             SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(3)), $composer, 6);
-                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                         }
                         $composer.endReplaceGroup();
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(9)), $composer, 6);
@@ -3338,10 +3427,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv111110 = RowKt.rowMeasurePolicy(horizontalArrangement$iv15, verticalAlignment$iv15, $composer, $changed$iv7);
                         int $changed$iv$iv11115 = (390 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv11117 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv11115 = ComposedModifierKt.materializeModifier($composer, modifier$iv11115);
-                        constructor6 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor6 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv11115 = (($changed$iv$iv11115 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -3349,38 +3438,38 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function8 = constructor6;
-                            $composer.createNode(function8);
+                            st.function8 = st.constructor6;
+                            $composer.createNode(st.function8);
                         } else {
-                            function8 = constructor6;
+                            st.function8 = st.constructor6;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv111110, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv11117, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv111110, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv11117, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash11115 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv6));
-                        $this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(compositeKeyHash$iv$iv6), setCompositeKeyHash11115);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv11115, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv6));
+                        st.$this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(st.compositeKeyHash$iv$iv6), setCompositeKeyHash11115);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv11115, ComposeUiNode.Companion.getSetModifier());
                         int i111112 = ($changed$iv$iv$iv11115 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                         int i111113 = ((390 >> 6) & 112) | 6;
-                        $this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
+                        st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
                         ComposerKt.sourceInformationMarkerStart($composer, -1980267798, "C220@9102L15,218@8996L282:RazrCoverShell.kt#z0j3je");
                         $composer.startReplaceGroup(-618069607);
                         ComposerKt.sourceInformation($composer, "210@8649L11,208@8527L373,216@8925L28");
-                        if (uiState.getSelectedModel() != null) {
-                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
+                        if (st.uiState.getSelectedModel() != null) {
+                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(st.uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
                             SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1084width3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(8)), $composer, 6);
                         }
                         $composer.endReplaceGroup();
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + st.uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                         $composer.startReplaceGroup(-618043174);
                         ComposerKt.sourceInformation($composer, "226@9344L27,229@9479L11,227@9396L229");
-                        if (uiState.getSending()) {
-                            SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
+                        if (st.uiState.getSending()) {
+                            SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6(st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
                             ai.nous.aurora.compat.Compat.m3067Text4IGK_g("thinking…", (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199686, 0, 131026);
                         }
                         $composer.endReplaceGroup();
@@ -3410,10 +3499,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv111111 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv110, horizontalAlignment$iv110, $composer, ((384 >> 3) & 14) | ((384 >> 3) & 112));
                         int $changed$iv$iv11116 = (384 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv11118 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv11116 = ComposedModifierKt.materializeModifier($composer, modifier$iv11116);
-                        constructor7 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor7 = ComposeUiNode.Companion.getConstructor();
                         int $i$f$Column11 = $changed$iv$iv11116 << 6;
                         int $changed$iv$iv$iv11116 = ($i$f$Column11 & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
@@ -3422,21 +3511,21 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function9 = constructor7;
-                            $composer.createNode(function9);
+                            st.function9 = st.constructor7;
+                            $composer.createNode(st.function9);
                         } else {
-                            function9 = constructor7;
+                            st.function9 = st.constructor7;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv111111, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv11118, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv111111, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv11118, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash11116 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv7));
-                        $this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(compositeKeyHash$iv$iv7), setCompositeKeyHash11116);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv11116, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv7));
+                        st.$this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(st.compositeKeyHash$iv$iv7), setCompositeKeyHash11116);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv11116, ComposeUiNode.Companion.getSetModifier());
                         int i111114 = ($changed$iv$iv$iv11116 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                         ColumnScopeInstance columnScopeInstance113 = ColumnScopeInstance.INSTANCE;
@@ -3448,10 +3537,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv111112 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv16, false);
                         int $changed$iv$iv11117 = (48 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv11119 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv11117 = ComposedModifierKt.materializeModifier($composer, modifier$iv11117);
-                        constructor8 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor8 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv11117 = (($changed$iv$iv11117 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -3459,21 +3548,21 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function10 = constructor8;
-                            $composer.createNode(function10);
+                            st.function10 = st.constructor8;
+                            $composer.createNode(st.function10);
                         } else {
-                            function10 = constructor8;
+                            st.function10 = st.constructor8;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv111112, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv11119, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv111112, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv11119, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash11117 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv8));
-                        $this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(compositeKeyHash$iv$iv8), setCompositeKeyHash11117);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv11117, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv8));
+                        st.$this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(st.compositeKeyHash$iv$iv8), setCompositeKeyHash11117);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv11117, ComposeUiNode.Companion.getSetModifier());
                         int i2111115 = ($changed$iv$iv$iv11117 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                         BoxScopeInstance boxScopeInstance18 = BoxScopeInstance.INSTANCE;
@@ -3488,44 +3577,44 @@ public final class RazrCoverShellKt {
                         Modifier modifierM600borderxT4_qwU7 = ai.nous.aurora.compat.Compat.m600borderxT4_qwU(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip16, ai.nous.aurora.compat.Compat.m4532copywmQWz5c(auroraAmber14, (14 & 1) != 0 ? ai.nous.aurora.compat.Compat.m4536getAlphaimpl(auroraAmber14) : 0.22f, (14 & 2) != 0 ? ai.nous.aurora.compat.Compat.m4540getRedimpl(auroraAmber14) : 0.0f, (14 & 4) != 0 ? ai.nous.aurora.compat.Compat.m4539getGreenimpl(auroraAmber14) : 0.0f, (14 & 8) != 0 ? ai.nous.aurora.compat.Compat.m4537getBlueimpl(auroraAmber14) : 0.0f), null, 2, null), ai.nous.aurora.compat.Compat.m7016constructorimpl(2), AuroraColorSchemeKt.getAuroraAmber($composer, 0), RoundedCornerShapeKt.getCircleShape());
                         $composer.startReplaceGroup(-529441171);
                         ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                        invalid$iv = $composer.changed(z2);
+                        st.invalid$iv = $composer.changed(st.z2);
                         Object it$iv13 = $composer.rememberedValue();
-                        if (!invalid$iv) {
+                        if (!st.invalid$iv) {
                         }
-                        value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
+                        st.value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(z2, (SemanticsPropertyReceiver) obj);
+                                return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(st.z2, (SemanticsPropertyReceiver) obj);
                             }
                         };
-                        $composer.updateRememberedValue(value$iv);
+                        $composer.updateRememberedValue(st.value$iv);
                         $composer.endReplaceGroup();
-                        Modifier modifierSemantics$default7 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU7, false, (Function1) value$iv, 1, null);
-                        boolean zCanTalk7 = CoverShellPolicy.INSTANCE.canTalk(z2);
+                        Modifier modifierSemantics$default7 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU7, false, (Function1) st.value$iv, 1, null);
+                        boolean zCanTalk7 = CoverShellPolicy.INSTANCE.canTalk(st.z2);
                         $composer.startReplaceGroup(-529427629);
                         ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                        invalid$iv2 = $composer.changedInstance(context);
+                        st.invalid$iv2 = $composer.changedInstance(st.context);
                         Object it$iv14 = $composer.rememberedValue();
-                        if (!invalid$iv2) {
+                        if (!st.invalid$iv2) {
                         }
-                        value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
+                        st.value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
                             @Override // kotlin.jvm.functions.Function0
                             public final Object invoke() {
-                                return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(context);
+                                return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(st.context);
                             }
                         };
-                        $composer.updateRememberedValue(value$iv2);
+                        $composer.updateRememberedValue(st.value$iv2);
                         $composer.endReplaceGroup();
-                        Modifier modifier$iv11118 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default7, zCanTalk7, "Start voice Assist", null, (Function0) value$iv2, 4, null);
+                        Modifier modifier$iv11118 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default7, zCanTalk7, "Start voice Assist", null, (Function0) st.value$iv2, 4, null);
                         Alignment contentAlignment$iv17 = Alignment.Companion.getCenter();
                         ComposerKt.sourceInformationMarkerStart($composer, 733328855, "CC(Box)P(2,1,3)72@3384L130:Box.kt#2w3rfo");
                         MeasurePolicy measurePolicy$iv111113 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv17, false);
                         int $changed$iv$iv11118 = (48 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv111110 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv11118 = ComposedModifierKt.materializeModifier($composer, modifier$iv11118);
-                        constructor9 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor9 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv11118 = (($changed$iv$iv11118 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -3533,38 +3622,38 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function11 = constructor9;
-                            $composer.createNode(function11);
+                            st.function11 = st.constructor9;
+                            $composer.createNode(st.function11);
                         } else {
-                            function11 = constructor9;
+                            st.function11 = st.constructor9;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv111113, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv111110, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv111113, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv111110, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash11118 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv9));
-                        $this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(compositeKeyHash$iv$iv9), setCompositeKeyHash11118);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv11118, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv9));
+                        st.$this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(st.compositeKeyHash$iv$iv9), setCompositeKeyHash11118);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv11118, ComposeUiNode.Companion.getSetModifier());
                         int i2111117 = ($changed$iv$iv$iv11118 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                         BoxScopeInstance boxScopeInstance19 = BoxScopeInstance.INSTANCE;
                         int i2111118 = ((48 >> 6) & 112) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -1977158684, "C281@11632L225:RazrCoverShell.kt#z0j3je");
                         Modifier modifierClip17 = ClipKt.clip(ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(56)), RoundedCornerShapeKt.getCircleShape());
-                        if (z2) {
+                        if (st.z2) {
                             $composer.startReplaceGroup(-617963319);
                             ComposerKt.sourceInformation($composer, "285@11805L11");
-                            auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
+                            st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
                         } else {
                             $composer.startReplaceGroup(-617962771);
                             ComposerKt.sourceInformation($composer, "285@11822L15");
-                            auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
+                            st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
                         }
                         $composer.endReplaceGroup();
-                        BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip17, auroraTextMuted2, null, 2, null), $composer, 0);
+                        BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip17, st.auroraTextMuted2, null, 2, null), $composer, 0);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         $composer.endNode();
@@ -3578,12 +3667,12 @@ public final class RazrCoverShellKt {
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(6)), $composer, 6);
-                        if (z2) {
-                            str = "TALK · tap orb or power";
+                        if (st.z2) {
+                            st.str = "TALK · tap orb or power";
                         } else {
-                            str = "Offline";
+                            st.str = "Offline";
                         }
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         $composer.endNode();
@@ -3603,10 +3692,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv111114 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv111, horizontalAlignment$iv111, $composer, ((390 >> 3) & 14) | ((390 >> 3) & 112));
                         int $changed$iv$iv11119 = (390 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv111111 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv11119 = ComposedModifierKt.materializeModifier($composer, modifier$iv11119);
-                        constructor10 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor10 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv11119 = (($changed$iv$iv11119 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -3614,19 +3703,19 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            $composer.createNode(constructor10);
+                            $composer.createNode(st.constructor10);
                         } else {
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv111114, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv111111, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv111114, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv111111, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash11119 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv10));
-                        $this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(compositeKeyHash$iv$iv10), setCompositeKeyHash11119);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv11119, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv10));
+                        st.$this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(st.compositeKeyHash$iv$iv10), setCompositeKeyHash11119);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv11119, ComposeUiNode.Companion.getSetModifier());
                         int i2111119 = ($changed$iv$iv$iv11119 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                         ColumnScopeInstance columnScopeInstance114 = ColumnScopeInstance.INSTANCE;
@@ -3639,10 +3728,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv111115 = RowKt.rowMeasurePolicy(horizontalArrangement$iv16, verticalAlignment$iv16, $composer, ((54 >> 3) & 14) | ((54 >> 3) & 112));
                         int $changed$iv$iv111110 = (54 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv111112 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv111110 = ComposedModifierKt.materializeModifier($composer, modifier$iv111110);
-                        constructor11 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor11 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv111110 = (($changed$iv$iv111110 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -3650,34 +3739,34 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function12 = constructor11;
-                            $composer.createNode(function12);
+                            st.function12 = st.constructor11;
+                            $composer.createNode(st.function12);
                         } else {
-                            function12 = constructor11;
+                            st.function12 = st.constructor11;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv111115, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv111112, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv111115, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv111112, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash111110 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv11));
-                        $this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(compositeKeyHash$iv$iv11), setCompositeKeyHash111110);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv111110, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv11));
+                        st.$this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(st.compositeKeyHash$iv$iv11), setCompositeKeyHash111110);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv111110, ComposeUiNode.Companion.getSetModifier());
                         int i21111111 = ($changed$iv$iv$iv111110 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                         int i21111112 = ((54 >> 6) & 112) | 6;
                         RowScope $this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24111 = RowScopeInstance.INSTANCE;
                         ComposerKt.sourceInformationMarkerStart($composer, -404697066, "C309@12543L264,316@12820L248:RazrCoverShell.kt#z0j3je");
                         CoverShellPolicy coverShellPolicy7 = CoverShellPolicy.INSTANCE;
-                        if (auroraSession != null) {
-                            z = true;
+                        if (st.auroraSession != null) {
+                            st.z = true;
                         } else {
-                            z = false;
+                            st.z = false;
                         }
-                        RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy7.canOpenLatest(z), function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24111, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
-                        RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(z2), function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24111, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                        RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy7.canOpenLatest(st.z), st.function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24111, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                        RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(st.z2), st.function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24111, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         $composer.endNode();
@@ -3704,10 +3793,10 @@ public final class RazrCoverShellKt {
                         }
                         return;
                     }
-                    localMap$iv$iv4 = localMap$iv$iv3;
-                    $this$Layout_u24lambda_u240$iv$iv5.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv5));
-                    $this$Layout_u24lambda_u240$iv$iv5.apply(Integer.valueOf(compositeKeyHash$iv$iv5), setCompositeKeyHash23);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv23, ComposeUiNode.Companion.getSetModifier());
+                    st.localMap$iv$iv4 = st.localMap$iv$iv3;
+                    st.$this$Layout_u24lambda_u240$iv$iv5.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv5));
+                    st.$this$Layout_u24lambda_u240$iv$iv5.apply(Integer.valueOf(st.compositeKeyHash$iv$iv5), setCompositeKeyHash23);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv23, ComposeUiNode.Companion.getSetModifier());
                     int i111115 = ($changed$iv$iv$iv23 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                     ColumnScopeInstance columnScopeInstance115 = ColumnScopeInstance.INSTANCE;
@@ -3715,12 +3804,12 @@ public final class RazrCoverShellKt {
                     ComposerKt.sourceInformationMarkerStart($composer, 763412498, "C170@7030L15,168@6959L293,176@7269L29,179@7384L10,177@7315L278,195@7997L29,200@8202L14,196@8043L193,202@8253L29,203@8299L1366:RazrCoverShell.kt#z0j3je");
                     ai.nous.aurora.compat.Compat.m3067Text4IGK_g("LATEST THREAD", (Modifier) null, AuroraColorSchemeKt.getAuroraTextFaint($composer, 0), TextUnitKt.getSp(9), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), TextUnitKt.getSp(1), (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 12782598, 0, 130834);
                     SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(5)), $composer, 6);
-                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
+                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
                     $composer.startReplaceGroup(-529544623);
                     ComposerKt.sourceInformation($composer, "186@7658L29,189@7786L15,187@7708L254");
-                    if (!StringsKt.isBlank(str4)) {
+                    if (!StringsKt.isBlank(st.str4)) {
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(3)), $composer, 6);
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                     }
                     $composer.endReplaceGroup();
                     SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(9)), $composer, 6);
@@ -3734,10 +3823,10 @@ public final class RazrCoverShellKt {
                     MeasurePolicy measurePolicy$iv111116 = RowKt.rowMeasurePolicy(horizontalArrangement$iv17, verticalAlignment$iv17, $composer, $changed$iv8);
                     int $changed$iv$iv111111 = (390 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv111113 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv111111 = ComposedModifierKt.materializeModifier($composer, modifier$iv111111);
-                    constructor6 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor6 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv111111 = (($changed$iv$iv111111 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -3745,38 +3834,38 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function8 = constructor6;
-                        $composer.createNode(function8);
+                        st.function8 = st.constructor6;
+                        $composer.createNode(st.function8);
                     } else {
-                        function8 = constructor6;
+                        st.function8 = st.constructor6;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv111116, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv111113, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv111116, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv111113, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash111111 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
                     }
-                    $this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv6));
-                    $this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(compositeKeyHash$iv$iv6), setCompositeKeyHash111111);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv111111, ComposeUiNode.Companion.getSetModifier());
+                    st.$this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv6));
+                    st.$this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(st.compositeKeyHash$iv$iv6), setCompositeKeyHash111111);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv111111, ComposeUiNode.Companion.getSetModifier());
                     int i111117 = ($changed$iv$iv$iv111111 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                     int i111118 = ((390 >> 6) & 112) | 6;
-                    $this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
+                    st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
                     ComposerKt.sourceInformationMarkerStart($composer, -1980267798, "C220@9102L15,218@8996L282:RazrCoverShell.kt#z0j3je");
                     $composer.startReplaceGroup(-618069607);
                     ComposerKt.sourceInformation($composer, "210@8649L11,208@8527L373,216@8925L28");
-                    if (uiState.getSelectedModel() != null) {
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
+                    if (st.uiState.getSelectedModel() != null) {
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(st.uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1084width3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(8)), $composer, 6);
                     }
                     $composer.endReplaceGroup();
-                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + st.uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                     $composer.startReplaceGroup(-618043174);
                     ComposerKt.sourceInformation($composer, "226@9344L27,229@9479L11,227@9396L229");
-                    if (uiState.getSending()) {
-                        SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
+                    if (st.uiState.getSending()) {
+                        SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6(st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
                         ai.nous.aurora.compat.Compat.m3067Text4IGK_g("thinking…", (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199686, 0, 131026);
                     }
                     $composer.endReplaceGroup();
@@ -3806,10 +3895,10 @@ public final class RazrCoverShellKt {
                     MeasurePolicy measurePolicy$iv111117 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv112, horizontalAlignment$iv112, $composer, ((384 >> 3) & 14) | ((384 >> 3) & 112));
                     int $changed$iv$iv111112 = (384 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv111114 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv111112 = ComposedModifierKt.materializeModifier($composer, modifier$iv111112);
-                    constructor7 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor7 = ComposeUiNode.Companion.getConstructor();
                     int $i$f$Column12 = $changed$iv$iv111112 << 6;
                     int $changed$iv$iv$iv111112 = ($i$f$Column12 & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
@@ -3818,21 +3907,21 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function9 = constructor7;
-                        $composer.createNode(function9);
+                        st.function9 = st.constructor7;
+                        $composer.createNode(st.function9);
                     } else {
-                        function9 = constructor7;
+                        st.function9 = st.constructor7;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv111117, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv111114, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv111117, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv111114, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash111112 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
                     }
-                    $this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv7));
-                    $this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(compositeKeyHash$iv$iv7), setCompositeKeyHash111112);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv111112, ComposeUiNode.Companion.getSetModifier());
+                    st.$this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv7));
+                    st.$this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(st.compositeKeyHash$iv$iv7), setCompositeKeyHash111112);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv111112, ComposeUiNode.Companion.getSetModifier());
                     int i111119 = ($changed$iv$iv$iv111112 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                     ColumnScopeInstance columnScopeInstance116 = ColumnScopeInstance.INSTANCE;
@@ -3844,10 +3933,10 @@ public final class RazrCoverShellKt {
                     MeasurePolicy measurePolicy$iv111118 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv18, false);
                     int $changed$iv$iv111113 = (48 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv111115 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv111113 = ComposedModifierKt.materializeModifier($composer, modifier$iv111113);
-                    constructor8 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor8 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv111113 = (($changed$iv$iv111113 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -3855,21 +3944,21 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function10 = constructor8;
-                        $composer.createNode(function10);
+                        st.function10 = st.constructor8;
+                        $composer.createNode(st.function10);
                     } else {
-                        function10 = constructor8;
+                        st.function10 = st.constructor8;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv111118, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv111115, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv111118, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv111115, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash111113 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
                     }
-                    $this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv8));
-                    $this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(compositeKeyHash$iv$iv8), setCompositeKeyHash111113);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv111113, ComposeUiNode.Companion.getSetModifier());
+                    st.$this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv8));
+                    st.$this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(st.compositeKeyHash$iv$iv8), setCompositeKeyHash111113);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv111113, ComposeUiNode.Companion.getSetModifier());
                     int i21111114 = ($changed$iv$iv$iv111113 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                     BoxScopeInstance boxScopeInstance110 = BoxScopeInstance.INSTANCE;
@@ -3884,44 +3973,44 @@ public final class RazrCoverShellKt {
                     Modifier modifierM600borderxT4_qwU8 = ai.nous.aurora.compat.Compat.m600borderxT4_qwU(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip18, ai.nous.aurora.compat.Compat.m4532copywmQWz5c(auroraAmber16, (14 & 1) != 0 ? ai.nous.aurora.compat.Compat.m4536getAlphaimpl(auroraAmber16) : 0.22f, (14 & 2) != 0 ? ai.nous.aurora.compat.Compat.m4540getRedimpl(auroraAmber16) : 0.0f, (14 & 4) != 0 ? ai.nous.aurora.compat.Compat.m4539getGreenimpl(auroraAmber16) : 0.0f, (14 & 8) != 0 ? ai.nous.aurora.compat.Compat.m4537getBlueimpl(auroraAmber16) : 0.0f), null, 2, null), ai.nous.aurora.compat.Compat.m7016constructorimpl(2), AuroraColorSchemeKt.getAuroraAmber($composer, 0), RoundedCornerShapeKt.getCircleShape());
                     $composer.startReplaceGroup(-529441171);
                     ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                    invalid$iv = $composer.changed(z2);
+                    st.invalid$iv = $composer.changed(st.z2);
                     Object it$iv15 = $composer.rememberedValue();
-                    if (!invalid$iv) {
+                    if (!st.invalid$iv) {
                     }
-                    value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
+                    st.value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
                         @Override // kotlin.jvm.functions.Function1
                         public final Object invoke(Object obj) {
-                            return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(z2, (SemanticsPropertyReceiver) obj);
+                            return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(st.z2, (SemanticsPropertyReceiver) obj);
                         }
                     };
-                    $composer.updateRememberedValue(value$iv);
+                    $composer.updateRememberedValue(st.value$iv);
                     $composer.endReplaceGroup();
-                    Modifier modifierSemantics$default8 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU8, false, (Function1) value$iv, 1, null);
-                    boolean zCanTalk8 = CoverShellPolicy.INSTANCE.canTalk(z2);
+                    Modifier modifierSemantics$default8 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU8, false, (Function1) st.value$iv, 1, null);
+                    boolean zCanTalk8 = CoverShellPolicy.INSTANCE.canTalk(st.z2);
                     $composer.startReplaceGroup(-529427629);
                     ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                    invalid$iv2 = $composer.changedInstance(context);
+                    st.invalid$iv2 = $composer.changedInstance(st.context);
                     Object it$iv16 = $composer.rememberedValue();
-                    if (!invalid$iv2) {
+                    if (!st.invalid$iv2) {
                     }
-                    value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
+                    st.value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
                         @Override // kotlin.jvm.functions.Function0
                         public final Object invoke() {
-                            return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(context);
+                            return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(st.context);
                         }
                     };
-                    $composer.updateRememberedValue(value$iv2);
+                    $composer.updateRememberedValue(st.value$iv2);
                     $composer.endReplaceGroup();
-                    Modifier modifier$iv111114 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default8, zCanTalk8, "Start voice Assist", null, (Function0) value$iv2, 4, null);
+                    Modifier modifier$iv111114 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default8, zCanTalk8, "Start voice Assist", null, (Function0) st.value$iv2, 4, null);
                     Alignment contentAlignment$iv19 = Alignment.Companion.getCenter();
                     ComposerKt.sourceInformationMarkerStart($composer, 733328855, "CC(Box)P(2,1,3)72@3384L130:Box.kt#2w3rfo");
                     MeasurePolicy measurePolicy$iv111119 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv19, false);
                     int $changed$iv$iv111114 = (48 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv111116 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv111114 = ComposedModifierKt.materializeModifier($composer, modifier$iv111114);
-                    constructor9 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor9 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv111114 = (($changed$iv$iv111114 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -3929,38 +4018,38 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function11 = constructor9;
-                        $composer.createNode(function11);
+                        st.function11 = st.constructor9;
+                        $composer.createNode(st.function11);
                     } else {
-                        function11 = constructor9;
+                        st.function11 = st.constructor9;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv111119, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv111116, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv111119, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv111116, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash111114 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
                     }
-                    $this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv9));
-                    $this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(compositeKeyHash$iv$iv9), setCompositeKeyHash111114);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv111114, ComposeUiNode.Companion.getSetModifier());
+                    st.$this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv9));
+                    st.$this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(st.compositeKeyHash$iv$iv9), setCompositeKeyHash111114);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv111114, ComposeUiNode.Companion.getSetModifier());
                     int i21111116 = ($changed$iv$iv$iv111114 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                     BoxScopeInstance boxScopeInstance111 = BoxScopeInstance.INSTANCE;
                     int i21111117 = ((48 >> 6) & 112) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -1977158684, "C281@11632L225:RazrCoverShell.kt#z0j3je");
                     Modifier modifierClip19 = ClipKt.clip(ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(56)), RoundedCornerShapeKt.getCircleShape());
-                    if (z2) {
+                    if (st.z2) {
                         $composer.startReplaceGroup(-617963319);
                         ComposerKt.sourceInformation($composer, "285@11805L11");
-                        auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
+                        st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
                     } else {
                         $composer.startReplaceGroup(-617962771);
                         ComposerKt.sourceInformation($composer, "285@11822L15");
-                        auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
+                        st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
                     }
                     $composer.endReplaceGroup();
-                    BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip19, auroraTextMuted2, null, 2, null), $composer, 0);
+                    BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip19, st.auroraTextMuted2, null, 2, null), $composer, 0);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     $composer.endNode();
@@ -3974,12 +4063,12 @@ public final class RazrCoverShellKt {
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(6)), $composer, 6);
-                    if (z2) {
-                        str = "TALK · tap orb or power";
+                    if (st.z2) {
+                        st.str = "TALK · tap orb or power";
                     } else {
-                        str = "Offline";
+                        st.str = "Offline";
                     }
-                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
+                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     $composer.endNode();
@@ -3999,10 +4088,10 @@ public final class RazrCoverShellKt {
                     MeasurePolicy measurePolicy$iv1111110 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv113, horizontalAlignment$iv113, $composer, ((390 >> 3) & 14) | ((390 >> 3) & 112));
                     int $changed$iv$iv111115 = (390 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv111117 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv111115 = ComposedModifierKt.materializeModifier($composer, modifier$iv111115);
-                    constructor10 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor10 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv111115 = (($changed$iv$iv111115 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -4010,19 +4099,19 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        $composer.createNode(constructor10);
+                        $composer.createNode(st.constructor10);
                     } else {
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv1111110, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv111117, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv1111110, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv111117, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash111115 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
                     }
-                    $this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv10));
-                    $this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(compositeKeyHash$iv$iv10), setCompositeKeyHash111115);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv111115, ComposeUiNode.Companion.getSetModifier());
+                    st.$this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv10));
+                    st.$this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(st.compositeKeyHash$iv$iv10), setCompositeKeyHash111115);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv111115, ComposeUiNode.Companion.getSetModifier());
                     int i21111118 = ($changed$iv$iv$iv111115 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                     ColumnScopeInstance columnScopeInstance117 = ColumnScopeInstance.INSTANCE;
@@ -4035,10 +4124,10 @@ public final class RazrCoverShellKt {
                     MeasurePolicy measurePolicy$iv1111111 = RowKt.rowMeasurePolicy(horizontalArrangement$iv18, verticalAlignment$iv18, $composer, ((54 >> 3) & 14) | ((54 >> 3) & 112));
                     int $changed$iv$iv111116 = (54 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv111118 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv111116 = ComposedModifierKt.materializeModifier($composer, modifier$iv111116);
-                    constructor11 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor11 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv111116 = (($changed$iv$iv111116 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -4046,34 +4135,34 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function12 = constructor11;
-                        $composer.createNode(function12);
+                        st.function12 = st.constructor11;
+                        $composer.createNode(st.function12);
                     } else {
-                        function12 = constructor11;
+                        st.function12 = st.constructor11;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv1111111, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv111118, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv1111111, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv111118, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash111116 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
                     }
-                    $this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv11));
-                    $this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(compositeKeyHash$iv$iv11), setCompositeKeyHash111116);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv111116, ComposeUiNode.Companion.getSetModifier());
+                    st.$this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv11));
+                    st.$this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(st.compositeKeyHash$iv$iv11), setCompositeKeyHash111116);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv111116, ComposeUiNode.Companion.getSetModifier());
                     int i211111110 = ($changed$iv$iv$iv111116 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                     int i211111111 = ((54 >> 6) & 112) | 6;
                     RowScope $this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24112 = RowScopeInstance.INSTANCE;
                     ComposerKt.sourceInformationMarkerStart($composer, -404697066, "C309@12543L264,316@12820L248:RazrCoverShell.kt#z0j3je");
                     CoverShellPolicy coverShellPolicy8 = CoverShellPolicy.INSTANCE;
-                    if (auroraSession != null) {
-                        z = true;
+                    if (st.auroraSession != null) {
+                        st.z = true;
                     } else {
-                        z = false;
+                        st.z = false;
                     }
-                    RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy8.canOpenLatest(z), function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24112, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
-                    RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(z2), function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24112, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                    RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy8.canOpenLatest(st.z), st.function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24112, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                    RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(st.z2), st.function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24112, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     $composer.endNode();
@@ -4100,11 +4189,15 @@ public final class RazrCoverShellKt {
                     }
                     return;
                 }
-                measurePolicy$iv = measurePolicy$iv8;
-                $this$Layout_u24lambda_u240$iv$iv14.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv14));
-                $this$Layout_u24lambda_u240$iv$iv14.apply(Integer.valueOf(compositeKeyHash$iv$iv14), setCompositeKeyHash3);
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv14, materialized$iv$iv3, ComposeUiNode.Companion.getSetModifier());
-                int i30 = ($changed$iv$iv$iv3 >> 6) & 14;
+        }
+        }
+        private final void CoverInvokeR2( BoxScope AuroraBackdrop, Composer $composer, int $changed, CoverInvokeState st ) {
+            if (($changed & 17) != 16 || !$composer.getSkipping()) {
+                st.measurePolicy$iv = st.measurePolicy$iv8;
+                st.$this$Layout_u24lambda_u240$iv$iv14.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv14));
+                st.$this$Layout_u24lambda_u240$iv$iv14.apply(Integer.valueOf(st.compositeKeyHash$iv$iv14), st.setCompositeKeyHash3);
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv14, st.materialized$iv$iv3, ComposeUiNode.Companion.getSetModifier());
+                int i30 = (st.$changed$iv$iv$iv3 >> 6) & 14;
                 ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                 int i31 = ((390 >> 6) & 112) | 6;
                 RowScope $this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u244 = RowScopeInstance.INSTANCE;
@@ -4118,10 +4211,10 @@ public final class RazrCoverShellKt {
                 MeasurePolicy measurePolicy$iv20 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv20, false);
                 int $changed$iv$iv24 = (48 << 3) & 112;
                 ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                compositeKeyHash$iv$iv = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                st.compositeKeyHash$iv$iv = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                 CompositionLocalMap localMap$iv$iv20 = $composer.getCurrentCompositionLocalMap();
                 Modifier materialized$iv$iv24 = ComposedModifierKt.materializeModifier($composer, modifier$iv24);
-                constructor = ComposeUiNode.Companion.getConstructor();
+                st.constructor = ComposeUiNode.Companion.getConstructor();
                 int $changed$iv$iv$iv24 = (($changed$iv$iv24 << 6) & 896) | 6;
                 ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                 if (!($composer.getApplier() instanceof Applier)) {
@@ -4129,21 +4222,21 @@ public final class RazrCoverShellKt {
                 }
                 $composer.startReusableNode();
                 if ($composer.getInserting()) {
-                    function3 = constructor;
-                    $composer.createNode(function3);
+                    st.function3 = st.constructor;
+                    $composer.createNode(st.function3);
                 } else {
-                    function3 = constructor;
+                    st.function3 = st.constructor;
                     $composer.useNode();
                 }
-                $this$Layout_u24lambda_u240$iv$iv = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv, measurePolicy$iv20, ComposeUiNode.Companion.getSetMeasurePolicy());
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv, localMap$iv$iv20, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                st.$this$Layout_u24lambda_u240$iv$iv = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv, measurePolicy$iv20, ComposeUiNode.Companion.getSetMeasurePolicy());
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv, localMap$iv$iv20, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                 Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash24 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                if (!$this$Layout_u24lambda_u240$iv$iv.getInserting()) {
+                if (!st.$this$Layout_u24lambda_u240$iv$iv.getInserting()) {
                 }
-                $this$Layout_u24lambda_u240$iv$iv.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv));
-                $this$Layout_u24lambda_u240$iv$iv.apply(Integer.valueOf(compositeKeyHash$iv$iv), setCompositeKeyHash24);
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv, materialized$iv$iv24, ComposeUiNode.Companion.getSetModifier());
+                st.$this$Layout_u24lambda_u240$iv$iv.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv));
+                st.$this$Layout_u24lambda_u240$iv$iv.apply(Integer.valueOf(st.compositeKeyHash$iv$iv), setCompositeKeyHash24);
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv, materialized$iv$iv24, ComposeUiNode.Companion.getSetModifier());
                 int i32 = ($changed$iv$iv$iv24 >> 6) & 14;
                 ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                 BoxScopeInstance boxScopeInstance20 = BoxScopeInstance.INSTANCE;
@@ -4164,10 +4257,10 @@ public final class RazrCoverShellKt {
                 MeasurePolicy measurePolicy$iv120 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv20, horizontalAlignment$iv20, $composer, ((0 >> 3) & 14) | ((0 >> 3) & 112));
                 int $changed$iv$iv25 = (0 << 3) & 112;
                 ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                compositeKeyHash$iv$iv2 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                st.compositeKeyHash$iv$iv2 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                 CompositionLocalMap localMap$iv$iv21 = $composer.getCurrentCompositionLocalMap();
                 Modifier materialized$iv$iv25 = ComposedModifierKt.materializeModifier($composer, modifier$iv25);
-                constructor2 = ComposeUiNode.Companion.getConstructor();
+                st.constructor2 = ComposeUiNode.Companion.getConstructor();
                 int $changed$iv$iv$iv25 = (($changed$iv$iv25 << 6) & 896) | 6;
                 ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                 if (!($composer.getApplier() instanceof Applier)) {
@@ -4175,21 +4268,21 @@ public final class RazrCoverShellKt {
                 }
                 $composer.startReusableNode();
                 if ($composer.getInserting()) {
-                    function4 = constructor2;
-                    $composer.createNode(function4);
+                    st.function4 = st.constructor2;
+                    $composer.createNode(st.function4);
                 } else {
-                    function4 = constructor2;
+                    st.function4 = st.constructor2;
                     $composer.useNode();
                 }
-                $this$Layout_u24lambda_u240$iv$iv2 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv2, measurePolicy$iv120, ComposeUiNode.Companion.getSetMeasurePolicy());
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv2, localMap$iv$iv21, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                st.$this$Layout_u24lambda_u240$iv$iv2 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv2, measurePolicy$iv120, ComposeUiNode.Companion.getSetMeasurePolicy());
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv2, localMap$iv$iv21, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                 Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash25 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                if (!$this$Layout_u24lambda_u240$iv$iv2.getInserting()) {
+                if (!st.$this$Layout_u24lambda_u240$iv$iv2.getInserting()) {
                 }
-                $this$Layout_u24lambda_u240$iv$iv2.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv2));
-                $this$Layout_u24lambda_u240$iv$iv2.apply(Integer.valueOf(compositeKeyHash$iv$iv2), setCompositeKeyHash25);
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv2, materialized$iv$iv25, ComposeUiNode.Companion.getSetModifier());
+                st.$this$Layout_u24lambda_u240$iv$iv2.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv2));
+                st.$this$Layout_u24lambda_u240$iv$iv2.apply(Integer.valueOf(st.compositeKeyHash$iv$iv2), setCompositeKeyHash25);
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv2, materialized$iv$iv25, ComposeUiNode.Companion.getSetModifier());
                 int i34 = ($changed$iv$iv$iv25 >> 6) & 14;
                 ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                 ColumnScopeInstance columnScopeInstance20 = ColumnScopeInstance.INSTANCE;
@@ -4208,13 +4301,13 @@ public final class RazrCoverShellKt {
                 Alignment.Vertical verticalAlignment$iv19 = Alignment.Companion.getCenterVertically();
                 ComposerKt.sourceInformationMarkerStart($composer, 693286680, "CC(Row)P(2,1,3)99@5018L58,100@5081L130:Row.kt#2w3rfo");
                 Arrangement.Horizontal horizontalArrangement$iv19 = Arrangement.INSTANCE.getStart();
-                measurePolicy$iv2 = RowKt.rowMeasurePolicy(horizontalArrangement$iv19, verticalAlignment$iv19, $composer, ((384 >> 3) & 14) | ((384 >> 3) & 112));
+                st.measurePolicy$iv2 = RowKt.rowMeasurePolicy(horizontalArrangement$iv19, verticalAlignment$iv19, $composer, ((384 >> 3) & 14) | ((384 >> 3) & 112));
                 int $changed$iv$iv26 = (384 << 3) & 112;
                 ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                compositeKeyHash$iv$iv3 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                st.compositeKeyHash$iv$iv3 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                 CompositionLocalMap localMap$iv$iv120 = $composer.getCurrentCompositionLocalMap();
                 Modifier materialized$iv$iv26 = ComposedModifierKt.materializeModifier($composer, modifier$iv26);
-                constructor3 = ComposeUiNode.Companion.getConstructor();
+                st.constructor3 = ComposeUiNode.Companion.getConstructor();
                 int $changed$iv$iv$iv26 = (($changed$iv$iv26 << 6) & 896) | 6;
                 ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                 if (!($composer.getApplier() instanceof Applier)) {
@@ -4222,50 +4315,50 @@ public final class RazrCoverShellKt {
                 }
                 $composer.startReusableNode();
                 if ($composer.getInserting()) {
-                    function5 = constructor3;
-                    $composer.createNode(function5);
+                    st.function5 = st.constructor3;
+                    $composer.createNode(st.function5);
                 } else {
-                    function5 = constructor3;
+                    st.function5 = st.constructor3;
                     $composer.useNode();
                 }
-                $this$Layout_u24lambda_u240$iv$iv3 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv3, measurePolicy$iv2, ComposeUiNode.Companion.getSetMeasurePolicy());
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv3, localMap$iv$iv120, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                st.$this$Layout_u24lambda_u240$iv$iv3 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv3, st.measurePolicy$iv2, ComposeUiNode.Companion.getSetMeasurePolicy());
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv3, localMap$iv$iv120, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                 Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash26 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                if (!$this$Layout_u24lambda_u240$iv$iv3.getInserting()) {
-                    measurePolicy$iv3 = measurePolicy$iv2;
-                    if (!Intrinsics.areEqual($this$Layout_u24lambda_u240$iv$iv3.rememberedValue(), Integer.valueOf(compositeKeyHash$iv$iv3))) {
+                if (!st.$this$Layout_u24lambda_u240$iv$iv3.getInserting()) {
+                    st.measurePolicy$iv3 = st.measurePolicy$iv2;
+                    if (!Intrinsics.areEqual(st.$this$Layout_u24lambda_u240$iv$iv3.rememberedValue(), Integer.valueOf(st.compositeKeyHash$iv$iv3))) {
                     }
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv3, materialized$iv$iv26, ComposeUiNode.Companion.getSetModifier());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv3, materialized$iv$iv26, ComposeUiNode.Companion.getSetModifier());
                     int i123 = ($changed$iv$iv$iv26 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                     RowScopeInstance rowScopeInstance3 = RowScopeInstance.INSTANCE;
                     int i124 = ((384 >> 6) & 112) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, 762306201, "C139@5911L223,145@6151L28,146@6196L270:RazrCoverShell.kt#z0j3je");
                     Modifier modifierClip110 = ClipKt.clip(ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(7)), RoundedCornerShapeKt.getCircleShape());
-                    if (z2) {
+                    if (st.z2) {
                         $composer.startReplaceGroup(-529593847);
                         ComposerKt.sourceInformation($composer, "143@6083L10");
-                        auroraTextMuted = AuroraColorSchemeKt.getAuroraLive($composer, 0);
+                        st.auroraTextMuted = AuroraColorSchemeKt.getAuroraLive($composer, 0);
                     } else {
                         $composer.startReplaceGroup(-529593330);
                         ComposerKt.sourceInformation($composer, "143@6099L15");
-                        auroraTextMuted = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
+                        st.auroraTextMuted = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
                     }
                     $composer.endReplaceGroup();
-                    BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip110, auroraTextMuted, null, 2, null), $composer, 0);
+                    BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip110, st.auroraTextMuted, null, 2, null), $composer, 0);
                     SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1084width3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(6)), $composer, 6);
-                    if (z2) {
+                    if (st.z2) {
                         $composer.startReplaceGroup(-529587638);
                         ComposerKt.sourceInformation($composer, "148@6277L11");
-                        auroraText = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
+                        st.auroraText = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
                     } else {
                         $composer.startReplaceGroup(-529587095);
                         ComposerKt.sourceInformation($composer, "148@6294L10");
-                        auroraText = AuroraColorSchemeKt.getAuroraText($composer, 0);
+                        st.auroraText = AuroraColorSchemeKt.getAuroraText($composer, 0);
                     }
                     $composer.endReplaceGroup();
-                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str2, (Modifier) null, auroraText, TextUnitKt.getSp(11), (FontStyle) null, FontWeight.Companion.getBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
+                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str2, (Modifier) null, st.auroraText, TextUnitKt.getSp(11), (FontStyle) null, FontWeight.Companion.getBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     $composer.endNode();
@@ -4282,13 +4375,13 @@ public final class RazrCoverShellKt {
                     Modifier modifier$iv27 = ai.nous.aurora.compat.Compat.m1035paddingVpY3zN4(ai.nous.aurora.compat.Compat.m600borderxT4_qwU(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(ClipKt.clip(ai.nous.aurora.compat.Compat.d_SizeKt_fillMaxWidth_4(Modifier.Companion, 0.0f, 1, null), ai.nous.aurora.compat.Compat.m1317RoundedCornerShape0680j_4(ai.nous.aurora.compat.Compat.m7016constructorimpl(16))), AuroraColorSchemeKt.getAuroraSurface($composer, 0), null, 2, null), ai.nous.aurora.compat.Compat.m7016constructorimpl(1), AuroraColorSchemeKt.getAuroraHairline($composer, 0), ai.nous.aurora.compat.Compat.m1317RoundedCornerShape0680j_4(ai.nous.aurora.compat.Compat.m7016constructorimpl(16))), ai.nous.aurora.compat.Compat.m7016constructorimpl(14), ai.nous.aurora.compat.Compat.m7016constructorimpl(13));
                     ComposerKt.sourceInformationMarkerStart($composer, 733328855, "CC(Box)P(2,1,3)72@3384L130:Box.kt#2w3rfo");
                     Alignment contentAlignment$iv110 = Alignment.Companion.getTopStart();
-                    measurePolicy$iv4 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv110, false);
+                    st.measurePolicy$iv4 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv110, false);
                     int $changed$iv$iv27 = (0 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv4 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
-                    localMap$iv$iv = $composer.getCurrentCompositionLocalMap();
+                    st.compositeKeyHash$iv$iv4 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.localMap$iv$iv = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv27 = ComposedModifierKt.materializeModifier($composer, modifier$iv27);
-                    constructor4 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor4 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv27 = (($changed$iv$iv27 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -4296,22 +4389,22 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function6 = constructor4;
-                        $composer.createNode(function6);
+                        st.function6 = st.constructor4;
+                        $composer.createNode(st.function6);
                     } else {
-                        function6 = constructor4;
+                        st.function6 = st.constructor4;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv4 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv4, measurePolicy$iv4, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv4, localMap$iv$iv, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv4 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv4, st.measurePolicy$iv4, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv4, st.localMap$iv$iv, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash27 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv4.getInserting()) {
-                        measurePolicy$iv5 = measurePolicy$iv4;
-                        localMap$iv$iv2 = localMap$iv$iv;
-                        if (!Intrinsics.areEqual($this$Layout_u24lambda_u240$iv$iv4.rememberedValue(), Integer.valueOf(compositeKeyHash$iv$iv4))) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv4.getInserting()) {
+                        st.measurePolicy$iv5 = st.measurePolicy$iv4;
+                        st.localMap$iv$iv2 = st.localMap$iv$iv;
+                        if (!Intrinsics.areEqual(st.$this$Layout_u24lambda_u240$iv$iv4.rememberedValue(), Integer.valueOf(st.compositeKeyHash$iv$iv4))) {
                         }
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv4, materialized$iv$iv27, ComposeUiNode.Companion.getSetModifier());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv4, materialized$iv$iv27, ComposeUiNode.Companion.getSetModifier());
                         int i111120 = ($changed$iv$iv$iv27 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                         BoxScopeInstance boxScopeInstance112 = BoxScopeInstance.INSTANCE;
@@ -4325,10 +4418,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv11121 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv114, horizontalAlignment$iv114, $composer, $i$f$Column13);
                         int $changed$iv$iv28 = (6 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv5 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
-                        localMap$iv$iv3 = $composer.getCurrentCompositionLocalMap();
+                        st.compositeKeyHash$iv$iv5 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.localMap$iv$iv3 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv28 = ComposedModifierKt.materializeModifier($composer, modifier$iv28);
-                        constructor5 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor5 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv28 = (($changed$iv$iv28 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -4336,21 +4429,21 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function7 = constructor5;
-                            $composer.createNode(function7);
+                            st.function7 = st.constructor5;
+                            $composer.createNode(st.function7);
                         } else {
-                            function7 = constructor5;
+                            st.function7 = st.constructor5;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv5 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, measurePolicy$iv11121, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, localMap$iv$iv3, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv5 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, measurePolicy$iv11121, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, st.localMap$iv$iv3, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash28 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv5.getInserting()) {
-                            localMap$iv$iv4 = localMap$iv$iv3;
-                            if (!Intrinsics.areEqual($this$Layout_u24lambda_u240$iv$iv5.rememberedValue(), Integer.valueOf(compositeKeyHash$iv$iv5))) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv5.getInserting()) {
+                            st.localMap$iv$iv4 = st.localMap$iv$iv3;
+                            if (!Intrinsics.areEqual(st.$this$Layout_u24lambda_u240$iv$iv5.rememberedValue(), Integer.valueOf(st.compositeKeyHash$iv$iv5))) {
                             }
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv28, ComposeUiNode.Companion.getSetModifier());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv28, ComposeUiNode.Companion.getSetModifier());
                             int i1111110 = ($changed$iv$iv$iv28 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                             ColumnScopeInstance columnScopeInstance118 = ColumnScopeInstance.INSTANCE;
@@ -4358,12 +4451,12 @@ public final class RazrCoverShellKt {
                             ComposerKt.sourceInformationMarkerStart($composer, 763412498, "C170@7030L15,168@6959L293,176@7269L29,179@7384L10,177@7315L278,195@7997L29,200@8202L14,196@8043L193,202@8253L29,203@8299L1366:RazrCoverShell.kt#z0j3je");
                             ai.nous.aurora.compat.Compat.m3067Text4IGK_g("LATEST THREAD", (Modifier) null, AuroraColorSchemeKt.getAuroraTextFaint($composer, 0), TextUnitKt.getSp(9), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), TextUnitKt.getSp(1), (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 12782598, 0, 130834);
                             SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(5)), $composer, 6);
-                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
+                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
                             $composer.startReplaceGroup(-529544623);
                             ComposerKt.sourceInformation($composer, "186@7658L29,189@7786L15,187@7708L254");
-                            if (!StringsKt.isBlank(str4)) {
+                            if (!StringsKt.isBlank(st.str4)) {
                                 SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(3)), $composer, 6);
-                                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                             }
                             $composer.endReplaceGroup();
                             SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(9)), $composer, 6);
@@ -4377,10 +4470,10 @@ public final class RazrCoverShellKt {
                             MeasurePolicy measurePolicy$iv1111112 = RowKt.rowMeasurePolicy(horizontalArrangement$iv110, verticalAlignment$iv110, $composer, $changed$iv9);
                             int $changed$iv$iv111117 = (390 << 3) & 112;
                             ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                            compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                            st.compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                             CompositionLocalMap localMap$iv$iv111119 = $composer.getCurrentCompositionLocalMap();
                             Modifier materialized$iv$iv111117 = ComposedModifierKt.materializeModifier($composer, modifier$iv111117);
-                            constructor6 = ComposeUiNode.Companion.getConstructor();
+                            st.constructor6 = ComposeUiNode.Companion.getConstructor();
                             int $changed$iv$iv$iv111117 = (($changed$iv$iv111117 << 6) & 896) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                             if (!($composer.getApplier() instanceof Applier)) {
@@ -4388,38 +4481,38 @@ public final class RazrCoverShellKt {
                             }
                             $composer.startReusableNode();
                             if ($composer.getInserting()) {
-                                function8 = constructor6;
-                                $composer.createNode(function8);
+                                st.function8 = st.constructor6;
+                                $composer.createNode(st.function8);
                             } else {
-                                function8 = constructor6;
+                                st.function8 = st.constructor6;
                                 $composer.useNode();
                             }
-                            $this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv1111112, ComposeUiNode.Companion.getSetMeasurePolicy());
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv111119, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                            st.$this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv1111112, ComposeUiNode.Companion.getSetMeasurePolicy());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv111119, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                             Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash111117 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                            if (!$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
+                            if (!st.$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
                             }
-                            $this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv6));
-                            $this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(compositeKeyHash$iv$iv6), setCompositeKeyHash111117);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv111117, ComposeUiNode.Companion.getSetModifier());
+                            st.$this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv6));
+                            st.$this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(st.compositeKeyHash$iv$iv6), setCompositeKeyHash111117);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv111117, ComposeUiNode.Companion.getSetModifier());
                             int i1111112 = ($changed$iv$iv$iv111117 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                             int i1111113 = ((390 >> 6) & 112) | 6;
-                            $this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
+                            st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
                             ComposerKt.sourceInformationMarkerStart($composer, -1980267798, "C220@9102L15,218@8996L282:RazrCoverShell.kt#z0j3je");
                             $composer.startReplaceGroup(-618069607);
                             ComposerKt.sourceInformation($composer, "210@8649L11,208@8527L373,216@8925L28");
-                            if (uiState.getSelectedModel() != null) {
-                                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
+                            if (st.uiState.getSelectedModel() != null) {
+                                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(st.uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
                                 SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1084width3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(8)), $composer, 6);
                             }
                             $composer.endReplaceGroup();
-                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + st.uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                             $composer.startReplaceGroup(-618043174);
                             ComposerKt.sourceInformation($composer, "226@9344L27,229@9479L11,227@9396L229");
-                            if (uiState.getSending()) {
-                                SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
+                            if (st.uiState.getSending()) {
+                                SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6(st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
                                 ai.nous.aurora.compat.Compat.m3067Text4IGK_g("thinking…", (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199686, 0, 131026);
                             }
                             $composer.endReplaceGroup();
@@ -4449,10 +4542,10 @@ public final class RazrCoverShellKt {
                             MeasurePolicy measurePolicy$iv1111113 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv115, horizontalAlignment$iv115, $composer, ((384 >> 3) & 14) | ((384 >> 3) & 112));
                             int $changed$iv$iv111118 = (384 << 3) & 112;
                             ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                            compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                            st.compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                             CompositionLocalMap localMap$iv$iv1111110 = $composer.getCurrentCompositionLocalMap();
                             Modifier materialized$iv$iv111118 = ComposedModifierKt.materializeModifier($composer, modifier$iv111118);
-                            constructor7 = ComposeUiNode.Companion.getConstructor();
+                            st.constructor7 = ComposeUiNode.Companion.getConstructor();
                             int $i$f$Column14 = $changed$iv$iv111118 << 6;
                             int $changed$iv$iv$iv111118 = ($i$f$Column14 & 896) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
@@ -4461,21 +4554,21 @@ public final class RazrCoverShellKt {
                             }
                             $composer.startReusableNode();
                             if ($composer.getInserting()) {
-                                function9 = constructor7;
-                                $composer.createNode(function9);
+                                st.function9 = st.constructor7;
+                                $composer.createNode(st.function9);
                             } else {
-                                function9 = constructor7;
+                                st.function9 = st.constructor7;
                                 $composer.useNode();
                             }
-                            $this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv1111113, ComposeUiNode.Companion.getSetMeasurePolicy());
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv1111110, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                            st.$this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv1111113, ComposeUiNode.Companion.getSetMeasurePolicy());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv1111110, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                             Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash111118 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                            if (!$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
+                            if (!st.$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
                             }
-                            $this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv7));
-                            $this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(compositeKeyHash$iv$iv7), setCompositeKeyHash111118);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv111118, ComposeUiNode.Companion.getSetModifier());
+                            st.$this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv7));
+                            st.$this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(st.compositeKeyHash$iv$iv7), setCompositeKeyHash111118);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv111118, ComposeUiNode.Companion.getSetModifier());
                             int i1111114 = ($changed$iv$iv$iv111118 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                             ColumnScopeInstance columnScopeInstance119 = ColumnScopeInstance.INSTANCE;
@@ -4487,10 +4580,10 @@ public final class RazrCoverShellKt {
                             MeasurePolicy measurePolicy$iv1111114 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv111, false);
                             int $changed$iv$iv111119 = (48 << 3) & 112;
                             ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                            compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                            st.compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                             CompositionLocalMap localMap$iv$iv1111111 = $composer.getCurrentCompositionLocalMap();
                             Modifier materialized$iv$iv111119 = ComposedModifierKt.materializeModifier($composer, modifier$iv111119);
-                            constructor8 = ComposeUiNode.Companion.getConstructor();
+                            st.constructor8 = ComposeUiNode.Companion.getConstructor();
                             int $changed$iv$iv$iv111119 = (($changed$iv$iv111119 << 6) & 896) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                             if (!($composer.getApplier() instanceof Applier)) {
@@ -4498,21 +4591,21 @@ public final class RazrCoverShellKt {
                             }
                             $composer.startReusableNode();
                             if ($composer.getInserting()) {
-                                function10 = constructor8;
-                                $composer.createNode(function10);
+                                st.function10 = st.constructor8;
+                                $composer.createNode(st.function10);
                             } else {
-                                function10 = constructor8;
+                                st.function10 = st.constructor8;
                                 $composer.useNode();
                             }
-                            $this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv1111114, ComposeUiNode.Companion.getSetMeasurePolicy());
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv1111111, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                            st.$this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv1111114, ComposeUiNode.Companion.getSetMeasurePolicy());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv1111111, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                             Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash111119 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                            if (!$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
+                            if (!st.$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
                             }
-                            $this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv8));
-                            $this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(compositeKeyHash$iv$iv8), setCompositeKeyHash111119);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv111119, ComposeUiNode.Companion.getSetModifier());
+                            st.$this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv8));
+                            st.$this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(st.compositeKeyHash$iv$iv8), setCompositeKeyHash111119);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv111119, ComposeUiNode.Companion.getSetModifier());
                             int i211111113 = ($changed$iv$iv$iv111119 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                             BoxScopeInstance boxScopeInstance113 = BoxScopeInstance.INSTANCE;
@@ -4527,44 +4620,44 @@ public final class RazrCoverShellKt {
                             Modifier modifierM600borderxT4_qwU9 = ai.nous.aurora.compat.Compat.m600borderxT4_qwU(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip111, ai.nous.aurora.compat.Compat.m4532copywmQWz5c(auroraAmber18, (14 & 1) != 0 ? ai.nous.aurora.compat.Compat.m4536getAlphaimpl(auroraAmber18) : 0.22f, (14 & 2) != 0 ? ai.nous.aurora.compat.Compat.m4540getRedimpl(auroraAmber18) : 0.0f, (14 & 4) != 0 ? ai.nous.aurora.compat.Compat.m4539getGreenimpl(auroraAmber18) : 0.0f, (14 & 8) != 0 ? ai.nous.aurora.compat.Compat.m4537getBlueimpl(auroraAmber18) : 0.0f), null, 2, null), ai.nous.aurora.compat.Compat.m7016constructorimpl(2), AuroraColorSchemeKt.getAuroraAmber($composer, 0), RoundedCornerShapeKt.getCircleShape());
                             $composer.startReplaceGroup(-529441171);
                             ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                            invalid$iv = $composer.changed(z2);
+                            st.invalid$iv = $composer.changed(st.z2);
                             Object it$iv17 = $composer.rememberedValue();
-                            if (!invalid$iv) {
+                            if (!st.invalid$iv) {
                             }
-                            value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
+                            st.value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
                                 @Override // kotlin.jvm.functions.Function1
                                 public final Object invoke(Object obj) {
-                                    return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(z2, (SemanticsPropertyReceiver) obj);
+                                    return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(st.z2, (SemanticsPropertyReceiver) obj);
                                 }
                             };
-                            $composer.updateRememberedValue(value$iv);
+                            $composer.updateRememberedValue(st.value$iv);
                             $composer.endReplaceGroup();
-                            Modifier modifierSemantics$default9 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU9, false, (Function1) value$iv, 1, null);
-                            boolean zCanTalk9 = CoverShellPolicy.INSTANCE.canTalk(z2);
+                            Modifier modifierSemantics$default9 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU9, false, (Function1) st.value$iv, 1, null);
+                            boolean zCanTalk9 = CoverShellPolicy.INSTANCE.canTalk(st.z2);
                             $composer.startReplaceGroup(-529427629);
                             ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                            invalid$iv2 = $composer.changedInstance(context);
+                            st.invalid$iv2 = $composer.changedInstance(st.context);
                             Object it$iv18 = $composer.rememberedValue();
-                            if (!invalid$iv2) {
+                            if (!st.invalid$iv2) {
                             }
-                            value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
+                            st.value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
                                 @Override // kotlin.jvm.functions.Function0
                                 public final Object invoke() {
-                                    return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(context);
+                                    return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(st.context);
                                 }
                             };
-                            $composer.updateRememberedValue(value$iv2);
+                            $composer.updateRememberedValue(st.value$iv2);
                             $composer.endReplaceGroup();
-                            Modifier modifier$iv1111110 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default9, zCanTalk9, "Start voice Assist", null, (Function0) value$iv2, 4, null);
+                            Modifier modifier$iv1111110 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default9, zCanTalk9, "Start voice Assist", null, (Function0) st.value$iv2, 4, null);
                             Alignment contentAlignment$iv112 = Alignment.Companion.getCenter();
                             ComposerKt.sourceInformationMarkerStart($composer, 733328855, "CC(Box)P(2,1,3)72@3384L130:Box.kt#2w3rfo");
                             MeasurePolicy measurePolicy$iv1111115 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv112, false);
                             int $changed$iv$iv1111110 = (48 << 3) & 112;
                             ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                            compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                            st.compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                             CompositionLocalMap localMap$iv$iv1111112 = $composer.getCurrentCompositionLocalMap();
                             Modifier materialized$iv$iv1111110 = ComposedModifierKt.materializeModifier($composer, modifier$iv1111110);
-                            constructor9 = ComposeUiNode.Companion.getConstructor();
+                            st.constructor9 = ComposeUiNode.Companion.getConstructor();
                             int $changed$iv$iv$iv1111110 = (($changed$iv$iv1111110 << 6) & 896) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                             if (!($composer.getApplier() instanceof Applier)) {
@@ -4572,38 +4665,38 @@ public final class RazrCoverShellKt {
                             }
                             $composer.startReusableNode();
                             if ($composer.getInserting()) {
-                                function11 = constructor9;
-                                $composer.createNode(function11);
+                                st.function11 = st.constructor9;
+                                $composer.createNode(st.function11);
                             } else {
-                                function11 = constructor9;
+                                st.function11 = st.constructor9;
                                 $composer.useNode();
                             }
-                            $this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv1111115, ComposeUiNode.Companion.getSetMeasurePolicy());
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv1111112, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                            st.$this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv1111115, ComposeUiNode.Companion.getSetMeasurePolicy());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv1111112, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                             Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1111110 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                            if (!$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
+                            if (!st.$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
                             }
-                            $this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv9));
-                            $this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(compositeKeyHash$iv$iv9), setCompositeKeyHash1111110);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv1111110, ComposeUiNode.Companion.getSetModifier());
+                            st.$this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv9));
+                            st.$this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(st.compositeKeyHash$iv$iv9), setCompositeKeyHash1111110);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv1111110, ComposeUiNode.Companion.getSetModifier());
                             int i211111115 = ($changed$iv$iv$iv1111110 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                             BoxScopeInstance boxScopeInstance114 = BoxScopeInstance.INSTANCE;
                             int i211111116 = ((48 >> 6) & 112) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -1977158684, "C281@11632L225:RazrCoverShell.kt#z0j3je");
                             Modifier modifierClip112 = ClipKt.clip(ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(56)), RoundedCornerShapeKt.getCircleShape());
-                            if (z2) {
+                            if (st.z2) {
                                 $composer.startReplaceGroup(-617963319);
                                 ComposerKt.sourceInformation($composer, "285@11805L11");
-                                auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
+                                st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
                             } else {
                                 $composer.startReplaceGroup(-617962771);
                                 ComposerKt.sourceInformation($composer, "285@11822L15");
-                                auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
+                                st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
                             }
                             $composer.endReplaceGroup();
-                            BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip112, auroraTextMuted2, null, 2, null), $composer, 0);
+                            BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip112, st.auroraTextMuted2, null, 2, null), $composer, 0);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             $composer.endNode();
@@ -4617,12 +4710,12 @@ public final class RazrCoverShellKt {
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(6)), $composer, 6);
-                            if (z2) {
-                                str = "TALK · tap orb or power";
+                            if (st.z2) {
+                                st.str = "TALK · tap orb or power";
                             } else {
-                                str = "Offline";
+                                st.str = "Offline";
                             }
-                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
+                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             $composer.endNode();
@@ -4642,10 +4735,10 @@ public final class RazrCoverShellKt {
                             MeasurePolicy measurePolicy$iv1111116 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv116, horizontalAlignment$iv116, $composer, ((390 >> 3) & 14) | ((390 >> 3) & 112));
                             int $changed$iv$iv1111111 = (390 << 3) & 112;
                             ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                            compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                            st.compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                             CompositionLocalMap localMap$iv$iv1111113 = $composer.getCurrentCompositionLocalMap();
                             Modifier materialized$iv$iv1111111 = ComposedModifierKt.materializeModifier($composer, modifier$iv1111111);
-                            constructor10 = ComposeUiNode.Companion.getConstructor();
+                            st.constructor10 = ComposeUiNode.Companion.getConstructor();
                             int $changed$iv$iv$iv1111111 = (($changed$iv$iv1111111 << 6) & 896) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                             if (!($composer.getApplier() instanceof Applier)) {
@@ -4653,19 +4746,19 @@ public final class RazrCoverShellKt {
                             }
                             $composer.startReusableNode();
                             if ($composer.getInserting()) {
-                                $composer.createNode(constructor10);
+                                $composer.createNode(st.constructor10);
                             } else {
                                 $composer.useNode();
                             }
-                            $this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv1111116, ComposeUiNode.Companion.getSetMeasurePolicy());
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv1111113, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                            st.$this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv1111116, ComposeUiNode.Companion.getSetMeasurePolicy());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv1111113, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                             Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1111111 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                            if (!$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
+                            if (!st.$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
                             }
-                            $this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv10));
-                            $this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(compositeKeyHash$iv$iv10), setCompositeKeyHash1111111);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv1111111, ComposeUiNode.Companion.getSetModifier());
+                            st.$this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv10));
+                            st.$this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(st.compositeKeyHash$iv$iv10), setCompositeKeyHash1111111);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv1111111, ComposeUiNode.Companion.getSetModifier());
                             int i211111117 = ($changed$iv$iv$iv1111111 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                             ColumnScopeInstance columnScopeInstance1110 = ColumnScopeInstance.INSTANCE;
@@ -4678,10 +4771,10 @@ public final class RazrCoverShellKt {
                             MeasurePolicy measurePolicy$iv1111117 = RowKt.rowMeasurePolicy(horizontalArrangement$iv111, verticalAlignment$iv111, $composer, ((54 >> 3) & 14) | ((54 >> 3) & 112));
                             int $changed$iv$iv1111112 = (54 << 3) & 112;
                             ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                            compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                            st.compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                             CompositionLocalMap localMap$iv$iv1111114 = $composer.getCurrentCompositionLocalMap();
                             Modifier materialized$iv$iv1111112 = ComposedModifierKt.materializeModifier($composer, modifier$iv1111112);
-                            constructor11 = ComposeUiNode.Companion.getConstructor();
+                            st.constructor11 = ComposeUiNode.Companion.getConstructor();
                             int $changed$iv$iv$iv1111112 = (($changed$iv$iv1111112 << 6) & 896) | 6;
                             ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                             if (!($composer.getApplier() instanceof Applier)) {
@@ -4689,34 +4782,34 @@ public final class RazrCoverShellKt {
                             }
                             $composer.startReusableNode();
                             if ($composer.getInserting()) {
-                                function12 = constructor11;
-                                $composer.createNode(function12);
+                                st.function12 = st.constructor11;
+                                $composer.createNode(st.function12);
                             } else {
-                                function12 = constructor11;
+                                st.function12 = st.constructor11;
                                 $composer.useNode();
                             }
-                            $this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv1111117, ComposeUiNode.Companion.getSetMeasurePolicy());
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv1111114, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                            st.$this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv1111117, ComposeUiNode.Companion.getSetMeasurePolicy());
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv1111114, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                             Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1111112 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                            if (!$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
+                            if (!st.$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
                             }
-                            $this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv11));
-                            $this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(compositeKeyHash$iv$iv11), setCompositeKeyHash1111112);
-                            ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv1111112, ComposeUiNode.Companion.getSetModifier());
+                            st.$this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv11));
+                            st.$this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(st.compositeKeyHash$iv$iv11), setCompositeKeyHash1111112);
+                            ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv1111112, ComposeUiNode.Companion.getSetModifier());
                             int i211111119 = ($changed$iv$iv$iv1111112 >> 6) & 14;
                             ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                             int i2111111110 = ((54 >> 6) & 112) | 6;
                             RowScope $this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24113 = RowScopeInstance.INSTANCE;
                             ComposerKt.sourceInformationMarkerStart($composer, -404697066, "C309@12543L264,316@12820L248:RazrCoverShell.kt#z0j3je");
                             CoverShellPolicy coverShellPolicy9 = CoverShellPolicy.INSTANCE;
-                            if (auroraSession != null) {
-                                z = true;
+                            if (st.auroraSession != null) {
+                                st.z = true;
                             } else {
-                                z = false;
+                                st.z = false;
                             }
-                            RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy9.canOpenLatest(z), function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24113, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
-                            RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(z2), function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24113, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                            RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy9.canOpenLatest(st.z), st.function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24113, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                            RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(st.z2), st.function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24113, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             ComposerKt.sourceInformationMarkerEnd($composer);
                             $composer.endNode();
@@ -4743,10 +4836,10 @@ public final class RazrCoverShellKt {
                             }
                             return;
                         }
-                        localMap$iv$iv4 = localMap$iv$iv3;
-                        $this$Layout_u24lambda_u240$iv$iv5.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv5));
-                        $this$Layout_u24lambda_u240$iv$iv5.apply(Integer.valueOf(compositeKeyHash$iv$iv5), setCompositeKeyHash28);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv28, ComposeUiNode.Companion.getSetModifier());
+                        st.localMap$iv$iv4 = st.localMap$iv$iv3;
+                        st.$this$Layout_u24lambda_u240$iv$iv5.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv5));
+                        st.$this$Layout_u24lambda_u240$iv$iv5.apply(Integer.valueOf(st.compositeKeyHash$iv$iv5), setCompositeKeyHash28);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv28, ComposeUiNode.Companion.getSetModifier());
                         int i1111115 = ($changed$iv$iv$iv28 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                         ColumnScopeInstance columnScopeInstance1111 = ColumnScopeInstance.INSTANCE;
@@ -4754,12 +4847,12 @@ public final class RazrCoverShellKt {
                         ComposerKt.sourceInformationMarkerStart($composer, 763412498, "C170@7030L15,168@6959L293,176@7269L29,179@7384L10,177@7315L278,195@7997L29,200@8202L14,196@8043L193,202@8253L29,203@8299L1366:RazrCoverShell.kt#z0j3je");
                         ai.nous.aurora.compat.Compat.m3067Text4IGK_g("LATEST THREAD", (Modifier) null, AuroraColorSchemeKt.getAuroraTextFaint($composer, 0), TextUnitKt.getSp(9), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), TextUnitKt.getSp(1), (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 12782598, 0, 130834);
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(5)), $composer, 6);
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
                         $composer.startReplaceGroup(-529544623);
                         ComposerKt.sourceInformation($composer, "186@7658L29,189@7786L15,187@7708L254");
-                        if (!StringsKt.isBlank(str4)) {
+                        if (!StringsKt.isBlank(st.str4)) {
                             SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(3)), $composer, 6);
-                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                         }
                         $composer.endReplaceGroup();
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(9)), $composer, 6);
@@ -4773,10 +4866,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv1111118 = RowKt.rowMeasurePolicy(horizontalArrangement$iv112, verticalAlignment$iv112, $composer, $changed$iv10);
                         int $changed$iv$iv1111113 = (390 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv1111115 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv1111113 = ComposedModifierKt.materializeModifier($composer, modifier$iv1111113);
-                        constructor6 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor6 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv1111113 = (($changed$iv$iv1111113 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -4784,38 +4877,38 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function8 = constructor6;
-                            $composer.createNode(function8);
+                            st.function8 = st.constructor6;
+                            $composer.createNode(st.function8);
                         } else {
-                            function8 = constructor6;
+                            st.function8 = st.constructor6;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv1111118, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv1111115, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv1111118, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv1111115, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1111113 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv6));
-                        $this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(compositeKeyHash$iv$iv6), setCompositeKeyHash1111113);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv1111113, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv6));
+                        st.$this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(st.compositeKeyHash$iv$iv6), setCompositeKeyHash1111113);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv1111113, ComposeUiNode.Companion.getSetModifier());
                         int i1111117 = ($changed$iv$iv$iv1111113 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                         int i1111118 = ((390 >> 6) & 112) | 6;
-                        $this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
+                        st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
                         ComposerKt.sourceInformationMarkerStart($composer, -1980267798, "C220@9102L15,218@8996L282:RazrCoverShell.kt#z0j3je");
                         $composer.startReplaceGroup(-618069607);
                         ComposerKt.sourceInformation($composer, "210@8649L11,208@8527L373,216@8925L28");
-                        if (uiState.getSelectedModel() != null) {
-                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
+                        if (st.uiState.getSelectedModel() != null) {
+                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(st.uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
                             SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1084width3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(8)), $composer, 6);
                         }
                         $composer.endReplaceGroup();
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + st.uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                         $composer.startReplaceGroup(-618043174);
                         ComposerKt.sourceInformation($composer, "226@9344L27,229@9479L11,227@9396L229");
-                        if (uiState.getSending()) {
-                            SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
+                        if (st.uiState.getSending()) {
+                            SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6(st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
                             ai.nous.aurora.compat.Compat.m3067Text4IGK_g("thinking…", (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199686, 0, 131026);
                         }
                         $composer.endReplaceGroup();
@@ -4845,10 +4938,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv1111119 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv117, horizontalAlignment$iv117, $composer, ((384 >> 3) & 14) | ((384 >> 3) & 112));
                         int $changed$iv$iv1111114 = (384 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv1111116 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv1111114 = ComposedModifierKt.materializeModifier($composer, modifier$iv1111114);
-                        constructor7 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor7 = ComposeUiNode.Companion.getConstructor();
                         int $i$f$Column15 = $changed$iv$iv1111114 << 6;
                         int $changed$iv$iv$iv1111114 = ($i$f$Column15 & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
@@ -4857,21 +4950,21 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function9 = constructor7;
-                            $composer.createNode(function9);
+                            st.function9 = st.constructor7;
+                            $composer.createNode(st.function9);
                         } else {
-                            function9 = constructor7;
+                            st.function9 = st.constructor7;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv1111119, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv1111116, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv1111119, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv1111116, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1111114 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv7));
-                        $this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(compositeKeyHash$iv$iv7), setCompositeKeyHash1111114);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv1111114, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv7));
+                        st.$this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(st.compositeKeyHash$iv$iv7), setCompositeKeyHash1111114);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv1111114, ComposeUiNode.Companion.getSetModifier());
                         int i1111119 = ($changed$iv$iv$iv1111114 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                         ColumnScopeInstance columnScopeInstance1112 = ColumnScopeInstance.INSTANCE;
@@ -4883,10 +4976,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv11111110 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv113, false);
                         int $changed$iv$iv1111115 = (48 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv1111117 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv1111115 = ComposedModifierKt.materializeModifier($composer, modifier$iv1111115);
-                        constructor8 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor8 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv1111115 = (($changed$iv$iv1111115 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -4894,21 +4987,21 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function10 = constructor8;
-                            $composer.createNode(function10);
+                            st.function10 = st.constructor8;
+                            $composer.createNode(st.function10);
                         } else {
-                            function10 = constructor8;
+                            st.function10 = st.constructor8;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv11111110, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv1111117, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv11111110, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv1111117, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1111115 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv8));
-                        $this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(compositeKeyHash$iv$iv8), setCompositeKeyHash1111115);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv1111115, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv8));
+                        st.$this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(st.compositeKeyHash$iv$iv8), setCompositeKeyHash1111115);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv1111115, ComposeUiNode.Companion.getSetModifier());
                         int i2111111112 = ($changed$iv$iv$iv1111115 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                         BoxScopeInstance boxScopeInstance115 = BoxScopeInstance.INSTANCE;
@@ -4923,44 +5016,44 @@ public final class RazrCoverShellKt {
                         Modifier modifierM600borderxT4_qwU10 = ai.nous.aurora.compat.Compat.m600borderxT4_qwU(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip113, ai.nous.aurora.compat.Compat.m4532copywmQWz5c(auroraAmber110, (14 & 1) != 0 ? ai.nous.aurora.compat.Compat.m4536getAlphaimpl(auroraAmber110) : 0.22f, (14 & 2) != 0 ? ai.nous.aurora.compat.Compat.m4540getRedimpl(auroraAmber110) : 0.0f, (14 & 4) != 0 ? ai.nous.aurora.compat.Compat.m4539getGreenimpl(auroraAmber110) : 0.0f, (14 & 8) != 0 ? ai.nous.aurora.compat.Compat.m4537getBlueimpl(auroraAmber110) : 0.0f), null, 2, null), ai.nous.aurora.compat.Compat.m7016constructorimpl(2), AuroraColorSchemeKt.getAuroraAmber($composer, 0), RoundedCornerShapeKt.getCircleShape());
                         $composer.startReplaceGroup(-529441171);
                         ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                        invalid$iv = $composer.changed(z2);
+                        st.invalid$iv = $composer.changed(st.z2);
                         Object it$iv19 = $composer.rememberedValue();
-                        if (!invalid$iv) {
+                        if (!st.invalid$iv) {
                         }
-                        value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
+                        st.value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(z2, (SemanticsPropertyReceiver) obj);
+                                return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(st.z2, (SemanticsPropertyReceiver) obj);
                             }
                         };
-                        $composer.updateRememberedValue(value$iv);
+                        $composer.updateRememberedValue(st.value$iv);
                         $composer.endReplaceGroup();
-                        Modifier modifierSemantics$default10 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU10, false, (Function1) value$iv, 1, null);
-                        boolean zCanTalk10 = CoverShellPolicy.INSTANCE.canTalk(z2);
+                        Modifier modifierSemantics$default10 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU10, false, (Function1) st.value$iv, 1, null);
+                        boolean zCanTalk10 = CoverShellPolicy.INSTANCE.canTalk(st.z2);
                         $composer.startReplaceGroup(-529427629);
                         ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                        invalid$iv2 = $composer.changedInstance(context);
+                        st.invalid$iv2 = $composer.changedInstance(st.context);
                         Object it$iv110 = $composer.rememberedValue();
-                        if (!invalid$iv2) {
+                        if (!st.invalid$iv2) {
                         }
-                        value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
+                        st.value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
                             @Override // kotlin.jvm.functions.Function0
                             public final Object invoke() {
-                                return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(context);
+                                return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(st.context);
                             }
                         };
-                        $composer.updateRememberedValue(value$iv2);
+                        $composer.updateRememberedValue(st.value$iv2);
                         $composer.endReplaceGroup();
-                        Modifier modifier$iv1111116 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default10, zCanTalk10, "Start voice Assist", null, (Function0) value$iv2, 4, null);
+                        Modifier modifier$iv1111116 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default10, zCanTalk10, "Start voice Assist", null, (Function0) st.value$iv2, 4, null);
                         Alignment contentAlignment$iv114 = Alignment.Companion.getCenter();
                         ComposerKt.sourceInformationMarkerStart($composer, 733328855, "CC(Box)P(2,1,3)72@3384L130:Box.kt#2w3rfo");
                         MeasurePolicy measurePolicy$iv11111111 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv114, false);
                         int $changed$iv$iv1111116 = (48 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv1111118 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv1111116 = ComposedModifierKt.materializeModifier($composer, modifier$iv1111116);
-                        constructor9 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor9 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv1111116 = (($changed$iv$iv1111116 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -4968,38 +5061,38 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function11 = constructor9;
-                            $composer.createNode(function11);
+                            st.function11 = st.constructor9;
+                            $composer.createNode(st.function11);
                         } else {
-                            function11 = constructor9;
+                            st.function11 = st.constructor9;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv11111111, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv1111118, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv11111111, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv1111118, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1111116 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv9));
-                        $this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(compositeKeyHash$iv$iv9), setCompositeKeyHash1111116);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv1111116, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv9));
+                        st.$this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(st.compositeKeyHash$iv$iv9), setCompositeKeyHash1111116);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv1111116, ComposeUiNode.Companion.getSetModifier());
                         int i2111111114 = ($changed$iv$iv$iv1111116 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                         BoxScopeInstance boxScopeInstance116 = BoxScopeInstance.INSTANCE;
                         int i2111111115 = ((48 >> 6) & 112) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -1977158684, "C281@11632L225:RazrCoverShell.kt#z0j3je");
                         Modifier modifierClip114 = ClipKt.clip(ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(56)), RoundedCornerShapeKt.getCircleShape());
-                        if (z2) {
+                        if (st.z2) {
                             $composer.startReplaceGroup(-617963319);
                             ComposerKt.sourceInformation($composer, "285@11805L11");
-                            auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
+                            st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
                         } else {
                             $composer.startReplaceGroup(-617962771);
                             ComposerKt.sourceInformation($composer, "285@11822L15");
-                            auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
+                            st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
                         }
                         $composer.endReplaceGroup();
-                        BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip114, auroraTextMuted2, null, 2, null), $composer, 0);
+                        BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip114, st.auroraTextMuted2, null, 2, null), $composer, 0);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         $composer.endNode();
@@ -5013,12 +5106,12 @@ public final class RazrCoverShellKt {
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(6)), $composer, 6);
-                        if (z2) {
-                            str = "TALK · tap orb or power";
+                        if (st.z2) {
+                            st.str = "TALK · tap orb or power";
                         } else {
-                            str = "Offline";
+                            st.str = "Offline";
                         }
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         $composer.endNode();
@@ -5038,10 +5131,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv11111112 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv118, horizontalAlignment$iv118, $composer, ((390 >> 3) & 14) | ((390 >> 3) & 112));
                         int $changed$iv$iv1111117 = (390 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv1111119 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv1111117 = ComposedModifierKt.materializeModifier($composer, modifier$iv1111117);
-                        constructor10 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor10 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv1111117 = (($changed$iv$iv1111117 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -5049,19 +5142,19 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            $composer.createNode(constructor10);
+                            $composer.createNode(st.constructor10);
                         } else {
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv11111112, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv1111119, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv11111112, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv1111119, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1111117 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv10));
-                        $this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(compositeKeyHash$iv$iv10), setCompositeKeyHash1111117);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv1111117, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv10));
+                        st.$this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(st.compositeKeyHash$iv$iv10), setCompositeKeyHash1111117);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv1111117, ComposeUiNode.Companion.getSetModifier());
                         int i2111111116 = ($changed$iv$iv$iv1111117 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                         ColumnScopeInstance columnScopeInstance1113 = ColumnScopeInstance.INSTANCE;
@@ -5074,10 +5167,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv11111113 = RowKt.rowMeasurePolicy(horizontalArrangement$iv113, verticalAlignment$iv113, $composer, ((54 >> 3) & 14) | ((54 >> 3) & 112));
                         int $changed$iv$iv1111118 = (54 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv11111110 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv1111118 = ComposedModifierKt.materializeModifier($composer, modifier$iv1111118);
-                        constructor11 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor11 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv1111118 = (($changed$iv$iv1111118 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -5085,34 +5178,34 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function12 = constructor11;
-                            $composer.createNode(function12);
+                            st.function12 = st.constructor11;
+                            $composer.createNode(st.function12);
                         } else {
-                            function12 = constructor11;
+                            st.function12 = st.constructor11;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv11111113, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv11111110, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv11111113, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv11111110, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1111118 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv11));
-                        $this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(compositeKeyHash$iv$iv11), setCompositeKeyHash1111118);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv1111118, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv11));
+                        st.$this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(st.compositeKeyHash$iv$iv11), setCompositeKeyHash1111118);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv1111118, ComposeUiNode.Companion.getSetModifier());
                         int i2111111118 = ($changed$iv$iv$iv1111118 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                         int i2111111119 = ((54 >> 6) & 112) | 6;
                         RowScope $this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24114 = RowScopeInstance.INSTANCE;
                         ComposerKt.sourceInformationMarkerStart($composer, -404697066, "C309@12543L264,316@12820L248:RazrCoverShell.kt#z0j3je");
                         CoverShellPolicy coverShellPolicy10 = CoverShellPolicy.INSTANCE;
-                        if (auroraSession != null) {
-                            z = true;
+                        if (st.auroraSession != null) {
+                            st.z = true;
                         } else {
-                            z = false;
+                            st.z = false;
                         }
-                        RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy10.canOpenLatest(z), function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24114, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
-                        RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(z2), function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24114, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                        RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy10.canOpenLatest(st.z), st.function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24114, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                        RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(st.z2), st.function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24114, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         $composer.endNode();
@@ -5139,11 +5232,11 @@ public final class RazrCoverShellKt {
                         }
                         return;
                     }
-                    measurePolicy$iv5 = measurePolicy$iv4;
-                    localMap$iv$iv2 = localMap$iv$iv;
-                    $this$Layout_u24lambda_u240$iv$iv4.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv4));
-                    $this$Layout_u24lambda_u240$iv$iv4.apply(Integer.valueOf(compositeKeyHash$iv$iv4), setCompositeKeyHash27);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv4, materialized$iv$iv27, ComposeUiNode.Companion.getSetModifier());
+                    st.measurePolicy$iv5 = st.measurePolicy$iv4;
+                    st.localMap$iv$iv2 = st.localMap$iv$iv;
+                    st.$this$Layout_u24lambda_u240$iv$iv4.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv4));
+                    st.$this$Layout_u24lambda_u240$iv$iv4.apply(Integer.valueOf(st.compositeKeyHash$iv$iv4), setCompositeKeyHash27);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv4, materialized$iv$iv27, ComposeUiNode.Companion.getSetModifier());
                     int i111121 = ($changed$iv$iv$iv27 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                     BoxScopeInstance boxScopeInstance117 = BoxScopeInstance.INSTANCE;
@@ -5157,10 +5250,10 @@ public final class RazrCoverShellKt {
                     MeasurePolicy measurePolicy$iv11122 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv119, horizontalAlignment$iv119, $composer, $i$f$Column16);
                     int $changed$iv$iv29 = (6 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv5 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
-                    localMap$iv$iv3 = $composer.getCurrentCompositionLocalMap();
+                    st.compositeKeyHash$iv$iv5 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.localMap$iv$iv3 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv29 = ComposedModifierKt.materializeModifier($composer, modifier$iv29);
-                    constructor5 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor5 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv29 = (($changed$iv$iv29 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -5168,21 +5261,21 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function7 = constructor5;
-                        $composer.createNode(function7);
+                        st.function7 = st.constructor5;
+                        $composer.createNode(st.function7);
                     } else {
-                        function7 = constructor5;
+                        st.function7 = st.constructor5;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv5 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, measurePolicy$iv11122, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, localMap$iv$iv3, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv5 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, measurePolicy$iv11122, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, st.localMap$iv$iv3, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash29 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv5.getInserting()) {
-                        localMap$iv$iv4 = localMap$iv$iv3;
-                        if (!Intrinsics.areEqual($this$Layout_u24lambda_u240$iv$iv5.rememberedValue(), Integer.valueOf(compositeKeyHash$iv$iv5))) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv5.getInserting()) {
+                        st.localMap$iv$iv4 = st.localMap$iv$iv3;
+                        if (!Intrinsics.areEqual(st.$this$Layout_u24lambda_u240$iv$iv5.rememberedValue(), Integer.valueOf(st.compositeKeyHash$iv$iv5))) {
                         }
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv29, ComposeUiNode.Companion.getSetModifier());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv29, ComposeUiNode.Companion.getSetModifier());
                         int i11111110 = ($changed$iv$iv$iv29 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                         ColumnScopeInstance columnScopeInstance1114 = ColumnScopeInstance.INSTANCE;
@@ -5190,12 +5283,12 @@ public final class RazrCoverShellKt {
                         ComposerKt.sourceInformationMarkerStart($composer, 763412498, "C170@7030L15,168@6959L293,176@7269L29,179@7384L10,177@7315L278,195@7997L29,200@8202L14,196@8043L193,202@8253L29,203@8299L1366:RazrCoverShell.kt#z0j3je");
                         ai.nous.aurora.compat.Compat.m3067Text4IGK_g("LATEST THREAD", (Modifier) null, AuroraColorSchemeKt.getAuroraTextFaint($composer, 0), TextUnitKt.getSp(9), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), TextUnitKt.getSp(1), (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 12782598, 0, 130834);
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(5)), $composer, 6);
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
                         $composer.startReplaceGroup(-529544623);
                         ComposerKt.sourceInformation($composer, "186@7658L29,189@7786L15,187@7708L254");
-                        if (!StringsKt.isBlank(str4)) {
+                        if (!StringsKt.isBlank(st.str4)) {
                             SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(3)), $composer, 6);
-                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                         }
                         $composer.endReplaceGroup();
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(9)), $composer, 6);
@@ -5209,10 +5302,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv11111114 = RowKt.rowMeasurePolicy(horizontalArrangement$iv114, verticalAlignment$iv114, $composer, $changed$iv11);
                         int $changed$iv$iv1111119 = (390 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv11111111 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv1111119 = ComposedModifierKt.materializeModifier($composer, modifier$iv1111119);
-                        constructor6 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor6 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv1111119 = (($changed$iv$iv1111119 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -5220,38 +5313,38 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function8 = constructor6;
-                            $composer.createNode(function8);
+                            st.function8 = st.constructor6;
+                            $composer.createNode(st.function8);
                         } else {
-                            function8 = constructor6;
+                            st.function8 = st.constructor6;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv11111114, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv11111111, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv11111114, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv11111111, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1111119 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv6));
-                        $this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(compositeKeyHash$iv$iv6), setCompositeKeyHash1111119);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv1111119, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv6));
+                        st.$this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(st.compositeKeyHash$iv$iv6), setCompositeKeyHash1111119);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv1111119, ComposeUiNode.Companion.getSetModifier());
                         int i11111112 = ($changed$iv$iv$iv1111119 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                         int i11111113 = ((390 >> 6) & 112) | 6;
-                        $this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
+                        st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
                         ComposerKt.sourceInformationMarkerStart($composer, -1980267798, "C220@9102L15,218@8996L282:RazrCoverShell.kt#z0j3je");
                         $composer.startReplaceGroup(-618069607);
                         ComposerKt.sourceInformation($composer, "210@8649L11,208@8527L373,216@8925L28");
-                        if (uiState.getSelectedModel() != null) {
-                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
+                        if (st.uiState.getSelectedModel() != null) {
+                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(st.uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
                             SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1084width3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(8)), $composer, 6);
                         }
                         $composer.endReplaceGroup();
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + st.uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                         $composer.startReplaceGroup(-618043174);
                         ComposerKt.sourceInformation($composer, "226@9344L27,229@9479L11,227@9396L229");
-                        if (uiState.getSending()) {
-                            SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
+                        if (st.uiState.getSending()) {
+                            SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6(st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
                             ai.nous.aurora.compat.Compat.m3067Text4IGK_g("thinking…", (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199686, 0, 131026);
                         }
                         $composer.endReplaceGroup();
@@ -5281,10 +5374,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv11111115 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv1110, horizontalAlignment$iv1110, $composer, ((384 >> 3) & 14) | ((384 >> 3) & 112));
                         int $changed$iv$iv11111110 = (384 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv11111112 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv11111110 = ComposedModifierKt.materializeModifier($composer, modifier$iv11111110);
-                        constructor7 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor7 = ComposeUiNode.Companion.getConstructor();
                         int $i$f$Column17 = $changed$iv$iv11111110 << 6;
                         int $changed$iv$iv$iv11111110 = ($i$f$Column17 & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
@@ -5293,21 +5386,21 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function9 = constructor7;
-                            $composer.createNode(function9);
+                            st.function9 = st.constructor7;
+                            $composer.createNode(st.function9);
                         } else {
-                            function9 = constructor7;
+                            st.function9 = st.constructor7;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv11111115, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv11111112, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv11111115, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv11111112, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash11111110 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv7));
-                        $this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(compositeKeyHash$iv$iv7), setCompositeKeyHash11111110);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv11111110, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv7));
+                        st.$this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(st.compositeKeyHash$iv$iv7), setCompositeKeyHash11111110);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv11111110, ComposeUiNode.Companion.getSetModifier());
                         int i11111114 = ($changed$iv$iv$iv11111110 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                         ColumnScopeInstance columnScopeInstance1115 = ColumnScopeInstance.INSTANCE;
@@ -5319,10 +5412,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv11111116 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv115, false);
                         int $changed$iv$iv11111111 = (48 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv11111113 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv11111111 = ComposedModifierKt.materializeModifier($composer, modifier$iv11111111);
-                        constructor8 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor8 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv11111111 = (($changed$iv$iv11111111 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -5330,21 +5423,21 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function10 = constructor8;
-                            $composer.createNode(function10);
+                            st.function10 = st.constructor8;
+                            $composer.createNode(st.function10);
                         } else {
-                            function10 = constructor8;
+                            st.function10 = st.constructor8;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv11111116, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv11111113, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv11111116, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv11111113, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash11111111 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv8));
-                        $this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(compositeKeyHash$iv$iv8), setCompositeKeyHash11111111);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv11111111, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv8));
+                        st.$this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(st.compositeKeyHash$iv$iv8), setCompositeKeyHash11111111);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv11111111, ComposeUiNode.Companion.getSetModifier());
                         int i21111111111 = ($changed$iv$iv$iv11111111 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                         BoxScopeInstance boxScopeInstance118 = BoxScopeInstance.INSTANCE;
@@ -5359,44 +5452,44 @@ public final class RazrCoverShellKt {
                         Modifier modifierM600borderxT4_qwU11 = ai.nous.aurora.compat.Compat.m600borderxT4_qwU(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip115, ai.nous.aurora.compat.Compat.m4532copywmQWz5c(auroraAmber112, (14 & 1) != 0 ? ai.nous.aurora.compat.Compat.m4536getAlphaimpl(auroraAmber112) : 0.22f, (14 & 2) != 0 ? ai.nous.aurora.compat.Compat.m4540getRedimpl(auroraAmber112) : 0.0f, (14 & 4) != 0 ? ai.nous.aurora.compat.Compat.m4539getGreenimpl(auroraAmber112) : 0.0f, (14 & 8) != 0 ? ai.nous.aurora.compat.Compat.m4537getBlueimpl(auroraAmber112) : 0.0f), null, 2, null), ai.nous.aurora.compat.Compat.m7016constructorimpl(2), AuroraColorSchemeKt.getAuroraAmber($composer, 0), RoundedCornerShapeKt.getCircleShape());
                         $composer.startReplaceGroup(-529441171);
                         ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                        invalid$iv = $composer.changed(z2);
+                        st.invalid$iv = $composer.changed(st.z2);
                         Object it$iv111 = $composer.rememberedValue();
-                        if (!invalid$iv) {
+                        if (!st.invalid$iv) {
                         }
-                        value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
+                        st.value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(z2, (SemanticsPropertyReceiver) obj);
+                                return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(st.z2, (SemanticsPropertyReceiver) obj);
                             }
                         };
-                        $composer.updateRememberedValue(value$iv);
+                        $composer.updateRememberedValue(st.value$iv);
                         $composer.endReplaceGroup();
-                        Modifier modifierSemantics$default11 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU11, false, (Function1) value$iv, 1, null);
-                        boolean zCanTalk11 = CoverShellPolicy.INSTANCE.canTalk(z2);
+                        Modifier modifierSemantics$default11 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU11, false, (Function1) st.value$iv, 1, null);
+                        boolean zCanTalk11 = CoverShellPolicy.INSTANCE.canTalk(st.z2);
                         $composer.startReplaceGroup(-529427629);
                         ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                        invalid$iv2 = $composer.changedInstance(context);
+                        st.invalid$iv2 = $composer.changedInstance(st.context);
                         Object it$iv112 = $composer.rememberedValue();
-                        if (!invalid$iv2) {
+                        if (!st.invalid$iv2) {
                         }
-                        value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
+                        st.value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
                             @Override // kotlin.jvm.functions.Function0
                             public final Object invoke() {
-                                return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(context);
+                                return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(st.context);
                             }
                         };
-                        $composer.updateRememberedValue(value$iv2);
+                        $composer.updateRememberedValue(st.value$iv2);
                         $composer.endReplaceGroup();
-                        Modifier modifier$iv11111112 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default11, zCanTalk11, "Start voice Assist", null, (Function0) value$iv2, 4, null);
+                        Modifier modifier$iv11111112 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default11, zCanTalk11, "Start voice Assist", null, (Function0) st.value$iv2, 4, null);
                         Alignment contentAlignment$iv116 = Alignment.Companion.getCenter();
                         ComposerKt.sourceInformationMarkerStart($composer, 733328855, "CC(Box)P(2,1,3)72@3384L130:Box.kt#2w3rfo");
                         MeasurePolicy measurePolicy$iv11111117 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv116, false);
                         int $changed$iv$iv11111112 = (48 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv11111114 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv11111112 = ComposedModifierKt.materializeModifier($composer, modifier$iv11111112);
-                        constructor9 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor9 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv11111112 = (($changed$iv$iv11111112 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -5404,38 +5497,38 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function11 = constructor9;
-                            $composer.createNode(function11);
+                            st.function11 = st.constructor9;
+                            $composer.createNode(st.function11);
                         } else {
-                            function11 = constructor9;
+                            st.function11 = st.constructor9;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv11111117, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv11111114, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv11111117, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv11111114, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash11111112 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv9));
-                        $this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(compositeKeyHash$iv$iv9), setCompositeKeyHash11111112);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv11111112, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv9));
+                        st.$this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(st.compositeKeyHash$iv$iv9), setCompositeKeyHash11111112);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv11111112, ComposeUiNode.Companion.getSetModifier());
                         int i21111111113 = ($changed$iv$iv$iv11111112 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                         BoxScopeInstance boxScopeInstance119 = BoxScopeInstance.INSTANCE;
                         int i21111111114 = ((48 >> 6) & 112) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -1977158684, "C281@11632L225:RazrCoverShell.kt#z0j3je");
                         Modifier modifierClip116 = ClipKt.clip(ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(56)), RoundedCornerShapeKt.getCircleShape());
-                        if (z2) {
+                        if (st.z2) {
                             $composer.startReplaceGroup(-617963319);
                             ComposerKt.sourceInformation($composer, "285@11805L11");
-                            auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
+                            st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
                         } else {
                             $composer.startReplaceGroup(-617962771);
                             ComposerKt.sourceInformation($composer, "285@11822L15");
-                            auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
+                            st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
                         }
                         $composer.endReplaceGroup();
-                        BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip116, auroraTextMuted2, null, 2, null), $composer, 0);
+                        BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip116, st.auroraTextMuted2, null, 2, null), $composer, 0);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         $composer.endNode();
@@ -5449,12 +5542,12 @@ public final class RazrCoverShellKt {
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(6)), $composer, 6);
-                        if (z2) {
-                            str = "TALK · tap orb or power";
+                        if (st.z2) {
+                            st.str = "TALK · tap orb or power";
                         } else {
-                            str = "Offline";
+                            st.str = "Offline";
                         }
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         $composer.endNode();
@@ -5474,10 +5567,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv11111118 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv1111, horizontalAlignment$iv1111, $composer, ((390 >> 3) & 14) | ((390 >> 3) & 112));
                         int $changed$iv$iv11111113 = (390 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv11111115 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv11111113 = ComposedModifierKt.materializeModifier($composer, modifier$iv11111113);
-                        constructor10 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor10 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv11111113 = (($changed$iv$iv11111113 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -5485,19 +5578,19 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            $composer.createNode(constructor10);
+                            $composer.createNode(st.constructor10);
                         } else {
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv11111118, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv11111115, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv11111118, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv11111115, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash11111113 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv10));
-                        $this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(compositeKeyHash$iv$iv10), setCompositeKeyHash11111113);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv11111113, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv10));
+                        st.$this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(st.compositeKeyHash$iv$iv10), setCompositeKeyHash11111113);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv11111113, ComposeUiNode.Companion.getSetModifier());
                         int i21111111115 = ($changed$iv$iv$iv11111113 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                         ColumnScopeInstance columnScopeInstance1116 = ColumnScopeInstance.INSTANCE;
@@ -5510,10 +5603,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv11111119 = RowKt.rowMeasurePolicy(horizontalArrangement$iv115, verticalAlignment$iv115, $composer, ((54 >> 3) & 14) | ((54 >> 3) & 112));
                         int $changed$iv$iv11111114 = (54 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv11111116 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv11111114 = ComposedModifierKt.materializeModifier($composer, modifier$iv11111114);
-                        constructor11 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor11 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv11111114 = (($changed$iv$iv11111114 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -5521,34 +5614,34 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function12 = constructor11;
-                            $composer.createNode(function12);
+                            st.function12 = st.constructor11;
+                            $composer.createNode(st.function12);
                         } else {
-                            function12 = constructor11;
+                            st.function12 = st.constructor11;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv11111119, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv11111116, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv11111119, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv11111116, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash11111114 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv11));
-                        $this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(compositeKeyHash$iv$iv11), setCompositeKeyHash11111114);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv11111114, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv11));
+                        st.$this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(st.compositeKeyHash$iv$iv11), setCompositeKeyHash11111114);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv11111114, ComposeUiNode.Companion.getSetModifier());
                         int i21111111117 = ($changed$iv$iv$iv11111114 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                         int i21111111118 = ((54 >> 6) & 112) | 6;
                         RowScope $this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24115 = RowScopeInstance.INSTANCE;
                         ComposerKt.sourceInformationMarkerStart($composer, -404697066, "C309@12543L264,316@12820L248:RazrCoverShell.kt#z0j3je");
                         CoverShellPolicy coverShellPolicy11 = CoverShellPolicy.INSTANCE;
-                        if (auroraSession != null) {
-                            z = true;
+                        if (st.auroraSession != null) {
+                            st.z = true;
                         } else {
-                            z = false;
+                            st.z = false;
                         }
-                        RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy11.canOpenLatest(z), function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24115, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
-                        RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(z2), function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24115, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                        RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy11.canOpenLatest(st.z), st.function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24115, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                        RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(st.z2), st.function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24115, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         $composer.endNode();
@@ -5575,10 +5668,10 @@ public final class RazrCoverShellKt {
                         }
                         return;
                     }
-                    localMap$iv$iv4 = localMap$iv$iv3;
-                    $this$Layout_u24lambda_u240$iv$iv5.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv5));
-                    $this$Layout_u24lambda_u240$iv$iv5.apply(Integer.valueOf(compositeKeyHash$iv$iv5), setCompositeKeyHash29);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv29, ComposeUiNode.Companion.getSetModifier());
+                    st.localMap$iv$iv4 = st.localMap$iv$iv3;
+                    st.$this$Layout_u24lambda_u240$iv$iv5.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv5));
+                    st.$this$Layout_u24lambda_u240$iv$iv5.apply(Integer.valueOf(st.compositeKeyHash$iv$iv5), setCompositeKeyHash29);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv29, ComposeUiNode.Companion.getSetModifier());
                     int i11111115 = ($changed$iv$iv$iv29 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                     ColumnScopeInstance columnScopeInstance1117 = ColumnScopeInstance.INSTANCE;
@@ -5586,12 +5679,12 @@ public final class RazrCoverShellKt {
                     ComposerKt.sourceInformationMarkerStart($composer, 763412498, "C170@7030L15,168@6959L293,176@7269L29,179@7384L10,177@7315L278,195@7997L29,200@8202L14,196@8043L193,202@8253L29,203@8299L1366:RazrCoverShell.kt#z0j3je");
                     ai.nous.aurora.compat.Compat.m3067Text4IGK_g("LATEST THREAD", (Modifier) null, AuroraColorSchemeKt.getAuroraTextFaint($composer, 0), TextUnitKt.getSp(9), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), TextUnitKt.getSp(1), (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 12782598, 0, 130834);
                     SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(5)), $composer, 6);
-                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
+                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
                     $composer.startReplaceGroup(-529544623);
                     ComposerKt.sourceInformation($composer, "186@7658L29,189@7786L15,187@7708L254");
-                    if (!StringsKt.isBlank(str4)) {
+                    if (!StringsKt.isBlank(st.str4)) {
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(3)), $composer, 6);
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                     }
                     $composer.endReplaceGroup();
                     SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(9)), $composer, 6);
@@ -5605,10 +5698,10 @@ public final class RazrCoverShellKt {
                     MeasurePolicy measurePolicy$iv111111110 = RowKt.rowMeasurePolicy(horizontalArrangement$iv116, verticalAlignment$iv116, $composer, $changed$iv12);
                     int $changed$iv$iv11111115 = (390 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv11111117 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv11111115 = ComposedModifierKt.materializeModifier($composer, modifier$iv11111115);
-                    constructor6 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor6 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv11111115 = (($changed$iv$iv11111115 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -5616,38 +5709,38 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function8 = constructor6;
-                        $composer.createNode(function8);
+                        st.function8 = st.constructor6;
+                        $composer.createNode(st.function8);
                     } else {
-                        function8 = constructor6;
+                        st.function8 = st.constructor6;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv111111110, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv11111117, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv111111110, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv11111117, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash11111115 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
                     }
-                    $this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv6));
-                    $this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(compositeKeyHash$iv$iv6), setCompositeKeyHash11111115);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv11111115, ComposeUiNode.Companion.getSetModifier());
+                    st.$this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv6));
+                    st.$this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(st.compositeKeyHash$iv$iv6), setCompositeKeyHash11111115);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv11111115, ComposeUiNode.Companion.getSetModifier());
                     int i11111117 = ($changed$iv$iv$iv11111115 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                     int i11111118 = ((390 >> 6) & 112) | 6;
-                    $this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
+                    st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
                     ComposerKt.sourceInformationMarkerStart($composer, -1980267798, "C220@9102L15,218@8996L282:RazrCoverShell.kt#z0j3je");
                     $composer.startReplaceGroup(-618069607);
                     ComposerKt.sourceInformation($composer, "210@8649L11,208@8527L373,216@8925L28");
-                    if (uiState.getSelectedModel() != null) {
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
+                    if (st.uiState.getSelectedModel() != null) {
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(st.uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1084width3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(8)), $composer, 6);
                     }
                     $composer.endReplaceGroup();
-                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + st.uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                     $composer.startReplaceGroup(-618043174);
                     ComposerKt.sourceInformation($composer, "226@9344L27,229@9479L11,227@9396L229");
-                    if (uiState.getSending()) {
-                        SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
+                    if (st.uiState.getSending()) {
+                        SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6(st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
                         ai.nous.aurora.compat.Compat.m3067Text4IGK_g("thinking…", (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199686, 0, 131026);
                     }
                     $composer.endReplaceGroup();
@@ -5677,10 +5770,10 @@ public final class RazrCoverShellKt {
                     MeasurePolicy measurePolicy$iv111111111 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv1112, horizontalAlignment$iv1112, $composer, ((384 >> 3) & 14) | ((384 >> 3) & 112));
                     int $changed$iv$iv11111116 = (384 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv11111118 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv11111116 = ComposedModifierKt.materializeModifier($composer, modifier$iv11111116);
-                    constructor7 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor7 = ComposeUiNode.Companion.getConstructor();
                     int $i$f$Column18 = $changed$iv$iv11111116 << 6;
                     int $changed$iv$iv$iv11111116 = ($i$f$Column18 & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
@@ -5689,21 +5782,21 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function9 = constructor7;
-                        $composer.createNode(function9);
+                        st.function9 = st.constructor7;
+                        $composer.createNode(st.function9);
                     } else {
-                        function9 = constructor7;
+                        st.function9 = st.constructor7;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv111111111, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv11111118, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv111111111, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv11111118, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash11111116 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
                     }
-                    $this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv7));
-                    $this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(compositeKeyHash$iv$iv7), setCompositeKeyHash11111116);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv11111116, ComposeUiNode.Companion.getSetModifier());
+                    st.$this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv7));
+                    st.$this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(st.compositeKeyHash$iv$iv7), setCompositeKeyHash11111116);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv11111116, ComposeUiNode.Companion.getSetModifier());
                     int i11111119 = ($changed$iv$iv$iv11111116 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                     ColumnScopeInstance columnScopeInstance1118 = ColumnScopeInstance.INSTANCE;
@@ -5715,10 +5808,10 @@ public final class RazrCoverShellKt {
                     MeasurePolicy measurePolicy$iv111111112 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv117, false);
                     int $changed$iv$iv11111117 = (48 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv11111119 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv11111117 = ComposedModifierKt.materializeModifier($composer, modifier$iv11111117);
-                    constructor8 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor8 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv11111117 = (($changed$iv$iv11111117 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -5726,21 +5819,21 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function10 = constructor8;
-                        $composer.createNode(function10);
+                        st.function10 = st.constructor8;
+                        $composer.createNode(st.function10);
                     } else {
-                        function10 = constructor8;
+                        st.function10 = st.constructor8;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv111111112, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv11111119, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv111111112, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv11111119, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash11111117 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
                     }
-                    $this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv8));
-                    $this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(compositeKeyHash$iv$iv8), setCompositeKeyHash11111117);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv11111117, ComposeUiNode.Companion.getSetModifier());
+                    st.$this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv8));
+                    st.$this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(st.compositeKeyHash$iv$iv8), setCompositeKeyHash11111117);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv11111117, ComposeUiNode.Companion.getSetModifier());
                     int i211111111110 = ($changed$iv$iv$iv11111117 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                     BoxScopeInstance boxScopeInstance1110 = BoxScopeInstance.INSTANCE;
@@ -5755,44 +5848,44 @@ public final class RazrCoverShellKt {
                     Modifier modifierM600borderxT4_qwU12 = ai.nous.aurora.compat.Compat.m600borderxT4_qwU(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip117, ai.nous.aurora.compat.Compat.m4532copywmQWz5c(auroraAmber114, (14 & 1) != 0 ? ai.nous.aurora.compat.Compat.m4536getAlphaimpl(auroraAmber114) : 0.22f, (14 & 2) != 0 ? ai.nous.aurora.compat.Compat.m4540getRedimpl(auroraAmber114) : 0.0f, (14 & 4) != 0 ? ai.nous.aurora.compat.Compat.m4539getGreenimpl(auroraAmber114) : 0.0f, (14 & 8) != 0 ? ai.nous.aurora.compat.Compat.m4537getBlueimpl(auroraAmber114) : 0.0f), null, 2, null), ai.nous.aurora.compat.Compat.m7016constructorimpl(2), AuroraColorSchemeKt.getAuroraAmber($composer, 0), RoundedCornerShapeKt.getCircleShape());
                     $composer.startReplaceGroup(-529441171);
                     ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                    invalid$iv = $composer.changed(z2);
+                    st.invalid$iv = $composer.changed(st.z2);
                     Object it$iv113 = $composer.rememberedValue();
-                    if (!invalid$iv) {
+                    if (!st.invalid$iv) {
                     }
-                    value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
+                    st.value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
                         @Override // kotlin.jvm.functions.Function1
                         public final Object invoke(Object obj) {
-                            return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(z2, (SemanticsPropertyReceiver) obj);
+                            return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(st.z2, (SemanticsPropertyReceiver) obj);
                         }
                     };
-                    $composer.updateRememberedValue(value$iv);
+                    $composer.updateRememberedValue(st.value$iv);
                     $composer.endReplaceGroup();
-                    Modifier modifierSemantics$default12 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU12, false, (Function1) value$iv, 1, null);
-                    boolean zCanTalk12 = CoverShellPolicy.INSTANCE.canTalk(z2);
+                    Modifier modifierSemantics$default12 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU12, false, (Function1) st.value$iv, 1, null);
+                    boolean zCanTalk12 = CoverShellPolicy.INSTANCE.canTalk(st.z2);
                     $composer.startReplaceGroup(-529427629);
                     ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                    invalid$iv2 = $composer.changedInstance(context);
+                    st.invalid$iv2 = $composer.changedInstance(st.context);
                     Object it$iv114 = $composer.rememberedValue();
-                    if (!invalid$iv2) {
+                    if (!st.invalid$iv2) {
                     }
-                    value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
+                    st.value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
                         @Override // kotlin.jvm.functions.Function0
                         public final Object invoke() {
-                            return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(context);
+                            return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(st.context);
                         }
                     };
-                    $composer.updateRememberedValue(value$iv2);
+                    $composer.updateRememberedValue(st.value$iv2);
                     $composer.endReplaceGroup();
-                    Modifier modifier$iv11111118 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default12, zCanTalk12, "Start voice Assist", null, (Function0) value$iv2, 4, null);
+                    Modifier modifier$iv11111118 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default12, zCanTalk12, "Start voice Assist", null, (Function0) st.value$iv2, 4, null);
                     Alignment contentAlignment$iv118 = Alignment.Companion.getCenter();
                     ComposerKt.sourceInformationMarkerStart($composer, 733328855, "CC(Box)P(2,1,3)72@3384L130:Box.kt#2w3rfo");
                     MeasurePolicy measurePolicy$iv111111113 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv118, false);
                     int $changed$iv$iv11111118 = (48 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv111111110 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv11111118 = ComposedModifierKt.materializeModifier($composer, modifier$iv11111118);
-                    constructor9 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor9 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv11111118 = (($changed$iv$iv11111118 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -5800,38 +5893,38 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function11 = constructor9;
-                        $composer.createNode(function11);
+                        st.function11 = st.constructor9;
+                        $composer.createNode(st.function11);
                     } else {
-                        function11 = constructor9;
+                        st.function11 = st.constructor9;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv111111113, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv111111110, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv111111113, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv111111110, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash11111118 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
                     }
-                    $this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv9));
-                    $this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(compositeKeyHash$iv$iv9), setCompositeKeyHash11111118);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv11111118, ComposeUiNode.Companion.getSetModifier());
+                    st.$this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv9));
+                    st.$this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(st.compositeKeyHash$iv$iv9), setCompositeKeyHash11111118);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv11111118, ComposeUiNode.Companion.getSetModifier());
                     int i211111111112 = ($changed$iv$iv$iv11111118 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                     BoxScopeInstance boxScopeInstance1111 = BoxScopeInstance.INSTANCE;
                     int i211111111113 = ((48 >> 6) & 112) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -1977158684, "C281@11632L225:RazrCoverShell.kt#z0j3je");
                     Modifier modifierClip118 = ClipKt.clip(ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(56)), RoundedCornerShapeKt.getCircleShape());
-                    if (z2) {
+                    if (st.z2) {
                         $composer.startReplaceGroup(-617963319);
                         ComposerKt.sourceInformation($composer, "285@11805L11");
-                        auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
+                        st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
                     } else {
                         $composer.startReplaceGroup(-617962771);
                         ComposerKt.sourceInformation($composer, "285@11822L15");
-                        auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
+                        st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
                     }
                     $composer.endReplaceGroup();
-                    BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip118, auroraTextMuted2, null, 2, null), $composer, 0);
+                    BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip118, st.auroraTextMuted2, null, 2, null), $composer, 0);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     $composer.endNode();
@@ -5845,12 +5938,12 @@ public final class RazrCoverShellKt {
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(6)), $composer, 6);
-                    if (z2) {
-                        str = "TALK · tap orb or power";
+                    if (st.z2) {
+                        st.str = "TALK · tap orb or power";
                     } else {
-                        str = "Offline";
+                        st.str = "Offline";
                     }
-                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
+                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     $composer.endNode();
@@ -5870,10 +5963,10 @@ public final class RazrCoverShellKt {
                     MeasurePolicy measurePolicy$iv111111114 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv1113, horizontalAlignment$iv1113, $composer, ((390 >> 3) & 14) | ((390 >> 3) & 112));
                     int $changed$iv$iv11111119 = (390 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv111111111 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv11111119 = ComposedModifierKt.materializeModifier($composer, modifier$iv11111119);
-                    constructor10 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor10 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv11111119 = (($changed$iv$iv11111119 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -5881,19 +5974,19 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        $composer.createNode(constructor10);
+                        $composer.createNode(st.constructor10);
                     } else {
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv111111114, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv111111111, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv111111114, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv111111111, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash11111119 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
                     }
-                    $this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv10));
-                    $this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(compositeKeyHash$iv$iv10), setCompositeKeyHash11111119);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv11111119, ComposeUiNode.Companion.getSetModifier());
+                    st.$this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv10));
+                    st.$this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(st.compositeKeyHash$iv$iv10), setCompositeKeyHash11111119);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv11111119, ComposeUiNode.Companion.getSetModifier());
                     int i211111111114 = ($changed$iv$iv$iv11111119 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                     ColumnScopeInstance columnScopeInstance1119 = ColumnScopeInstance.INSTANCE;
@@ -5906,10 +5999,10 @@ public final class RazrCoverShellKt {
                     MeasurePolicy measurePolicy$iv111111115 = RowKt.rowMeasurePolicy(horizontalArrangement$iv117, verticalAlignment$iv117, $composer, ((54 >> 3) & 14) | ((54 >> 3) & 112));
                     int $changed$iv$iv111111110 = (54 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv111111112 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv111111110 = ComposedModifierKt.materializeModifier($composer, modifier$iv111111110);
-                    constructor11 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor11 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv111111110 = (($changed$iv$iv111111110 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -5917,34 +6010,34 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function12 = constructor11;
-                        $composer.createNode(function12);
+                        st.function12 = st.constructor11;
+                        $composer.createNode(st.function12);
                     } else {
-                        function12 = constructor11;
+                        st.function12 = st.constructor11;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv111111115, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv111111112, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv111111115, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv111111112, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash111111110 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
                     }
-                    $this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv11));
-                    $this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(compositeKeyHash$iv$iv11), setCompositeKeyHash111111110);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv111111110, ComposeUiNode.Companion.getSetModifier());
+                    st.$this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv11));
+                    st.$this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(st.compositeKeyHash$iv$iv11), setCompositeKeyHash111111110);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv111111110, ComposeUiNode.Companion.getSetModifier());
                     int i211111111116 = ($changed$iv$iv$iv111111110 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                     int i211111111117 = ((54 >> 6) & 112) | 6;
                     RowScope $this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24116 = RowScopeInstance.INSTANCE;
                     ComposerKt.sourceInformationMarkerStart($composer, -404697066, "C309@12543L264,316@12820L248:RazrCoverShell.kt#z0j3je");
                     CoverShellPolicy coverShellPolicy12 = CoverShellPolicy.INSTANCE;
-                    if (auroraSession != null) {
-                        z = true;
+                    if (st.auroraSession != null) {
+                        st.z = true;
                     } else {
-                        z = false;
+                        st.z = false;
                     }
-                    RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy12.canOpenLatest(z), function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24116, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
-                    RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(z2), function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24116, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                    RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy12.canOpenLatest(st.z), st.function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24116, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                    RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(st.z2), st.function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24116, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     $composer.endNode();
@@ -5971,39 +6064,39 @@ public final class RazrCoverShellKt {
                     }
                     return;
                 }
-                measurePolicy$iv3 = measurePolicy$iv2;
-                $this$Layout_u24lambda_u240$iv$iv3.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv3));
-                $this$Layout_u24lambda_u240$iv$iv3.apply(Integer.valueOf(compositeKeyHash$iv$iv3), setCompositeKeyHash26);
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv3, materialized$iv$iv26, ComposeUiNode.Companion.getSetModifier());
+                st.measurePolicy$iv3 = st.measurePolicy$iv2;
+                st.$this$Layout_u24lambda_u240$iv$iv3.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv3));
+                st.$this$Layout_u24lambda_u240$iv$iv3.apply(Integer.valueOf(st.compositeKeyHash$iv$iv3), setCompositeKeyHash26);
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv3, materialized$iv$iv26, ComposeUiNode.Companion.getSetModifier());
                 int i125 = ($changed$iv$iv$iv26 >> 6) & 14;
                 ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                 RowScopeInstance rowScopeInstance4 = RowScopeInstance.INSTANCE;
                 int i126 = ((384 >> 6) & 112) | 6;
                 ComposerKt.sourceInformationMarkerStart($composer, 762306201, "C139@5911L223,145@6151L28,146@6196L270:RazrCoverShell.kt#z0j3je");
                 Modifier modifierClip119 = ClipKt.clip(ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(7)), RoundedCornerShapeKt.getCircleShape());
-                if (z2) {
+                if (st.z2) {
                     $composer.startReplaceGroup(-529593847);
                     ComposerKt.sourceInformation($composer, "143@6083L10");
-                    auroraTextMuted = AuroraColorSchemeKt.getAuroraLive($composer, 0);
+                    st.auroraTextMuted = AuroraColorSchemeKt.getAuroraLive($composer, 0);
                 } else {
                     $composer.startReplaceGroup(-529593330);
                     ComposerKt.sourceInformation($composer, "143@6099L15");
-                    auroraTextMuted = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
+                    st.auroraTextMuted = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
                 }
                 $composer.endReplaceGroup();
-                BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip119, auroraTextMuted, null, 2, null), $composer, 0);
+                BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip119, st.auroraTextMuted, null, 2, null), $composer, 0);
                 SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1084width3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(6)), $composer, 6);
-                if (z2) {
+                if (st.z2) {
                     $composer.startReplaceGroup(-529587638);
                     ComposerKt.sourceInformation($composer, "148@6277L11");
-                    auroraText = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
+                    st.auroraText = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
                 } else {
                     $composer.startReplaceGroup(-529587095);
                     ComposerKt.sourceInformation($composer, "148@6294L10");
-                    auroraText = AuroraColorSchemeKt.getAuroraText($composer, 0);
+                    st.auroraText = AuroraColorSchemeKt.getAuroraText($composer, 0);
                 }
                 $composer.endReplaceGroup();
-                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str2, (Modifier) null, auroraText, TextUnitKt.getSp(11), (FontStyle) null, FontWeight.Companion.getBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
+                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str2, (Modifier) null, st.auroraText, TextUnitKt.getSp(11), (FontStyle) null, FontWeight.Companion.getBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
                 ComposerKt.sourceInformationMarkerEnd($composer);
                 ComposerKt.sourceInformationMarkerEnd($composer);
                 $composer.endNode();
@@ -6020,13 +6113,13 @@ public final class RazrCoverShellKt {
                 Modifier modifier$iv210 = ai.nous.aurora.compat.Compat.m1035paddingVpY3zN4(ai.nous.aurora.compat.Compat.m600borderxT4_qwU(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(ClipKt.clip(ai.nous.aurora.compat.Compat.d_SizeKt_fillMaxWidth_4(Modifier.Companion, 0.0f, 1, null), ai.nous.aurora.compat.Compat.m1317RoundedCornerShape0680j_4(ai.nous.aurora.compat.Compat.m7016constructorimpl(16))), AuroraColorSchemeKt.getAuroraSurface($composer, 0), null, 2, null), ai.nous.aurora.compat.Compat.m7016constructorimpl(1), AuroraColorSchemeKt.getAuroraHairline($composer, 0), ai.nous.aurora.compat.Compat.m1317RoundedCornerShape0680j_4(ai.nous.aurora.compat.Compat.m7016constructorimpl(16))), ai.nous.aurora.compat.Compat.m7016constructorimpl(14), ai.nous.aurora.compat.Compat.m7016constructorimpl(13));
                 ComposerKt.sourceInformationMarkerStart($composer, 733328855, "CC(Box)P(2,1,3)72@3384L130:Box.kt#2w3rfo");
                 Alignment contentAlignment$iv119 = Alignment.Companion.getTopStart();
-                measurePolicy$iv4 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv119, false);
+                st.measurePolicy$iv4 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv119, false);
                 int $changed$iv$iv210 = (0 << 3) & 112;
                 ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                compositeKeyHash$iv$iv4 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
-                localMap$iv$iv = $composer.getCurrentCompositionLocalMap();
+                st.compositeKeyHash$iv$iv4 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                st.localMap$iv$iv = $composer.getCurrentCompositionLocalMap();
                 Modifier materialized$iv$iv210 = ComposedModifierKt.materializeModifier($composer, modifier$iv210);
-                constructor4 = ComposeUiNode.Companion.getConstructor();
+                st.constructor4 = ComposeUiNode.Companion.getConstructor();
                 int $changed$iv$iv$iv210 = (($changed$iv$iv210 << 6) & 896) | 6;
                 ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                 if (!($composer.getApplier() instanceof Applier)) {
@@ -6034,22 +6127,22 @@ public final class RazrCoverShellKt {
                 }
                 $composer.startReusableNode();
                 if ($composer.getInserting()) {
-                    function6 = constructor4;
-                    $composer.createNode(function6);
+                    st.function6 = st.constructor4;
+                    $composer.createNode(st.function6);
                 } else {
-                    function6 = constructor4;
+                    st.function6 = st.constructor4;
                     $composer.useNode();
                 }
-                $this$Layout_u24lambda_u240$iv$iv4 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv4, measurePolicy$iv4, ComposeUiNode.Companion.getSetMeasurePolicy());
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv4, localMap$iv$iv, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                st.$this$Layout_u24lambda_u240$iv$iv4 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv4, st.measurePolicy$iv4, ComposeUiNode.Companion.getSetMeasurePolicy());
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv4, st.localMap$iv$iv, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                 Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash210 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                if (!$this$Layout_u24lambda_u240$iv$iv4.getInserting()) {
-                    measurePolicy$iv5 = measurePolicy$iv4;
-                    localMap$iv$iv2 = localMap$iv$iv;
-                    if (!Intrinsics.areEqual($this$Layout_u24lambda_u240$iv$iv4.rememberedValue(), Integer.valueOf(compositeKeyHash$iv$iv4))) {
+                if (!st.$this$Layout_u24lambda_u240$iv$iv4.getInserting()) {
+                    st.measurePolicy$iv5 = st.measurePolicy$iv4;
+                    st.localMap$iv$iv2 = st.localMap$iv$iv;
+                    if (!Intrinsics.areEqual(st.$this$Layout_u24lambda_u240$iv$iv4.rememberedValue(), Integer.valueOf(st.compositeKeyHash$iv$iv4))) {
                     }
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv4, materialized$iv$iv210, ComposeUiNode.Companion.getSetModifier());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv4, materialized$iv$iv210, ComposeUiNode.Companion.getSetModifier());
                     int i111122 = ($changed$iv$iv$iv210 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                     BoxScopeInstance boxScopeInstance1112 = BoxScopeInstance.INSTANCE;
@@ -6063,10 +6156,10 @@ public final class RazrCoverShellKt {
                     MeasurePolicy measurePolicy$iv11123 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv1114, horizontalAlignment$iv1114, $composer, $i$f$Column19);
                     int $changed$iv$iv211 = (6 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv5 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
-                    localMap$iv$iv3 = $composer.getCurrentCompositionLocalMap();
+                    st.compositeKeyHash$iv$iv5 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.localMap$iv$iv3 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv211 = ComposedModifierKt.materializeModifier($composer, modifier$iv211);
-                    constructor5 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor5 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv211 = (($changed$iv$iv211 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -6074,21 +6167,21 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function7 = constructor5;
-                        $composer.createNode(function7);
+                        st.function7 = st.constructor5;
+                        $composer.createNode(st.function7);
                     } else {
-                        function7 = constructor5;
+                        st.function7 = st.constructor5;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv5 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, measurePolicy$iv11123, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, localMap$iv$iv3, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv5 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, measurePolicy$iv11123, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, st.localMap$iv$iv3, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash211 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv5.getInserting()) {
-                        localMap$iv$iv4 = localMap$iv$iv3;
-                        if (!Intrinsics.areEqual($this$Layout_u24lambda_u240$iv$iv5.rememberedValue(), Integer.valueOf(compositeKeyHash$iv$iv5))) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv5.getInserting()) {
+                        st.localMap$iv$iv4 = st.localMap$iv$iv3;
+                        if (!Intrinsics.areEqual(st.$this$Layout_u24lambda_u240$iv$iv5.rememberedValue(), Integer.valueOf(st.compositeKeyHash$iv$iv5))) {
                         }
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv211, ComposeUiNode.Companion.getSetModifier());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv211, ComposeUiNode.Companion.getSetModifier());
                         int i111111110 = ($changed$iv$iv$iv211 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                         ColumnScopeInstance columnScopeInstance11110 = ColumnScopeInstance.INSTANCE;
@@ -6096,12 +6189,12 @@ public final class RazrCoverShellKt {
                         ComposerKt.sourceInformationMarkerStart($composer, 763412498, "C170@7030L15,168@6959L293,176@7269L29,179@7384L10,177@7315L278,195@7997L29,200@8202L14,196@8043L193,202@8253L29,203@8299L1366:RazrCoverShell.kt#z0j3je");
                         ai.nous.aurora.compat.Compat.m3067Text4IGK_g("LATEST THREAD", (Modifier) null, AuroraColorSchemeKt.getAuroraTextFaint($composer, 0), TextUnitKt.getSp(9), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), TextUnitKt.getSp(1), (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 12782598, 0, 130834);
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(5)), $composer, 6);
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
                         $composer.startReplaceGroup(-529544623);
                         ComposerKt.sourceInformation($composer, "186@7658L29,189@7786L15,187@7708L254");
-                        if (!StringsKt.isBlank(str4)) {
+                        if (!StringsKt.isBlank(st.str4)) {
                             SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(3)), $composer, 6);
-                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                         }
                         $composer.endReplaceGroup();
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(9)), $composer, 6);
@@ -6115,10 +6208,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv111111116 = RowKt.rowMeasurePolicy(horizontalArrangement$iv118, verticalAlignment$iv118, $composer, $changed$iv13);
                         int $changed$iv$iv111111111 = (390 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv111111113 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv111111111 = ComposedModifierKt.materializeModifier($composer, modifier$iv111111111);
-                        constructor6 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor6 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv111111111 = (($changed$iv$iv111111111 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -6126,38 +6219,38 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function8 = constructor6;
-                            $composer.createNode(function8);
+                            st.function8 = st.constructor6;
+                            $composer.createNode(st.function8);
                         } else {
-                            function8 = constructor6;
+                            st.function8 = st.constructor6;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv111111116, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv111111113, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv111111116, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv111111113, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash111111111 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv6));
-                        $this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(compositeKeyHash$iv$iv6), setCompositeKeyHash111111111);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv111111111, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv6));
+                        st.$this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(st.compositeKeyHash$iv$iv6), setCompositeKeyHash111111111);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv111111111, ComposeUiNode.Companion.getSetModifier());
                         int i111111112 = ($changed$iv$iv$iv111111111 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                         int i111111113 = ((390 >> 6) & 112) | 6;
-                        $this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
+                        st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
                         ComposerKt.sourceInformationMarkerStart($composer, -1980267798, "C220@9102L15,218@8996L282:RazrCoverShell.kt#z0j3je");
                         $composer.startReplaceGroup(-618069607);
                         ComposerKt.sourceInformation($composer, "210@8649L11,208@8527L373,216@8925L28");
-                        if (uiState.getSelectedModel() != null) {
-                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
+                        if (st.uiState.getSelectedModel() != null) {
+                            ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(st.uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
                             SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1084width3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(8)), $composer, 6);
                         }
                         $composer.endReplaceGroup();
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + st.uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                         $composer.startReplaceGroup(-618043174);
                         ComposerKt.sourceInformation($composer, "226@9344L27,229@9479L11,227@9396L229");
-                        if (uiState.getSending()) {
-                            SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
+                        if (st.uiState.getSending()) {
+                            SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6(st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
                             ai.nous.aurora.compat.Compat.m3067Text4IGK_g("thinking…", (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199686, 0, 131026);
                         }
                         $composer.endReplaceGroup();
@@ -6187,10 +6280,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv111111117 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv1115, horizontalAlignment$iv1115, $composer, ((384 >> 3) & 14) | ((384 >> 3) & 112));
                         int $changed$iv$iv111111112 = (384 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv111111114 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv111111112 = ComposedModifierKt.materializeModifier($composer, modifier$iv111111112);
-                        constructor7 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor7 = ComposeUiNode.Companion.getConstructor();
                         int $i$f$Column110 = $changed$iv$iv111111112 << 6;
                         int $changed$iv$iv$iv111111112 = ($i$f$Column110 & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
@@ -6199,21 +6292,21 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function9 = constructor7;
-                            $composer.createNode(function9);
+                            st.function9 = st.constructor7;
+                            $composer.createNode(st.function9);
                         } else {
-                            function9 = constructor7;
+                            st.function9 = st.constructor7;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv111111117, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv111111114, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv111111117, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv111111114, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash111111112 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv7));
-                        $this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(compositeKeyHash$iv$iv7), setCompositeKeyHash111111112);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv111111112, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv7));
+                        st.$this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(st.compositeKeyHash$iv$iv7), setCompositeKeyHash111111112);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv111111112, ComposeUiNode.Companion.getSetModifier());
                         int i111111114 = ($changed$iv$iv$iv111111112 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                         ColumnScopeInstance columnScopeInstance11111 = ColumnScopeInstance.INSTANCE;
@@ -6225,10 +6318,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv111111118 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv1110, false);
                         int $changed$iv$iv111111113 = (48 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv111111115 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv111111113 = ComposedModifierKt.materializeModifier($composer, modifier$iv111111113);
-                        constructor8 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor8 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv111111113 = (($changed$iv$iv111111113 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -6236,21 +6329,21 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function10 = constructor8;
-                            $composer.createNode(function10);
+                            st.function10 = st.constructor8;
+                            $composer.createNode(st.function10);
                         } else {
-                            function10 = constructor8;
+                            st.function10 = st.constructor8;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv111111118, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv111111115, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv111111118, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv111111115, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash111111113 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv8));
-                        $this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(compositeKeyHash$iv$iv8), setCompositeKeyHash111111113);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv111111113, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv8));
+                        st.$this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(st.compositeKeyHash$iv$iv8), setCompositeKeyHash111111113);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv111111113, ComposeUiNode.Companion.getSetModifier());
                         int i211111111119 = ($changed$iv$iv$iv111111113 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                         BoxScopeInstance boxScopeInstance1113 = BoxScopeInstance.INSTANCE;
@@ -6265,44 +6358,44 @@ public final class RazrCoverShellKt {
                         Modifier modifierM600borderxT4_qwU13 = ai.nous.aurora.compat.Compat.m600borderxT4_qwU(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip1110, ai.nous.aurora.compat.Compat.m4532copywmQWz5c(auroraAmber116, (14 & 1) != 0 ? ai.nous.aurora.compat.Compat.m4536getAlphaimpl(auroraAmber116) : 0.22f, (14 & 2) != 0 ? ai.nous.aurora.compat.Compat.m4540getRedimpl(auroraAmber116) : 0.0f, (14 & 4) != 0 ? ai.nous.aurora.compat.Compat.m4539getGreenimpl(auroraAmber116) : 0.0f, (14 & 8) != 0 ? ai.nous.aurora.compat.Compat.m4537getBlueimpl(auroraAmber116) : 0.0f), null, 2, null), ai.nous.aurora.compat.Compat.m7016constructorimpl(2), AuroraColorSchemeKt.getAuroraAmber($composer, 0), RoundedCornerShapeKt.getCircleShape());
                         $composer.startReplaceGroup(-529441171);
                         ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                        invalid$iv = $composer.changed(z2);
+                        st.invalid$iv = $composer.changed(st.z2);
                         Object it$iv115 = $composer.rememberedValue();
-                        if (!invalid$iv) {
+                        if (!st.invalid$iv) {
                         }
-                        value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
+                        st.value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(z2, (SemanticsPropertyReceiver) obj);
+                                return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(st.z2, (SemanticsPropertyReceiver) obj);
                             }
                         };
-                        $composer.updateRememberedValue(value$iv);
+                        $composer.updateRememberedValue(st.value$iv);
                         $composer.endReplaceGroup();
-                        Modifier modifierSemantics$default13 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU13, false, (Function1) value$iv, 1, null);
-                        boolean zCanTalk13 = CoverShellPolicy.INSTANCE.canTalk(z2);
+                        Modifier modifierSemantics$default13 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU13, false, (Function1) st.value$iv, 1, null);
+                        boolean zCanTalk13 = CoverShellPolicy.INSTANCE.canTalk(st.z2);
                         $composer.startReplaceGroup(-529427629);
                         ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                        invalid$iv2 = $composer.changedInstance(context);
+                        st.invalid$iv2 = $composer.changedInstance(st.context);
                         Object it$iv116 = $composer.rememberedValue();
-                        if (!invalid$iv2) {
+                        if (!st.invalid$iv2) {
                         }
-                        value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
+                        st.value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
                             @Override // kotlin.jvm.functions.Function0
                             public final Object invoke() {
-                                return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(context);
+                                return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(st.context);
                             }
                         };
-                        $composer.updateRememberedValue(value$iv2);
+                        $composer.updateRememberedValue(st.value$iv2);
                         $composer.endReplaceGroup();
-                        Modifier modifier$iv111111114 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default13, zCanTalk13, "Start voice Assist", null, (Function0) value$iv2, 4, null);
+                        Modifier modifier$iv111111114 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default13, zCanTalk13, "Start voice Assist", null, (Function0) st.value$iv2, 4, null);
                         Alignment contentAlignment$iv1111 = Alignment.Companion.getCenter();
                         ComposerKt.sourceInformationMarkerStart($composer, 733328855, "CC(Box)P(2,1,3)72@3384L130:Box.kt#2w3rfo");
                         MeasurePolicy measurePolicy$iv111111119 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv1111, false);
                         int $changed$iv$iv111111114 = (48 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv111111116 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv111111114 = ComposedModifierKt.materializeModifier($composer, modifier$iv111111114);
-                        constructor9 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor9 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv111111114 = (($changed$iv$iv111111114 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -6310,38 +6403,38 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function11 = constructor9;
-                            $composer.createNode(function11);
+                            st.function11 = st.constructor9;
+                            $composer.createNode(st.function11);
                         } else {
-                            function11 = constructor9;
+                            st.function11 = st.constructor9;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv111111119, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv111111116, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv111111119, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv111111116, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash111111114 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv9));
-                        $this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(compositeKeyHash$iv$iv9), setCompositeKeyHash111111114);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv111111114, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv9));
+                        st.$this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(st.compositeKeyHash$iv$iv9), setCompositeKeyHash111111114);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv111111114, ComposeUiNode.Companion.getSetModifier());
                         int i2111111111111 = ($changed$iv$iv$iv111111114 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                         BoxScopeInstance boxScopeInstance1114 = BoxScopeInstance.INSTANCE;
                         int i2111111111112 = ((48 >> 6) & 112) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -1977158684, "C281@11632L225:RazrCoverShell.kt#z0j3je");
                         Modifier modifierClip1111 = ClipKt.clip(ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(56)), RoundedCornerShapeKt.getCircleShape());
-                        if (z2) {
+                        if (st.z2) {
                             $composer.startReplaceGroup(-617963319);
                             ComposerKt.sourceInformation($composer, "285@11805L11");
-                            auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
+                            st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
                         } else {
                             $composer.startReplaceGroup(-617962771);
                             ComposerKt.sourceInformation($composer, "285@11822L15");
-                            auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
+                            st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
                         }
                         $composer.endReplaceGroup();
-                        BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip1111, auroraTextMuted2, null, 2, null), $composer, 0);
+                        BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip1111, st.auroraTextMuted2, null, 2, null), $composer, 0);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         $composer.endNode();
@@ -6355,12 +6448,12 @@ public final class RazrCoverShellKt {
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(6)), $composer, 6);
-                        if (z2) {
-                            str = "TALK · tap orb or power";
+                        if (st.z2) {
+                            st.str = "TALK · tap orb or power";
                         } else {
-                            str = "Offline";
+                            st.str = "Offline";
                         }
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         $composer.endNode();
@@ -6380,10 +6473,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv1111111110 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv1116, horizontalAlignment$iv1116, $composer, ((390 >> 3) & 14) | ((390 >> 3) & 112));
                         int $changed$iv$iv111111115 = (390 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv111111117 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv111111115 = ComposedModifierKt.materializeModifier($composer, modifier$iv111111115);
-                        constructor10 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor10 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv111111115 = (($changed$iv$iv111111115 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -6391,19 +6484,19 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            $composer.createNode(constructor10);
+                            $composer.createNode(st.constructor10);
                         } else {
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv1111111110, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv111111117, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv1111111110, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv111111117, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash111111115 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv10));
-                        $this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(compositeKeyHash$iv$iv10), setCompositeKeyHash111111115);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv111111115, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv10));
+                        st.$this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(st.compositeKeyHash$iv$iv10), setCompositeKeyHash111111115);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv111111115, ComposeUiNode.Companion.getSetModifier());
                         int i2111111111113 = ($changed$iv$iv$iv111111115 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                         ColumnScopeInstance columnScopeInstance11112 = ColumnScopeInstance.INSTANCE;
@@ -6416,10 +6509,10 @@ public final class RazrCoverShellKt {
                         MeasurePolicy measurePolicy$iv1111111111 = RowKt.rowMeasurePolicy(horizontalArrangement$iv119, verticalAlignment$iv119, $composer, ((54 >> 3) & 14) | ((54 >> 3) & 112));
                         int $changed$iv$iv111111116 = (54 << 3) & 112;
                         ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                        compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                        st.compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                         CompositionLocalMap localMap$iv$iv111111118 = $composer.getCurrentCompositionLocalMap();
                         Modifier materialized$iv$iv111111116 = ComposedModifierKt.materializeModifier($composer, modifier$iv111111116);
-                        constructor11 = ComposeUiNode.Companion.getConstructor();
+                        st.constructor11 = ComposeUiNode.Companion.getConstructor();
                         int $changed$iv$iv$iv111111116 = (($changed$iv$iv111111116 << 6) & 896) | 6;
                         ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                         if (!($composer.getApplier() instanceof Applier)) {
@@ -6427,34 +6520,34 @@ public final class RazrCoverShellKt {
                         }
                         $composer.startReusableNode();
                         if ($composer.getInserting()) {
-                            function12 = constructor11;
-                            $composer.createNode(function12);
+                            st.function12 = st.constructor11;
+                            $composer.createNode(st.function12);
                         } else {
-                            function12 = constructor11;
+                            st.function12 = st.constructor11;
                             $composer.useNode();
                         }
-                        $this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv1111111111, ComposeUiNode.Companion.getSetMeasurePolicy());
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv111111118, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                        st.$this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv1111111111, ComposeUiNode.Companion.getSetMeasurePolicy());
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv111111118, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                         Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash111111116 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                        if (!$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
+                        if (!st.$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
                         }
-                        $this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv11));
-                        $this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(compositeKeyHash$iv$iv11), setCompositeKeyHash111111116);
-                        ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv111111116, ComposeUiNode.Companion.getSetModifier());
+                        st.$this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv11));
+                        st.$this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(st.compositeKeyHash$iv$iv11), setCompositeKeyHash111111116);
+                        ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv111111116, ComposeUiNode.Companion.getSetModifier());
                         int i2111111111115 = ($changed$iv$iv$iv111111116 >> 6) & 14;
                         ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                         int i2111111111116 = ((54 >> 6) & 112) | 6;
                         RowScope $this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24117 = RowScopeInstance.INSTANCE;
                         ComposerKt.sourceInformationMarkerStart($composer, -404697066, "C309@12543L264,316@12820L248:RazrCoverShell.kt#z0j3je");
                         CoverShellPolicy coverShellPolicy13 = CoverShellPolicy.INSTANCE;
-                        if (auroraSession != null) {
-                            z = true;
+                        if (st.auroraSession != null) {
+                            st.z = true;
                         } else {
-                            z = false;
+                            st.z = false;
                         }
-                        RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy13.canOpenLatest(z), function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24117, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
-                        RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(z2), function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24117, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                        RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy13.canOpenLatest(st.z), st.function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24117, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                        RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(st.z2), st.function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24117, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         ComposerKt.sourceInformationMarkerEnd($composer);
                         $composer.endNode();
@@ -6481,10 +6574,10 @@ public final class RazrCoverShellKt {
                         }
                         return;
                     }
-                    localMap$iv$iv4 = localMap$iv$iv3;
-                    $this$Layout_u24lambda_u240$iv$iv5.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv5));
-                    $this$Layout_u24lambda_u240$iv$iv5.apply(Integer.valueOf(compositeKeyHash$iv$iv5), setCompositeKeyHash211);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv211, ComposeUiNode.Companion.getSetModifier());
+                    st.localMap$iv$iv4 = st.localMap$iv$iv3;
+                    st.$this$Layout_u24lambda_u240$iv$iv5.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv5));
+                    st.$this$Layout_u24lambda_u240$iv$iv5.apply(Integer.valueOf(st.compositeKeyHash$iv$iv5), setCompositeKeyHash211);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv211, ComposeUiNode.Companion.getSetModifier());
                     int i111111115 = ($changed$iv$iv$iv211 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                     ColumnScopeInstance columnScopeInstance11113 = ColumnScopeInstance.INSTANCE;
@@ -6492,12 +6585,12 @@ public final class RazrCoverShellKt {
                     ComposerKt.sourceInformationMarkerStart($composer, 763412498, "C170@7030L15,168@6959L293,176@7269L29,179@7384L10,177@7315L278,195@7997L29,200@8202L14,196@8043L193,202@8253L29,203@8299L1366:RazrCoverShell.kt#z0j3je");
                     ai.nous.aurora.compat.Compat.m3067Text4IGK_g("LATEST THREAD", (Modifier) null, AuroraColorSchemeKt.getAuroraTextFaint($composer, 0), TextUnitKt.getSp(9), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), TextUnitKt.getSp(1), (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 12782598, 0, 130834);
                     SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(5)), $composer, 6);
-                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
+                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
                     $composer.startReplaceGroup(-529544623);
                     ComposerKt.sourceInformation($composer, "186@7658L29,189@7786L15,187@7708L254");
-                    if (!StringsKt.isBlank(str4)) {
+                    if (!StringsKt.isBlank(st.str4)) {
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(3)), $composer, 6);
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                     }
                     $composer.endReplaceGroup();
                     SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(9)), $composer, 6);
@@ -6511,10 +6604,10 @@ public final class RazrCoverShellKt {
                     MeasurePolicy measurePolicy$iv1111111112 = RowKt.rowMeasurePolicy(horizontalArrangement$iv1110, verticalAlignment$iv1110, $composer, $changed$iv14);
                     int $changed$iv$iv111111117 = (390 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv111111119 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv111111117 = ComposedModifierKt.materializeModifier($composer, modifier$iv111111117);
-                    constructor6 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor6 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv111111117 = (($changed$iv$iv111111117 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -6522,38 +6615,38 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function8 = constructor6;
-                        $composer.createNode(function8);
+                        st.function8 = st.constructor6;
+                        $composer.createNode(st.function8);
                     } else {
-                        function8 = constructor6;
+                        st.function8 = st.constructor6;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv1111111112, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv111111119, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv1111111112, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv111111119, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash111111117 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
                     }
-                    $this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv6));
-                    $this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(compositeKeyHash$iv$iv6), setCompositeKeyHash111111117);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv111111117, ComposeUiNode.Companion.getSetModifier());
+                    st.$this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv6));
+                    st.$this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(st.compositeKeyHash$iv$iv6), setCompositeKeyHash111111117);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv111111117, ComposeUiNode.Companion.getSetModifier());
                     int i111111117 = ($changed$iv$iv$iv111111117 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                     int i111111118 = ((390 >> 6) & 112) | 6;
-                    $this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
+                    st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
                     ComposerKt.sourceInformationMarkerStart($composer, -1980267798, "C220@9102L15,218@8996L282:RazrCoverShell.kt#z0j3je");
                     $composer.startReplaceGroup(-618069607);
                     ComposerKt.sourceInformation($composer, "210@8649L11,208@8527L373,216@8925L28");
-                    if (uiState.getSelectedModel() != null) {
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
+                    if (st.uiState.getSelectedModel() != null) {
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(st.uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1084width3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(8)), $composer, 6);
                     }
                     $composer.endReplaceGroup();
-                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + st.uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                     $composer.startReplaceGroup(-618043174);
                     ComposerKt.sourceInformation($composer, "226@9344L27,229@9479L11,227@9396L229");
-                    if (uiState.getSending()) {
-                        SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
+                    if (st.uiState.getSending()) {
+                        SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6(st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
                         ai.nous.aurora.compat.Compat.m3067Text4IGK_g("thinking…", (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199686, 0, 131026);
                     }
                     $composer.endReplaceGroup();
@@ -6583,10 +6676,10 @@ public final class RazrCoverShellKt {
                     MeasurePolicy measurePolicy$iv1111111113 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv1117, horizontalAlignment$iv1117, $composer, ((384 >> 3) & 14) | ((384 >> 3) & 112));
                     int $changed$iv$iv111111118 = (384 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv1111111110 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv111111118 = ComposedModifierKt.materializeModifier($composer, modifier$iv111111118);
-                    constructor7 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor7 = ComposeUiNode.Companion.getConstructor();
                     int $i$f$Column111 = $changed$iv$iv111111118 << 6;
                     int $changed$iv$iv$iv111111118 = ($i$f$Column111 & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
@@ -6595,21 +6688,21 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function9 = constructor7;
-                        $composer.createNode(function9);
+                        st.function9 = st.constructor7;
+                        $composer.createNode(st.function9);
                     } else {
-                        function9 = constructor7;
+                        st.function9 = st.constructor7;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv1111111113, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv1111111110, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv1111111113, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv1111111110, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash111111118 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
                     }
-                    $this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv7));
-                    $this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(compositeKeyHash$iv$iv7), setCompositeKeyHash111111118);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv111111118, ComposeUiNode.Companion.getSetModifier());
+                    st.$this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv7));
+                    st.$this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(st.compositeKeyHash$iv$iv7), setCompositeKeyHash111111118);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv111111118, ComposeUiNode.Companion.getSetModifier());
                     int i111111119 = ($changed$iv$iv$iv111111118 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                     ColumnScopeInstance columnScopeInstance11114 = ColumnScopeInstance.INSTANCE;
@@ -6621,10 +6714,10 @@ public final class RazrCoverShellKt {
                     MeasurePolicy measurePolicy$iv1111111114 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv1112, false);
                     int $changed$iv$iv111111119 = (48 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv1111111111 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv111111119 = ComposedModifierKt.materializeModifier($composer, modifier$iv111111119);
-                    constructor8 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor8 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv111111119 = (($changed$iv$iv111111119 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -6632,21 +6725,21 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function10 = constructor8;
-                        $composer.createNode(function10);
+                        st.function10 = st.constructor8;
+                        $composer.createNode(st.function10);
                     } else {
-                        function10 = constructor8;
+                        st.function10 = st.constructor8;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv1111111114, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv1111111111, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv1111111114, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv1111111111, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash111111119 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
                     }
-                    $this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv8));
-                    $this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(compositeKeyHash$iv$iv8), setCompositeKeyHash111111119);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv111111119, ComposeUiNode.Companion.getSetModifier());
+                    st.$this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv8));
+                    st.$this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(st.compositeKeyHash$iv$iv8), setCompositeKeyHash111111119);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv111111119, ComposeUiNode.Companion.getSetModifier());
                     int i2111111111118 = ($changed$iv$iv$iv111111119 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                     BoxScopeInstance boxScopeInstance1115 = BoxScopeInstance.INSTANCE;
@@ -6661,44 +6754,44 @@ public final class RazrCoverShellKt {
                     Modifier modifierM600borderxT4_qwU14 = ai.nous.aurora.compat.Compat.m600borderxT4_qwU(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip1112, ai.nous.aurora.compat.Compat.m4532copywmQWz5c(auroraAmber118, (14 & 1) != 0 ? ai.nous.aurora.compat.Compat.m4536getAlphaimpl(auroraAmber118) : 0.22f, (14 & 2) != 0 ? ai.nous.aurora.compat.Compat.m4540getRedimpl(auroraAmber118) : 0.0f, (14 & 4) != 0 ? ai.nous.aurora.compat.Compat.m4539getGreenimpl(auroraAmber118) : 0.0f, (14 & 8) != 0 ? ai.nous.aurora.compat.Compat.m4537getBlueimpl(auroraAmber118) : 0.0f), null, 2, null), ai.nous.aurora.compat.Compat.m7016constructorimpl(2), AuroraColorSchemeKt.getAuroraAmber($composer, 0), RoundedCornerShapeKt.getCircleShape());
                     $composer.startReplaceGroup(-529441171);
                     ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                    invalid$iv = $composer.changed(z2);
+                    st.invalid$iv = $composer.changed(st.z2);
                     Object it$iv117 = $composer.rememberedValue();
-                    if (!invalid$iv) {
+                    if (!st.invalid$iv) {
                     }
-                    value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
+                    st.value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
                         @Override // kotlin.jvm.functions.Function1
                         public final Object invoke(Object obj) {
-                            return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(z2, (SemanticsPropertyReceiver) obj);
+                            return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(st.z2, (SemanticsPropertyReceiver) obj);
                         }
                     };
-                    $composer.updateRememberedValue(value$iv);
+                    $composer.updateRememberedValue(st.value$iv);
                     $composer.endReplaceGroup();
-                    Modifier modifierSemantics$default14 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU14, false, (Function1) value$iv, 1, null);
-                    boolean zCanTalk14 = CoverShellPolicy.INSTANCE.canTalk(z2);
+                    Modifier modifierSemantics$default14 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU14, false, (Function1) st.value$iv, 1, null);
+                    boolean zCanTalk14 = CoverShellPolicy.INSTANCE.canTalk(st.z2);
                     $composer.startReplaceGroup(-529427629);
                     ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                    invalid$iv2 = $composer.changedInstance(context);
+                    st.invalid$iv2 = $composer.changedInstance(st.context);
                     Object it$iv118 = $composer.rememberedValue();
-                    if (!invalid$iv2) {
+                    if (!st.invalid$iv2) {
                     }
-                    value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
+                    st.value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
                         @Override // kotlin.jvm.functions.Function0
                         public final Object invoke() {
-                            return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(context);
+                            return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(st.context);
                         }
                     };
-                    $composer.updateRememberedValue(value$iv2);
+                    $composer.updateRememberedValue(st.value$iv2);
                     $composer.endReplaceGroup();
-                    Modifier modifier$iv1111111110 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default14, zCanTalk14, "Start voice Assist", null, (Function0) value$iv2, 4, null);
+                    Modifier modifier$iv1111111110 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default14, zCanTalk14, "Start voice Assist", null, (Function0) st.value$iv2, 4, null);
                     Alignment contentAlignment$iv1113 = Alignment.Companion.getCenter();
                     ComposerKt.sourceInformationMarkerStart($composer, 733328855, "CC(Box)P(2,1,3)72@3384L130:Box.kt#2w3rfo");
                     MeasurePolicy measurePolicy$iv1111111115 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv1113, false);
                     int $changed$iv$iv1111111110 = (48 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv1111111112 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv1111111110 = ComposedModifierKt.materializeModifier($composer, modifier$iv1111111110);
-                    constructor9 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor9 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv1111111110 = (($changed$iv$iv1111111110 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -6706,38 +6799,38 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function11 = constructor9;
-                        $composer.createNode(function11);
+                        st.function11 = st.constructor9;
+                        $composer.createNode(st.function11);
                     } else {
-                        function11 = constructor9;
+                        st.function11 = st.constructor9;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv1111111115, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv1111111112, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv1111111115, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv1111111112, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1111111110 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
                     }
-                    $this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv9));
-                    $this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(compositeKeyHash$iv$iv9), setCompositeKeyHash1111111110);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv1111111110, ComposeUiNode.Companion.getSetModifier());
+                    st.$this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv9));
+                    st.$this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(st.compositeKeyHash$iv$iv9), setCompositeKeyHash1111111110);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv1111111110, ComposeUiNode.Companion.getSetModifier());
                     int i21111111111110 = ($changed$iv$iv$iv1111111110 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                     BoxScopeInstance boxScopeInstance1116 = BoxScopeInstance.INSTANCE;
                     int i21111111111111 = ((48 >> 6) & 112) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -1977158684, "C281@11632L225:RazrCoverShell.kt#z0j3je");
                     Modifier modifierClip1113 = ClipKt.clip(ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(56)), RoundedCornerShapeKt.getCircleShape());
-                    if (z2) {
+                    if (st.z2) {
                         $composer.startReplaceGroup(-617963319);
                         ComposerKt.sourceInformation($composer, "285@11805L11");
-                        auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
+                        st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
                     } else {
                         $composer.startReplaceGroup(-617962771);
                         ComposerKt.sourceInformation($composer, "285@11822L15");
-                        auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
+                        st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
                     }
                     $composer.endReplaceGroup();
-                    BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip1113, auroraTextMuted2, null, 2, null), $composer, 0);
+                    BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip1113, st.auroraTextMuted2, null, 2, null), $composer, 0);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     $composer.endNode();
@@ -6751,12 +6844,12 @@ public final class RazrCoverShellKt {
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(6)), $composer, 6);
-                    if (z2) {
-                        str = "TALK · tap orb or power";
+                    if (st.z2) {
+                        st.str = "TALK · tap orb or power";
                     } else {
-                        str = "Offline";
+                        st.str = "Offline";
                     }
-                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
+                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     $composer.endNode();
@@ -6776,10 +6869,10 @@ public final class RazrCoverShellKt {
                     MeasurePolicy measurePolicy$iv1111111116 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv1118, horizontalAlignment$iv1118, $composer, ((390 >> 3) & 14) | ((390 >> 3) & 112));
                     int $changed$iv$iv1111111111 = (390 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv1111111113 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv1111111111 = ComposedModifierKt.materializeModifier($composer, modifier$iv1111111111);
-                    constructor10 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor10 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv1111111111 = (($changed$iv$iv1111111111 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -6787,19 +6880,19 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        $composer.createNode(constructor10);
+                        $composer.createNode(st.constructor10);
                     } else {
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv1111111116, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv1111111113, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv1111111116, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv1111111113, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1111111111 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
                     }
-                    $this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv10));
-                    $this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(compositeKeyHash$iv$iv10), setCompositeKeyHash1111111111);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv1111111111, ComposeUiNode.Companion.getSetModifier());
+                    st.$this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv10));
+                    st.$this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(st.compositeKeyHash$iv$iv10), setCompositeKeyHash1111111111);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv1111111111, ComposeUiNode.Companion.getSetModifier());
                     int i21111111111112 = ($changed$iv$iv$iv1111111111 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                     ColumnScopeInstance columnScopeInstance11115 = ColumnScopeInstance.INSTANCE;
@@ -6812,10 +6905,10 @@ public final class RazrCoverShellKt {
                     MeasurePolicy measurePolicy$iv1111111117 = RowKt.rowMeasurePolicy(horizontalArrangement$iv1111, verticalAlignment$iv1111, $composer, ((54 >> 3) & 14) | ((54 >> 3) & 112));
                     int $changed$iv$iv1111111112 = (54 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv1111111114 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv1111111112 = ComposedModifierKt.materializeModifier($composer, modifier$iv1111111112);
-                    constructor11 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor11 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv1111111112 = (($changed$iv$iv1111111112 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -6823,34 +6916,34 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function12 = constructor11;
-                        $composer.createNode(function12);
+                        st.function12 = st.constructor11;
+                        $composer.createNode(st.function12);
                     } else {
-                        function12 = constructor11;
+                        st.function12 = st.constructor11;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv1111111117, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv1111111114, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv1111111117, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv1111111114, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1111111112 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
                     }
-                    $this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv11));
-                    $this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(compositeKeyHash$iv$iv11), setCompositeKeyHash1111111112);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv1111111112, ComposeUiNode.Companion.getSetModifier());
+                    st.$this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv11));
+                    st.$this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(st.compositeKeyHash$iv$iv11), setCompositeKeyHash1111111112);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv1111111112, ComposeUiNode.Companion.getSetModifier());
                     int i21111111111114 = ($changed$iv$iv$iv1111111112 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                     int i21111111111115 = ((54 >> 6) & 112) | 6;
                     RowScope $this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24118 = RowScopeInstance.INSTANCE;
                     ComposerKt.sourceInformationMarkerStart($composer, -404697066, "C309@12543L264,316@12820L248:RazrCoverShell.kt#z0j3je");
                     CoverShellPolicy coverShellPolicy14 = CoverShellPolicy.INSTANCE;
-                    if (auroraSession != null) {
-                        z = true;
+                    if (st.auroraSession != null) {
+                        st.z = true;
                     } else {
-                        z = false;
+                        st.z = false;
                     }
-                    RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy14.canOpenLatest(z), function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24118, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
-                    RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(z2), function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24118, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                    RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy14.canOpenLatest(st.z), st.function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24118, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                    RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(st.z2), st.function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24118, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     $composer.endNode();
@@ -6877,11 +6970,11 @@ public final class RazrCoverShellKt {
                     }
                     return;
                 }
-                measurePolicy$iv5 = measurePolicy$iv4;
-                localMap$iv$iv2 = localMap$iv$iv;
-                $this$Layout_u24lambda_u240$iv$iv4.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv4));
-                $this$Layout_u24lambda_u240$iv$iv4.apply(Integer.valueOf(compositeKeyHash$iv$iv4), setCompositeKeyHash210);
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv4, materialized$iv$iv210, ComposeUiNode.Companion.getSetModifier());
+                st.measurePolicy$iv5 = st.measurePolicy$iv4;
+                st.localMap$iv$iv2 = st.localMap$iv$iv;
+                st.$this$Layout_u24lambda_u240$iv$iv4.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv4));
+                st.$this$Layout_u24lambda_u240$iv$iv4.apply(Integer.valueOf(st.compositeKeyHash$iv$iv4), setCompositeKeyHash210);
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv4, materialized$iv$iv210, ComposeUiNode.Companion.getSetModifier());
                 int i111123 = ($changed$iv$iv$iv210 >> 6) & 14;
                 ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                 BoxScopeInstance boxScopeInstance1117 = BoxScopeInstance.INSTANCE;
@@ -6895,10 +6988,10 @@ public final class RazrCoverShellKt {
                 MeasurePolicy measurePolicy$iv11124 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv1119, horizontalAlignment$iv1119, $composer, $i$f$Column112);
                 int $changed$iv$iv212 = (6 << 3) & 112;
                 ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                compositeKeyHash$iv$iv5 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
-                localMap$iv$iv3 = $composer.getCurrentCompositionLocalMap();
+                st.compositeKeyHash$iv$iv5 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                st.localMap$iv$iv3 = $composer.getCurrentCompositionLocalMap();
                 Modifier materialized$iv$iv212 = ComposedModifierKt.materializeModifier($composer, modifier$iv212);
-                constructor5 = ComposeUiNode.Companion.getConstructor();
+                st.constructor5 = ComposeUiNode.Companion.getConstructor();
                 int $changed$iv$iv$iv212 = (($changed$iv$iv212 << 6) & 896) | 6;
                 ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                 if (!($composer.getApplier() instanceof Applier)) {
@@ -6906,21 +6999,21 @@ public final class RazrCoverShellKt {
                 }
                 $composer.startReusableNode();
                 if ($composer.getInserting()) {
-                    function7 = constructor5;
-                    $composer.createNode(function7);
+                    st.function7 = st.constructor5;
+                    $composer.createNode(st.function7);
                 } else {
-                    function7 = constructor5;
+                    st.function7 = st.constructor5;
                     $composer.useNode();
                 }
-                $this$Layout_u24lambda_u240$iv$iv5 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, measurePolicy$iv11124, ComposeUiNode.Companion.getSetMeasurePolicy());
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, localMap$iv$iv3, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                st.$this$Layout_u24lambda_u240$iv$iv5 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, measurePolicy$iv11124, ComposeUiNode.Companion.getSetMeasurePolicy());
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, st.localMap$iv$iv3, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                 Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash212 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                if (!$this$Layout_u24lambda_u240$iv$iv5.getInserting()) {
-                    localMap$iv$iv4 = localMap$iv$iv3;
-                    if (!Intrinsics.areEqual($this$Layout_u24lambda_u240$iv$iv5.rememberedValue(), Integer.valueOf(compositeKeyHash$iv$iv5))) {
+                if (!st.$this$Layout_u24lambda_u240$iv$iv5.getInserting()) {
+                    st.localMap$iv$iv4 = st.localMap$iv$iv3;
+                    if (!Intrinsics.areEqual(st.$this$Layout_u24lambda_u240$iv$iv5.rememberedValue(), Integer.valueOf(st.compositeKeyHash$iv$iv5))) {
                     }
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv212, ComposeUiNode.Companion.getSetModifier());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv212, ComposeUiNode.Companion.getSetModifier());
                     int i1111111110 = ($changed$iv$iv$iv212 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                     ColumnScopeInstance columnScopeInstance11116 = ColumnScopeInstance.INSTANCE;
@@ -6928,12 +7021,12 @@ public final class RazrCoverShellKt {
                     ComposerKt.sourceInformationMarkerStart($composer, 763412498, "C170@7030L15,168@6959L293,176@7269L29,179@7384L10,177@7315L278,195@7997L29,200@8202L14,196@8043L193,202@8253L29,203@8299L1366:RazrCoverShell.kt#z0j3je");
                     ai.nous.aurora.compat.Compat.m3067Text4IGK_g("LATEST THREAD", (Modifier) null, AuroraColorSchemeKt.getAuroraTextFaint($composer, 0), TextUnitKt.getSp(9), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), TextUnitKt.getSp(1), (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 12782598, 0, 130834);
                     SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(5)), $composer, 6);
-                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
+                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
                     $composer.startReplaceGroup(-529544623);
                     ComposerKt.sourceInformation($composer, "186@7658L29,189@7786L15,187@7708L254");
-                    if (!StringsKt.isBlank(str4)) {
+                    if (!StringsKt.isBlank(st.str4)) {
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(3)), $composer, 6);
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                     }
                     $composer.endReplaceGroup();
                     SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(9)), $composer, 6);
@@ -6947,10 +7040,10 @@ public final class RazrCoverShellKt {
                     MeasurePolicy measurePolicy$iv1111111118 = RowKt.rowMeasurePolicy(horizontalArrangement$iv1112, verticalAlignment$iv1112, $composer, $changed$iv15);
                     int $changed$iv$iv1111111113 = (390 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv1111111115 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv1111111113 = ComposedModifierKt.materializeModifier($composer, modifier$iv1111111113);
-                    constructor6 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor6 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv1111111113 = (($changed$iv$iv1111111113 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -6958,38 +7051,38 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function8 = constructor6;
-                        $composer.createNode(function8);
+                        st.function8 = st.constructor6;
+                        $composer.createNode(st.function8);
                     } else {
-                        function8 = constructor6;
+                        st.function8 = st.constructor6;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv1111111118, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv1111111115, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv1111111118, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv1111111115, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1111111113 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
                     }
-                    $this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv6));
-                    $this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(compositeKeyHash$iv$iv6), setCompositeKeyHash1111111113);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv1111111113, ComposeUiNode.Companion.getSetModifier());
+                    st.$this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv6));
+                    st.$this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(st.compositeKeyHash$iv$iv6), setCompositeKeyHash1111111113);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv1111111113, ComposeUiNode.Companion.getSetModifier());
                     int i1111111112 = ($changed$iv$iv$iv1111111113 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                     int i1111111113 = ((390 >> 6) & 112) | 6;
-                    $this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
+                    st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
                     ComposerKt.sourceInformationMarkerStart($composer, -1980267798, "C220@9102L15,218@8996L282:RazrCoverShell.kt#z0j3je");
                     $composer.startReplaceGroup(-618069607);
                     ComposerKt.sourceInformation($composer, "210@8649L11,208@8527L373,216@8925L28");
-                    if (uiState.getSelectedModel() != null) {
-                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
+                    if (st.uiState.getSelectedModel() != null) {
+                        ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(st.uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
                         SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1084width3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(8)), $composer, 6);
                     }
                     $composer.endReplaceGroup();
-                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + st.uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                     $composer.startReplaceGroup(-618043174);
                     ComposerKt.sourceInformation($composer, "226@9344L27,229@9479L11,227@9396L229");
-                    if (uiState.getSending()) {
-                        SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
+                    if (st.uiState.getSending()) {
+                        SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6(st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
                         ai.nous.aurora.compat.Compat.m3067Text4IGK_g("thinking…", (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199686, 0, 131026);
                     }
                     $composer.endReplaceGroup();
@@ -7019,10 +7112,10 @@ public final class RazrCoverShellKt {
                     MeasurePolicy measurePolicy$iv1111111119 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv11110, horizontalAlignment$iv11110, $composer, ((384 >> 3) & 14) | ((384 >> 3) & 112));
                     int $changed$iv$iv1111111114 = (384 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv1111111116 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv1111111114 = ComposedModifierKt.materializeModifier($composer, modifier$iv1111111114);
-                    constructor7 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor7 = ComposeUiNode.Companion.getConstructor();
                     int $i$f$Column113 = $changed$iv$iv1111111114 << 6;
                     int $changed$iv$iv$iv1111111114 = ($i$f$Column113 & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
@@ -7031,21 +7124,21 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function9 = constructor7;
-                        $composer.createNode(function9);
+                        st.function9 = st.constructor7;
+                        $composer.createNode(st.function9);
                     } else {
-                        function9 = constructor7;
+                        st.function9 = st.constructor7;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv1111111119, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv1111111116, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv1111111119, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv1111111116, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1111111114 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
                     }
-                    $this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv7));
-                    $this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(compositeKeyHash$iv$iv7), setCompositeKeyHash1111111114);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv1111111114, ComposeUiNode.Companion.getSetModifier());
+                    st.$this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv7));
+                    st.$this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(st.compositeKeyHash$iv$iv7), setCompositeKeyHash1111111114);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv1111111114, ComposeUiNode.Companion.getSetModifier());
                     int i1111111114 = ($changed$iv$iv$iv1111111114 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                     ColumnScopeInstance columnScopeInstance11117 = ColumnScopeInstance.INSTANCE;
@@ -7057,10 +7150,10 @@ public final class RazrCoverShellKt {
                     MeasurePolicy measurePolicy$iv11111111110 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv1114, false);
                     int $changed$iv$iv1111111115 = (48 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv1111111117 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv1111111115 = ComposedModifierKt.materializeModifier($composer, modifier$iv1111111115);
-                    constructor8 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor8 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv1111111115 = (($changed$iv$iv1111111115 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -7068,21 +7161,21 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function10 = constructor8;
-                        $composer.createNode(function10);
+                        st.function10 = st.constructor8;
+                        $composer.createNode(st.function10);
                     } else {
-                        function10 = constructor8;
+                        st.function10 = st.constructor8;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv11111111110, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv1111111117, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv11111111110, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv1111111117, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1111111115 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
                     }
-                    $this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv8));
-                    $this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(compositeKeyHash$iv$iv8), setCompositeKeyHash1111111115);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv1111111115, ComposeUiNode.Companion.getSetModifier());
+                    st.$this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv8));
+                    st.$this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(st.compositeKeyHash$iv$iv8), setCompositeKeyHash1111111115);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv1111111115, ComposeUiNode.Companion.getSetModifier());
                     int i21111111111117 = ($changed$iv$iv$iv1111111115 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                     BoxScopeInstance boxScopeInstance1118 = BoxScopeInstance.INSTANCE;
@@ -7097,44 +7190,44 @@ public final class RazrCoverShellKt {
                     Modifier modifierM600borderxT4_qwU15 = ai.nous.aurora.compat.Compat.m600borderxT4_qwU(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip1114, ai.nous.aurora.compat.Compat.m4532copywmQWz5c(auroraAmber1110, (14 & 1) != 0 ? ai.nous.aurora.compat.Compat.m4536getAlphaimpl(auroraAmber1110) : 0.22f, (14 & 2) != 0 ? ai.nous.aurora.compat.Compat.m4540getRedimpl(auroraAmber1110) : 0.0f, (14 & 4) != 0 ? ai.nous.aurora.compat.Compat.m4539getGreenimpl(auroraAmber1110) : 0.0f, (14 & 8) != 0 ? ai.nous.aurora.compat.Compat.m4537getBlueimpl(auroraAmber1110) : 0.0f), null, 2, null), ai.nous.aurora.compat.Compat.m7016constructorimpl(2), AuroraColorSchemeKt.getAuroraAmber($composer, 0), RoundedCornerShapeKt.getCircleShape());
                     $composer.startReplaceGroup(-529441171);
                     ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                    invalid$iv = $composer.changed(z2);
+                    st.invalid$iv = $composer.changed(st.z2);
                     Object it$iv119 = $composer.rememberedValue();
-                    if (!invalid$iv) {
+                    if (!st.invalid$iv) {
                     }
-                    value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
+                    st.value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
                         @Override // kotlin.jvm.functions.Function1
                         public final Object invoke(Object obj) {
-                            return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(z2, (SemanticsPropertyReceiver) obj);
+                            return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(st.z2, (SemanticsPropertyReceiver) obj);
                         }
                     };
-                    $composer.updateRememberedValue(value$iv);
+                    $composer.updateRememberedValue(st.value$iv);
                     $composer.endReplaceGroup();
-                    Modifier modifierSemantics$default15 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU15, false, (Function1) value$iv, 1, null);
-                    boolean zCanTalk15 = CoverShellPolicy.INSTANCE.canTalk(z2);
+                    Modifier modifierSemantics$default15 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU15, false, (Function1) st.value$iv, 1, null);
+                    boolean zCanTalk15 = CoverShellPolicy.INSTANCE.canTalk(st.z2);
                     $composer.startReplaceGroup(-529427629);
                     ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                    invalid$iv2 = $composer.changedInstance(context);
+                    st.invalid$iv2 = $composer.changedInstance(st.context);
                     Object it$iv1110 = $composer.rememberedValue();
-                    if (!invalid$iv2) {
+                    if (!st.invalid$iv2) {
                     }
-                    value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
+                    st.value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
                         @Override // kotlin.jvm.functions.Function0
                         public final Object invoke() {
-                            return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(context);
+                            return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(st.context);
                         }
                     };
-                    $composer.updateRememberedValue(value$iv2);
+                    $composer.updateRememberedValue(st.value$iv2);
                     $composer.endReplaceGroup();
-                    Modifier modifier$iv1111111116 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default15, zCanTalk15, "Start voice Assist", null, (Function0) value$iv2, 4, null);
+                    Modifier modifier$iv1111111116 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default15, zCanTalk15, "Start voice Assist", null, (Function0) st.value$iv2, 4, null);
                     Alignment contentAlignment$iv1115 = Alignment.Companion.getCenter();
                     ComposerKt.sourceInformationMarkerStart($composer, 733328855, "CC(Box)P(2,1,3)72@3384L130:Box.kt#2w3rfo");
                     MeasurePolicy measurePolicy$iv11111111111 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv1115, false);
                     int $changed$iv$iv1111111116 = (48 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv1111111118 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv1111111116 = ComposedModifierKt.materializeModifier($composer, modifier$iv1111111116);
-                    constructor9 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor9 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv1111111116 = (($changed$iv$iv1111111116 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -7142,38 +7235,38 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function11 = constructor9;
-                        $composer.createNode(function11);
+                        st.function11 = st.constructor9;
+                        $composer.createNode(st.function11);
                     } else {
-                        function11 = constructor9;
+                        st.function11 = st.constructor9;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv11111111111, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv1111111118, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv11111111111, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv1111111118, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1111111116 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
                     }
-                    $this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv9));
-                    $this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(compositeKeyHash$iv$iv9), setCompositeKeyHash1111111116);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv1111111116, ComposeUiNode.Companion.getSetModifier());
+                    st.$this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv9));
+                    st.$this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(st.compositeKeyHash$iv$iv9), setCompositeKeyHash1111111116);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv1111111116, ComposeUiNode.Companion.getSetModifier());
                     int i21111111111119 = ($changed$iv$iv$iv1111111116 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                     BoxScopeInstance boxScopeInstance1119 = BoxScopeInstance.INSTANCE;
                     int i211111111111110 = ((48 >> 6) & 112) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -1977158684, "C281@11632L225:RazrCoverShell.kt#z0j3je");
                     Modifier modifierClip1115 = ClipKt.clip(ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(56)), RoundedCornerShapeKt.getCircleShape());
-                    if (z2) {
+                    if (st.z2) {
                         $composer.startReplaceGroup(-617963319);
                         ComposerKt.sourceInformation($composer, "285@11805L11");
-                        auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
+                        st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
                     } else {
                         $composer.startReplaceGroup(-617962771);
                         ComposerKt.sourceInformation($composer, "285@11822L15");
-                        auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
+                        st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
                     }
                     $composer.endReplaceGroup();
-                    BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip1115, auroraTextMuted2, null, 2, null), $composer, 0);
+                    BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip1115, st.auroraTextMuted2, null, 2, null), $composer, 0);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     $composer.endNode();
@@ -7187,12 +7280,12 @@ public final class RazrCoverShellKt {
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(6)), $composer, 6);
-                    if (z2) {
-                        str = "TALK · tap orb or power";
+                    if (st.z2) {
+                        st.str = "TALK · tap orb or power";
                     } else {
-                        str = "Offline";
+                        st.str = "Offline";
                     }
-                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
+                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     $composer.endNode();
@@ -7212,10 +7305,10 @@ public final class RazrCoverShellKt {
                     MeasurePolicy measurePolicy$iv11111111112 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv11111, horizontalAlignment$iv11111, $composer, ((390 >> 3) & 14) | ((390 >> 3) & 112));
                     int $changed$iv$iv1111111117 = (390 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv1111111119 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv1111111117 = ComposedModifierKt.materializeModifier($composer, modifier$iv1111111117);
-                    constructor10 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor10 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv1111111117 = (($changed$iv$iv1111111117 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -7223,19 +7316,19 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        $composer.createNode(constructor10);
+                        $composer.createNode(st.constructor10);
                     } else {
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv11111111112, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv1111111119, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv11111111112, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv1111111119, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1111111117 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
                     }
-                    $this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv10));
-                    $this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(compositeKeyHash$iv$iv10), setCompositeKeyHash1111111117);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv1111111117, ComposeUiNode.Companion.getSetModifier());
+                    st.$this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv10));
+                    st.$this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(st.compositeKeyHash$iv$iv10), setCompositeKeyHash1111111117);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv1111111117, ComposeUiNode.Companion.getSetModifier());
                     int i211111111111111 = ($changed$iv$iv$iv1111111117 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                     ColumnScopeInstance columnScopeInstance11118 = ColumnScopeInstance.INSTANCE;
@@ -7248,10 +7341,10 @@ public final class RazrCoverShellKt {
                     MeasurePolicy measurePolicy$iv11111111113 = RowKt.rowMeasurePolicy(horizontalArrangement$iv1113, verticalAlignment$iv1113, $composer, ((54 >> 3) & 14) | ((54 >> 3) & 112));
                     int $changed$iv$iv1111111118 = (54 << 3) & 112;
                     ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                    compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                    st.compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                     CompositionLocalMap localMap$iv$iv11111111110 = $composer.getCurrentCompositionLocalMap();
                     Modifier materialized$iv$iv1111111118 = ComposedModifierKt.materializeModifier($composer, modifier$iv1111111118);
-                    constructor11 = ComposeUiNode.Companion.getConstructor();
+                    st.constructor11 = ComposeUiNode.Companion.getConstructor();
                     int $changed$iv$iv$iv1111111118 = (($changed$iv$iv1111111118 << 6) & 896) | 6;
                     ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                     if (!($composer.getApplier() instanceof Applier)) {
@@ -7259,34 +7352,34 @@ public final class RazrCoverShellKt {
                     }
                     $composer.startReusableNode();
                     if ($composer.getInserting()) {
-                        function12 = constructor11;
-                        $composer.createNode(function12);
+                        st.function12 = st.constructor11;
+                        $composer.createNode(st.function12);
                     } else {
-                        function12 = constructor11;
+                        st.function12 = st.constructor11;
                         $composer.useNode();
                     }
-                    $this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv11111111113, ComposeUiNode.Companion.getSetMeasurePolicy());
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv11111111110, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                    st.$this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv11111111113, ComposeUiNode.Companion.getSetMeasurePolicy());
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv11111111110, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                     Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1111111118 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                    if (!$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
+                    if (!st.$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
                     }
-                    $this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv11));
-                    $this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(compositeKeyHash$iv$iv11), setCompositeKeyHash1111111118);
-                    ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv1111111118, ComposeUiNode.Companion.getSetModifier());
+                    st.$this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv11));
+                    st.$this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(st.compositeKeyHash$iv$iv11), setCompositeKeyHash1111111118);
+                    ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv1111111118, ComposeUiNode.Companion.getSetModifier());
                     int i211111111111113 = ($changed$iv$iv$iv1111111118 >> 6) & 14;
                     ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                     int i211111111111114 = ((54 >> 6) & 112) | 6;
                     RowScope $this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24119 = RowScopeInstance.INSTANCE;
                     ComposerKt.sourceInformationMarkerStart($composer, -404697066, "C309@12543L264,316@12820L248:RazrCoverShell.kt#z0j3je");
                     CoverShellPolicy coverShellPolicy15 = CoverShellPolicy.INSTANCE;
-                    if (auroraSession != null) {
-                        z = true;
+                    if (st.auroraSession != null) {
+                        st.z = true;
                     } else {
-                        z = false;
+                        st.z = false;
                     }
-                    RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy15.canOpenLatest(z), function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24119, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
-                    RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(z2), function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24119, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                    RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy15.canOpenLatest(st.z), st.function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24119, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                    RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(st.z2), st.function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u24119, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     ComposerKt.sourceInformationMarkerEnd($composer);
                     $composer.endNode();
@@ -7313,10 +7406,10 @@ public final class RazrCoverShellKt {
                     }
                     return;
                 }
-                localMap$iv$iv4 = localMap$iv$iv3;
-                $this$Layout_u24lambda_u240$iv$iv5.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv5));
-                $this$Layout_u24lambda_u240$iv$iv5.apply(Integer.valueOf(compositeKeyHash$iv$iv5), setCompositeKeyHash212);
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv212, ComposeUiNode.Companion.getSetModifier());
+                st.localMap$iv$iv4 = st.localMap$iv$iv3;
+                st.$this$Layout_u24lambda_u240$iv$iv5.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv5));
+                st.$this$Layout_u24lambda_u240$iv$iv5.apply(Integer.valueOf(st.compositeKeyHash$iv$iv5), setCompositeKeyHash212);
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv5, materialized$iv$iv212, ComposeUiNode.Companion.getSetModifier());
                 int i1111111115 = ($changed$iv$iv$iv212 >> 6) & 14;
                 ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                 ColumnScopeInstance columnScopeInstance11119 = ColumnScopeInstance.INSTANCE;
@@ -7324,12 +7417,12 @@ public final class RazrCoverShellKt {
                 ComposerKt.sourceInformationMarkerStart($composer, 763412498, "C170@7030L15,168@6959L293,176@7269L29,179@7384L10,177@7315L278,195@7997L29,200@8202L14,196@8043L193,202@8253L29,203@8299L1366:RazrCoverShell.kt#z0j3je");
                 ai.nous.aurora.compat.Compat.m3067Text4IGK_g("LATEST THREAD", (Modifier) null, AuroraColorSchemeKt.getAuroraTextFaint($composer, 0), TextUnitKt.getSp(9), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), TextUnitKt.getSp(1), (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 12782598, 0, 130834);
                 SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(5)), $composer, 6);
-                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
+                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str3, (Modifier) null, AuroraColorSchemeKt.getAuroraText($composer, 0), TextUnitKt.getSp(15), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 3120, 120786);
                 $composer.startReplaceGroup(-529544623);
                 ComposerKt.sourceInformation($composer, "186@7658L29,189@7786L15,187@7708L254");
-                if (!StringsKt.isBlank(str4)) {
+                if (!StringsKt.isBlank(st.str4)) {
                     SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(3)), $composer, 6);
-                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str4, (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 2, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                 }
                 $composer.endReplaceGroup();
                 SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(9)), $composer, 6);
@@ -7343,10 +7436,10 @@ public final class RazrCoverShellKt {
                 MeasurePolicy measurePolicy$iv11111111114 = RowKt.rowMeasurePolicy(horizontalArrangement$iv1114, verticalAlignment$iv1114, $composer, $changed$iv16);
                 int $changed$iv$iv1111111119 = (390 << 3) & 112;
                 ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                st.compositeKeyHash$iv$iv6 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                 CompositionLocalMap localMap$iv$iv11111111111 = $composer.getCurrentCompositionLocalMap();
                 Modifier materialized$iv$iv1111111119 = ComposedModifierKt.materializeModifier($composer, modifier$iv1111111119);
-                constructor6 = ComposeUiNode.Companion.getConstructor();
+                st.constructor6 = ComposeUiNode.Companion.getConstructor();
                 int $changed$iv$iv$iv1111111119 = (($changed$iv$iv1111111119 << 6) & 896) | 6;
                 ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                 if (!($composer.getApplier() instanceof Applier)) {
@@ -7354,38 +7447,38 @@ public final class RazrCoverShellKt {
                 }
                 $composer.startReusableNode();
                 if ($composer.getInserting()) {
-                    function8 = constructor6;
-                    $composer.createNode(function8);
+                    st.function8 = st.constructor6;
+                    $composer.createNode(st.function8);
                 } else {
-                    function8 = constructor6;
+                    st.function8 = st.constructor6;
                     $composer.useNode();
                 }
-                $this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv11111111114, ComposeUiNode.Companion.getSetMeasurePolicy());
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv11111111111, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                st.$this$Layout_u24lambda_u240$iv$iv6 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, measurePolicy$iv11111111114, ComposeUiNode.Companion.getSetMeasurePolicy());
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, localMap$iv$iv11111111111, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                 Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash1111111119 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                if (!$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
+                if (!st.$this$Layout_u24lambda_u240$iv$iv6.getInserting()) {
                 }
-                $this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv6));
-                $this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(compositeKeyHash$iv$iv6), setCompositeKeyHash1111111119);
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv1111111119, ComposeUiNode.Companion.getSetModifier());
+                st.$this$Layout_u24lambda_u240$iv$iv6.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv6));
+                st.$this$Layout_u24lambda_u240$iv$iv6.apply(Integer.valueOf(st.compositeKeyHash$iv$iv6), setCompositeKeyHash1111111119);
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv6, materialized$iv$iv1111111119, ComposeUiNode.Companion.getSetModifier());
                 int i1111111117 = ($changed$iv$iv$iv1111111119 >> 6) & 14;
                 ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                 int i1111111118 = ((390 >> 6) & 112) | 6;
-                $this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
+                st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244 = RowScopeInstance.INSTANCE;
                 ComposerKt.sourceInformationMarkerStart($composer, -1980267798, "C220@9102L15,218@8996L282:RazrCoverShell.kt#z0j3je");
                 $composer.startReplaceGroup(-618069607);
                 ComposerKt.sourceInformation($composer, "210@8649L11,208@8527L373,216@8925L28");
-                if (uiState.getSelectedModel() != null) {
-                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
+                if (st.uiState.getSelectedModel() != null) {
+                    ai.nous.aurora.compat.Compat.m3067Text4IGK_g(ai.nous.aurora.compat.Compat.d_StringsKt_substringAfterLast_5(st.uiState.getSelectedModel(), '/', (String) null, 2, (Object) null), (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120754);
                     SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1084width3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(8)), $composer, 6);
                 }
                 $composer.endReplaceGroup();
-                ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
+                ai.nous.aurora.compat.Compat.m3067Text4IGK_g("·  " + st.uiState.getSessions().size() + " threads", (Modifier) null, AuroraColorSchemeKt.getAuroraTextMuted($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, (FontWeight) null, (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, ai.nous.aurora.compat.Compat.m6933getEllipsisgIe3tQ8(TextOverflow.Companion), false, 1, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 3072, 3120, 120818);
                 $composer.startReplaceGroup(-618043174);
                 ComposerKt.sourceInformation($composer, "226@9344L27,229@9479L11,227@9396L229");
-                if (uiState.getSending()) {
-                    SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
+                if (st.uiState.getSending()) {
+                    SpacerKt.Spacer(ai.nous.aurora.compat.Compat.d_RowScope_weight_6(st.$this$invoke_u24lambda_u2417_u24lambda_u2414_u24lambda_u246_u24lambda_u245_u24lambda_u244, Modifier.Companion, 1.0f, false, 2, null), $composer, 0);
                     ai.nous.aurora.compat.Compat.m3067Text4IGK_g("thinking…", (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(11), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) null, 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199686, 0, 131026);
                 }
                 $composer.endReplaceGroup();
@@ -7415,10 +7508,10 @@ public final class RazrCoverShellKt {
                 MeasurePolicy measurePolicy$iv11111111115 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv11112, horizontalAlignment$iv11112, $composer, ((384 >> 3) & 14) | ((384 >> 3) & 112));
                 int $changed$iv$iv11111111110 = (384 << 3) & 112;
                 ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                st.compositeKeyHash$iv$iv7 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                 CompositionLocalMap localMap$iv$iv11111111112 = $composer.getCurrentCompositionLocalMap();
                 Modifier materialized$iv$iv11111111110 = ComposedModifierKt.materializeModifier($composer, modifier$iv11111111110);
-                constructor7 = ComposeUiNode.Companion.getConstructor();
+                st.constructor7 = ComposeUiNode.Companion.getConstructor();
                 int $i$f$Column114 = $changed$iv$iv11111111110 << 6;
                 int $changed$iv$iv$iv11111111110 = ($i$f$Column114 & 896) | 6;
                 ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
@@ -7427,21 +7520,21 @@ public final class RazrCoverShellKt {
                 }
                 $composer.startReusableNode();
                 if ($composer.getInserting()) {
-                    function9 = constructor7;
-                    $composer.createNode(function9);
+                    st.function9 = st.constructor7;
+                    $composer.createNode(st.function9);
                 } else {
-                    function9 = constructor7;
+                    st.function9 = st.constructor7;
                     $composer.useNode();
                 }
-                $this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv11111111115, ComposeUiNode.Companion.getSetMeasurePolicy());
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv11111111112, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                st.$this$Layout_u24lambda_u240$iv$iv7 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, measurePolicy$iv11111111115, ComposeUiNode.Companion.getSetMeasurePolicy());
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, localMap$iv$iv11111111112, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                 Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash11111111110 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                if (!$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
+                if (!st.$this$Layout_u24lambda_u240$iv$iv7.getInserting()) {
                 }
-                $this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv7));
-                $this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(compositeKeyHash$iv$iv7), setCompositeKeyHash11111111110);
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv11111111110, ComposeUiNode.Companion.getSetModifier());
+                st.$this$Layout_u24lambda_u240$iv$iv7.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv7));
+                st.$this$Layout_u24lambda_u240$iv$iv7.apply(Integer.valueOf(st.compositeKeyHash$iv$iv7), setCompositeKeyHash11111111110);
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv7, materialized$iv$iv11111111110, ComposeUiNode.Companion.getSetModifier());
                 int i1111111119 = ($changed$iv$iv$iv11111111110 >> 6) & 14;
                 ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                 ColumnScopeInstance columnScopeInstance111110 = ColumnScopeInstance.INSTANCE;
@@ -7453,10 +7546,10 @@ public final class RazrCoverShellKt {
                 MeasurePolicy measurePolicy$iv11111111116 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv1116, false);
                 int $changed$iv$iv11111111111 = (48 << 3) & 112;
                 ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                st.compositeKeyHash$iv$iv8 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                 CompositionLocalMap localMap$iv$iv11111111113 = $composer.getCurrentCompositionLocalMap();
                 Modifier materialized$iv$iv11111111111 = ComposedModifierKt.materializeModifier($composer, modifier$iv11111111111);
-                constructor8 = ComposeUiNode.Companion.getConstructor();
+                st.constructor8 = ComposeUiNode.Companion.getConstructor();
                 int $changed$iv$iv$iv11111111111 = (($changed$iv$iv11111111111 << 6) & 896) | 6;
                 ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                 if (!($composer.getApplier() instanceof Applier)) {
@@ -7464,21 +7557,21 @@ public final class RazrCoverShellKt {
                 }
                 $composer.startReusableNode();
                 if ($composer.getInserting()) {
-                    function10 = constructor8;
-                    $composer.createNode(function10);
+                    st.function10 = st.constructor8;
+                    $composer.createNode(st.function10);
                 } else {
-                    function10 = constructor8;
+                    st.function10 = st.constructor8;
                     $composer.useNode();
                 }
-                $this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv11111111116, ComposeUiNode.Companion.getSetMeasurePolicy());
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv11111111113, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                st.$this$Layout_u24lambda_u240$iv$iv8 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, measurePolicy$iv11111111116, ComposeUiNode.Companion.getSetMeasurePolicy());
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, localMap$iv$iv11111111113, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                 Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash11111111111 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                if (!$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
+                if (!st.$this$Layout_u24lambda_u240$iv$iv8.getInserting()) {
                 }
-                $this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv8));
-                $this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(compositeKeyHash$iv$iv8), setCompositeKeyHash11111111111);
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv11111111111, ComposeUiNode.Companion.getSetModifier());
+                st.$this$Layout_u24lambda_u240$iv$iv8.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv8));
+                st.$this$Layout_u24lambda_u240$iv$iv8.apply(Integer.valueOf(st.compositeKeyHash$iv$iv8), setCompositeKeyHash11111111111);
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv8, materialized$iv$iv11111111111, ComposeUiNode.Companion.getSetModifier());
                 int i211111111111116 = ($changed$iv$iv$iv11111111111 >> 6) & 14;
                 ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                 BoxScopeInstance boxScopeInstance11110 = BoxScopeInstance.INSTANCE;
@@ -7493,44 +7586,44 @@ public final class RazrCoverShellKt {
                 Modifier modifierM600borderxT4_qwU16 = ai.nous.aurora.compat.Compat.m600borderxT4_qwU(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip1116, ai.nous.aurora.compat.Compat.m4532copywmQWz5c(auroraAmber1112, (14 & 1) != 0 ? ai.nous.aurora.compat.Compat.m4536getAlphaimpl(auroraAmber1112) : 0.22f, (14 & 2) != 0 ? ai.nous.aurora.compat.Compat.m4540getRedimpl(auroraAmber1112) : 0.0f, (14 & 4) != 0 ? ai.nous.aurora.compat.Compat.m4539getGreenimpl(auroraAmber1112) : 0.0f, (14 & 8) != 0 ? ai.nous.aurora.compat.Compat.m4537getBlueimpl(auroraAmber1112) : 0.0f), null, 2, null), ai.nous.aurora.compat.Compat.m7016constructorimpl(2), AuroraColorSchemeKt.getAuroraAmber($composer, 0), RoundedCornerShapeKt.getCircleShape());
                 $composer.startReplaceGroup(-529441171);
                 ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                invalid$iv = $composer.changed(z2);
+                st.invalid$iv = $composer.changed(st.z2);
                 Object it$iv1111 = $composer.rememberedValue();
-                if (!invalid$iv) {
+                if (!st.invalid$iv) {
                 }
-                value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
+                st.value$iv = new Function1() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda0
                     @Override // kotlin.jvm.functions.Function1
                     public final Object invoke(Object obj) {
-                        return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(z2, (SemanticsPropertyReceiver) obj);
+                        return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$8$lambda$7(st.z2, (SemanticsPropertyReceiver) obj);
                     }
                 };
-                $composer.updateRememberedValue(value$iv);
+                $composer.updateRememberedValue(st.value$iv);
                 $composer.endReplaceGroup();
-                Modifier modifierSemantics$default16 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU16, false, (Function1) value$iv, 1, null);
-                boolean zCanTalk16 = CoverShellPolicy.INSTANCE.canTalk(z2);
+                Modifier modifierSemantics$default16 = ai.nous.aurora.compat.Compat.d_SemanticsModifierKt_semantics_5(modifierM600borderxT4_qwU16, false, (Function1) st.value$iv, 1, null);
+                boolean zCanTalk16 = CoverShellPolicy.INSTANCE.canTalk(st.z2);
                 $composer.startReplaceGroup(-529427629);
                 ComposerKt.sourceInformation($composer, "CC(remember):RazrCoverShell.kt#9igjgp");
-                invalid$iv2 = $composer.changedInstance(context);
+                st.invalid$iv2 = $composer.changedInstance(st.context);
                 Object it$iv1112 = $composer.rememberedValue();
-                if (!invalid$iv2) {
+                if (!st.invalid$iv2) {
                 }
-                value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
+                st.value$iv2 = new Function0() { // from class: ai.nous.aurora.presentation.shell.cover.RazrCoverShellKt$RazrCoverShell$1$$ExternalSyntheticLambda1
                     @Override // kotlin.jvm.functions.Function0
                     public final Object invoke() {
-                        return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(context);
+                        return RazrCoverShellKt.AnonymousClass1.invoke$lambda$17$lambda$14$lambda$13$lambda$12$lambda$10$lambda$9(st.context);
                     }
                 };
-                $composer.updateRememberedValue(value$iv2);
+                $composer.updateRememberedValue(st.value$iv2);
                 $composer.endReplaceGroup();
-                Modifier modifier$iv11111111112 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default16, zCanTalk16, "Start voice Assist", null, (Function0) value$iv2, 4, null);
+                Modifier modifier$iv11111111112 = ai.nous.aurora.compat.Compat.m622clickableXHw0xAI$default(modifierSemantics$default16, zCanTalk16, "Start voice Assist", null, (Function0) st.value$iv2, 4, null);
                 Alignment contentAlignment$iv1117 = Alignment.Companion.getCenter();
                 ComposerKt.sourceInformationMarkerStart($composer, 733328855, "CC(Box)P(2,1,3)72@3384L130:Box.kt#2w3rfo");
                 MeasurePolicy measurePolicy$iv11111111117 = BoxKt.maybeCachedBoxMeasurePolicy(contentAlignment$iv1117, false);
                 int $changed$iv$iv11111111112 = (48 << 3) & 112;
                 ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                st.compositeKeyHash$iv$iv9 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                 CompositionLocalMap localMap$iv$iv11111111114 = $composer.getCurrentCompositionLocalMap();
                 Modifier materialized$iv$iv11111111112 = ComposedModifierKt.materializeModifier($composer, modifier$iv11111111112);
-                constructor9 = ComposeUiNode.Companion.getConstructor();
+                st.constructor9 = ComposeUiNode.Companion.getConstructor();
                 int $changed$iv$iv$iv11111111112 = (($changed$iv$iv11111111112 << 6) & 896) | 6;
                 ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                 if (!($composer.getApplier() instanceof Applier)) {
@@ -7538,38 +7631,38 @@ public final class RazrCoverShellKt {
                 }
                 $composer.startReusableNode();
                 if ($composer.getInserting()) {
-                    function11 = constructor9;
-                    $composer.createNode(function11);
+                    st.function11 = st.constructor9;
+                    $composer.createNode(st.function11);
                 } else {
-                    function11 = constructor9;
+                    st.function11 = st.constructor9;
                     $composer.useNode();
                 }
-                $this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv11111111117, ComposeUiNode.Companion.getSetMeasurePolicy());
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv11111111114, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                st.$this$Layout_u24lambda_u240$iv$iv9 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, measurePolicy$iv11111111117, ComposeUiNode.Companion.getSetMeasurePolicy());
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, localMap$iv$iv11111111114, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                 Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash11111111112 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                if (!$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
+                if (!st.$this$Layout_u24lambda_u240$iv$iv9.getInserting()) {
                 }
-                $this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv9));
-                $this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(compositeKeyHash$iv$iv9), setCompositeKeyHash11111111112);
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv11111111112, ComposeUiNode.Companion.getSetModifier());
+                st.$this$Layout_u24lambda_u240$iv$iv9.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv9));
+                st.$this$Layout_u24lambda_u240$iv$iv9.apply(Integer.valueOf(st.compositeKeyHash$iv$iv9), setCompositeKeyHash11111111112);
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv9, materialized$iv$iv11111111112, ComposeUiNode.Companion.getSetModifier());
                 int i211111111111118 = ($changed$iv$iv$iv11111111112 >> 6) & 14;
                 ComposerKt.sourceInformationMarkerStart($composer, -2146769399, "C73@3429L9:Box.kt#2w3rfo");
                 BoxScopeInstance boxScopeInstance11111 = BoxScopeInstance.INSTANCE;
                 int i211111111111119 = ((48 >> 6) & 112) | 6;
                 ComposerKt.sourceInformationMarkerStart($composer, -1977158684, "C281@11632L225:RazrCoverShell.kt#z0j3je");
                 Modifier modifierClip1117 = ClipKt.clip(ai.nous.aurora.compat.Compat.m1079size3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(56)), RoundedCornerShapeKt.getCircleShape());
-                if (z2) {
+                if (st.z2) {
                     $composer.startReplaceGroup(-617963319);
                     ComposerKt.sourceInformation($composer, "285@11805L11");
-                    auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
+                    st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraAmber($composer, 0);
                 } else {
                     $composer.startReplaceGroup(-617962771);
                     ComposerKt.sourceInformation($composer, "285@11822L15");
-                    auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
+                    st.auroraTextMuted2 = AuroraColorSchemeKt.getAuroraTextMuted($composer, 0);
                 }
                 $composer.endReplaceGroup();
-                BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip1117, auroraTextMuted2, null, 2, null), $composer, 0);
+                BoxKt.Box(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierClip1117, st.auroraTextMuted2, null, 2, null), $composer, 0);
                 ComposerKt.sourceInformationMarkerEnd($composer);
                 ComposerKt.sourceInformationMarkerEnd($composer);
                 $composer.endNode();
@@ -7583,12 +7676,12 @@ public final class RazrCoverShellKt {
                 ComposerKt.sourceInformationMarkerEnd($composer);
                 ComposerKt.sourceInformationMarkerEnd($composer);
                 SpacerKt.Spacer(ai.nous.aurora.compat.Compat.m1065height3ABfNKs(Modifier.Companion, ai.nous.aurora.compat.Compat.m7016constructorimpl(6)), $composer, 6);
-                if (z2) {
-                    str = "TALK · tap orb or power";
+                if (st.z2) {
+                    st.str = "TALK · tap orb or power";
                 } else {
-                    str = "Offline";
+                    st.str = "Offline";
                 }
-                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
+                ai.nous.aurora.compat.Compat.m3067Text4IGK_g(st.str, (Modifier) null, AuroraColorSchemeKt.getAuroraAmber($composer, 0), TextUnitKt.getSp(12), (FontStyle) null, FontWeight.Companion.getSemiBold(), (FontFamily) FontFamily.Companion.getMonospace(), 0L, (TextDecoration) null, (TextAlign) null, 0L, 0, false, 0, 0, (Function1<? super TextLayoutResult, Unit>) null, (TextStyle) null, $composer, 199680, 0, 130962);
                 ComposerKt.sourceInformationMarkerEnd($composer);
                 ComposerKt.sourceInformationMarkerEnd($composer);
                 $composer.endNode();
@@ -7608,10 +7701,10 @@ public final class RazrCoverShellKt {
                 MeasurePolicy measurePolicy$iv11111111118 = ColumnKt.columnMeasurePolicy(verticalArrangement$iv11113, horizontalAlignment$iv11113, $composer, ((390 >> 3) & 14) | ((390 >> 3) & 112));
                 int $changed$iv$iv11111111113 = (390 << 3) & 112;
                 ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                st.compositeKeyHash$iv$iv10 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                 CompositionLocalMap localMap$iv$iv11111111115 = $composer.getCurrentCompositionLocalMap();
                 Modifier materialized$iv$iv11111111113 = ComposedModifierKt.materializeModifier($composer, modifier$iv11111111113);
-                constructor10 = ComposeUiNode.Companion.getConstructor();
+                st.constructor10 = ComposeUiNode.Companion.getConstructor();
                 int $changed$iv$iv$iv11111111113 = (($changed$iv$iv11111111113 << 6) & 896) | 6;
                 ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                 if (!($composer.getApplier() instanceof Applier)) {
@@ -7619,19 +7712,19 @@ public final class RazrCoverShellKt {
                 }
                 $composer.startReusableNode();
                 if ($composer.getInserting()) {
-                    $composer.createNode(constructor10);
+                    $composer.createNode(st.constructor10);
                 } else {
                     $composer.useNode();
                 }
-                $this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv11111111118, ComposeUiNode.Companion.getSetMeasurePolicy());
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv11111111115, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                st.$this$Layout_u24lambda_u240$iv$iv10 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, measurePolicy$iv11111111118, ComposeUiNode.Companion.getSetMeasurePolicy());
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, localMap$iv$iv11111111115, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                 Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash11111111113 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                if (!$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
+                if (!st.$this$Layout_u24lambda_u240$iv$iv10.getInserting()) {
                 }
-                $this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv10));
-                $this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(compositeKeyHash$iv$iv10), setCompositeKeyHash11111111113);
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv11111111113, ComposeUiNode.Companion.getSetModifier());
+                st.$this$Layout_u24lambda_u240$iv$iv10.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv10));
+                st.$this$Layout_u24lambda_u240$iv$iv10.apply(Integer.valueOf(st.compositeKeyHash$iv$iv10), setCompositeKeyHash11111111113);
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv10, materialized$iv$iv11111111113, ComposeUiNode.Companion.getSetModifier());
                 int i2111111111111110 = ($changed$iv$iv$iv11111111113 >> 6) & 14;
                 ComposerKt.sourceInformationMarkerStart($composer, -384784025, "C88@4444L9:Column.kt#2w3rfo");
                 ColumnScopeInstance columnScopeInstance111111 = ColumnScopeInstance.INSTANCE;
@@ -7644,10 +7737,10 @@ public final class RazrCoverShellKt {
                 MeasurePolicy measurePolicy$iv11111111119 = RowKt.rowMeasurePolicy(horizontalArrangement$iv1115, verticalAlignment$iv1115, $composer, ((54 >> 3) & 14) | ((54 >> 3) & 112));
                 int $changed$iv$iv11111111114 = (54 << 3) & 112;
                 ComposerKt.sourceInformationMarkerStart($composer, -1323940314, "CC(Layout)P(!1,2)79@3208L23,82@3359L411:Layout.kt#80mrfh");
-                compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
+                st.compositeKeyHash$iv$iv11 = ComposablesKt.getCurrentCompositeKeyHash($composer, 0);
                 CompositionLocalMap localMap$iv$iv11111111116 = $composer.getCurrentCompositionLocalMap();
                 Modifier materialized$iv$iv11111111114 = ComposedModifierKt.materializeModifier($composer, modifier$iv11111111114);
-                constructor11 = ComposeUiNode.Companion.getConstructor();
+                st.constructor11 = ComposeUiNode.Companion.getConstructor();
                 int $changed$iv$iv$iv11111111114 = (($changed$iv$iv11111111114 << 6) & 896) | 6;
                 ComposerKt.sourceInformationMarkerStart($composer, -692256719, "CC(ReusableComposeNode)P(1,2)376@14062L9:Composables.kt#9igjgp");
                 if (!($composer.getApplier() instanceof Applier)) {
@@ -7655,34 +7748,34 @@ public final class RazrCoverShellKt {
                 }
                 $composer.startReusableNode();
                 if ($composer.getInserting()) {
-                    function12 = constructor11;
-                    $composer.createNode(function12);
+                    st.function12 = st.constructor11;
+                    $composer.createNode(st.function12);
                 } else {
-                    function12 = constructor11;
+                    st.function12 = st.constructor11;
                     $composer.useNode();
                 }
-                $this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv11111111119, ComposeUiNode.Companion.getSetMeasurePolicy());
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv11111111116, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
+                st.$this$Layout_u24lambda_u240$iv$iv11 = ai.nous.aurora.compat.Compat.m4027constructorimpl($composer);
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, measurePolicy$iv11111111119, ComposeUiNode.Companion.getSetMeasurePolicy());
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, localMap$iv$iv11111111116, ComposeUiNode.Companion.getSetResolvedCompositionLocals());
                 Function2<ComposeUiNode, Integer, Unit> setCompositeKeyHash11111111114 = ComposeUiNode.Companion.getSetCompositeKeyHash();
-                if (!$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
+                if (!st.$this$Layout_u24lambda_u240$iv$iv11.getInserting()) {
                 }
-                $this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(compositeKeyHash$iv$iv11));
-                $this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(compositeKeyHash$iv$iv11), setCompositeKeyHash11111111114);
-                ai.nous.aurora.compat.Compat.m4034setimpl($this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv11111111114, ComposeUiNode.Companion.getSetModifier());
+                st.$this$Layout_u24lambda_u240$iv$iv11.updateRememberedValue(Integer.valueOf(st.compositeKeyHash$iv$iv11));
+                st.$this$Layout_u24lambda_u240$iv$iv11.apply(Integer.valueOf(st.compositeKeyHash$iv$iv11), setCompositeKeyHash11111111114);
+                ai.nous.aurora.compat.Compat.m4034setimpl(st.$this$Layout_u24lambda_u240$iv$iv11, materialized$iv$iv11111111114, ComposeUiNode.Companion.getSetModifier());
                 int i2111111111111112 = ($changed$iv$iv$iv11111111114 >> 6) & 14;
                 ComposerKt.sourceInformationMarkerStart($composer, -407840262, "C101@5126L9:Row.kt#2w3rfo");
                 int i2111111111111113 = ((54 >> 6) & 112) | 6;
                 RowScope $this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u241110 = RowScopeInstance.INSTANCE;
                 ComposerKt.sourceInformationMarkerStart($composer, -404697066, "C309@12543L264,316@12820L248:RazrCoverShell.kt#z0j3je");
                 CoverShellPolicy coverShellPolicy16 = CoverShellPolicy.INSTANCE;
-                if (auroraSession != null) {
-                    z = true;
+                if (st.auroraSession != null) {
+                    st.z = true;
                 } else {
-                    z = false;
+                    st.z = false;
                 }
-                RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy16.canOpenLatest(z), function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u241110, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
-                RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(z2), function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u241110, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                RazrCoverShellKt.CoverAction("OPEN", "Latest thread", coverShellPolicy16.canOpenLatest(st.z), st.function13, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u241110, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
+                RazrCoverShellKt.CoverAction("NEW", "Start chat", CoverShellPolicy.INSTANCE.canStartChat(st.z2), st.function14, ai.nous.aurora.compat.Compat.d_RowScope_weight_6($this$invoke_u24lambda_u2417_u24lambda_u2416_u24lambda_u241110, Modifier.Companion, 1.0f, false, 2, null), $composer, 54, 0);
                 ComposerKt.sourceInformationMarkerEnd($composer);
                 ComposerKt.sourceInformationMarkerEnd($composer);
                 $composer.endNode();
@@ -7708,8 +7801,7 @@ public final class RazrCoverShellKt {
                     return;
                 }
                 return;
-            }
-            $composer.skipToGroupEnd();
+        }
         }
 
         /* JADX INFO: Access modifiers changed from: private */

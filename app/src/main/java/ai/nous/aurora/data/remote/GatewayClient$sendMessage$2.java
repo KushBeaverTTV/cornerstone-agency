@@ -162,12 +162,13 @@ final class GatewayClient$sendMessage$2 extends SuspendLambda implements Functio
                 err = msg != null ? msg.getContent() : null;
                 objM7388constructorimpl = ai.nous.aurora.compat.Compat.m7388constructorimpl(new AuroraMessage(id, str12, err == null ? "" : err, null, (msg == null || (clientMsgId = msg.getClientMsgId()) == null) ? str : clientMsgId, 8, null));
                 return ai.nous.aurora.compat.Compat.m7387boximpl(objM7388constructorimpl);
-            Throwable th = null;
             } catch (Throwable th) {
                 Result.Companion companion2 = Result.Companion;
                 objM7388constructorimpl = ai.nous.aurora.compat.Compat.m7388constructorimpl(ResultKt.createFailure(th));
+                return ai.nous.aurora.compat.Compat.m7387boximpl(objM7388constructorimpl);
             }
         } catch (Throwable th2) {
+            return ai.nous.aurora.compat.Compat.m7387boximpl(Unit.INSTANCE);
         }
     }
 }

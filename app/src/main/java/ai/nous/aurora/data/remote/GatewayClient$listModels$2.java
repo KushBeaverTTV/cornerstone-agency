@@ -78,7 +78,6 @@ final class GatewayClient$listModels$2 extends SuspendLambda implements Function
                     $result2 = $result;
                     $result3 = objModels;
                     break;
-                    break;
                 case 1:
                     $result3 = $result;
                     ResultKt.throwOnFailure($result3);
@@ -113,12 +112,13 @@ final class GatewayClient$listModels$2 extends SuspendLambda implements Function
                 }
                 objM7388constructorimpl = ai.nous.aurora.compat.Compat.m7388constructorimpl((List) destination$iv$iv);
                 return ai.nous.aurora.compat.Compat.m7387boximpl(objM7388constructorimpl);
-            Throwable th = null;
             } catch (Throwable th) {
                 Result.Companion companion2 = Result.Companion;
                 objM7388constructorimpl = ai.nous.aurora.compat.Compat.m7388constructorimpl(ResultKt.createFailure(th));
+                return ai.nous.aurora.compat.Compat.m7387boximpl(objM7388constructorimpl);
             }
         } catch (Throwable th2) {
         }
+        return ai.nous.aurora.compat.Compat.m7387boximpl(CollectionsKt.emptyList());
     }
 }

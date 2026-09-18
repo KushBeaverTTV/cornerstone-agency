@@ -170,6 +170,8 @@ final class GatewayClient$connect$2 extends SuspendLambda implements Function2<C
                     throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
             }
         } catch (Throwable th7) {
+            return ai.nous.aurora.compat.Compat.m7387boximpl(Unit.INSTANCE);
         }
+        return ai.nous.aurora.compat.Compat.m7387boximpl(Unit.INSTANCE);
     }
 }

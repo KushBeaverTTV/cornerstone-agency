@@ -355,6 +355,7 @@ public final class AuroraComponentsKt {
             primary2 = primary3;
         }
         ScopeUpdateScope scopeUpdateScopeEndRestartGroup = $composer2.endRestartGroup();
+        final Modifier modifier2$cap = modifier2;
         if (scopeUpdateScopeEndRestartGroup != null) {
             final Modifier modifier5 = modifier3;
             final boolean z = enabled2;
@@ -488,6 +489,7 @@ public final class AuroraComponentsKt {
             function3 = function5;
         }
         ScopeUpdateScope scopeUpdateScopeEndRestartGroup = $composer2.endRestartGroup();
+        final Modifier modifier2$cap = modifier2;
         if (scopeUpdateScopeEndRestartGroup != null) {
             final Modifier modifier5 = modifier3;
             final Function0<Unit> function6 = function3;
@@ -684,6 +686,7 @@ public final class AuroraComponentsKt {
             }
         }
         ScopeUpdateScope scopeUpdateScopeEndRestartGroup = $composer2.endRestartGroup();
+        final Modifier modifier2$cap = modifier2;
         if (scopeUpdateScopeEndRestartGroup != null) {
             final Modifier modifier4 = modifier2;
             final String str = label2;
@@ -703,7 +706,7 @@ public final class AuroraComponentsKt {
     }
 
     public static final void AuroraKicker(final String text, Modifier modifier, Composer $composer, final int $changed, final int i) {
-        final Modifier modifier2;
+        Modifier modifier2;
         Composer $composer2;
         Intrinsics.checkNotNullParameter(text, "text");
         Composer $composer3 = $composer.startRestartGroup(-1690144532);
@@ -743,11 +746,12 @@ public final class AuroraComponentsKt {
             $composer2 = $composer3;
         }
         ScopeUpdateScope scopeUpdateScopeEndRestartGroup = $composer2.endRestartGroup();
+        final Modifier modifier2$cap = modifier2;
         if (scopeUpdateScopeEndRestartGroup != null) {
             scopeUpdateScopeEndRestartGroup.updateScope(new Function2() { // from class: ai.nous.aurora.presentation.components.AuroraComponentsKt$$ExternalSyntheticLambda9
                 @Override // kotlin.jvm.functions.Function2
                 public final Object invoke(Object obj, Object obj2) {
-                    return AuroraComponentsKt.AuroraKicker$lambda$5(text, modifier2, $changed, i, (Composer) obj, ((Integer) obj2).intValue());
+                    return AuroraComponentsKt.AuroraKicker$lambda$5(text, modifier2$cap, $changed, i, (Composer) obj, ((Integer) obj2).intValue());
                 }
             });
         }
@@ -906,6 +910,7 @@ public final class AuroraComponentsKt {
             }
         }
         ScopeUpdateScope scopeUpdateScopeEndRestartGroup = $composer2.endRestartGroup();
+        final Modifier modifier2$cap = modifier2;
         if (scopeUpdateScopeEndRestartGroup != null) {
             final Modifier modifier5 = modifier3;
             scopeUpdateScopeEndRestartGroup.updateScope(new Function2() { // from class: ai.nous.aurora.presentation.components.AuroraComponentsKt$$ExternalSyntheticLambda8
@@ -1510,6 +1515,7 @@ public final class AuroraComponentsKt {
             }
         }
         ScopeUpdateScope scopeUpdateScopeEndRestartGroup = $composer2.endRestartGroup();
+        final Modifier modifier2$cap = modifier2;
         if (scopeUpdateScopeEndRestartGroup != null) {
             final Modifier modifier4 = modifier3;
             final String str2 = deliveryStatus2;
@@ -1548,7 +1554,7 @@ public final class AuroraComponentsKt {
     /* JADX WARN: Code duplicated, block: B:60:0x02f5  */
     /* JADX WARN: Code duplicated, block: B:71:0x0466  */
     public static final void LoadingRow(final String text, Modifier modifier, Composer $composer, final int $changed, final int i) {
-        final Modifier modifier2;
+        Modifier modifier2;
         Object value$iv;
         Function0<ComposeUiNode> function0;
         CompositionLocalMap localMap$iv$iv;
@@ -1770,11 +1776,12 @@ public final class AuroraComponentsKt {
             $composer2 = $composer3;
         }
         ScopeUpdateScope scopeUpdateScopeEndRestartGroup = $composer2.endRestartGroup();
+        final Modifier modifier2$cap = modifier2;
         if (scopeUpdateScopeEndRestartGroup != null) {
             scopeUpdateScopeEndRestartGroup.updateScope(new Function2() { // from class: ai.nous.aurora.presentation.components.AuroraComponentsKt$$ExternalSyntheticLambda5
                 @Override // kotlin.jvm.functions.Function2
                 public final Object invoke(Object obj, Object obj2) {
-                    return AuroraComponentsKt.LoadingRow$lambda$23(text, modifier2, $changed, i, (Composer) obj, ((Integer) obj2).intValue());
+                    return AuroraComponentsKt.LoadingRow$lambda$23(text, modifier2$cap, $changed, i, (Composer) obj, ((Integer) obj2).intValue());
                 }
             });
         }
@@ -1789,7 +1796,7 @@ public final class AuroraComponentsKt {
     }
 
     public static final void ThinkingRow(final String detail, Modifier modifier, Composer $composer, final int $changed, final int i) {
-        final Modifier modifier2;
+        Modifier modifier2;
         Object value$iv;
         Object value$iv2;
         Object value$iv3;
@@ -2171,11 +2178,12 @@ public final class AuroraComponentsKt {
             modifier2 = modifier4;
         }
         ScopeUpdateScope scopeUpdateScopeEndRestartGroup = $composer2.endRestartGroup();
+        final Modifier modifier2$cap = modifier2;
         if (scopeUpdateScopeEndRestartGroup != null) {
             scopeUpdateScopeEndRestartGroup.updateScope(new Function2() { // from class: ai.nous.aurora.presentation.components.AuroraComponentsKt$$ExternalSyntheticLambda7
                 @Override // kotlin.jvm.functions.Function2
                 public final Object invoke(Object obj, Object obj2) {
-                    return AuroraComponentsKt.ThinkingRow$lambda$37(detail, modifier2, $changed, i, (Composer) obj, ((Integer) obj2).intValue());
+                    return AuroraComponentsKt.ThinkingRow$lambda$37(detail, modifier2$cap, $changed, i, (Composer) obj, ((Integer) obj2).intValue());
                 }
             });
         }

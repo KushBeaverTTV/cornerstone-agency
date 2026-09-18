@@ -814,7 +814,7 @@ public final class PairingScreenKt {
     }
 
     private static final void ConnectingSplash(Modifier modifier, Composer $composer, final int $changed, final int i) {
-        final Modifier modifier2;
+        Modifier modifier2;
         Function0<ComposeUiNode> function0;
         Composer $composer2 = $composer.startRestartGroup(-851455639);
         ComposerKt.sourceInformation($composer2, "C(ConnectingSplash)306@11863L10,303@11776L618:PairingScreen.kt#3dn6gp");
@@ -892,10 +892,11 @@ public final class PairingScreenKt {
         }
         ScopeUpdateScope scopeUpdateScopeEndRestartGroup = $composer2.endRestartGroup();
         if (scopeUpdateScopeEndRestartGroup != null) {
-            scopeUpdateScopeEndRestartGroup.updateScope(new Function2() { // from class: ai.nous.aurora.presentation.pairing.PairingScreenKt$$ExternalSyntheticLambda4
+            final Modifier modifier2$c898 = modifier2;
+            scopeUpdateScopeEndRestartGroup.updateScope(new Function2() { // from class: ai.nous.aurora.presentatio
                 @Override // kotlin.jvm.functions.Function2
                 public final Object invoke(Object obj, Object obj2) {
-                    return PairingScreenKt.ConnectingSplash$lambda$15(modifier2, $changed, i, (Composer) obj, ((Integer) obj2).intValue());
+                    return PairingScreenKt.ConnectingSplash$lambda$15(modifier2$c898, $changed, i, (Composer) obj, ((Integer) obj2).intValue());
                 }
             });
         }

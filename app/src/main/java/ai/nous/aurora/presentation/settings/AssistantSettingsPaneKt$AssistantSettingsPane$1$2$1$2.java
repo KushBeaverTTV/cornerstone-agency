@@ -145,7 +145,7 @@ final class AssistantSettingsPaneKt$AssistantSettingsPane$1$2$1$2 implements Fun
                     auroraHairline = AuroraColorSchemeKt.getAuroraHairline($composer, 0);
                 }
                 $composer.endReplaceGroup();
-                final Function1<String, Unit> function3 = function2;
+                final Function1<? super String, Unit> function3 = function2;
                 int $changed$iv2 = $changed$iv;
                 Modifier modifierM589backgroundbw27NRU$default = ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(ai.nous.aurora.compat.Compat.m600borderxT4_qwU(modifierClip, fM244getXxsD9Ej5fM, auroraHairline, AuroraShapeKt.getAuroraShapeMd()), AuroraColorSchemeKt.getAuroraSurface($composer, 0), null, 2, null);
                 $composer.startReplaceGroup(-1660043008);

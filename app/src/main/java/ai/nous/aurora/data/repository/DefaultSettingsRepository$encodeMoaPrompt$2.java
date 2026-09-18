@@ -139,7 +139,6 @@ final class DefaultSettingsRepository$encodeMoaPrompt$2 extends SuspendLambda im
                         }
                         $result2 = ai.nous.aurora.compat.Compat.m7388constructorimpl(str3);
                         return ai.nous.aurora.compat.Compat.m7387boximpl($result2);
-                    Throwable th = null;
                     } catch (Throwable th) {
                         $result = $result;
                         Result.Companion companion2 = Result.Companion;
@@ -171,6 +170,7 @@ final class DefaultSettingsRepository$encodeMoaPrompt$2 extends SuspendLambda im
                         int iCode2 = response.code();
                         if (detail != null) {
                         }
+                        str3 = null;
                         if (str3 == null) {
                             str3 = "";
                         }
@@ -186,6 +186,7 @@ final class DefaultSettingsRepository$encodeMoaPrompt$2 extends SuspendLambda im
                     }
                     if (z) {
                     }
+                    str3 = z ? it : null;
                     if (str3 == null) {
                         throw new IllegalStateException("encode returned blank message".toString());
                     }
@@ -204,6 +205,7 @@ final class DefaultSettingsRepository$encodeMoaPrompt$2 extends SuspendLambda im
                         int iCode3 = response.code();
                         if (detail != null) {
                         }
+                        str3 = null;
                         if (str3 == null) {
                             str3 = "";
                         }
@@ -219,6 +221,7 @@ final class DefaultSettingsRepository$encodeMoaPrompt$2 extends SuspendLambda im
                     }
                     if (z) {
                     }
+                    str3 = z ? it : null;
                     if (str3 == null) {
                         throw new IllegalStateException("encode returned blank message".toString());
                     }
@@ -228,6 +231,9 @@ final class DefaultSettingsRepository$encodeMoaPrompt$2 extends SuspendLambda im
                     throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
             }
         } catch (Throwable th2) {
+            Result.Companion companion99 = Result.Companion;
+            return ai.nous.aurora.compat.Compat.m7387boximpl(ai.nous.aurora.compat.Compat.m7388constructorimpl(ResultKt.createFailure(th2)));
         }
+            return $result2;
     }
 }

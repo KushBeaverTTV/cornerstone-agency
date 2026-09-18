@@ -357,7 +357,7 @@ public final class OutboxExactlyOnce {
     }
 
     /* JADX WARN: Multi-variable type inference failed */
-    public final <T> List<T> dedupeByClientMsgId(List<? extends T> rows, Function1<? super T, String> idOf, Function1<? super T, String> clientMsgIdOf, Function1<? super T, Boolean> isUser) {
+    public final <T> List<T> dedupeByClientMsgId(List<T> rows, Function1<? super T, String> idOf, Function1<? super T, String> clientMsgIdOf, Function1<? super T, Boolean> isUser) {
         String it;
         Intrinsics.checkNotNullParameter(rows, "rows");
         Intrinsics.checkNotNullParameter(idOf, "idOf");
@@ -381,7 +381,7 @@ public final class OutboxExactlyOnce {
                     if (existing == null) {
                         bestByClient.put(client, element$iv);
                     } else {
-                        bestByClient.put(client, INSTANCE.preferRemoteBubble(existing, element$iv, idOf));
+                        bestByClient.put(client, INSTANCE.preferRemoteBubble(existing, element$iv, (Function1) idOf));
                     }
                 }
             }

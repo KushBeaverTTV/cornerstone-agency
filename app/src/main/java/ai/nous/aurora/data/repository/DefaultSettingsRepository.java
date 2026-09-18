@@ -267,13 +267,13 @@ public final class DefaultSettingsRepository implements SettingsRepository {
             int $i$f$withLock;
             HermesSettingsSnapshot it;
             int i;
-            HermesConfigSchemaDto owner$iv2;
-            Mutex $this$withLock_u24default$iv2;
+            HermesConfigSchemaDto owner$iv2 = null;
+            Mutex $this$withLock_u24default$iv2 = null;
             HermesSettingsSnapshot hermesSettingsSnapshot;
             HermesConfigSchemaDto owner$iv3;
             HermesConfigSchemaDto bundled;
             int $i$f$withLock2;
-            Mutex $this$withLock_u24default$iv3;
+            Mutex $this$withLock_u24default$iv3 = null;
             CoroutineScope $this$invokeSuspend_u24lambda_u2412_u24lambda_u244;
             int i2;
             Object objService;
@@ -307,16 +307,16 @@ public final class DefaultSettingsRepository implements SettingsRepository {
             Object $result6;
             Object $result7;
             String resolutionError;
-            Object objM7388constructorimpl;
-            Map<String, JsonElement> map2;
-            HermesConfigSchemaDto schema3;
-            HermesConfigSchemaDto bundled4;
-            DefaultSettingsRepository defaultSettingsRepository3;
-            HermesConfigSchemaDto owner$iv4;
-            int $i$f$withLock5;
-            Object objM7388constructorimpl2;
-            HermesConfigSchemaDto bundled5;
-            DefaultSettingsRepository defaultSettingsRepository4;
+            Object objM7388constructorimpl = null;
+            Map<String, JsonElement> map2 = null;
+            HermesConfigSchemaDto schema3 = null;
+            HermesConfigSchemaDto bundled4 = null;
+            DefaultSettingsRepository defaultSettingsRepository3 = null;
+            HermesConfigSchemaDto owner$iv4 = null;
+            int $i$f$withLock5 = 0;
+            Object objM7388constructorimpl2 = null;
+            HermesConfigSchemaDto bundled5 = null;
+            DefaultSettingsRepository defaultSettingsRepository4 = null;
             Throwable failure;
             HermesSettingsSnapshot prior;
             Map<String, JsonElement> mapEmptyMap;
@@ -331,7 +331,7 @@ public final class DefaultSettingsRepository implements SettingsRepository {
             MoaSnapshot it2;
             HermesSettingsSnapshot snap2;
             HermesSettingsSnapshot lastGood;
-            HermesSettingsSnapshot disk2;
+            HermesSettingsSnapshot disk2 = null;
             String error;
             String str;
             MoaSnapshot it3;
@@ -742,7 +742,7 @@ public final class DefaultSettingsRepository implements SettingsRepository {
                                                         defaultSettingsRepository4.cached = snap;
                                                         defaultSettingsRepository4.persistLastGood(snap);
                                                     } else if (defaultSettingsRepository4.cached == null) {
-                                                        defaultSettingsRepository4.cached = disk;
+                                                        defaultSettingsRepository4.cached = disk2;
                                                     }
                                                     it2 = snap.getMoa();
                                                     if (it2 != null) {
@@ -840,7 +840,7 @@ public final class DefaultSettingsRepository implements SettingsRepository {
                                             defaultSettingsRepository4.cached = snap;
                                             defaultSettingsRepository4.persistLastGood(snap);
                                         } else if (defaultSettingsRepository4.cached == null) {
-                                            defaultSettingsRepository4.cached = disk;
+                                            defaultSettingsRepository4.cached = disk2;
                                         }
                                         it2 = snap.getMoa();
                                         if (it2 != null) {
@@ -1115,102 +1115,7 @@ public final class DefaultSettingsRepository implements SettingsRepository {
                         defaultSettingsRepository4.cached = snap;
                         defaultSettingsRepository4.persistLastGood(snap);
                     } else if (defaultSettingsRepository4.cached == null) {
-                        defaultSettingsRepository4.cached = disk;
-                    }
-                    it2 = snap.getMoa();
-                    if (it2 != null) {
-                        if (it2.getRemoteAvailable()) {
-                            it3 = it2;
-                        } else {
-                            it3 = null;
-                        }
-                        if (it3 != null) {
-                            defaultSettingsRepository4.moaCached = it3;
-                        }
-                    }
-                    snap2 = (HermesSettingsSnapshot) objM7388constructorimpl2;
-                    if (!snap2.getRemoteAvailable()) {
-                        lastGood = defaultSettingsRepository4.cached;
-                        if (lastGood == null) {
-                            lastGood = defaultSettingsRepository4.readLastGood();
-                        }
-                        disk2 = lastGood;
-                        if (disk2 != null) {
-                            error = snap2.getError();
-                            if (error == null) {
-                                str = "Live settings unavailable. Showing last-good snapshot.";
-                            } else {
-                                str = error;
-                            }
-                            snap2 = HermesSettingsSnapshot.copy$default(disk2, null, null, null, false, str, null, null, 103, null);
-                        }
-                        break;
-                    }
-                    $this$withLock_u24default$iv2.unlock(owner$iv2);
-                    return snap2;
-                    Result.Companion companion9 = Result.Companion;
-                    objM7388constructorimpl2 = ai.nous.aurora.compat.Compat.m7388constructorimpl(ResultKt.createFailure(th));
-                    $this$withLock_u24default$iv2 = $this$withLock_u24default$iv3;
-                    bundled5 = bundled;
-                    defaultSettingsRepository4 = defaultSettingsRepository;
-                    owner$iv2 = owner$iv3;
-                    failure = ai.nous.aurora.compat.Compat.m7391exceptionOrNullimpl(objM7388constructorimpl2);
-                    if (failure != null) {
-                        prior = defaultSettingsRepository4.cached;
-                        if (prior != null) {
-                            mapEmptyMap = prior.getValues();
-                        } else {
-                            mapEmptyMap = null;
-                        }
-                        if (mapEmptyMap == null) {
-                            mapEmptyMap = MapsKt.emptyMap();
-                        }
-                        $this$invokeSuspend_u24lambda_u2412_u24lambda_u246_u24lambda_u245 = new StringBuilder();
-                        $this$invokeSuspend_u24lambda_u2412_u24lambda_u246_u24lambda_u245.append("Live settings unavailable. ");
-                        if (prior != null) {
-                            values = prior.getValues();
-                        } else {
-                            values = null;
-                        }
-                        if (values != null) {
-                            z2 = true;
-                        } else {
-                            z2 = true;
-                        }
-                        if (z2) {
-                            $this$invokeSuspend_u24lambda_u2412_u24lambda_u246_u24lambda_u245.append("No last-good snapshot.");
-                        } else {
-                            $this$invokeSuspend_u24lambda_u2412_u24lambda_u246_u24lambda_u245.append("Showing last-good snapshot.");
-                        }
-                        $this$invokeSuspend_u24lambda_u2412_u24lambda_u246_u24lambda_u245.append(" ");
-                        message = failure.getMessage();
-                        if (message == null) {
-                            message = "";
-                        }
-                        $this$invokeSuspend_u24lambda_u2412_u24lambda_u246_u24lambda_u245.append(message);
-                        Unit unit5 = Unit.INSTANCE;
-                        String string9 = $this$invokeSuspend_u24lambda_u2412_u24lambda_u246_u24lambda_u245.toString();
-                        Intrinsics.checkNotNullExpressionValue(string9, "toString(...)");
-                        String string10 = StringsKt.trim((CharSequence) string9).toString();
-                        if (prior != null) {
-                            schemaSource = "bundled";
-                        } else {
-                            schemaSource = "bundled";
-                        }
-                        String str6 = schemaSource;
-                        if (prior != null) {
-                            moa = prior.getMoa();
-                        } else {
-                            moa = null;
-                        }
-                        objM7388constructorimpl2 = defaultSettingsRepository4.toSnapshot(bundled5, mapEmptyMap, false, string10, str6, moa);
-                    }
-                    snap = (HermesSettingsSnapshot) objM7388constructorimpl2;
-                    if (snap.getRemoteAvailable()) {
-                        defaultSettingsRepository4.cached = snap;
-                        defaultSettingsRepository4.persistLastGood(snap);
-                    } else if (defaultSettingsRepository4.cached == null) {
-                        defaultSettingsRepository4.cached = disk;
+                        defaultSettingsRepository4.cached = disk2;
                     }
                     it2 = snap.getMoa();
                     if (it2 != null) {
@@ -1431,102 +1336,7 @@ public final class DefaultSettingsRepository implements SettingsRepository {
                             defaultSettingsRepository4.cached = snap;
                             defaultSettingsRepository4.persistLastGood(snap);
                         } else if (defaultSettingsRepository4.cached == null) {
-                            defaultSettingsRepository4.cached = disk;
-                        }
-                        it2 = snap.getMoa();
-                        if (it2 != null) {
-                            if (it2.getRemoteAvailable()) {
-                                it3 = it2;
-                            } else {
-                                it3 = null;
-                            }
-                            if (it3 != null) {
-                                defaultSettingsRepository4.moaCached = it3;
-                            }
-                        }
-                        snap2 = (HermesSettingsSnapshot) objM7388constructorimpl2;
-                        if (!snap2.getRemoteAvailable()) {
-                            lastGood = defaultSettingsRepository4.cached;
-                            if (lastGood == null) {
-                                lastGood = defaultSettingsRepository4.readLastGood();
-                            }
-                            disk2 = lastGood;
-                            if (disk2 != null) {
-                                error = snap2.getError();
-                                if (error == null) {
-                                    str = "Live settings unavailable. Showing last-good snapshot.";
-                                } else {
-                                    str = error;
-                                }
-                                snap2 = HermesSettingsSnapshot.copy$default(disk2, null, null, null, false, str, null, null, 103, null);
-                            }
-                            break;
-                        }
-                        $this$withLock_u24default$iv2.unlock(owner$iv2);
-                        return snap2;
-                        Result.Companion companion11 = Result.Companion;
-                        objM7388constructorimpl2 = ai.nous.aurora.compat.Compat.m7388constructorimpl(ResultKt.createFailure(th));
-                        $this$withLock_u24default$iv2 = $this$withLock_u24default$iv3;
-                        bundled5 = bundled;
-                        defaultSettingsRepository4 = defaultSettingsRepository;
-                        owner$iv2 = owner$iv3;
-                        failure = ai.nous.aurora.compat.Compat.m7391exceptionOrNullimpl(objM7388constructorimpl2);
-                        if (failure != null) {
-                            prior = defaultSettingsRepository4.cached;
-                            if (prior != null) {
-                                mapEmptyMap = prior.getValues();
-                            } else {
-                                mapEmptyMap = null;
-                            }
-                            if (mapEmptyMap == null) {
-                                mapEmptyMap = MapsKt.emptyMap();
-                            }
-                            $this$invokeSuspend_u24lambda_u2412_u24lambda_u246_u24lambda_u245 = new StringBuilder();
-                            $this$invokeSuspend_u24lambda_u2412_u24lambda_u246_u24lambda_u245.append("Live settings unavailable. ");
-                            if (prior != null) {
-                                values = prior.getValues();
-                            } else {
-                                values = null;
-                            }
-                            if (values != null) {
-                                z2 = true;
-                            } else {
-                                z2 = true;
-                            }
-                            if (z2) {
-                                $this$invokeSuspend_u24lambda_u2412_u24lambda_u246_u24lambda_u245.append("No last-good snapshot.");
-                            } else {
-                                $this$invokeSuspend_u24lambda_u2412_u24lambda_u246_u24lambda_u245.append("Showing last-good snapshot.");
-                            }
-                            $this$invokeSuspend_u24lambda_u2412_u24lambda_u246_u24lambda_u245.append(" ");
-                            message = failure.getMessage();
-                            if (message == null) {
-                                message = "";
-                            }
-                            $this$invokeSuspend_u24lambda_u2412_u24lambda_u246_u24lambda_u245.append(message);
-                            Unit unit7 = Unit.INSTANCE;
-                            String string13 = $this$invokeSuspend_u24lambda_u2412_u24lambda_u246_u24lambda_u245.toString();
-                            Intrinsics.checkNotNullExpressionValue(string13, "toString(...)");
-                            String string14 = StringsKt.trim((CharSequence) string13).toString();
-                            if (prior != null) {
-                                schemaSource = "bundled";
-                            } else {
-                                schemaSource = "bundled";
-                            }
-                            String str8 = schemaSource;
-                            if (prior != null) {
-                                moa = prior.getMoa();
-                            } else {
-                                moa = null;
-                            }
-                            objM7388constructorimpl2 = defaultSettingsRepository4.toSnapshot(bundled5, mapEmptyMap, false, string14, str8, moa);
-                        }
-                        snap = (HermesSettingsSnapshot) objM7388constructorimpl2;
-                        if (snap.getRemoteAvailable()) {
-                            defaultSettingsRepository4.cached = snap;
-                            defaultSettingsRepository4.persistLastGood(snap);
-                        } else if (defaultSettingsRepository4.cached == null) {
-                            defaultSettingsRepository4.cached = disk;
+                            defaultSettingsRepository4.cached = disk2;
                         }
                         it2 = snap.getMoa();
                         if (it2 != null) {
@@ -1738,102 +1548,7 @@ public final class DefaultSettingsRepository implements SettingsRepository {
                             defaultSettingsRepository4.cached = snap;
                             defaultSettingsRepository4.persistLastGood(snap);
                         } else if (defaultSettingsRepository4.cached == null) {
-                            defaultSettingsRepository4.cached = disk;
-                        }
-                        it2 = snap.getMoa();
-                        if (it2 != null) {
-                            if (it2.getRemoteAvailable()) {
-                                it3 = it2;
-                            } else {
-                                it3 = null;
-                            }
-                            if (it3 != null) {
-                                defaultSettingsRepository4.moaCached = it3;
-                            }
-                        }
-                        snap2 = (HermesSettingsSnapshot) objM7388constructorimpl2;
-                        if (!snap2.getRemoteAvailable()) {
-                            lastGood = defaultSettingsRepository4.cached;
-                            if (lastGood == null) {
-                                lastGood = defaultSettingsRepository4.readLastGood();
-                            }
-                            disk2 = lastGood;
-                            if (disk2 != null) {
-                                error = snap2.getError();
-                                if (error == null) {
-                                    str = "Live settings unavailable. Showing last-good snapshot.";
-                                } else {
-                                    str = error;
-                                }
-                                snap2 = HermesSettingsSnapshot.copy$default(disk2, null, null, null, false, str, null, null, 103, null);
-                            }
-                            break;
-                        }
-                        $this$withLock_u24default$iv2.unlock(owner$iv2);
-                        return snap2;
-                        Result.Companion companion13 = Result.Companion;
-                        objM7388constructorimpl2 = ai.nous.aurora.compat.Compat.m7388constructorimpl(ResultKt.createFailure(th));
-                        $this$withLock_u24default$iv2 = $this$withLock_u24default$iv3;
-                        bundled5 = bundled;
-                        defaultSettingsRepository4 = defaultSettingsRepository;
-                        owner$iv2 = owner$iv3;
-                        failure = ai.nous.aurora.compat.Compat.m7391exceptionOrNullimpl(objM7388constructorimpl2);
-                        if (failure != null) {
-                            prior = defaultSettingsRepository4.cached;
-                            if (prior != null) {
-                                mapEmptyMap = prior.getValues();
-                            } else {
-                                mapEmptyMap = null;
-                            }
-                            if (mapEmptyMap == null) {
-                                mapEmptyMap = MapsKt.emptyMap();
-                            }
-                            $this$invokeSuspend_u24lambda_u2412_u24lambda_u246_u24lambda_u245 = new StringBuilder();
-                            $this$invokeSuspend_u24lambda_u2412_u24lambda_u246_u24lambda_u245.append("Live settings unavailable. ");
-                            if (prior != null) {
-                                values = prior.getValues();
-                            } else {
-                                values = null;
-                            }
-                            if (values != null) {
-                                z2 = true;
-                            } else {
-                                z2 = true;
-                            }
-                            if (z2) {
-                                $this$invokeSuspend_u24lambda_u2412_u24lambda_u246_u24lambda_u245.append("No last-good snapshot.");
-                            } else {
-                                $this$invokeSuspend_u24lambda_u2412_u24lambda_u246_u24lambda_u245.append("Showing last-good snapshot.");
-                            }
-                            $this$invokeSuspend_u24lambda_u2412_u24lambda_u246_u24lambda_u245.append(" ");
-                            message = failure.getMessage();
-                            if (message == null) {
-                                message = "";
-                            }
-                            $this$invokeSuspend_u24lambda_u2412_u24lambda_u246_u24lambda_u245.append(message);
-                            Unit unit9 = Unit.INSTANCE;
-                            String string17 = $this$invokeSuspend_u24lambda_u2412_u24lambda_u246_u24lambda_u245.toString();
-                            Intrinsics.checkNotNullExpressionValue(string17, "toString(...)");
-                            String string18 = StringsKt.trim((CharSequence) string17).toString();
-                            if (prior != null) {
-                                schemaSource = "bundled";
-                            } else {
-                                schemaSource = "bundled";
-                            }
-                            String str10 = schemaSource;
-                            if (prior != null) {
-                                moa = prior.getMoa();
-                            } else {
-                                moa = null;
-                            }
-                            objM7388constructorimpl2 = defaultSettingsRepository4.toSnapshot(bundled5, mapEmptyMap, false, string18, str10, moa);
-                        }
-                        snap = (HermesSettingsSnapshot) objM7388constructorimpl2;
-                        if (snap.getRemoteAvailable()) {
-                            defaultSettingsRepository4.cached = snap;
-                            defaultSettingsRepository4.persistLastGood(snap);
-                        } else if (defaultSettingsRepository4.cached == null) {
-                            defaultSettingsRepository4.cached = disk;
+                            defaultSettingsRepository4.cached = disk2;
                         }
                         it2 = snap.getMoa();
                         if (it2 != null) {
@@ -2013,7 +1728,7 @@ public final class DefaultSettingsRepository implements SettingsRepository {
                             defaultSettingsRepository4.cached = snap;
                             defaultSettingsRepository4.persistLastGood(snap);
                         } else if (defaultSettingsRepository4.cached == null) {
-                            defaultSettingsRepository4.cached = disk;
+                            defaultSettingsRepository4.cached = disk2;
                         }
                         it2 = snap.getMoa();
                         if (it2 != null) {
@@ -2110,7 +1825,7 @@ public final class DefaultSettingsRepository implements SettingsRepository {
                         defaultSettingsRepository4.cached = snap;
                         defaultSettingsRepository4.persistLastGood(snap);
                     } else if (defaultSettingsRepository4.cached == null) {
-                        defaultSettingsRepository4.cached = disk;
+                        defaultSettingsRepository4.cached = disk2;
                     }
                     it2 = snap.getMoa();
                     if (it2 != null) {
@@ -2256,7 +1971,7 @@ public final class DefaultSettingsRepository implements SettingsRepository {
                             defaultSettingsRepository4.cached = snap;
                             defaultSettingsRepository4.persistLastGood(snap);
                         } else if (defaultSettingsRepository4.cached == null) {
-                            defaultSettingsRepository4.cached = disk;
+                            defaultSettingsRepository4.cached = disk2;
                         }
                         it2 = snap.getMoa();
                         if (it2 != null) {
@@ -2372,7 +2087,7 @@ public final class DefaultSettingsRepository implements SettingsRepository {
                         defaultSettingsRepository4.cached = snap;
                         defaultSettingsRepository4.persistLastGood(snap);
                     } else if (defaultSettingsRepository4.cached == null) {
-                        defaultSettingsRepository4.cached = disk;
+                        defaultSettingsRepository4.cached = disk2;
                     }
                     it2 = snap.getMoa();
                     if (it2 != null) {
@@ -2408,6 +2123,7 @@ public final class DefaultSettingsRepository implements SettingsRepository {
                 default:
                     throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
             }
+            return null;
         }
     }
 
@@ -2577,7 +2293,7 @@ public final class DefaultSettingsRepository implements SettingsRepository {
             MoaSnapshot moaSnapshotCopy$default;
             DefaultSettingsRepository defaultSettingsRepository2;
             int i;
-            DefaultSettingsRepository defaultSettingsRepository3;
+            DefaultSettingsRepository defaultSettingsRepository3 = null;
             MoaSnapshot it;
             Object coroutine_suspended = IntrinsicsKt.getCOROUTINE_SUSPENDED();
             try {
@@ -2666,13 +2382,17 @@ public final class DefaultSettingsRepository implements SettingsRepository {
                         }
                         MoaSnapshot moaSnapshot3 = defaultSettingsRepository.moaCached;
                         if (moaSnapshot3 != null) {
+                            return ai.nous.aurora.compat.Compat.m7388constructorimpl(moaSnapshot3);
                         }
                         break;
                     default:
                         throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
                 }
             } catch (Throwable th2) {
+                Result.Companion companion99 = Result.Companion;
+                return ai.nous.aurora.compat.Compat.m7388constructorimpl(ResultKt.createFailure(th2));
             }
+            return $result2;
         }
     }
 
@@ -2786,7 +2506,7 @@ public final class DefaultSettingsRepository implements SettingsRepository {
 
     /* JADX INFO: Access modifiers changed from: private */
     public final HermesSettingsSnapshot readLastGood() {
-        Object objM7388constructorimpl;
+        Object objM7388constructorimpl = null;
         SettingsLastGoodPayload payload;
         try {
             Result.Companion companion = Result.Companion;
@@ -2901,7 +2621,7 @@ public final class DefaultSettingsRepository implements SettingsRepository {
         final String key2;
         String identity;
         HermesConfigApi hermesConfigApi;
-        Object objM7388constructorimpl;
+        Object objM7388constructorimpl = null;
         String strReplace;
         if (continuation instanceof C02221) {
             c02221 = (C02221) continuation;
@@ -2961,7 +2681,7 @@ public final class DefaultSettingsRepository implements SettingsRepository {
                 }
                 Interceptor auth = new Interceptor() { // from class: ai.nous.aurora.data.repository.DefaultSettingsRepository$$ExternalSyntheticLambda1
                     @Override // okhttp3.Interceptor
-                    public final okhttp3.Response intercept(Interceptor.Chain chain) {
+                    public final okhttp3.Response intercept(Interceptor.Chain chain) throws java.io.IOException {
                         return DefaultSettingsRepository.service$lambda$6(key2, chain);
                     }
                 };
@@ -3026,7 +2746,7 @@ public final class DefaultSettingsRepository implements SettingsRepository {
                 }
                 Interceptor auth2 = new Interceptor() { // from class: ai.nous.aurora.data.repository.DefaultSettingsRepository$$ExternalSyntheticLambda1
                     @Override // okhttp3.Interceptor
-                    public final okhttp3.Response intercept(Interceptor.Chain chain) {
+                    public final okhttp3.Response intercept(Interceptor.Chain chain) throws java.io.IOException {
                         return DefaultSettingsRepository.service$lambda$6(key2, chain);
                     }
                 };
@@ -3070,7 +2790,7 @@ public final class DefaultSettingsRepository implements SettingsRepository {
                 }
                 Interceptor auth3 = new Interceptor() { // from class: ai.nous.aurora.data.repository.DefaultSettingsRepository$$ExternalSyntheticLambda1
                     @Override // okhttp3.Interceptor
-                    public final okhttp3.Response intercept(Interceptor.Chain chain) {
+                    public final okhttp3.Response intercept(Interceptor.Chain chain) throws java.io.IOException {
                         return DefaultSettingsRepository.service$lambda$6(key2, chain);
                     }
                 };
@@ -3093,16 +2813,17 @@ public final class DefaultSettingsRepository implements SettingsRepository {
             default:
                 throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
         }
+        return null;
     }
 
     /* JADX INFO: Access modifiers changed from: private */
-    public static final okhttp3.Response service$lambda$6(String $key, Interceptor.Chain chain) {
+    public static final okhttp3.Response service$lambda$6(String $key, Interceptor.Chain chain) throws java.io.IOException {
         Intrinsics.checkNotNullParameter(chain, "chain");
         return chain.proceed(chain.request().newBuilder().header("Authorization", "Bearer " + $key).header("Content-Type", "application/json").build());
     }
 
     private final String configBridgeUrl(String gateway) {
-        Object objM7388constructorimpl;
+        Object objM7388constructorimpl = null;
         try {
             Result.Companion companion = Result.Companion;
             DefaultSettingsRepository defaultSettingsRepository = this;
@@ -3123,12 +2844,22 @@ public final class DefaultSettingsRepository implements SettingsRepository {
         } catch (Throwable th) {
             Result.Companion companion2 = Result.Companion;
             objM7388constructorimpl = ai.nous.aurora.compat.Compat.m7388constructorimpl(ResultKt.createFailure(th));
+            if (ai.nous.aurora.compat.Compat.m7391exceptionOrNullimpl(objM7388constructorimpl) != null) {
+                objM7388constructorimpl = BuildConfig.HERMES_CONFIG_URL;
+            }
+            Intrinsics.checkNotNullExpressionValue(objM7388constructorimpl, "getOrElse(...)");
+            return (String) objM7388constructorimpl;
         }
     }
 
     /* JADX INFO: Access modifiers changed from: private */
-    public final HermesConfigSchemaDto loadBundledSchema() throws IOException {
-        InputStream inputStreamOpen = this.appContext.getAssets().open("hermes_schema.json");
+    public final HermesConfigSchemaDto loadBundledSchema() {
+        InputStream inputStreamOpen;
+        try {
+            inputStreamOpen = this.appContext.getAssets().open("hermes_schema.json");
+        } catch (java.io.IOException e) {
+            throw ai.nous.aurora.compat.Compat.sneakyThrow(e);
+        }
         Intrinsics.checkNotNullExpressionValue(inputStreamOpen, "open(...)");
         Reader inputStreamReader = new InputStreamReader(inputStreamOpen, Charsets.UTF_8);
         BufferedReader bufferedReader = inputStreamReader instanceof BufferedReader ? (BufferedReader) inputStreamReader : new BufferedReader(inputStreamReader, 8192);
@@ -3167,7 +2898,7 @@ public final class DefaultSettingsRepository implements SettingsRepository {
     }
 
     /* JADX INFO: Access modifiers changed from: private */
-    public final HermesSettingsSnapshot toSnapshot(HermesConfigSchemaDto $this$toSnapshot, Map<String, ? extends JsonElement> map, boolean remoteAvailable, String error, String schemaSource, MoaSnapshot moa) {
+    public final HermesSettingsSnapshot toSnapshot(HermesConfigSchemaDto $this$toSnapshot, Map<String, JsonElement> map, boolean remoteAvailable, String error, String schemaSource, MoaSnapshot moa) {
         Map<String, HermesConfigFieldDto> fields = $this$toSnapshot.getFields();
         Collection destination$iv$iv = new ArrayList(fields.size());
         for (Map.Entry<String, HermesConfigFieldDto> entry : fields.entrySet()) {
@@ -3196,9 +2927,9 @@ public final class DefaultSettingsRepository implements SettingsRepository {
         }
         Map $this$flatten_u24lambda_u2416 = MapsKt.createMapBuilder();
         Map $this$forEach$iv = (Map) value;
-        for (Map.Entry element$iv : $this$forEach$iv.entrySet()) {
-            String key = (String) element$iv.getKey();
-            JsonElement child = (JsonElement) element$iv.getValue();
+        for (Object element$iv : $this$forEach$iv.entrySet()) {
+            String key = (String) ((Map.Entry) element$iv).getKey();
+            JsonElement child = (JsonElement) ((Map.Entry) element$iv).getValue();
             String path = StringsKt.isBlank(prefix) ? key : prefix + "." + key;
             $this$flatten_u24lambda_u2416.putAll(flatten(child, path));
         }

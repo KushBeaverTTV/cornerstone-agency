@@ -62,8 +62,15 @@ public final class DefaultSettingsRepository$saveMoa$2$1$transport$1 implements 
         int iCode = response.code();
         MoaConfigDto moaConfigDto = (MoaConfigDto) response.body();
         String strTake = null;
-        if (!response.isSuccessful() && (responseBodyErrorBody = response.errorBody()) != null && (strString = responseBodyErrorBody.string()) != null) {
-            strTake = StringsKt.take(strString, AuroraMotion.TAB_MS);
+        if (!response.isSuccessful() && (responseBodyErrorBody = response.errorBody()) != null) {
+            try {
+                strString = responseBodyErrorBody.string();
+            } catch (java.io.IOException e) {
+                throw ai.nous.aurora.compat.Compat.sneakyThrow(e);
+            }
+            if (strString != null) {
+                strTake = StringsKt.take(strString, AuroraMotion.TAB_MS);
+            }
         }
         return new MoaTransportResponse(zIsSuccessful, iCode, moaConfigDto, strTake);
     }
@@ -109,8 +116,15 @@ public final class DefaultSettingsRepository$saveMoa$2$1$transport$1 implements 
         int iCode = response.code();
         MoaConfigDto moaConfigDto = (MoaConfigDto) response.body();
         String strTake = null;
-        if (!response.isSuccessful() && (responseBodyErrorBody = response.errorBody()) != null && (strString = responseBodyErrorBody.string()) != null) {
-            strTake = StringsKt.take(strString, AuroraMotion.TAB_MS);
+        if (!response.isSuccessful() && (responseBodyErrorBody = response.errorBody()) != null) {
+            try {
+                strString = responseBodyErrorBody.string();
+            } catch (java.io.IOException e) {
+                throw ai.nous.aurora.compat.Compat.sneakyThrow(e);
+            }
+            if (strString != null) {
+                strTake = StringsKt.take(strString, AuroraMotion.TAB_MS);
+            }
         }
         return new MoaTransportResponse(zIsSuccessful, iCode, moaConfigDto, strTake);
     }

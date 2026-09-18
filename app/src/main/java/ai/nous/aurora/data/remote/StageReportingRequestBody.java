@@ -31,7 +31,7 @@ public final class StageReportingRequestBody extends RequestBody {
     }
 
     @Override // okhttp3.RequestBody
-    public long contentLength() {
+    public long contentLength() throws IOException {
         return this.delegate.contentLength();
     }
 

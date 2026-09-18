@@ -183,7 +183,7 @@ public final class AssistActivityKt {
                 jM4560getBlack0d7_KjU = ai.nous.aurora.compat.Compat.m4560getBlack0d7_KjU(companion);
             }
             $composer2 = $composer3;
-            BoxWithConstraintsKt.BoxWithConstraints(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierFillMaxSize$default2, jM4560getBlack0d7_KjU, null, 2, null), null, false, (Function2) ComposableLambdaKt.rememberComposableLambda(-64316006, true, new AssistActivityKt$AssistUi$1$1(onClose, speakReplies, onToggleSpeak, phase, orbStyle, onOrbDown, statusLine, listening, working, transcript, reply), $composer3, 54), $composer3, 3072, 6);
+            BoxWithConstraintsKt.BoxWithConstraints(ai.nous.aurora.compat.Compat.m589backgroundbw27NRU$default(modifierFillMaxSize$default2, jM4560getBlack0d7_KjU, null, 2, null), null, false, (Function3) ComposableLambdaKt.rememberComposableLambda(-64316006, true, new AssistActivityKt$AssistUi$1$1(onClose, speakReplies, onToggleSpeak, phase, orbStyle, onOrbDown, statusLine, listening, working, transcript, reply), $composer3, 54), $composer3, 3072, 6);
             ComposerKt.sourceInformationMarkerEnd($composer3);
             ComposerKt.sourceInformationMarkerEnd($composer3);
             $composer2.endNode();

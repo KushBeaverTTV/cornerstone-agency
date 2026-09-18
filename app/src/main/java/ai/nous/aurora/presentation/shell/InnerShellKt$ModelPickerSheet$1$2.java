@@ -214,7 +214,7 @@ final class InnerShellKt$ModelPickerSheet$1$2 implements Function3<AnimatedVisib
     public final void invoke(AnimatedVisibilityScope AnimatedVisibility, Composer $composer, int $changed) {
         Object value$iv;
         Function0<ComposeUiNode> function0;
-        Function1<MainViewModel.ModelChoice, Unit> function1;
+        Function1<? super MainViewModel.ModelChoice, Unit> function1;
         int compositeKeyHash$iv$iv;
         Function0<ComposeUiNode> constructor;
         Function0<ComposeUiNode> function2;
@@ -225,7 +225,7 @@ final class InnerShellKt$ModelPickerSheet$1$2 implements Function3<AnimatedVisib
         Function0<ComposeUiNode> function3;
         Composer $this$Layout_u24lambda_u240$iv$iv2;
         MeasurePolicy measurePolicy$iv2;
-        Function1<MainViewModel.ModelChoice, Unit> function4;
+        Function1<? super MainViewModel.ModelChoice, Unit> function4;
         String str;
         String str2;
         boolean z;
@@ -239,7 +239,7 @@ final class InnerShellKt$ModelPickerSheet$1$2 implements Function3<AnimatedVisib
         Iterator it;
         Object element$iv;
         MainViewModel.ModelChoice modelChoice;
-        final String activeProviderLabel;
+        String activeProviderLabel;
         Object it$iv;
         Object value$iv2;
         boolean invalid$iv;
@@ -276,14 +276,14 @@ final class InnerShellKt$ModelPickerSheet$1$2 implements Function3<AnimatedVisib
         int index$iv;
         Iterator it2;
         Composer $composer3;
-        final MainViewModel.ModelChoice choice;
+        MainViewModel.ModelChoice choice;
         boolean selected;
         long j;
         long jM4532copywmQWz5c;
         boolean invalid$iv2;
         Object it$iv3;
         String str8;
-        Object value$iv5;
+        Object value$iv5 = null;
         int compositeKeyHash$iv$iv7;
         Function0<ComposeUiNode> constructor7;
         Function0<ComposeUiNode> function9;
@@ -630,10 +630,11 @@ final class InnerShellKt$ModelPickerSheet$1$2 implements Function3<AnimatedVisib
                     invalid$iv = $composer.changed(activeProviderLabel);
                     Object it$iv5 = $composer.rememberedValue();
                     if (!invalid$iv || it$iv5 == Composer.Companion.getEmpty()) {
+                        final String activeProviderLabel$c636 = activeProviderLabel;
                         value$iv3 = new Function1() { // from class: ai.nous.aurora.presentation.shell.InnerShellKt$ModelPickerSheet$1$2$$ExternalSyntheticLambda2
                             @Override // kotlin.jvm.functions.Function1
                             public final Object invoke(Object obj) {
-                                return InnerShellKt$ModelPickerSheet$1$2.invoke$lambda$23$lambda$14$lambda$9$lambda$8(activeProviderLabel, (SemanticsPropertyReceiver) obj);
+                                return InnerShellKt$ModelPickerSheet$1$2.invoke$lambda$23$lambda$14$lambda$9$lambda$8(activeProviderLabel$c636, (SemanticsPropertyReceiver) obj);
                             }
                         };
                         $composer.updateRememberedValue(value$iv3);
@@ -895,7 +896,7 @@ final class InnerShellKt$ModelPickerSheet$1$2 implements Function3<AnimatedVisib
                         boolean persistable = choice.getPersistable();
                         $composer$iv.startReplaceGroup(1480324388);
                         ComposerKt.sourceInformation($composer$iv, str9);
-                        final Function1<MainViewModel.ModelChoice, Unit> function14 = function4;
+                        final Function1<? super MainViewModel.ModelChoice, Unit> function14 = function4;
                         invalid$iv2 = $composer$iv.changed(function14) | $composer$iv.changed(choice);
                         it$iv3 = $composer$iv.rememberedValue();
                         if (invalid$iv2) {
@@ -1097,10 +1098,11 @@ final class InnerShellKt$ModelPickerSheet$1$2 implements Function3<AnimatedVisib
                             str6 = str16;
                             str7 = str17;
                         }
+                        final MainViewModel.ModelChoice choice$c1104 = choice;
                         value$iv5 = new Function0() { // from class: ai.nous.aurora.presentation.shell.InnerShellKt$ModelPickerSheet$1$2$$ExternalSyntheticLambda4
                             @Override // kotlin.jvm.functions.Function0
                             public final Object invoke() {
-                                return InnerShellKt$ModelPickerSheet$1$2.invoke$lambda$23$lambda$22$lambda$21$lambda$18$lambda$17(function14, choice);
+                                return InnerShellKt$ModelPickerSheet$1$2.invoke$lambda$23$lambda$22$lambda$21$lambda$18$lambda$17(function14, choice$c1104);
                             }
                         };
                         $composer$iv.updateRememberedValue(value$iv5);
@@ -1462,7 +1464,6 @@ final class InnerShellKt$ModelPickerSheet$1$2 implements Function3<AnimatedVisib
                     materialized$iv$iv2 = materialized$iv$iv;
                     if (Intrinsics.areEqual(it4.getProvider(), InnerShellKt.ModelPickerSheet$lambda$84(mutableState))) {
                         break;
-                        break;
                     } else {
                         $this$firstOrNull$iv = $this$firstOrNull$iv2;
                         materialized$iv$iv = materialized$iv$iv2;
@@ -1500,10 +1501,11 @@ final class InnerShellKt$ModelPickerSheet$1$2 implements Function3<AnimatedVisib
                 Object it$iv6 = $composer.rememberedValue();
                 if (invalid$iv) {
                 }
+                final String activeProviderLabel$c1505 = activeProviderLabel;
                 value$iv3 = new Function1() { // from class: ai.nous.aurora.presentation.shell.InnerShellKt$ModelPickerSheet$1$2$$ExternalSyntheticLambda2
                     @Override // kotlin.jvm.functions.Function1
                     public final Object invoke(Object obj) {
-                        return InnerShellKt$ModelPickerSheet$1$2.invoke$lambda$23$lambda$14$lambda$9$lambda$8(activeProviderLabel, (SemanticsPropertyReceiver) obj);
+                        return InnerShellKt$ModelPickerSheet$1$2.invoke$lambda$23$lambda$14$lambda$9$lambda$8(activeProviderLabel$c1505, (SemanticsPropertyReceiver) obj);
                     }
                 };
                 $composer.updateRememberedValue(value$iv3);
@@ -1671,7 +1673,7 @@ final class InnerShellKt$ModelPickerSheet$1$2 implements Function3<AnimatedVisib
                 ComposerKt.sourceInformationMarkerStart($composer$iv, 712458999, "C1763@81771L40:InnerShell.kt#m1syn");
                 $this$filter$iv = list4;
                 destination$iv$iv = new ArrayList();
-                java.util.Iterator<Object> r56 = list4.iterator();
+                java.util.Iterator<MainViewModel.ModelChoice> r56 = list4.iterator();
                 while (r56.hasNext()) {
                     Iterable $this$filter$iv3 = $this$filter$iv;
                     Object element$iv$iv = r56.next();
@@ -1679,7 +1681,6 @@ final class InnerShellKt$ModelPickerSheet$1$2 implements Function3<AnimatedVisib
                     int $changed$iv3 = $changed$iv;
                     int i119 = i;
                     if (Intrinsics.areEqual(it3.getProvider(), InnerShellKt.ModelPickerSheet$lambda$84(mutableState))) {
-                        Object element$iv$iv = r56.next();
                         destination$iv$iv.add(element$iv$iv);
                     }
                     $this$filter$iv = $this$filter$iv3;
@@ -1967,10 +1968,11 @@ final class InnerShellKt$ModelPickerSheet$1$2 implements Function3<AnimatedVisib
                     } else {
                         str8 = str9;
                     }
+                    final MainViewModel.ModelChoice choice$c1973 = choice;
                     value$iv5 = new Function0() { // from class: ai.nous.aurora.presentation.shell.InnerShellKt$ModelPickerSheet$1$2$$ExternalSyntheticLambda4
                         @Override // kotlin.jvm.functions.Function0
                         public final Object invoke() {
-                            return InnerShellKt$ModelPickerSheet$1$2.invoke$lambda$23$lambda$22$lambda$21$lambda$18$lambda$17(function15, choice);
+                            return InnerShellKt$ModelPickerSheet$1$2.invoke$lambda$23$lambda$22$lambda$21$lambda$18$lambda$17(function15, choice$c1973);
                         }
                     };
                     $composer$iv.updateRememberedValue(value$iv5);
@@ -2416,7 +2418,6 @@ final class InnerShellKt$ModelPickerSheet$1$2 implements Function3<AnimatedVisib
                     materialized$iv$iv2 = materialized$iv$iv;
                     if (Intrinsics.areEqual(it4.getProvider(), InnerShellKt.ModelPickerSheet$lambda$84(mutableState))) {
                         break;
-                        break;
                     } else {
                         $this$firstOrNull$iv = $this$firstOrNull$iv2;
                         materialized$iv$iv = materialized$iv$iv2;
@@ -2454,10 +2455,11 @@ final class InnerShellKt$ModelPickerSheet$1$2 implements Function3<AnimatedVisib
                 Object it$iv7 = $composer.rememberedValue();
                 if (invalid$iv) {
                 }
+                final String activeProviderLabel$c2457 = activeProviderLabel;
                 value$iv3 = new Function1() { // from class: ai.nous.aurora.presentation.shell.InnerShellKt$ModelPickerSheet$1$2$$ExternalSyntheticLambda2
                     @Override // kotlin.jvm.functions.Function1
                     public final Object invoke(Object obj) {
-                        return InnerShellKt$ModelPickerSheet$1$2.invoke$lambda$23$lambda$14$lambda$9$lambda$8(activeProviderLabel, (SemanticsPropertyReceiver) obj);
+                        return InnerShellKt$ModelPickerSheet$1$2.invoke$lambda$23$lambda$14$lambda$9$lambda$8(activeProviderLabel$c2457, (SemanticsPropertyReceiver) obj);
                     }
                 };
                 $composer.updateRememberedValue(value$iv3);
@@ -2920,10 +2922,11 @@ final class InnerShellKt$ModelPickerSheet$1$2 implements Function3<AnimatedVisib
                     } else {
                         str8 = str9;
                     }
+                    final MainViewModel.ModelChoice choice$c2926 = choice;
                     value$iv5 = new Function0() { // from class: ai.nous.aurora.presentation.shell.InnerShellKt$ModelPickerSheet$1$2$$ExternalSyntheticLambda4
                         @Override // kotlin.jvm.functions.Function0
                         public final Object invoke() {
-                            return InnerShellKt$ModelPickerSheet$1$2.invoke$lambda$23$lambda$22$lambda$21$lambda$18$lambda$17(function16, choice);
+                            return InnerShellKt$ModelPickerSheet$1$2.invoke$lambda$23$lambda$22$lambda$21$lambda$18$lambda$17(function16, choice$c2926);
                         }
                     };
                     $composer$iv.updateRememberedValue(value$iv5);
@@ -3285,7 +3288,6 @@ final class InnerShellKt$ModelPickerSheet$1$2 implements Function3<AnimatedVisib
                 materialized$iv$iv2 = materialized$iv$iv;
                 if (Intrinsics.areEqual(it4.getProvider(), InnerShellKt.ModelPickerSheet$lambda$84(mutableState))) {
                     break;
-                    break;
                 } else {
                     $this$firstOrNull$iv = $this$firstOrNull$iv2;
                     materialized$iv$iv = materialized$iv$iv2;
@@ -3323,10 +3325,11 @@ final class InnerShellKt$ModelPickerSheet$1$2 implements Function3<AnimatedVisib
             Object it$iv8 = $composer.rememberedValue();
             if (invalid$iv) {
             }
+            final String activeProviderLabel$c3325 = activeProviderLabel;
             value$iv3 = new Function1() { // from class: ai.nous.aurora.presentation.shell.InnerShellKt$ModelPickerSheet$1$2$$ExternalSyntheticLambda2
                 @Override // kotlin.jvm.functions.Function1
                 public final Object invoke(Object obj) {
-                    return InnerShellKt$ModelPickerSheet$1$2.invoke$lambda$23$lambda$14$lambda$9$lambda$8(activeProviderLabel, (SemanticsPropertyReceiver) obj);
+                    return InnerShellKt$ModelPickerSheet$1$2.invoke$lambda$23$lambda$14$lambda$9$lambda$8(activeProviderLabel$c3325, (SemanticsPropertyReceiver) obj);
                 }
             };
             $composer.updateRememberedValue(value$iv3);
@@ -3494,9 +3497,10 @@ final class InnerShellKt$ModelPickerSheet$1$2 implements Function3<AnimatedVisib
             ComposerKt.sourceInformationMarkerStart($composer$iv, 712458999, "C1763@81771L40:InnerShell.kt#m1syn");
             $this$filter$iv = list6;
             destination$iv$iv = new ArrayList();
-            while (r56.hasNext()) {
+            java.util.Iterator<Object> r56b = $this$filter$iv.iterator();
+            while (r56b.hasNext()) {
                 Iterable $this$filter$iv5 = $this$filter$iv;
-                Object element$iv$iv = r56.next();
+                Object element$iv$iv = r56b.next();
                 it3 = (MainViewModel.ModelChoice) element$iv$iv;
                 int $changed$iv5 = $changed$iv;
                 int i1123 = i;
@@ -3788,10 +3792,11 @@ final class InnerShellKt$ModelPickerSheet$1$2 implements Function3<AnimatedVisib
                 } else {
                     str8 = str9;
                 }
+                final MainViewModel.ModelChoice choice$c3795 = choice;
                 value$iv5 = new Function0() { // from class: ai.nous.aurora.presentation.shell.InnerShellKt$ModelPickerSheet$1$2$$ExternalSyntheticLambda4
                     @Override // kotlin.jvm.functions.Function0
                     public final Object invoke() {
-                        return InnerShellKt$ModelPickerSheet$1$2.invoke$lambda$23$lambda$22$lambda$21$lambda$18$lambda$17(function17, choice);
+                        return InnerShellKt$ModelPickerSheet$1$2.invoke$lambda$23$lambda$22$lambda$21$lambda$18$lambda$17(function17, choice$c3795);
                     }
                 };
                 $composer$iv.updateRememberedValue(value$iv5);

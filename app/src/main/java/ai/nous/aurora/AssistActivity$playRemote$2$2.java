@@ -40,7 +40,7 @@ final class AssistActivity$playRemote$2$2 extends SuspendLambda implements Funct
     }
 
     @Override // kotlin.coroutines.jvm.internal.BaseContinuationImpl
-    public final Object invokeSuspend(Object obj) throws IOException {
+    public final Object invokeSuspend(Object obj) {
         IntrinsicsKt.getCOROUTINE_SUSPENDED();
         switch (this.label) {
             case 0:
@@ -48,8 +48,12 @@ final class AssistActivity$playRemote$2$2 extends SuspendLambda implements Funct
                 this.$this_runCatching.stopPlayback();
                 AssistActivity assistActivity = this.$this_runCatching;
                 MediaPlayer $this$invokeSuspend_u24lambda_u240 = new MediaPlayer();
-                $this$invokeSuspend_u24lambda_u240.setDataSource(this.$tmp.getAbsolutePath());
-                $this$invokeSuspend_u24lambda_u240.prepare();
+                try {
+                    $this$invokeSuspend_u24lambda_u240.setDataSource(this.$tmp.getAbsolutePath());
+                    $this$invokeSuspend_u24lambda_u240.prepare();
+                } catch (java.io.IOException e) {
+                    throw ai.nous.aurora.compat.Compat.sneakyThrow(e);
+                }
                 $this$invokeSuspend_u24lambda_u240.start();
                 assistActivity.player = $this$invokeSuspend_u24lambda_u240;
                 return Unit.INSTANCE;

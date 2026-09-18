@@ -223,7 +223,7 @@ public final class SettingsSearchIndex {
         boolean assistAlias;
         Iterable $this$any$iv;
         boolean moaAlias2;
-        boolean z;
+        boolean z = true;
         Iterable $this$forEach$iv;
         int $i$f$forEach;
         String shown;

@@ -63,7 +63,7 @@ final class PairingScreenKt$PairingScreen$2$1$1 implements Function3<ColumnScope
             if (ComposerKt.isTraceInProgress()) {
                 ComposerKt.traceEventStart(271765563, $changed, -1, "ai.nous.aurora.presentation.pairing.PairingScreen.<anonymous>.<anonymous>.<anonymous> (PairingScreen.kt:97)");
             }
-            AuroraComponentsKt.AuroraTextField(this.$connect.getApiKey(), this.$onApiKeyChange, null, "Paste your key once", true, !this.$connect.getBusy(), null, new PasswordVisualTransformation((char) 0, 1, null), null, null, $composer, 27648, 836);
+            AuroraComponentsKt.AuroraTextField(this.$connect.getApiKey(), this.$onApiKeyChange, null, "Paste your key once", true, !this.$connect.getBusy(), null, new PasswordVisualTransformation('•'), null, null, $composer, 27648, 836);
             String keyStatus = PairingKeyStatusPolicy.INSTANCE.keyStatusLabel("", this.$connect.getApiKey());
             boolean keyStatusLive = PairingKeyStatusPolicy.INSTANCE.hasCredential("", this.$connect.getApiKey());
             PairingScreenKt.RowLabel("SECURE CONNECTION", keyStatus, keyStatusLive, $composer, 6, 0);

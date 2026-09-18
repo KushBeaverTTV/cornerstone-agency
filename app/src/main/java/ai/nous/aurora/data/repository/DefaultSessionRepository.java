@@ -287,7 +287,7 @@ public final class DefaultSessionRepository implements SessionRepository {
         AnonymousClass1 anonymousClass1;
         DefaultSessionRepository defaultSessionRepository;
         Object objOwnerKey;
-        String owner;
+        String owner = null;
         Object objWithTransaction;
         DefaultSessionRepository defaultSessionRepository2;
         if (continuation instanceof AnonymousClass1) {
@@ -521,14 +521,14 @@ public final class DefaultSessionRepository implements SessionRepository {
     /* JADX WARN: Not initialized variable reg: 11, insn: 0x0173: MOVE (r9 I:??[OBJECT, ARRAY]) = (r11 I:??[OBJECT, ARRAY] A[D('$this$withLock_u24default$iv' kotlinx.coroutines.sync.Mutex)]), block:B:55:0x0171 */
     @Override // ai.nous.aurora.data.repository.SessionRepository
     /* JADX INFO: renamed from: refreshSessions-IoAF18A, reason: not valid java name */
-    public Object mo53refreshSessionsIoAF18A(Continuation continuation) throws Throwable {
+    public Object mo53refreshSessionsIoAF18A(Continuation continuation) {
         DefaultSessionRepository$refreshSessions$1 defaultSessionRepository$refreshSessions$1;
-        Mutex $this$withLock_u24default$iv;
+        Mutex $this$withLock_u24default$iv = null;
         Mutex $this$withLock_u24default$iv2;
         Object owner$iv;
         DefaultSessionRepository defaultSessionRepository;
         Object objOwnerKey;
-        String owner;
+        String owner = null;
         long gen;
         Mutex $this$withLock_u24default$iv3;
         DefaultSessionRepository defaultSessionRepository2;
@@ -636,7 +636,6 @@ public final class DefaultSessionRepository implements SessionRepository {
                                         sessionDao = defaultSessionRepository2.sessions;
                                         List $this$map$iv2 = remote;
                                         destination$iv$iv2 = new ArrayList(CollectionsKt.collectionSizeOrDefault($this$map$iv2, 10));
-                                        Object item$iv$iv2 = null;
                                         for (Object item$iv$iv2 : $this$map$iv2) {
                                             AuroraSession it2 = (AuroraSession) item$iv$iv2;
                                             Object $result2 = $result;
@@ -677,7 +676,6 @@ public final class DefaultSessionRepository implements SessionRepository {
                                         i4 = i;
                                         Iterable $this$map$iv3 = (Iterable) all2;
                                         destination$iv$iv3 = new ArrayList(CollectionsKt.collectionSizeOrDefault($this$map$iv3, 10));
-                                        Object item$iv$iv3 = null;
                                         for (Object item$iv$iv3 : $this$map$iv3) {
                                             SessionEntity it3 = (SessionEntity) item$iv$iv3;
                                             destination$iv$iv3.add(defaultSessionRepository3.toModel(it3));
@@ -1178,6 +1176,7 @@ public final class DefaultSessionRepository implements SessionRepository {
             }
         } catch (Throwable th6) {
         }
+        return ai.nous.aurora.compat.Compat.m7387boximpl(CollectionsKt.emptyList());
     }
 
     /* JADX WARN: Code duplicated, block: B:21:0x0078 A[RETURN] */
@@ -1194,7 +1193,7 @@ public final class DefaultSessionRepository implements SessionRepository {
         DefaultSessionRepository$createSession$1 defaultSessionRepository$createSession$1;
         DefaultSessionRepository defaultSessionRepository;
         Object objOwnerKey;
-        String owner;
+        String owner = null;
         Object objM42createSessiongIAlus;
         DefaultSessionRepository defaultSessionRepository2;
         Object value;
@@ -1386,18 +1385,18 @@ public final class DefaultSessionRepository implements SessionRepository {
     /* JADX WARN: Code duplicated, block: B:99:0x02ec A[RETURN] */
     @Override // ai.nous.aurora.data.repository.SessionRepository
     /* JADX INFO: renamed from: selectSession-gIAlu-s, reason: not valid java name */
-    public Object mo55selectSessiongIAlus(String str, Continuation continuation) throws Throwable {
+    public Object mo55selectSessiongIAlus(String str, Continuation continuation) {
         DefaultSessionRepository$selectSession$1 defaultSessionRepository$selectSession$1;
         DefaultSessionRepository defaultSessionRepository;
         String sessionId;
         Object objOwnerKey;
-        String owner;
+        String owner = null;
         DefaultSessionRepository defaultSessionRepository2;
         String owner2;
-        Object msgs;
+        Object msgs = null;
         DefaultSessionRepository defaultSessionRepository3;
-        String owner3;
-        DefaultSessionRepository defaultSessionRepository4;
+        String owner3 = null;
+        DefaultSessionRepository defaultSessionRepository4 = null;
         List<AuroraMessage> list;
         String owner4;
         String sessionId2;
@@ -1680,9 +1679,11 @@ public final class DefaultSessionRepository implements SessionRepository {
                             element$iv2 = it3.next();
                             if (Intrinsics.areEqual(((AuroraSession) element$iv2).getId(), sessionId7)) {
                                 obj4 = element$iv2;
+                                break;
                             }
                         } else {
                             obj4 = obj3;
+                            break;
                         }
                     }
                     auroraSession = (AuroraSession) obj4;
@@ -1914,9 +1915,11 @@ public final class DefaultSessionRepository implements SessionRepository {
                         element$iv2 = it3.next();
                         if (Intrinsics.areEqual(((AuroraSession) element$iv2).getId(), sessionId7)) {
                             obj4 = element$iv2;
+                            break;
                         }
                     } else {
                         obj4 = obj3;
+                        break;
                     }
                 }
                 auroraSession = (AuroraSession) obj4;
@@ -2138,9 +2141,11 @@ public final class DefaultSessionRepository implements SessionRepository {
                         element$iv2 = it3.next();
                         if (Intrinsics.areEqual(((AuroraSession) element$iv2).getId(), sessionId7)) {
                             obj4 = element$iv2;
+                            break;
                         }
                     } else {
                         obj4 = obj3;
+                        break;
                     }
                 }
                 auroraSession = (AuroraSession) obj4;
@@ -2348,9 +2353,11 @@ public final class DefaultSessionRepository implements SessionRepository {
                         element$iv2 = it3.next();
                         if (Intrinsics.areEqual(((AuroraSession) element$iv2).getId(), sessionId7)) {
                             obj4 = element$iv2;
+                            break;
                         }
                     } else {
                         obj4 = obj3;
+                        break;
                     }
                 }
                 auroraSession = (AuroraSession) obj4;
@@ -2437,6 +2444,13 @@ public final class DefaultSessionRepository implements SessionRepository {
                         if (str2 != null) {
                             z = false;
                         }
+                            owner8 = owner7;
+                            defaultSessionRepository8 = defaultSessionRepository7;
+                            owner3 = owner8;
+                            owner = sessionId5;
+                            DefaultSessionRepository defaultSessionRepository110 = defaultSessionRepository8;
+                            msgs = obj2;
+                            defaultSessionRepository4 = defaultSessionRepository110;
                         if (!z) {
                             named = existing.copy((91 & 1) != 0 ? existing.id : null, (91 & 2) != 0 ? existing.ownerKey : null, (91 & 4) != 0 ? existing.title : SessionPresentation.INSTANCE.titleFromFirstMessage(firstUser), (91 & 8) != 0 ? existing.source : null, (91 & 16) != 0 ? existing.model : null, (91 & 32) != 0 ? existing.messageCount : list2.size(), (91 & 64) != 0 ? existing.lastActiveMs : 0L, (91 & 128) != 0 ? existing.preview : StringsKt.take(firstUser, 160));
                             sessionDao = defaultSessionRepository7.sessions;
@@ -2449,13 +2463,6 @@ public final class DefaultSessionRepository implements SessionRepository {
                             if (sessionDao.insert(named, defaultSessionRepository$selectSession$2) == coroutine_suspended) {
                                 return coroutine_suspended;
                             }
-                            owner8 = owner7;
-                            defaultSessionRepository8 = defaultSessionRepository7;
-                            owner3 = owner8;
-                            owner = sessionId5;
-                            DefaultSessionRepository defaultSessionRepository110 = defaultSessionRepository8;
-                            msgs = obj2;
-                            defaultSessionRepository4 = defaultSessionRepository110;
                         }
                         it2 = ai.nous.aurora.compat.Compat.m7391exceptionOrNullimpl(msgs);
                         if (it2 != null) {
@@ -2507,16 +2514,18 @@ public final class DefaultSessionRepository implements SessionRepository {
                                 element$iv2 = it3.next();
                                 if (Intrinsics.areEqual(((AuroraSession) element$iv2).getId(), sessionId7)) {
                                     obj4 = element$iv2;
+                                    break;
                                 }
                             } else {
                                 obj4 = obj3;
+                                break;
                             }
                         }
                         auroraSession = (AuroraSession) obj4;
                         if (auroraSession != null) {
                             return ai.nous.aurora.compat.Compat.m7388constructorimpl(auroraSession);
                         }
-                        throw new IllegalStateException("Session not found".toString());
+                        break;
                     } while (!StringsKt.equals(((AuroraMessage) element$iv).getRole(), "user", true));
                     auroraMessage = (AuroraMessage) element$iv;
                     if (auroraMessage != null) {
@@ -2598,9 +2607,11 @@ public final class DefaultSessionRepository implements SessionRepository {
                             element$iv2 = it3.next();
                             if (Intrinsics.areEqual(((AuroraSession) element$iv2).getId(), sessionId7)) {
                                 obj4 = element$iv2;
+                                break;
                             }
                         } else {
                             obj4 = obj3;
+                            break;
                         }
                     }
                     auroraSession = (AuroraSession) obj4;
@@ -2663,9 +2674,11 @@ public final class DefaultSessionRepository implements SessionRepository {
                         element$iv2 = it3.next();
                         if (Intrinsics.areEqual(((AuroraSession) element$iv2).getId(), sessionId7)) {
                             obj4 = element$iv2;
+                            break;
                         }
                     } else {
                         obj4 = obj3;
+                        break;
                     }
                 }
                 auroraSession = (AuroraSession) obj4;
@@ -2785,16 +2798,18 @@ public final class DefaultSessionRepository implements SessionRepository {
                                 element$iv2 = it3.next();
                                 if (Intrinsics.areEqual(((AuroraSession) element$iv2).getId(), sessionId7)) {
                                     obj4 = element$iv2;
+                                    break;
                                 }
                             } else {
                                 obj4 = obj3;
+                                break;
                             }
                         }
                         auroraSession = (AuroraSession) obj4;
                         if (auroraSession != null) {
                             return ai.nous.aurora.compat.Compat.m7388constructorimpl(auroraSession);
                         }
-                        throw new IllegalStateException("Session not found".toString());
+                        break;
                     } while (!StringsKt.equals(((AuroraMessage) element$iv).getRole(), "user", true));
                     auroraMessage = (AuroraMessage) element$iv;
                     if (auroraMessage != null) {
@@ -2876,9 +2891,11 @@ public final class DefaultSessionRepository implements SessionRepository {
                             element$iv2 = it3.next();
                             if (Intrinsics.areEqual(((AuroraSession) element$iv2).getId(), sessionId7)) {
                                 obj4 = element$iv2;
+                                break;
                             }
                         } else {
                             obj4 = obj3;
+                            break;
                         }
                     }
                     auroraSession = (AuroraSession) obj4;
@@ -2941,9 +2958,11 @@ public final class DefaultSessionRepository implements SessionRepository {
                         element$iv2 = it3.next();
                         if (Intrinsics.areEqual(((AuroraSession) element$iv2).getId(), sessionId7)) {
                             obj4 = element$iv2;
+                            break;
                         }
                     } else {
                         obj4 = obj3;
+                        break;
                     }
                 }
                 auroraSession = (AuroraSession) obj4;
@@ -3053,16 +3072,18 @@ public final class DefaultSessionRepository implements SessionRepository {
                                 element$iv2 = it3.next();
                                 if (Intrinsics.areEqual(((AuroraSession) element$iv2).getId(), sessionId7)) {
                                     obj4 = element$iv2;
+                                    break;
                                 }
                             } else {
                                 obj4 = obj3;
+                                break;
                             }
                         }
                         auroraSession = (AuroraSession) obj4;
                         if (auroraSession != null) {
                             return ai.nous.aurora.compat.Compat.m7388constructorimpl(auroraSession);
                         }
-                        throw new IllegalStateException("Session not found".toString());
+                        break;
                     } while (!StringsKt.equals(((AuroraMessage) element$iv).getRole(), "user", true));
                     auroraMessage = (AuroraMessage) element$iv;
                     if (auroraMessage != null) {
@@ -3144,9 +3165,11 @@ public final class DefaultSessionRepository implements SessionRepository {
                             element$iv2 = it3.next();
                             if (Intrinsics.areEqual(((AuroraSession) element$iv2).getId(), sessionId7)) {
                                 obj4 = element$iv2;
+                                break;
                             }
                         } else {
                             obj4 = obj3;
+                            break;
                         }
                     }
                     auroraSession = (AuroraSession) obj4;
@@ -3209,9 +3232,11 @@ public final class DefaultSessionRepository implements SessionRepository {
                         element$iv2 = it3.next();
                         if (Intrinsics.areEqual(((AuroraSession) element$iv2).getId(), sessionId7)) {
                             obj4 = element$iv2;
+                            break;
                         }
                     } else {
                         obj4 = obj3;
+                        break;
                     }
                 }
                 auroraSession = (AuroraSession) obj4;
@@ -3280,9 +3305,11 @@ public final class DefaultSessionRepository implements SessionRepository {
                         element$iv2 = it3.next();
                         if (Intrinsics.areEqual(((AuroraSession) element$iv2).getId(), sessionId7)) {
                             obj4 = element$iv2;
+                            break;
                         }
                     } else {
                         obj4 = obj3;
+                        break;
                     }
                 }
                 auroraSession = (AuroraSession) obj4;
@@ -3328,9 +3355,11 @@ public final class DefaultSessionRepository implements SessionRepository {
                         element$iv2 = it3.next();
                         if (Intrinsics.areEqual(((AuroraSession) element$iv2).getId(), sessionId7)) {
                             obj4 = element$iv2;
+                            break;
                         }
                     } else {
                         obj4 = obj3;
+                        break;
                     }
                 }
                 auroraSession = (AuroraSession) obj4;
@@ -3355,9 +3384,11 @@ public final class DefaultSessionRepository implements SessionRepository {
                         element$iv2 = it3.next();
                         if (Intrinsics.areEqual(((AuroraSession) element$iv2).getId(), sessionId7)) {
                             obj4 = element$iv2;
+                            break;
                         }
                     } else {
                         obj4 = obj3;
+                        break;
                     }
                 }
                 auroraSession = (AuroraSession) obj4;
@@ -3385,7 +3416,7 @@ public final class DefaultSessionRepository implements SessionRepository {
     public final Object reconcileAmbiguousOutbox(String sessionId, String str, List<AuroraMessage> list, Continuation continuation) {
         C02191 c02191;
         DefaultSessionRepository defaultSessionRepository;
-        String owner;
+        String owner = null;
         List<AuroraMessage> list2;
         Object objOutboxForSession;
         Collection destination$iv$iv;
@@ -3494,8 +3525,7 @@ public final class DefaultSessionRepository implements SessionRepository {
                 destination$iv$iv = new ArrayList();
                 java.util.Iterator<Object> r13U15 = $this$filterTo$iv$iv2.iterator();
                 while (r13U15.hasNext()) {
-    element$iv$iv = r13U15.next();
-
+                    Object element$iv$iv = r13U15.next();
                     it2 = (MessageEntity) element$iv$iv;
                     if (Intrinsics.areEqual(it2.getDeliveryStatus(), OutboxExactlyOnce.STATUS_AMBIGUOUS)) {
                         destination$iv$iv.add(element$iv$iv);
@@ -3630,7 +3660,7 @@ public final class DefaultSessionRepository implements SessionRepository {
     /* JADX WARN: Code duplicated, block: B:7:0x0018  */
     @Override // ai.nous.aurora.data.repository.SessionRepository
     /* JADX INFO: renamed from: sendMessage-BWLJW6A, reason: not valid java name */
-    public Object mo56sendMessageBWLJW6A(String str, String str2, String str3, Continuation continuation) throws Throwable {
+    public Object mo56sendMessageBWLJW6A(String str, String str2, String str3, Continuation continuation) {
         DefaultSessionRepository$sendMessage$1 defaultSessionRepository$sendMessage$1;
         DefaultSessionRepository defaultSessionRepository;
         String content;
@@ -3640,7 +3670,7 @@ public final class DefaultSessionRepository implements SessionRepository {
         String sessionId2;
         DefaultSessionRepository defaultSessionRepository2;
         String model2;
-        String owner;
+        String owner = null;
         String clientId;
         String pendingId;
         MessageDao messageDao;
@@ -4217,7 +4247,7 @@ public final class DefaultSessionRepository implements SessionRepository {
     /* JADX WARN: Code duplicated, block: B:7:0x0018  */
     @Override // ai.nous.aurora.data.repository.SessionRepository
     /* JADX INFO: renamed from: retryMessage-BWLJW6A, reason: not valid java name */
-    public Object mo54retryMessageBWLJW6A(String str, String str2, String str3, Continuation continuation) throws Throwable {
+    public Object mo54retryMessageBWLJW6A(String str, String str2, String str3, Continuation continuation) {
         DefaultSessionRepository$retryMessage$1 defaultSessionRepository$retryMessage$1;
         DefaultSessionRepository defaultSessionRepository;
         String localMessageId;
@@ -4228,7 +4258,7 @@ public final class DefaultSessionRepository implements SessionRepository {
         DefaultSessionRepository defaultSessionRepository2;
         String sessionId2;
         String localMessageId3;
-        String owner;
+        String owner = null;
         Object objClaimForRetry;
         DefaultSessionRepository defaultSessionRepository3;
         String model2;
@@ -4659,7 +4689,7 @@ public final class DefaultSessionRepository implements SessionRepository {
             }
         } catch (Throwable th) {
             Result.Companion companion3 = Result.Companion;
-            ai.nous.aurora.compat.Compat.m7388constructorimpl(ResultKt.createFailure(th));
+            return ai.nous.aurora.compat.Compat.m7387boximpl(ai.nous.aurora.compat.Compat.m7388constructorimpl(ResultKt.createFailure(th)));
         }
     }
 
@@ -4671,7 +4701,7 @@ public final class DefaultSessionRepository implements SessionRepository {
         C02201 c02201;
         DefaultSessionRepository defaultSessionRepository;
         Object objOwnerKey;
-        String owner;
+        String owner = null;
         MessageDao messageDao;
         if (continuation instanceof C02201) {
             c02201 = (C02201) continuation;
@@ -4903,11 +4933,11 @@ public final class DefaultSessionRepository implements SessionRepository {
     	at jadx.core.dex.visitors.typeinference.FixTypesVisitor.visit(FixTypesVisitor.java:94)
      */
     /* JADX INFO: renamed from: deliverPending-bMdYcbs, reason: not valid java name */
-    public final Object m51deliverPendingbMdYcbs(String str, String str2, String str3, String str4, String str5, String str6, Continuation continuation) throws Throwable {
+    public final Object m51deliverPendingbMdYcbs(String str, String str2, String str3, String str4, String str5, String str6, Continuation continuation) {
         DefaultSessionRepository$deliverPending$1 defaultSessionRepository$deliverPending$1;
         DefaultSessionRepository defaultSessionRepository;
-        Object r4;
-        String str7;
+        Object r4 = null;
+        String str7 = null;
         DefaultSessionRepository defaultSessionRepository2;
         String str8;
         String str9;
@@ -4923,7 +4953,7 @@ public final class DefaultSessionRepository implements SessionRepository {
         Object objUpdateStatusIf;
         String str15;
         Object r5;
-        DefaultSessionRepository defaultSessionRepository4;
+        DefaultSessionRepository defaultSessionRepository4 = null;
         String str16;
         Object deliveryStatus;
         DefaultSessionRepository defaultSessionRepository5;
@@ -4988,11 +5018,11 @@ public final class DefaultSessionRepository implements SessionRepository {
         Object r2;
         Object objM7388constructorimpl;
         DefaultSessionRepository defaultSessionRepository14;
-        String str39;
-        String str40;
-        Object r14;
+        String str39 = null;
+        String str40 = null;
+        Object r14 = null;
         String str41;
-        String str42;
+        String str42 = null;
         DefaultSessionRepository defaultSessionRepository15;
         int i3;
         Object objM43getMessagesgIAlus;
@@ -5031,23 +5061,23 @@ public final class DefaultSessionRepository implements SessionRepository {
         String str55;
         String str56;
         Object objMo55selectSessiongIAlus2;
-        Object r20;
-        String str57;
-        DefaultSessionRepository defaultSessionRepository20;
+        Object r20 = null;
+        String str57 = null;
+        DefaultSessionRepository defaultSessionRepository20 = null;
         int i8;
         Throwable th5 = null;
-        String str58;
-        String str59;
-        DefaultSessionRepository defaultSessionRepository21;
-        String str60;
-        Object r21;
+        String str58 = null;
+        String str59 = null;
+        DefaultSessionRepository defaultSessionRepository21 = null;
+        String str60 = null;
+        Object r21 = null;
         Object byId;
         DefaultSessionRepository defaultSessionRepository22;
         String str61;
         Object r22;
-        String str62;
-        DefaultSessionRepository defaultSessionRepository23;
-        Object r23;
+        String str62 = null;
+        DefaultSessionRepository defaultSessionRepository23 = null;
+        Object r23 = null;
         DefaultSessionRepository defaultSessionRepository24;
         String str63;
         Object r24;
@@ -7203,9 +7233,6 @@ public final class DefaultSessionRepository implements SessionRepository {
                             ai.nous.aurora.compat.Compat.d_Mutex_DefaultImpls_unlock_4(r24, null, 1, null);
                             defaultSessionRepository24.deliveryLocks.remove(OutboxExactlyOnce.INSTANCE.deliveryKey(str63, str8), r24);
                             return objM7388constructorimpl;
-                            ai.nous.aurora.compat.Compat.d_Mutex_DefaultImpls_unlock_4(r4, null, 1, null);
-                            defaultSessionRepository2.deliveryLocks.remove(OutboxExactlyOnce.INSTANCE.deliveryKey(str7, str8), r4);
-                            throw th5;
                         case 5:
                             auroraMessage3 = (AuroraMessage) defaultSessionRepository$deliverPending$2.L$6;
                             r7 = (Mutex) defaultSessionRepository$deliverPending$2.L$5;
@@ -8562,72 +8589,6 @@ public final class DefaultSessionRepository implements SessionRepository {
                                 defaultSessionRepository24.deliveryLocks.remove(OutboxExactlyOnce.INSTANCE.deliveryKey(str63, str8), r24);
                                 return objM7388constructorimpl;
                             }
-                            str44 = str52;
-                            str43 = str54;
-                            value3 = obj;
-                            r20 = r23;
-                            defaultSessionRepository20 = defaultSessionRepository23;
-                            str57 = str62;
-                            str29 = str55;
-                            th3 = th4;
-                            str41 = str43;
-                            r22 = r20;
-                            str61 = str57;
-                            defaultSessionRepository22 = defaultSessionRepository20;
-                            ai.nous.aurora.compat.Compat.m7388constructorimpl(ai.nous.aurora.compat.Compat.m7387boximpl(value3));
-                            i8 = i2;
-                            r21 = r22;
-                            th5 = th3;
-                            str8 = str29;
-                            defaultSessionRepository21 = defaultSessionRepository22;
-                            str59 = str41;
-                            str58 = str44;
-                            str60 = str61;
-                            MessageDao messageDao1117 = defaultSessionRepository21.messages;
-                            defaultSessionRepository$deliverPending$2.L$0 = defaultSessionRepository21;
-                            defaultSessionRepository$deliverPending$2.L$1 = str8;
-                            defaultSessionRepository$deliverPending$2.L$2 = str59;
-                            defaultSessionRepository$deliverPending$2.L$3 = str60;
-                            defaultSessionRepository$deliverPending$2.L$4 = str58;
-                            defaultSessionRepository$deliverPending$2.L$5 = r21;
-                            defaultSessionRepository$deliverPending$2.L$6 = th5;
-                            defaultSessionRepository$deliverPending$2.L$7 = null;
-                            defaultSessionRepository$deliverPending$2.L$8 = null;
-                            defaultSessionRepository$deliverPending$2.L$9 = null;
-                            defaultSessionRepository$deliverPending$2.L$10 = null;
-                            defaultSessionRepository$deliverPending$2.label = 12;
-                            byId = messageDao1117.getById(str8, str60, defaultSessionRepository$deliverPending$2);
-                            r25 = r21;
-                            str64 = str60;
-                            defaultSessionRepository26 = defaultSessionRepository21;
-                            if (byId == coroutine_suspended) {
-                                return coroutine_suspended;
-                            }
-                            messageEntity = (MessageEntity) byId;
-                            if (messageEntity != null) {
-                                deliveryStatus4 = messageEntity.getDeliveryStatus();
-                            } else {
-                                deliveryStatus4 = null;
-                            }
-                            if (Intrinsics.areEqual(deliveryStatus4, OutboxExactlyOnce.STATUS_SENT)) {
-                                Result.Companion companion211114 = Result.Companion;
-                                Object objM7388constructorimpl1116 = ai.nous.aurora.compat.Compat.m7388constructorimpl(new AuroraMessage(str8, "user", str59, OutboxExactlyOnce.STATUS_SENT, str58));
-                                ai.nous.aurora.compat.Compat.d_Mutex_DefaultImpls_unlock_4(r25, null, 1, null);
-                                defaultSessionRepository26.deliveryLocks.remove(OutboxExactlyOnce.INSTANCE.deliveryKey(str64, str8), r25);
-                                return objM7388constructorimpl1116;
-                            }
-                            th2 = th5;
-                            r16 = r25;
-                            str47 = str64;
-                            defaultSessionRepository25 = defaultSessionRepository26;
-                            Result.Companion companion211115 = Result.Companion;
-                            objM7388constructorimpl = ai.nous.aurora.compat.Compat.m7388constructorimpl(ResultKt.createFailure(th2));
-                            r24 = r16;
-                            str63 = str47;
-                            defaultSessionRepository24 = defaultSessionRepository25;
-                            ai.nous.aurora.compat.Compat.d_Mutex_DefaultImpls_unlock_4(r24, null, 1, null);
-                            defaultSessionRepository24.deliveryLocks.remove(OutboxExactlyOnce.INSTANCE.deliveryKey(str63, str8), r24);
-                            return objM7388constructorimpl;
                         case 12:
                             i8 = 0;
                             th5 = (Throwable) defaultSessionRepository$deliverPending$2.L$6;
@@ -8674,12 +8635,12 @@ public final class DefaultSessionRepository implements SessionRepository {
                 }
             } catch (Throwable th38) {
                 r4 = continuation;
-                str7 = defaultSessionRepository;
             }
         } catch (Throwable th39) {
             Result.Companion companion40 = Result.Companion;
-            ai.nous.aurora.compat.Compat.m7388constructorimpl(ResultKt.createFailure(th39));
+            return ai.nous.aurora.compat.Compat.m7387boximpl(ai.nous.aurora.compat.Compat.m7388constructorimpl(ResultKt.createFailure(th39)));
         }
+        return ai.nous.aurora.compat.Compat.m7387boximpl(Unit.INSTANCE);
     }
 
     /* JADX INFO: Access modifiers changed from: private */
@@ -8709,7 +8670,7 @@ public final class DefaultSessionRepository implements SessionRepository {
         C02151 c02151;
         DefaultSessionRepository defaultSessionRepository;
         Object objOwnerKey;
-        String owner;
+        String owner = null;
         MessageDao messageDao;
         DefaultSessionRepository defaultSessionRepository2;
         String owner2;

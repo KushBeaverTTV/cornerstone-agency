@@ -46,7 +46,7 @@ public final class AdvancedCategoryLiveValue {
     /* JADX WARN: Code duplicated, block: B:213:0x0480 A[SYNTHETIC] */
     /* JADX WARN: Failed to restore switch over string. Please report as a decompilation issue */
     public final String liveSummary(String id, final Map<String, String> values) {
-        String strInvoke;
+        String strInvoke = null;
         String strInvoke2;
         String strInvoke3;
         String en;
@@ -56,7 +56,7 @@ public final class AdvancedCategoryLiveValue {
         String value;
         char c;
         boolean z;
-        boolean z2;
+        boolean z2 = false;
         Intrinsics.checkNotNullParameter(id, "id");
         Intrinsics.checkNotNullParameter(values, "values");
         Function1<? super String, String> function1 = new Function1() { // from class: ai.nous.aurora.domain.model.AdvancedCategoryLiveValue$$ExternalSyntheticLambda0
@@ -109,6 +109,7 @@ public final class AdvancedCategoryLiveValue {
                         } else {
                             element$iv = null;
                         }
+                        break;
                     }
                     Map.Entry entry2 = (Map.Entry) element$iv;
                     strInvoke = entry2 != null ? (String) entry2.getValue() : null;
@@ -168,8 +169,7 @@ public final class AdvancedCategoryLiveValue {
                         break;
                     }
                     Map.Entry entry4 = (Map.Entry) element$iv;
-                    if (entry4 != null) {
-                    }
+                    strInvoke = entry4 != null ? (String) entry4.getValue() : null;
                     if (strInvoke != null) {
                         strInvoke4 = strInvoke;
                     }
@@ -216,8 +216,7 @@ public final class AdvancedCategoryLiveValue {
                         break;
                     }
                     Map.Entry entry6 = (Map.Entry) element$iv;
-                    if (entry6 != null) {
-                    }
+                    strInvoke = entry6 != null ? (String) entry6.getValue() : null;
                     if (strInvoke != null) {
                         strInvoke4 = strInvoke;
                     }
@@ -271,8 +270,7 @@ public final class AdvancedCategoryLiveValue {
                         break;
                     }
                     Map.Entry entry8 = (Map.Entry) element$iv;
-                    if (entry8 != null) {
-                    }
+                    strInvoke = entry8 != null ? (String) entry8.getValue() : null;
                     if (strInvoke != null) {
                         strInvoke4 = strInvoke;
                     }
@@ -319,8 +317,7 @@ public final class AdvancedCategoryLiveValue {
                         break;
                     }
                     Map.Entry entry10 = (Map.Entry) element$iv;
-                    if (entry10 != null) {
-                    }
+                    strInvoke = entry10 != null ? (String) entry10.getValue() : null;
                     if (strInvoke != null) {
                         strInvoke4 = strInvoke;
                     }
@@ -367,8 +364,7 @@ public final class AdvancedCategoryLiveValue {
                         break;
                     }
                     Map.Entry entry12 = (Map.Entry) element$iv;
-                    if (entry12 != null) {
-                    }
+                    strInvoke = entry12 != null ? (String) entry12.getValue() : null;
                     if (strInvoke != null) {
                         strInvoke4 = strInvoke;
                     }
@@ -411,8 +407,7 @@ public final class AdvancedCategoryLiveValue {
                         break;
                     }
                     Map.Entry entry14 = (Map.Entry) element$iv;
-                    if (entry14 != null) {
-                    }
+                    strInvoke = entry14 != null ? (String) entry14.getValue() : null;
                     if (strInvoke != null) {
                         strInvoke4 = strInvoke;
                     }
@@ -455,8 +450,7 @@ public final class AdvancedCategoryLiveValue {
                         break;
                     }
                     Map.Entry entry16 = (Map.Entry) element$iv;
-                    if (entry16 != null) {
-                    }
+                    strInvoke = entry16 != null ? (String) entry16.getValue() : null;
                     if (strInvoke != null) {
                         strInvoke4 = strInvoke;
                     }
@@ -508,8 +502,7 @@ public final class AdvancedCategoryLiveValue {
                         break;
                     }
                     Map.Entry entry18 = (Map.Entry) element$iv;
-                    if (entry18 != null) {
-                    }
+                    strInvoke = entry18 != null ? (String) entry18.getValue() : null;
                     if (strInvoke != null) {
                         strInvoke4 = strInvoke;
                     }
@@ -565,8 +558,7 @@ public final class AdvancedCategoryLiveValue {
                         break;
                     }
                     Map.Entry entry110 = (Map.Entry) element$iv;
-                    if (entry110 != null) {
-                    }
+                    strInvoke = entry110 != null ? (String) entry110.getValue() : null;
                     if (strInvoke != null) {
                         strInvoke4 = strInvoke;
                     }
@@ -613,8 +605,7 @@ public final class AdvancedCategoryLiveValue {
                         break;
                     }
                     Map.Entry entry112 = (Map.Entry) element$iv;
-                    if (entry112 != null) {
-                    }
+                    strInvoke = entry112 != null ? (String) entry112.getValue() : null;
                     if (strInvoke != null) {
                         strInvoke4 = strInvoke;
                     }
@@ -665,8 +656,7 @@ public final class AdvancedCategoryLiveValue {
                         break;
                     }
                     Map.Entry entry114 = (Map.Entry) element$iv;
-                    if (entry114 != null) {
-                    }
+                    strInvoke = entry114 != null ? (String) entry114.getValue() : null;
                     if (strInvoke != null) {
                         strInvoke4 = strInvoke;
                     }
@@ -724,8 +714,7 @@ public final class AdvancedCategoryLiveValue {
                         break;
                     }
                     Map.Entry entry116 = (Map.Entry) element$iv;
-                    if (entry116 != null) {
-                    }
+                    strInvoke = entry116 != null ? (String) entry116.getValue() : null;
                     if (strInvoke != null) {
                         strInvoke4 = strInvoke;
                     }
@@ -777,8 +766,7 @@ public final class AdvancedCategoryLiveValue {
                         break;
                     }
                     Map.Entry entry118 = (Map.Entry) element$iv;
-                    if (entry118 != null) {
-                    }
+                    strInvoke = entry118 != null ? (String) entry118.getValue() : null;
                     if (strInvoke != null) {
                         strInvoke4 = strInvoke;
                     }
@@ -825,8 +813,7 @@ public final class AdvancedCategoryLiveValue {
                         break;
                     }
                     Map.Entry entry1110 = (Map.Entry) element$iv;
-                    if (entry1110 != null) {
-                    }
+                    strInvoke = entry1110 != null ? (String) entry1110.getValue() : null;
                     if (strInvoke != null) {
                         strInvoke4 = strInvoke;
                     }
@@ -878,8 +865,7 @@ public final class AdvancedCategoryLiveValue {
                         break;
                     }
                     Map.Entry entry1112 = (Map.Entry) element$iv;
-                    if (entry1112 != null) {
-                    }
+                    strInvoke = entry1112 != null ? (String) entry1112.getValue() : null;
                     if (strInvoke != null) {
                         strInvoke4 = strInvoke;
                     }
@@ -936,8 +922,7 @@ public final class AdvancedCategoryLiveValue {
                         break;
                     }
                     Map.Entry entry1114 = (Map.Entry) element$iv;
-                    if (entry1114 != null) {
-                    }
+                    strInvoke = entry1114 != null ? (String) entry1114.getValue() : null;
                     if (strInvoke != null) {
                         strInvoke4 = strInvoke;
                     }
@@ -979,8 +964,7 @@ public final class AdvancedCategoryLiveValue {
                     break;
                 }
                 Map.Entry entry1116 = (Map.Entry) element$iv;
-                if (entry1116 != null) {
-                }
+                strInvoke = entry1116 != null ? (String) entry1116.getValue() : null;
                 if (strInvoke != null) {
                     strInvoke4 = strInvoke;
                 }

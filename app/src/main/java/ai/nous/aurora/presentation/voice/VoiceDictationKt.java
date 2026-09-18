@@ -176,7 +176,7 @@ public final class VoiceDictationKt {
             $composer.updateRememberedValue(value$iv7);
         }
         $composer.endReplaceGroup();
-        final ManagedActivityResultLauncher permissionLauncher = ActivityResultRegistryKt.rememberLauncherForActivityResult(requestPermission, (Function1) value$iv7, $composer, z);
+        final ManagedActivityResultLauncher permissionLauncher = ActivityResultRegistryKt.rememberLauncherForActivityResult(requestPermission, (Function1) value$iv7, $composer, 0);
         $composer.startReplaceGroup(-294635133);
         ComposerKt.sourceInformation($composer, "CC(remember):VoiceDictation.kt#9igjgp");
         boolean zChangedInstance = $composer.changedInstance(context) | ((((($changed & 112) ^ 48) <= 32 || !$composer.changed(onListening)) && ($changed & 48) != 32) ? z : true);

@@ -150,7 +150,6 @@ public final class DefaultSessionRepository$observeMessages$$inlined$flatMapLate
                                         return coroutine_suspended;
                                     }
                                     break;
-                                    break;
                                 case 1:
                                     ResultKt.throwOnFailure($result);
                                     break;
@@ -251,7 +250,6 @@ public final class DefaultSessionRepository$observeMessages$$inlined$flatMapLate
                                     if (flowCollector.emit(listDedupeByClientMsgId, anonymousClass1) == coroutine_suspended) {
                                         return coroutine_suspended;
                                     }
-                                    break;
                                     break;
                                 case 1:
                                     ResultKt.throwOnFailure($result);

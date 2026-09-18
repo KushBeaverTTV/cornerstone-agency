@@ -138,7 +138,6 @@ public final class DefaultSessionRepository$observeSessions$$inlined$flatMapLate
                                         return coroutine_suspended;
                                     }
                                     break;
-                                    break;
                                 case 1:
                                     ResultKt.throwOnFailure($result);
                                     break;
@@ -232,7 +231,6 @@ public final class DefaultSessionRepository$observeSessions$$inlined$flatMapLate
                                     if (flowCollector.emit((List) destination$iv$iv, anonymousClass1) == coroutine_suspended) {
                                         return coroutine_suspended;
                                     }
-                                    break;
                                     break;
                                 case 1:
                                     ResultKt.throwOnFailure($result);

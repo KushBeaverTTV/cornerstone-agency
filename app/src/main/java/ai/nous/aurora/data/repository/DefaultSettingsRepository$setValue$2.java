@@ -82,7 +82,7 @@ final class DefaultSettingsRepository$setValue$2 extends SuspendLambda implement
         int i;
         HermesSettingsSnapshot prior;
         JsonElement jsonElement;
-        String str;
+        String str = null;
         DefaultSettingsRepository defaultSettingsRepository;
         String str2;
         int i2;
@@ -133,7 +133,6 @@ final class DefaultSettingsRepository$setValue$2 extends SuspendLambda implement
                             $result = $result;
                             i = i2;
                             str = str7;
-                        Throwable th = null;
                         } catch (Throwable th) {
                             $result = $result;
                             Result.Companion companion2 = Result.Companion;
@@ -447,5 +446,6 @@ final class DefaultSettingsRepository$setValue$2 extends SuspendLambda implement
             }
         } catch (Throwable th2) {
         }
+            return null;
     }
 }

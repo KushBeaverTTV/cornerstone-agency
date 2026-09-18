@@ -287,15 +287,15 @@ public final class HostVoiceClient {
                 scheme = "http";
             }
             objM7388constructorimpl = ai.nous.aurora.compat.Compat.m7388constructorimpl(new URI(scheme, null, uri.getHost(), 8765, null, null, null).toString());
+        } catch (Throwable th) {
+            Result.Companion companion2 = Result.Companion;
+            objM7388constructorimpl = ai.nous.aurora.compat.Compat.m7388constructorimpl(ResultKt.createFailure(th));
+        }
             if (ai.nous.aurora.compat.Compat.m7391exceptionOrNullimpl(objM7388constructorimpl) != null) {
                 objM7388constructorimpl = BuildConfig.HERMES_CONFIG_URL;
             }
             Intrinsics.checkNotNullExpressionValue(objM7388constructorimpl, "getOrElse(...)");
             return StringsKt.trimEnd((String) objM7388constructorimpl, '/');
-        } catch (Throwable th) {
-            Result.Companion companion2 = Result.Companion;
-            objM7388constructorimpl = ai.nous.aurora.compat.Compat.m7388constructorimpl(ResultKt.createFailure(th));
-        }
     }
 
     /* JADX INFO: Access modifiers changed from: private */
@@ -492,7 +492,9 @@ public final class HostVoiceClient {
                         throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
                 }
             } catch (Throwable th4) {
+                return Boxing.boxBoolean(false);
             }
+            return Boxing.boxBoolean(false);
         }
     }
 
@@ -657,8 +659,9 @@ public final class HostVoiceClient {
             this.$onStage.invoke(Stage.UPLOADING);
             StageReportingRequestBody body = new StageReportingRequestBody(bodyBuilder.build(), this.$onStage);
             Request req = new Request.Builder().url(base + "/v1/voice/dictate").header("Authorization", "Bearer " + key).post(body).build();
-            Response responseExecute = this.this$0.client.newCall(req).execute();
+            Response responseExecute = null;
             try {
+                responseExecute = this.this$0.client.newCall(req).execute();
                 Response resp = responseExecute;
                 ResponseBody responseBodyBody = resp.body();
                 String text = responseBodyBody != null ? responseBodyBody.string() : null;
@@ -710,7 +713,7 @@ public final class HostVoiceClient {
                     throw th;
                 } catch (Throwable th2) {
                     CloseableKt.closeFinally(responseExecute, th);
-                    throw th2;
+                    throw ai.nous.aurora.compat.Compat.sneakyThrow(th2);
                 }
             }
         }
@@ -772,7 +775,7 @@ public final class HostVoiceClient {
             Object objBridgeBase;
             Request.Builder builder2;
             String key2;
-            Response responseExecute;
+            Response responseExecute = null;
             Response resp;
             ResponseBody responseBodyBody;
             String text;
@@ -805,8 +808,8 @@ public final class HostVoiceClient {
                     key2 = key;
                     $result = objBridgeBase;
                     Request req = builder2.url($result + "/v1/voice/transcribe").header("Authorization", "Bearer " + key2).post(body).build();
-                    responseExecute = HostVoiceClient.this.client.newCall(req).execute();
                     try {
+                    responseExecute = HostVoiceClient.this.client.newCall(req).execute();
                         resp = responseExecute;
                         responseBodyBody = resp.body();
                         if (responseBodyBody != null) {
@@ -833,10 +836,11 @@ public final class HostVoiceClient {
                             throw th;
                         } catch (Throwable th2) {
                             CloseableKt.closeFinally(responseExecute, th);
-                            throw th2;
+                            throw ai.nous.aurora.compat.Compat.sneakyThrow(th2);
                         }
                     }
                 case 1:
+                    try {
                     ResultKt.throwOnFailure($result);
                     key = (String) $result;
                     if (!StringsKt.isBlank(key)) {
@@ -878,7 +882,11 @@ public final class HostVoiceClient {
                     String str2 = strOptString;
                     CloseableKt.closeFinally(responseExecute, null);
                     return str2;
+                    } catch (java.io.IOException | org.json.JSONException e) {
+                        throw ai.nous.aurora.compat.Compat.sneakyThrow(e);
+                    }
                 case 2:
+                    try {
                     builder2 = (Request.Builder) this.L$2;
                     MultipartBody body2 = (MultipartBody) this.L$1;
                     String key3 = (String) this.L$0;
@@ -908,6 +916,9 @@ public final class HostVoiceClient {
                     String str3 = strOptString;
                     CloseableKt.closeFinally(responseExecute, null);
                     return str3;
+                    } catch (java.io.IOException | org.json.JSONException e) {
+                        throw ai.nous.aurora.compat.Compat.sneakyThrow(e);
+                    }
                 default:
                     throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
             }

@@ -185,7 +185,6 @@ public final class SessionDao_Impl implements SessionDao {
             @Override // kotlin.jvm.functions.Function1
             public final Object invoke(Object obj) {
                 Object f$0 = null;
-                Object f$0 = null;
                 return SessionDao_Impl.this.lambda$replaceForOwner$0(ownerKey, rows, (Continuation) obj);
             }
         }, $completion);

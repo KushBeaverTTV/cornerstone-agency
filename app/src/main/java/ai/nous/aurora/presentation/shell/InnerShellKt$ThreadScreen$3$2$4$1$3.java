@@ -49,7 +49,7 @@ final class InnerShellKt$ThreadScreen$3$2$4$1$3 implements Function4<LazyItemSco
             String role = msg.getRole();
             String content = msg.getContent();
             String deliveryStatus = msg.getDeliveryStatus();
-            final String id = msg.getId();
+            String id = msg.getId();
             Function0 function0 = null;
             if (id == null || !msg.isFailed()) {
                 id = null;
@@ -63,10 +63,11 @@ final class InnerShellKt$ThreadScreen$3$2$4$1$3 implements Function4<LazyItemSco
                 boolean invalid$iv = $composer.changed(function1) | $composer.changed(id);
                 Object it$iv = $composer.rememberedValue();
                 if (invalid$iv || it$iv == Composer.Companion.getEmpty()) {
+                    final String id$c69 = id;
                     value$iv = new Function0() { // from class: ai.nous.aurora.presentation.shell.InnerShellKt$ThreadScreen$3$2$4$1$3$$ExternalSyntheticLambda0
                         @Override // kotlin.jvm.functions.Function0
                         public final Object invoke() {
-                            return InnerShellKt$ThreadScreen$3$2$4$1$3.invoke$lambda$3$lambda$2$lambda$1(function1, id);
+                            return InnerShellKt$ThreadScreen$3$2$4$1$3.invoke$lambda$3$lambda$2$lambda$1(function1, id$c69);
                         }
                     };
                     $composer.updateRememberedValue(value$iv);
