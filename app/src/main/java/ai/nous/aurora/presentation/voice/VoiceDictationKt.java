@@ -46,17 +46,17 @@ public final class VoiceDictationKt {
     /* JADX WARN: Code duplicated, block: B:128:0x0318  */
     public static final Function0<Unit> rememberDictationLauncher(final Function1<? super String, Unit> onResult, final Function1<? super Boolean, Unit> onListening, Function1<? super String, Unit> function1, Composer $composer, int $changed, int i) {
         final Function1<? super String, Unit> function2;
-        Object value$iv;
-        boolean z;
-        Object value$iv2;
-        Object value$iv3;
-        Function1<? super String, Unit> function3;
-        boolean z2;
-        boolean z3;
-        boolean invalid$iv;
-        Object value$iv4;
-        Object value$iv5;
-        Object value$iv6;
+        Object value$iv = null;
+        boolean z = false;
+        Object value$iv2 = null;
+        Object value$iv3 = null;
+        Function1<? super String, Unit> function3 = null;
+        boolean z2 = false;
+        boolean z3 = false;
+        boolean invalid$iv = false;
+        Object value$iv4 = null;
+        Object value$iv5 = null;
+        Object value$iv6 = null;
         Intrinsics.checkNotNullParameter(onResult, "onResult");
         Intrinsics.checkNotNullParameter(onListening, "onListening");
         $composer.startReplaceGroup(-1241758761);

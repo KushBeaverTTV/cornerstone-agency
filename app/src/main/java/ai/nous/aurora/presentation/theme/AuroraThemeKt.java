@@ -31,13 +31,14 @@ public final class AuroraThemeKt {
         return AuroraShapes;
     }
 
-    public static final void AuroraTheme(final AuroraSkin skin, final Function2<? super Composer, ? super Integer, Unit> content, Composer $composer, final int $changed, final int i) {
+    public static final void AuroraTheme(AuroraSkin skin, final Function2<? super Composer, ? super Integer, Unit> content, Composer $composer, final int $changed, final int i) {
         Intrinsics.checkNotNullParameter(content, "content");
+        AuroraSkin skinLocal = skin;
         Composer $composer2 = $composer.startRestartGroup(1634037950);
         ComposerKt.sourceInformation($composer2, "C(AuroraTheme)P(1)34@1088L171,30@940L319:AuroraTheme.kt#li0cm");
         int $dirty = $changed;
         if (($changed & 6) == 0) {
-            $dirty |= ((i & 1) == 0 && $composer2.changed(skin)) ? 4 : 2;
+            $dirty |= ((i & 1) == 0 && $composer2.changed(skinLocal)) ? 4 : 2;
         }
         if ((i & 2) != 0) {
             $dirty |= 48;
@@ -59,7 +60,7 @@ public final class AuroraThemeKt {
                 ComposerKt.sourceInformationMarkerStart($composer2, 2023513938, "CC:CompositionLocal.kt#9igjgp");
                 Object objConsume = $composer2.consume(localAuroraSkin);
                 ComposerKt.sourceInformationMarkerEnd($composer2);
-                skin = (AuroraSkin) objConsume;
+                skinLocal = (AuroraSkin) objConsume;
                 $dirty &= -15;
             }
             int $dirty2 = $dirty;
@@ -67,7 +68,8 @@ public final class AuroraThemeKt {
             if (ComposerKt.isTraceInProgress()) {
                 ComposerKt.traceEventStart(1634037950, $dirty2, -1, "ai.nous.aurora.presentation.theme.AuroraTheme (AuroraTheme.kt:28)");
             }
-            final ThemeTokens tokens = ThemeTokensKt.themeTokensFor(skin);
+            final AuroraSkin skin$c62 = skinLocal;
+            final ThemeTokens tokens = ThemeTokensKt.themeTokensFor(skin$c62);
             MaterialThemeKt.MaterialTheme(AuroraColorSchemeKt.auroraColorScheme(tokens), AuroraShapes, AuroraTypographyKt.auroraTypography(tokens), (Function2) ComposableLambdaKt.rememberComposableLambda(-1582685294, true, new Function2<Composer, Integer, Unit>() { // from class: ai.nous.aurora.presentation.theme.AuroraThemeKt.AuroraTheme.1
                 @Override // kotlin.jvm.functions.Function2
                 public /* bridge */ /* synthetic */ Unit invoke(Composer composer, Integer num) {
@@ -81,7 +83,7 @@ public final class AuroraThemeKt {
                         if (ComposerKt.isTraceInProgress()) {
                             ComposerKt.traceEventStart(-1582685294, $changed2, -1, "ai.nous.aurora.presentation.theme.AuroraTheme.<anonymous> (AuroraTheme.kt:35)");
                         }
-                        CompositionLocalKt.CompositionLocalProvider((ProvidedValue<?>[]) new ProvidedValue[]{ThemeTokensKt.getLocalThemeTokens().provides(tokens), ThemeTokensKt.getLocalAuroraSkin().provides(skin)}, content, $composer3, ProvidedValue.$stable);
+                        CompositionLocalKt.CompositionLocalProvider((ProvidedValue<?>[]) new ProvidedValue[]{ThemeTokensKt.getLocalThemeTokens().provides(tokens), ThemeTokensKt.getLocalAuroraSkin().provides(skin$c62)}, content, $composer3, ProvidedValue.$stable);
                         if (ComposerKt.isTraceInProgress()) {
                             ComposerKt.traceEventEnd();
                             return;
@@ -95,12 +97,13 @@ public final class AuroraThemeKt {
                 ComposerKt.traceEventEnd();
             }
         }
+        final AuroraSkin skin$restart = skinLocal;
         ScopeUpdateScope scopeUpdateScopeEndRestartGroup = $composer2.endRestartGroup();
         if (scopeUpdateScopeEndRestartGroup != null) {
             scopeUpdateScopeEndRestartGroup.updateScope(new Function2() { // from class: ai.nous.aurora.presentation.theme.AuroraThemeKt$$ExternalSyntheticLambda0
                 @Override // kotlin.jvm.functions.Function2
                 public final Object invoke(Object obj, Object obj2) {
-                    return AuroraThemeKt.AuroraTheme$lambda$0(skin, content, $changed, i, (Composer) obj, ((Integer) obj2).intValue());
+                    return AuroraThemeKt.AuroraTheme$lambda$0(skin$restart, content, $changed, i, (Composer) obj, ((Integer) obj2).intValue());
                 }
             });
         }

@@ -408,9 +408,9 @@ public final class TerminalEmulator {
 
     /* JADX WARN: Multi-variable type inference failed */
     public void processCodePoint(int i) {
-        int i2;
-        int arg;
-        int i3;
+        int i2 = 0;
+        int arg = 0;
+        int i3 = 0;
         if (this.mEscapeState == 20) {
             doApc(i);
         }
@@ -1936,11 +1936,11 @@ public final class TerminalEmulator {
     /* JADX WARN: Code duplicated, block: B:66:0x013d A[Catch: NumberFormatException -> 0x01f9, TRY_ENTER, TRY_LEAVE, TryCatch #5 {NumberFormatException -> 0x01f9, blocks: (B:55:0x0115, B:57:0x0121, B:66:0x013d), top: B:138:0x0115 }] */
     /* JADX WARN: Code duplicated, block: B:73:0x01cb  */
     private void doOscSetTextParameters(String bellOrStringTerminator) {
-        char c;
-        int i;
-        char b;
-        int lastSemiIndex;
-        int i2;
+        char c = 0;
+        int i = 0;
+        char b = 0;
+        int lastSemiIndex = 0;
+        int i2 = 0;
         String textParameter = "";
         int value = -1;
         int value2 = 0;

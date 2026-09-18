@@ -151,7 +151,6 @@ public final class TerminalSession extends TerminalOutput {
                         }
                         throw th;
                     }
-                Object e = null;
                 } catch (Exception e) {
                 }
             }
@@ -365,7 +364,7 @@ public final class TerminalSession extends TerminalOutput {
     }
 
     private static FileDescriptor wrapFileDescriptor(int fileDescriptor, TerminalSessionClient client) {
-        Field descriptorField;
+        Field descriptorField = null;
         FileDescriptor result = new FileDescriptor();
         try {
             try {
@@ -376,7 +375,11 @@ public final class TerminalSession extends TerminalOutput {
                 } catch (NoSuchFieldException e2) {
                     Logger.logStackTraceWithMessage(client, LOG_TAG, "Error accessing FileDescriptor#descriptor private field", e2);
                     System.exit(1);
+                    return null;
                 }
+            }
+            if (descriptorField == null) {
+                return null;
             }
             descriptorField.setAccessible(true);
             descriptorField.set(result, Integer.valueOf(fileDescriptor));

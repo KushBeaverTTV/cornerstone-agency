@@ -268,6 +268,9 @@ public final class TerminalScreenKt {
             Result.Companion companion2 = Result.Companion;
             objM7388constructorimpl = ai.nous.aurora.compat.Compat.m7388constructorimpl(ResultKt.createFailure(th));
         }
+        String bridgeHttp = BuildConfig.HERMES_CONFIG_URL;
+        Intrinsics.checkNotNullExpressionValue(bridgeHttp, "getOrElse(...)");
+        return ai.nous.aurora.compat.Compat.d_StringsKt_replace_6(ai.nous.aurora.compat.Compat.d_StringsKt_replace_6(StringsKt.trimEnd(bridgeHttp, '/'), "https://", "wss://", false, 4, (Object) null), "http://", "ws://", false, 4, (Object) null);
     }
 
     /* JADX INFO: Access modifiers changed from: private */

@@ -50,17 +50,17 @@ public final class TerminalRenderer {
     /* JADX WARN: Code duplicated, block: B:88:0x0209  */
     /* JADX WARN: Code duplicated, block: B:89:0x020c  */
     public final void render(TerminalEmulator mEmulator, Canvas canvas, int topRow, int selectionY1, int selectionY2, int selectionX1, int selectionX2) {
-        int selx1;
-        boolean z;
-        boolean invertCursorTextColor;
-        int codePoint;
-        float fMeasureText;
-        boolean insideSelection;
-        char[] line;
-        boolean invertCursorTextColor2;
-        int i;
-        char[] line2;
-        int i2;
+        int selx1 = 0;
+        boolean z = false;
+        boolean invertCursorTextColor = false;
+        int codePoint = 0;
+        float fMeasureText = 0.0f;
+        boolean insideSelection = false;
+        char[] line = null;
+        boolean invertCursorTextColor2 = false;
+        int i = 0;
+        char[] line2 = null;
+        int i2 = 0;
         TerminalRenderer terminalRenderer = this;
         TerminalEmulator terminalEmulator = mEmulator;
         boolean reverseVideo = mEmulator.isReverseVideo();
@@ -200,11 +200,9 @@ public final class TerminalRenderer {
                     if (currentCharIndex < charsUsedInLine2) {
                         line2 = line;
                         break;
-                        break;
                     }
                     line2 = line;
                     if (WcWidth.width(line2, currentCharIndex) <= 0) {
-                        break;
                         break;
                     }
                     if (Character.isHighSurrogate(line2[currentCharIndex])) {

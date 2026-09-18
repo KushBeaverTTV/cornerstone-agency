@@ -58,7 +58,7 @@ final class TerminalScreenKt$TerminalScreen$enqueuePtyOutput$1 extends SuspendLa
         Object obj2;
         TerminalOutputBuffer terminalOutputBuffer;
         byte[] tail;
-        TerminalSession terminalSession;
+        TerminalSession terminalSession = null;
         Object obj3;
         TerminalOutputBuffer terminalOutputBuffer2;
         byte[] chunk;
@@ -67,7 +67,7 @@ final class TerminalScreenKt$TerminalScreen$enqueuePtyOutput$1 extends SuspendLa
         Object obj5;
         TerminalOutputBuffer terminalOutputBuffer3;
         byte[] tail2;
-        TerminalSession terminalSession2;
+        TerminalSession terminalSession2 = null;
         TerminalSession terminalSession3;
         Object coroutine_suspended = IntrinsicsKt.getCOROUTINE_SUSPENDED();
         switch (this.label) {
@@ -139,7 +139,7 @@ final class TerminalScreenKt$TerminalScreen$enqueuePtyOutput$1 extends SuspendLa
                                     terminalOutputBuffer3 = this.$outputBuffer;
                                     synchronized (obj5) {
                                         tail2 = terminalOutputBuffer3.drain();
-                                        if (tail2 != null) {
+                                        if (tail2 != null && (terminalSession2 = this.$sessionRef.get()) != null) {
                                             terminalSession2.writeToEmulator(tail2, tail2.length);
                                         }
                                         return Unit.INSTANCE;
@@ -164,7 +164,7 @@ final class TerminalScreenKt$TerminalScreen$enqueuePtyOutput$1 extends SuspendLa
                         terminalOutputBuffer = this.$outputBuffer;
                         synchronized (obj2) {
                             tail = terminalOutputBuffer.drain();
-                            if (tail != null) {
+                            if (tail != null && (terminalSession = this.$sessionRef.get()) != null) {
                                 terminalSession.writeToEmulator(tail, tail.length);
                             }
                             throw th2;
