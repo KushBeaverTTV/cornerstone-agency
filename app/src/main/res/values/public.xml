@@ -13,12 +13,9 @@
     <public type="attr" name="fontProviderAuthority" id="0x7f01000a" />
     <public type="attr" name="fontProviderCerts" id="0x7f01000b" />
     <public type="attr" name="fontProviderFallbackQuery" id="0x7f01000c" />
-    <public type="attr" name="fontProviderFetchStrategy" id="0x7f01000d" />
-    <public type="attr" name="fontProviderFetchTimeout" id="0x7f01000e" />
     <public type="attr" name="fontProviderPackage" id="0x7f01000f" />
     <public type="attr" name="fontProviderQuery" id="0x7f010010" />
     <public type="attr" name="fontProviderSystemFontFamily" id="0x7f010011" />
-    <public type="attr" name="fontStyle" id="0x7f010012" />
     <public type="attr" name="fontVariationSettings" id="0x7f010013" />
     <public type="attr" name="fontWeight" id="0x7f010014" />
     <public type="attr" name="lStar" id="0x7f010015" />

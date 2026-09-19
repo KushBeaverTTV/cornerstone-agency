@@ -4,3 +4,5 @@ build/
 app/build/
 local.properties
 *.lock
+_jadx-raw/
+*\$*.java
