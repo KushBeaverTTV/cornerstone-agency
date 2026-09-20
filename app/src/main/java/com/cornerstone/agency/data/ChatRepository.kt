@@ -596,29 +596,36 @@ class ChatRepository(
         }
     }
 
-    /** [answers] maps question qid → answer; a single "" key means {answer}. */
+    /** [answers] maps question qid → answer; a single "" key means {answer}.
+     * Batch requests (the server sent `questions[]` with qids) must close with
+     * {"answers": {qid: …}} — a result without `answers` is a cancel-all. */
     override suspend fun answerClarify(itemId: String, answers: Map<String, String>) {
+        val req = _items.value.firstOrNull { it.id == itemId }?.request ?: return
+        val batch = req.questions.any { it.qid.isNotEmpty() }
         val single = answers[""] ?: answers.values.firstOrNull().orEmpty()
-        val result = if (answers.size <= 1) {
-            buildJsonObject { put("answer", single) }
-        } else {
+        val result = if (batch) {
             buildJsonObject {
                 put("answers", buildJsonObject {
-                    answers.forEach { (qid, a) -> if (qid.isNotEmpty()) put(qid, a) }
+                    answers.forEach { (qid, a) -> put(qid.ifEmpty { "q0" }, a) }
                 })
             }
+        } else {
+            buildJsonObject { put("answer", single) }
         }
-        respond(itemId, "Answered: $single", result) { req ->
+        respond(itemId, "Answered: $single", result) { r ->
             gateway.call(
                 "clarify.respond",
                 buildJsonObject {
-                    req.requestId?.let { put("request_id", it) }
-                    if (answers.size <= 1) {
-                        put("answer", single)
-                    } else {
+                    r.requestId?.let { put("request_id", it) }
+                    if (batch) {
                         put("answers", buildJsonObject {
-                            answers.forEach { (qid, a) -> if (qid.isNotEmpty()) put(qid, a) }
+                            answers.forEach { (qid, a) -> put(qid.ifEmpty { "q0" }, a) }
                         })
+                    } else {
+                        put("answer", single)
+                        answers.keys.firstOrNull()
+                            ?.takeIf { it.isNotEmpty() }
+                            ?.let { put("question_id", it) }
                     }
                 },
             )
