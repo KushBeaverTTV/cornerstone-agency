@@ -60,6 +60,9 @@ fun AppShell(
     onOpenJob: (jobId: String) -> Unit = {},
     onOpenSystem: () -> Unit = {},
     onOpenSkills: () -> Unit = {},
+    onOpenPrima: () -> Unit = {},
+    onOpenPrimaSessions: () -> Unit = {},
+    onOpenPrimaSession: (sessionId: String) -> Unit = {},
 ) {
     val ui by vm.ui.collectAsState()
     val colors = AgencyTokens.colors
@@ -168,8 +171,12 @@ fun AppShell(
             }
             Box(Modifier.weight(1f).fillMaxWidth()) {
                 when (Tab.entries[tab]) {
-                    Tab.BOTS -> BotsScreen(vm, onOpenChat, onOpenBot, onNewAgent)
-                    Tab.CHATS -> ChatsScreen(vm, onOpenSession)
+                    Tab.BOTS -> BotsScreen(
+                        vm, onOpenChat, onOpenBot, onNewAgent,
+                        onOpenPrima = onOpenPrima,
+                        onOpenPrimaSessions = onOpenPrimaSessions,
+                    )
+                    Tab.CHATS -> ChatsScreen(vm, onOpenSession, onOpenPrimaSession)
                     Tab.JOBS -> JobsScreen(vm, onOpenJob)
                     Tab.MORE -> MoreScreen(vm, onOpenSystem, onOpenSkills)
                 }

@@ -52,8 +52,15 @@ fun MoreScreen(
     var voiceTokenDraft by androidx.compose.runtime.remember {
         androidx.compose.runtime.mutableStateOf<String?>(null)
     }
-
-    LaunchedEffect(Unit) { vm.refreshStatus() }
+    val bridgeHealth by vm.bridgeHealth.collectAsState()
+    val primaSocketState by vm.primaSocket.state.collectAsState()
+    var bridgeHostDraft by androidx.compose.runtime.remember {
+        androidx.compose.runtime.mutableStateOf<String?>(null)
+    }
+    var bridgeTokenDraft by androidx.compose.runtime.remember {
+        androidx.compose.runtime.mutableStateOf<String?>(null)
+    }
+    LaunchedEffect(Unit) { vm.refreshStatus(); vm.refreshBridge() }
 
     Column(
         Modifier
@@ -164,6 +171,102 @@ fun MoreScreen(
                 ) {
                     Text("Save voice settings", color = colors.gold)
                 }
+            }
+        }
+
+        Spacer(Modifier.height(space.lg))
+        SectionKicker("Bridge")
+        Spacer(Modifier.height(space.sm))
+        AgencyCard(Modifier.fillMaxWidth()) {
+            Text(
+                "Desktop bridge (Prima + Laya)",
+                style = MaterialTheme.typography.bodyMedium,
+                color = colors.foreground,
+            )
+            Spacer(Modifier.height(space.xs))
+            Text(
+                "Host:port",
+                style = MaterialTheme.typography.labelSmall,
+                color = colors.tertiary,
+            )
+            com.cornerstone.agency.ui.components.AgencyTextField(
+                value = bridgeHostDraft ?: vm.bridge.host,
+                onValueChange = { bridgeHostDraft = it },
+                modifier = Modifier.fillMaxWidth(),
+                placeholder = "127.0.0.1:9121",
+                singleLine = true,
+            )
+            Spacer(Modifier.height(space.xs))
+            Text(
+                "Token",
+                style = MaterialTheme.typography.labelSmall,
+                color = colors.tertiary,
+            )
+            com.cornerstone.agency.ui.components.AgencyTextField(
+                value = bridgeTokenDraft ?: vm.bridge.token,
+                onValueChange = { bridgeTokenDraft = it },
+                modifier = Modifier.fillMaxWidth(),
+                placeholder = "agb_…",
+                singleLine = true,
+            )
+            if (bridgeHostDraft != null || bridgeTokenDraft != null) {
+                Spacer(Modifier.height(space.xs))
+                TextButton(
+                    onClick = {
+                        bridgeHostDraft?.let { vm.setBridgeHost(it) }
+                        bridgeTokenDraft?.let { vm.setBridgeToken(it) }
+                        bridgeHostDraft = null
+                        bridgeTokenDraft = null
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text("Save bridge settings", color = colors.gold)
+                }
+            }
+            Spacer(Modifier.height(space.sm))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Box(
+                    Modifier
+                        .clip(RoundedCornerShape(999.dp))
+                        .background(
+                            if (bridgeHealth?.ok == true) colors.success.copy(alpha = 0.16f)
+                            else colors.destructive.copy(alpha = 0.16f),
+                        )
+                        .padding(horizontal = space.md, vertical = space.xs),
+                ) {
+                    Text(
+                        text = when {
+                            bridgeHealth?.ok == true -> "Healthy"
+                            else -> "Unreachable"
+                        },
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = FontWeight.Medium,
+                        color = if (bridgeHealth?.ok == true) colors.success else colors.destructive,
+                    )
+                }
+                Spacer(Modifier.weight(1f))
+                TextButton(onClick = { vm.refreshBridge() }) {
+                    Text("Test", color = colors.gold)
+                }
+            }
+            bridgeHealth?.let { h ->
+                Spacer(Modifier.height(space.xs))
+                InfoRow("Prima", h.prima.version?.let { "v$it" } ?: "not found")
+                Spacer(Modifier.height(space.xxs))
+                InfoRow(
+                    "Laya",
+                    if (h.laya.loaded) "loaded" else if (h.laya.present) "lazy-loads on first call" else "not found",
+                )
+                Spacer(Modifier.height(space.xxs))
+                InfoRow(
+                    "Socket",
+                    when (primaSocketState) {
+                        com.cornerstone.agency.data.GatewayState.OPEN -> "open"
+                        com.cornerstone.agency.data.GatewayState.CONNECTING -> "connecting"
+                        com.cornerstone.agency.data.GatewayState.RECONNECTING -> "reconnecting"
+                        else -> "closed"
+                    },
+                )
             }
         }
 

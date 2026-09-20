@@ -22,6 +22,7 @@ import com.cornerstone.agency.ui.screens.ChatScreen
 import com.cornerstone.agency.ui.screens.ConnectScreen
 import com.cornerstone.agency.ui.screens.JobDetailScreen
 import com.cornerstone.agency.ui.screens.NewAgentScreen
+import com.cornerstone.agency.ui.screens.PrimaSessionsScreen
 import com.cornerstone.agency.ui.screens.SessionsScreen
 import com.cornerstone.agency.ui.screens.ShareTargetScreen
 import com.cornerstone.agency.ui.screens.SkillsScreen
@@ -38,10 +39,15 @@ object Routes {
     const val SKILLS = "skills"
     const val SYSTEM = "system"
     const val SHARE = "share"
+    const val PRIMA = "prima?session={session}"
+    const val PRIMA_SESSIONS = "prima-sessions"
 
     fun chat(profile: String, session: String? = null): String =
         "chat/${Uri.encode(profile)}" +
             (session?.let { "?session=${Uri.encode(it)}" } ?: "")
+
+    fun prima(session: String? = null): String =
+        "prima" + (session?.let { "?session=${Uri.encode(it)}" } ?: "")
 
     fun sessions(profile: String): String = "sessions/${Uri.encode(profile)}"
 
@@ -109,6 +115,36 @@ fun AppNav(vm: AppViewModel, navController: NavHostController = rememberNavContr
                 onOpenJob = { id -> navController.navigate(Routes.job(id)) },
                 onOpenSystem = { navController.navigate(Routes.SYSTEM) },
                 onOpenSkills = { navController.navigate(Routes.SKILLS) },
+                onOpenPrima = { navController.navigate(Routes.prima()) },
+                onOpenPrimaSessions = { navController.navigate(Routes.PRIMA_SESSIONS) },
+                onOpenPrimaSession = { sid -> navController.navigate(Routes.prima(sid)) },
+            )
+        }
+        composable(
+            route = Routes.PRIMA,
+            arguments = listOf(
+                navArgument("session") {
+                    type = NavType.StringType
+                    nullable = true
+                    defaultValue = null
+                },
+            ),
+        ) { entry ->
+            ChatScreen(
+                vm = vm,
+                profileName = "prima",
+                sessionId = entry.arguments?.getString("session"),
+                onBack = { navController.popBackStack() },
+                onOpenSessions = { navController.navigate(Routes.PRIMA_SESSIONS) },
+                onOpenBotSettings = {},
+                prima = true,
+            )
+        }
+        composable(Routes.PRIMA_SESSIONS) {
+            PrimaSessionsScreen(
+                vm = vm,
+                onBack = { navController.popBackStack() },
+                onOpenSession = { sid -> navController.navigate(Routes.prima(sid)) },
             )
         }
         composable(

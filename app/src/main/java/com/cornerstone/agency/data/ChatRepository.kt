@@ -45,28 +45,30 @@ private val RESOLVE_SUFFIX = Regex("\\.(resolved|expired|answered|cancelled|canc
 class ChatRepository(
     private val gateway: GatewaySocket,
     val profile: String,
-) {
+) : ChatSource {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     private val localId = AtomicLong(0)
 
+    override val linkState: StateFlow<GatewayState> = gateway.state
+
     private val _items = MutableStateFlow<List<ChatItem>>(emptyList())
-    val items: StateFlow<List<ChatItem>> = _items.asStateFlow()
+    override val items: StateFlow<List<ChatItem>> = _items.asStateFlow()
 
     private val _title = MutableStateFlow("")
-    val title: StateFlow<String> = _title.asStateFlow()
+    override val title: StateFlow<String> = _title.asStateFlow()
 
     private val _opening = MutableStateFlow(true)
-    val opening: StateFlow<Boolean> = _opening.asStateFlow()
+    override val opening: StateFlow<Boolean> = _opening.asStateFlow()
 
     private val _streaming = MutableStateFlow(false)
-    val streaming: StateFlow<Boolean> = _streaming.asStateFlow()
+    override val streaming: StateFlow<Boolean> = _streaming.asStateFlow()
 
     /** Transient turn status line ("(◇) orchestrating…") — NOT a transcript row. */
     private val _statusLine = MutableStateFlow("")
-    val statusLine: StateFlow<String> = _statusLine.asStateFlow()
+    override val statusLine: StateFlow<String> = _statusLine.asStateFlow()
 
     private val _lastError = MutableStateFlow("")
-    val lastError: StateFlow<String> = _lastError.asStateFlow()
+    override val lastError: StateFlow<String> = _lastError.asStateFlow()
 
     var storedSessionId: String? = null
         private set
@@ -107,7 +109,7 @@ class ChatRepository(
      * Herald's order: explicit stored id → resume; else session.list{profile}
      * most-recent → resume; else session.create{profile}.
      */
-    suspend fun open(requestedStoredId: String? = null) {
+    override suspend fun open(requestedStoredId: String?) {
         _opening.value = true
         try {
             when {
@@ -132,7 +134,7 @@ class ChatRepository(
     }
 
     /** Re-resolve after a socket reconnect: resume the stored session for a fresh runtime id. */
-    suspend fun refreshAfterReconnect() {
+    override suspend fun refreshAfterReconnect() {
         val stored = storedSessionId ?: return
         try {
             resume(stored)
@@ -228,7 +230,7 @@ class ChatRepository(
 
     // ---- actions ----------------------------------------------------------
 
-    suspend fun send(text: String) {
+    override suspend fun send(text: String) {
         val t = text.trim()
         if (t.isEmpty()) return
         if (runtimeSessionId == null) {
@@ -256,7 +258,7 @@ class ChatRepository(
         }
     }
 
-    suspend fun stop() {
+    override suspend fun stop() {
         val rt = runtimeSessionId ?: return
         try {
             gateway.call("session.interrupt", buildJsonObject { put("session_id", rt) })
@@ -265,7 +267,7 @@ class ChatRepository(
         finalizeStreaming()
     }
 
-    suspend fun newSession() {
+    override suspend fun newSession() {
         _opening.value = true
         try {
             create()
@@ -282,7 +284,7 @@ class ChatRepository(
         gateway.call("session.delete", buildJsonObject { put("session_id", storedId) })
     }
 
-    suspend fun rename(newTitle: String) {
+    override suspend fun rename(newTitle: String) {
         val id = runtimeSessionId ?: storedSessionId ?: return
         val t = newTitle.trim()
         if (t.isEmpty()) return
@@ -313,7 +315,7 @@ class ChatRepository(
 
     /** Leaving the chat: best-effort interrupt of a live turn, then tear down. */
     @OptIn(DelicateCoroutinesApi::class)
-    fun close() {
+    override fun close() {
         reqTimers.values.forEach { it.cancel() }
         reqTimers.clear()
         reqIndex.clear()
@@ -576,7 +578,7 @@ class ChatRepository(
         }
     }
 
-    suspend fun approveRequest(itemId: String, choice: String) {
+    override suspend fun approveRequest(itemId: String, choice: String) {
         val resolution = if (choice == "deny") "Denied" else "Approved $choice"
         respond(
             itemId, resolution,
@@ -595,7 +597,7 @@ class ChatRepository(
     }
 
     /** [answers] maps question qid → answer; a single "" key means {answer}. */
-    suspend fun answerClarify(itemId: String, answers: Map<String, String>) {
+    override suspend fun answerClarify(itemId: String, answers: Map<String, String>) {
         val single = answers[""] ?: answers.values.firstOrNull().orEmpty()
         val result = if (answers.size <= 1) {
             buildJsonObject { put("answer", single) }
@@ -625,7 +627,7 @@ class ChatRepository(
     }
 
     /** secret / sudo / vault.* / other one-string prompts. Never logged or persisted. */
-    suspend fun submitRequestValue(itemId: String, value: String) {
+    override suspend fun submitRequestValue(itemId: String, value: String) {
         respond(itemId, "Sent", buildJsonObject { put("value", value) }) { req ->
             val rpc = when (req.kind) {
                 RequestKind.Secret -> "secret.respond" to "value"
@@ -643,7 +645,7 @@ class ChatRepository(
         }
     }
 
-    suspend fun respondMcp(itemId: String, approved: Boolean) {
+    override suspend fun respondMcp(itemId: String, approved: Boolean) {
         respond(
             itemId, if (approved) "Approved" else "Denied",
             buildJsonObject { put("approved", approved) },

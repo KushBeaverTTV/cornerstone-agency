@@ -84,6 +84,46 @@ class AppViewModel(private val app: Application) : AndroidViewModel(app) {
     /** Shared dashboard socket — lives in GatewayHub so it survives the Activity. */
     val gateway: GatewaySocket = GatewayHub.attach(repo)
 
+    // -- M6: desktop bridge (Prima + Laya) ----------------------------------
+
+    /** REST client for the local bridge (docs/BRIDGE.md). Host/token in SecureStore. */
+    val bridge = com.cornerstone.agency.data.BridgeRepository(store)
+
+    /** One WS fanning out all Prima session events. Created on VM init. */
+    val primaSocket = com.cornerstone.agency.data.PrimaSocket(bridge, viewModelScope)
+
+    /** Last /health result; null = untested/unreachable. */
+    private val _bridgeHealth = MutableStateFlow<com.cornerstone.agency.data.BridgeHealth?>(null)
+    val bridgeHealth: StateFlow<com.cornerstone.agency.data.BridgeHealth?> = _bridgeHealth.asStateFlow()
+
+    /** Probe /health; on success (re)connect the Prima event socket. */
+    fun refreshBridge() {
+        viewModelScope.launch {
+            if (!bridge.configured) {
+                _bridgeHealth.value = null
+                return@launch
+            }
+            try {
+                _bridgeHealth.value = bridge.health()
+                primaSocket.connect()
+            } catch (_: Exception) {
+                _bridgeHealth.value = null
+            }
+        }
+    }
+
+    fun setBridgeHost(host: String) {
+        bridge.host = host.trim()
+        bridge.save()
+        refreshBridge()
+    }
+
+    fun setBridgeToken(token: String) {
+        bridge.token = token.trim()
+        bridge.save()
+        refreshBridge()
+    }
+
     /** Deep-link requested by a notification/share intent; consumed by AppNav. */
     private val _pendingDeepLink = MutableStateFlow<ChatDeepLink?>(null)
     val pendingDeepLink: StateFlow<ChatDeepLink?> = _pendingDeepLink.asStateFlow()
@@ -310,6 +350,7 @@ class AppViewModel(private val app: Application) : AndroidViewModel(app) {
         viewModelScope.launch { NotificationCenter.warmCronFilter() }
         refreshProfiles()
         refreshStatus()
+        refreshBridge()
         syncBackgroundWork()
     }
 

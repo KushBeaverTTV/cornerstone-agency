@@ -1,0 +1,195 @@
+package com.cornerstone.agency.data
+
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
+import kotlinx.serialization.json.putJsonArray
+import kotlinx.serialization.json.putJsonObject
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.util.concurrent.TimeUnit
+
+@Serializable
+data class BridgeHealthPrima(
+    val available: Boolean = false,
+    val version: String? = null,
+    val sessions: Int = 0,
+)
+
+@Serializable
+data class BridgeHealthLaya(
+    val loaded: Boolean = false,
+    val checkpoint: String? = null,
+    val device: String? = null,
+    val present: Boolean = false,
+    val error: String? = null,
+)
+
+@Serializable
+data class BridgeHealth(
+    val ok: Boolean = false,
+    val service: String = "",
+    val version: String = "",
+    val prima: BridgeHealthPrima = BridgeHealthPrima(),
+    val laya: BridgeHealthLaya = BridgeHealthLaya(),
+)
+
+@Serializable
+data class PrimaSession(
+    val id: String = "",
+    val name: String = "",
+    val cwd: String = "",
+    val is_streaming: Boolean = false,
+    val message_count: Int = 0,
+    val created_at: Double = 0.0,
+    val last_activity: Double = 0.0,
+    val alive: Boolean = true,
+) {
+    val label: String
+        get() = name.ifBlank { "Session ${id.take(6)}" }
+}
+
+/**
+ * OkHttp client for the desktop bridge (docs/BRIDGE.md). Bearer auth on every
+ * route except /health; host:port + token live in SecureStore.
+ */
+class BridgeRepository(private val store: SecureStore) {
+
+    private val json = Json { ignoreUnknownKeys = true; coerceInputValues = true }
+
+    var host: String = store.bridgeHost.ifBlank { DEFAULT_HOST }
+    var token: String = store.bridgeToken
+
+    val configured: Boolean
+        get() = host.isNotBlank() && token.isNotBlank()
+
+    /** Persist current host/token into SecureStore. */
+    fun save() {
+        store.bridgeHost = host
+        store.bridgeToken = token
+    }
+
+    internal val client = OkHttpClient.Builder()
+        .connectTimeout(8, TimeUnit.SECONDS)
+        .readTimeout(120, TimeUnit.SECONDS) // laya cold load can take ~1 min
+        .build()
+
+    private fun base() = "http://$host"
+
+    fun wsUrl(): String =
+        "ws://$host/prima/ws?token=${java.net.URLEncoder.encode(token, "UTF-8")}"
+
+    private suspend fun api(
+        path: String,
+        method: String = "GET",
+        body: String? = null,
+        auth: Boolean = true,
+    ): String = withContext(Dispatchers.IO) {
+        val request = Request.Builder()
+            .url("${base()}$path")
+            .header("Accept", "application/json")
+            .apply {
+                if (auth) header("Authorization", "Bearer $token")
+                when (method) {
+                    "POST" -> post((body ?: "").toRequestBody(JSON_MEDIA))
+                    "PUT" -> put((body ?: "").toRequestBody(JSON_MEDIA))
+                    "DELETE" -> delete()
+                }
+            }
+            .build()
+        client.newCall(request).execute().use { resp ->
+            val text = resp.body?.string().orEmpty()
+            if (!resp.isSuccessful) {
+                val detail = runCatching {
+                    (json.parseToJsonElement(text) as? JsonObject)
+                        ?.get("detail")
+                        ?.toString()
+                        ?.trim('"')
+                }.getOrNull() ?: "HTTP ${resp.code}"
+                throw ApiException(resp.code, detail)
+            }
+            text
+        }
+    }
+
+    // -- endpoints --------------------------------------------------------
+
+    suspend fun health(): BridgeHealth =
+        json.decodeFromString(api("/health", auth = false))
+
+    suspend fun primaSessions(): List<PrimaSession> =
+        json.decodeFromString<PrimaSessionsResponse>(api("/prima/sessions")).sessions
+
+    suspend fun createPrimaSession(cwd: String? = null, name: String = ""): String {
+        val body = buildJsonObject {
+            if (cwd != null) put("cwd", cwd)
+            if (name.isNotBlank()) put("name", name)
+        }
+        val res = json.parseToJsonElement(api("/prima/sessions", "POST", body.toString()))
+        return (res as? JsonObject)?.get("id")
+            ?.let { it as? kotlinx.serialization.json.JsonPrimitive }?.content
+            ?: throw ApiException(500, "bridge returned no session id")
+    }
+
+    /** Raw get_messages passthrough — the bridge returns the worker's data. */
+    suspend fun primaMessages(sid: String): JsonArray {
+        val res = json.parseToJsonElement(api("/prima/sessions/$sid/messages"))
+        val obj = res as? JsonObject ?: return JsonArray(emptyList())
+        return (obj["messages"] as? JsonArray) ?: JsonArray(emptyList())
+    }
+
+    suspend fun primaPrompt(sid: String, message: String, streamingBehavior: String? = null) {
+        val body = buildJsonObject {
+            put("message", message)
+            if (streamingBehavior != null) put("streaming_behavior", streamingBehavior)
+        }
+        api("/prima/sessions/$sid/prompt", "POST", body.toString())
+    }
+
+    suspend fun primaAbort(sid: String) {
+        api("/prima/sessions/$sid/abort", "POST", "{}")
+    }
+
+    suspend fun primaRename(sid: String, name: String) {
+        val body = buildJsonObject { put("name", name) }
+        api("/prima/sessions/$sid/name", "POST", body.toString())
+    }
+
+    suspend fun primaDelete(sid: String) {
+        api("/prima/sessions/$sid", "DELETE")
+    }
+
+    suspend fun layaStatus(): JsonObject =
+        json.parseToJsonElement(api("/laya/status")) as JsonObject
+
+    /** POST /laya/route — returns {bot, probs, confidence}. */
+    suspend fun layaRoute(text: String, bots: List<Pair<String, String>>): JsonObject {
+        val body = buildJsonObject {
+            put("text", text)
+            putJsonArray("bots") {
+                bots.forEach { (name, desc) ->
+                    add(buildJsonObject {
+                        put("name", name)
+                        put("description", desc)
+                    })
+                }
+            }
+        }
+        return json.parseToJsonElement(api("/laya/route", "POST", body.toString())) as JsonObject
+    }
+
+    @Serializable
+    private data class PrimaSessionsResponse(val sessions: List<PrimaSession> = emptyList())
+
+    companion object {
+        const val DEFAULT_HOST = "127.0.0.1:9121"
+        private val JSON_MEDIA = "application/json".toMediaType()
+    }
+}

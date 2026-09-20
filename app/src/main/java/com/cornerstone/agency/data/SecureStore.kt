@@ -50,11 +50,23 @@ class SecureStore(context: Context) {
         prefs.edit().clear().apply()
     }
 
+    // -- desktop bridge (Prima + Laya) ------------------------------------
+
+    var bridgeHost: String
+        get() = prefs.getString(KEY_BRIDGE_HOST, "") ?: ""
+        set(v) = prefs.edit().putString(KEY_BRIDGE_HOST, v).apply()
+
+    var bridgeToken: String
+        get() = prefs.getString(KEY_BRIDGE_TOKEN, "") ?: ""
+        set(v) = prefs.edit().putString(KEY_BRIDGE_TOKEN, v).apply()
+
     companion object {
         private const val FILE = "agency_connection"
         private const val KEY_URL = "base_url"
         private const val KEY_USER = "username"
         private const val KEY_PASSWORD = "password"
         private const val KEY_COOKIE = "cookie"
+        private const val KEY_BRIDGE_HOST = "bridge_host"
+        private const val KEY_BRIDGE_TOKEN = "bridge_token"
     }
 }

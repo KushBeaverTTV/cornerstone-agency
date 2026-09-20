@@ -57,12 +57,18 @@ fun BotsScreen(
     onOpenChat: (String) -> Unit,
     onOpenBot: (String) -> Unit = {},
     onNewAgent: () -> Unit = {},
+    onOpenPrima: () -> Unit = {},
+    onOpenPrimaSessions: () -> Unit = {},
 ) {
     val ui by vm.ui.collectAsState()
     val colors = AgencyTokens.colors
     val space = AgencyTokens.space
     var query by remember { mutableStateOf("") }
     val openProfiles by PendingRequests.openProfiles.collectAsState()
+    val bridgeHealth by vm.bridgeHealth.collectAsState()
+    val primaUp = bridgeHealth?.ok == true && bridgeHealth?.prima?.available == true
+
+    LaunchedEffect(Unit) { vm.refreshBridge() }
 
     val filtered = ui.profiles.filter {
         query.isBlank() ||
@@ -139,6 +145,31 @@ fun BotsScreen(
                     )
                 }
             }
+
+            if (primaUp && (query.isBlank() || "prima".contains(query, ignoreCase = true) ||
+                    "prime agent".contains(query, ignoreCase = true))
+            ) {
+                item(key = "kicker-desktop") {
+                    Column(Modifier.padding(horizontal = space.lg)) {
+                        Spacer(Modifier.height(space.md))
+                        SectionKicker("Desktop")
+                        Spacer(Modifier.height(space.xs))
+                    }
+                }
+                item(key = "desktop-prima") {
+                    AgencyRow(
+                        title = "Prima",
+                        subtitle = "Prime Agent · ${bridgeHealth?.prima?.version ?: ""}".trimEnd('·', ' '),
+                        meta = "",
+                        modifier = Modifier.padding(horizontal = space.sm),
+                        onClick = onOpenPrima,
+                        onLongClick = onOpenPrimaSessions,
+                        leading = {
+                            BotAvatar(name = "Prima", color = colors.defaultViolet)
+                        },
+                    )
+                }
+            }
         }
         if (ui.profilesLoading && ui.profiles.isEmpty()) {
             CircularProgressIndicator(
@@ -153,6 +184,7 @@ fun BotsScreen(
 fun ChatsScreen(
     vm: AppViewModel,
     onOpenSession: (profile: String, sessionId: String) -> Unit,
+    onOpenPrimaSession: (sessionId: String) -> Unit = {},
 ) {
     val ui by vm.ui.collectAsState()
     val colors = AgencyTokens.colors
@@ -160,7 +192,11 @@ fun ChatsScreen(
     val socketState by vm.gateway.state.collectAsState()
     val hideCronChatter by vm.hideCronChatter.collectAsState()
     val openSessions by PendingRequests.openSessions.collectAsState()
+    val bridgeHealth by vm.bridgeHealth.collectAsState()
     val scope = rememberCoroutineScope()
+    var primaSessions by remember {
+        mutableStateOf<List<com.cornerstone.agency.data.PrimaSession>>(emptyList())
+    }
 
     // Sessions grouped by bot, in roster order.
     var groups by remember {
@@ -199,8 +235,13 @@ fun ChatsScreen(
         }
     }
 
-    LaunchedEffect(socketState, ui.profiles) {
+    LaunchedEffect(socketState, ui.profiles, bridgeHealth) {
         if (socketState == GatewayState.OPEN && ui.profiles.isNotEmpty()) refresh()
+        if (bridgeHealth?.ok == true && bridgeHealth?.prima?.available == true) {
+            primaSessions = runCatching { vm.bridge.primaSessions() }.getOrDefault(emptyList())
+        } else {
+            primaSessions = emptyList()
+        }
     }
     // sessions.changed is a global push — refresh opportunistically.
     LaunchedEffect(Unit) {
@@ -241,7 +282,7 @@ fun ChatsScreen(
                 )
             }
 
-            visibleGroups.isEmpty() -> EmptyState(
+            visibleGroups.isEmpty() && primaSessions.isEmpty() -> EmptyState(
                 if (error.isEmpty()) "No chats yet" else "Couldn't load chats",
                 if (error.isEmpty()) {
                     if (hideCronChatter && groups.isNotEmpty()) "All visible sessions are cron chatter"
@@ -285,6 +326,28 @@ fun ChatsScreen(
                                         )
                                     }
                                 }
+                            },
+                        )
+                    }
+                }
+                if (primaSessions.isNotEmpty()) {
+                    item(key = "kicker-desktop-prima") {
+                        SectionKicker(
+                            "PRIMA",
+                            modifier = Modifier.padding(
+                                horizontal = space.lg, vertical = space.xs,
+                            ),
+                        )
+                    }
+                    items(primaSessions, key = { "dprima:${it.id}" }) { s ->
+                        AgencyRow(
+                            title = s.label,
+                            subtitle = s.cwd,
+                            meta = if (s.is_streaming) "streaming" else "",
+                            onClick = { onOpenPrimaSession(s.id) },
+                            modifier = Modifier.padding(horizontal = space.sm),
+                            leading = {
+                                BotAvatar(name = "Prima", color = colors.defaultViolet)
                             },
                         )
                     }

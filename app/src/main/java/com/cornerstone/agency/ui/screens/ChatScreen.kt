@@ -91,14 +91,18 @@ fun ChatScreen(
     onBack: () -> Unit,
     onOpenSessions: () -> Unit,
     onOpenBotSettings: () -> Unit,
+    prima: Boolean = false,
 ) {
     val colors = AgencyTokens.colors
     val space = AgencyTokens.space
     val compact = isCompactHeight()
     val ui by vm.ui.collectAsState()
-    val socketState by vm.gateway.state.collectAsState()
 
-    val chat = remember(profileName, sessionId) { ChatRepository(vm.gateway, profileName) }
+    val chat: com.cornerstone.agency.data.ChatSource = remember(profileName, sessionId, prima) {
+        if (prima) com.cornerstone.agency.data.PrimaChatRepository(vm.bridge, vm.primaSocket)
+        else ChatRepository(vm.gateway, profileName)
+    }
+    val socketState by chat.linkState.collectAsState()
     val items by chat.items.collectAsState()
     val title by chat.title.collectAsState()
     val opening by chat.opening.collectAsState()
@@ -169,7 +173,8 @@ fun ChatScreen(
             }
             BotAvatar(
                 name = botName,
-                color = botAvatarColor(profileName, profileName == "default"),
+                color = if (prima) colors.defaultViolet
+                    else botAvatarColor(profileName, profileName == "default"),
                 size = if (compact) 22.dp else 30.dp,
             )
             Spacer(Modifier.width(space.sm))
@@ -218,10 +223,12 @@ fun ChatScreen(
                             renameOpen = true
                         },
                     )
-                    DropdownMenuItem(
-                        text = { Text("Bot settings") },
-                        onClick = { menuOpen = false; onOpenBotSettings() },
-                    )
+                    if (!prima) {
+                        DropdownMenuItem(
+                            text = { Text("Bot settings") },
+                            onClick = { menuOpen = false; onOpenBotSettings() },
+                        )
+                    }
                 }
             }
         }
@@ -403,7 +410,7 @@ fun ChatScreen(
 @Composable
 private fun ChatBubble(
     item: ChatItem,
-    chat: ChatRepository,
+    chat: com.cornerstone.agency.data.ChatSource,
     scope: kotlinx.coroutines.CoroutineScope,
 ) {
     val colors = AgencyTokens.colors
