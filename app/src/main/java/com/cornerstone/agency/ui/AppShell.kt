@@ -59,6 +59,21 @@ fun AppShell(
     var tab by rememberSaveable { mutableIntStateOf(Tab.BOTS.ordinal) }
     val needsAttention by com.cornerstone.agency.data.PendingRequests.anyOpen.collectAsState()
 
+    // Android 13+: heads-up request/message notifications need the runtime grant.
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val notifPerm = androidx.activity.compose.rememberLauncherForActivityResult(
+        androidx.activity.result.contract.ActivityResultContracts.RequestPermission(),
+    ) {}
+    androidx.compose.runtime.LaunchedEffect(Unit) {
+        if (
+            android.os.Build.VERSION.SDK_INT >= 33 &&
+            context.checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) !=
+                android.content.pm.PackageManager.PERMISSION_GRANTED
+        ) {
+            notifPerm.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+        }
+    }
+
     AgencyScaffold(
         bottomBar = {
             NavigationBar(containerColor = colors.sidebar) {

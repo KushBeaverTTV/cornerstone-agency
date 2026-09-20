@@ -154,16 +154,29 @@ object PendingRequests {
     private val trackerScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private val _openBySession = MutableStateFlow<Map<String, Int>>(emptyMap())
     private val _openByProfile = MutableStateFlow<Map<String, Int>>(emptyMap())
+    // Requests seen by the global socket listener (NotificationCenter) for
+    // sessions no chat screen currently has open.
+    private val _externalBySession = MutableStateFlow<Map<String, Int>>(emptyMap())
+    private val _externalByProfile = MutableStateFlow<Map<String, Int>>(emptyMap())
 
-    val anyOpen: StateFlow<Boolean> = _openBySession
-        .map { m -> m.values.any { it > 0 } }
-        .stateIn(trackerScope, SharingStarted.Eagerly, false)
-    val openSessions: StateFlow<Set<String>> = _openBySession
-        .map { m -> m.filterValues { it > 0 }.keys }
-        .stateIn(trackerScope, SharingStarted.Eagerly, emptySet())
-    val openProfiles: StateFlow<Set<String>> = _openByProfile
-        .map { m -> m.filterValues { it > 0 }.keys }
-        .stateIn(trackerScope, SharingStarted.Eagerly, emptySet())
+    private fun merged(
+        a: Map<String, Int>, b: Map<String, Int>,
+    ): Map<String, Int> = (a.keys + b.keys).associateWith {
+        (a[it] ?: 0) + (b[it] ?: 0)
+    }
+
+    val anyOpen: StateFlow<Boolean> =
+        kotlinx.coroutines.flow.combine(_openBySession, _externalBySession) { a, b ->
+            merged(a, b).values.any { it > 0 }
+        }.stateIn(trackerScope, SharingStarted.Eagerly, false)
+    val openSessions: StateFlow<Set<String>> =
+        kotlinx.coroutines.flow.combine(_openBySession, _externalBySession) { a, b ->
+            merged(a, b).filterValues { it > 0 }.keys
+        }.stateIn(trackerScope, SharingStarted.Eagerly, emptySet())
+    val openProfiles: StateFlow<Set<String>> =
+        kotlinx.coroutines.flow.combine(_openByProfile, _externalByProfile) { a, b ->
+            merged(a, b).filterValues { it > 0 }.keys
+        }.stateIn(trackerScope, SharingStarted.Eagerly, emptySet())
 
     fun report(sessionKey: String, profile: String, count: Int) {
         if (sessionKey.isNotEmpty()) {
@@ -171,6 +184,12 @@ object PendingRequests {
                 (sessionKey to count)
         }
         _openByProfile.value = _openByProfile.value + (profile to count)
+    }
+
+    /** Absolute per-session/per-profile open counts from the global listener. */
+    fun reportExternal(bySession: Map<String, Int>, byProfile: Map<String, Int>) {
+        _externalBySession.value = bySession
+        _externalByProfile.value = byProfile
     }
 
     fun clear(sessionKey: String, profile: String) {

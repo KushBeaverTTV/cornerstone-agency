@@ -86,9 +86,19 @@ class ChatRepository(
     private val reqTimers = HashMap<String, kotlinx.coroutines.Job>()
     private val reqIndex = HashMap<String, String>()
 
+    // Every runtime id this repo has owned (re-resume mints new ones) — all are
+    // "this chat is open" for notification suppression until close().
+    private val registeredSids = HashSet<String>()
+
     init {
         scope.launch { gateway.events.collect(::onEvent) }
         scope.launch { gateway.requests.collect(::onRequestFrame) }
+        // Resolutions that happened outside this transcript (notification
+        // action, TTL) collapse the matching card — the server stays silent.
+        scope.launch {
+            com.cornerstone.agency.service.NotificationCenter.resolvedKeys
+                .collect { key -> resolveRequest(key, "handled") }
+        }
     }
 
     // ---- session resolution ---------------------------------------------
@@ -141,6 +151,11 @@ class ChatRepository(
         runtimeSessionId = res.str("session_id") ?: runtimeSessionId
         storedSessionId = res.str("stored_session_id")
             ?: res.str("session_key") ?: res.str("resumed") ?: storedId
+        GatewayHub.registerSession(runtimeSessionId, storedSessionId, profile)
+        runtimeSessionId?.let {
+            registeredSids += it
+            GatewayHub.openChats += it
+        }
         hydrate(res)
         seedPendingFromResume(res)
         fetchTitle()
@@ -178,6 +193,11 @@ class ChatRepository(
         ).asObj()
         runtimeSessionId = res.str("session_id")
         storedSessionId = res.str("stored_session_id") ?: storedSessionId
+        GatewayHub.registerSession(runtimeSessionId, storedSessionId, profile)
+        runtimeSessionId?.let {
+            registeredSids += it
+            GatewayHub.openChats += it
+        }
         hydrate(res)
         seedPendingFromResume(res)
         seedPendingApprovals()
@@ -283,7 +303,10 @@ class ChatRepository(
                 "session.title",
                 buildJsonObject { put("session_id", id) },
             ).asObj()
-            res.str("title")?.takeIf { it.isNotBlank() }?.let { _title.value = it }
+            res.str("title")?.takeIf { it.isNotBlank() }?.let {
+                _title.value = it
+                GatewayHub.sessions[runtimeSessionId]?.title = it
+            }
         } catch (_: Exception) {
         }
     }
@@ -294,6 +317,8 @@ class ChatRepository(
         reqTimers.values.forEach { it.cancel() }
         reqTimers.clear()
         reqIndex.clear()
+        GatewayHub.openChats -= registeredSids
+        registeredSids.clear()
         PendingRequests.clear(storedSessionId ?: runtimeSessionId ?: "", profile)
         if (_streaming.value) {
             val rt = runtimeSessionId
@@ -507,6 +532,7 @@ class ChatRepository(
     private fun resolveRequest(requestIdOrSrq: String?, resolution: String) {
         if (requestIdOrSrq == null) return
         val itemId = reqIndex[requestIdOrSrq] ?: return
+        com.cornerstone.agency.service.NotificationCenter.resolve(requestIdOrSrq)
         patchRequest(itemId) {
             if (it.open) it.copy(state = RequestState.Resolved, resolution = resolution) else it
         }
@@ -540,6 +566,9 @@ class ChatRepository(
             patchRequest(itemId) {
                 it.copy(state = RequestState.Resolved, resolution = resolution)
             }
+            com.cornerstone.agency.service.NotificationCenter.resolve(
+                req.requestId ?: req.srqId?.jsonPrimitive?.contentOrNull,
+            )
         } catch (e: Exception) {
             patchRequest(itemId) {
                 it.copy(state = RequestState.Open, respondError = friendly(e))

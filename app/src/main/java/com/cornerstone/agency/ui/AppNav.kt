@@ -65,6 +65,15 @@ fun AppNav(vm: AppViewModel, navController: NavHostController = rememberNavContr
         }
     }
 
+    // Notification taps: only navigate once the shell is up.
+    val deepLink by vm.pendingDeepLink.collectAsState()
+    LaunchedEffect(deepLink, ui.connected) {
+        val link = deepLink ?: return@LaunchedEffect
+        if (!ui.connected) return@LaunchedEffect
+        vm.consumeDeepLink()
+        navController.navigate(Routes.chat(link.profile, link.session))
+    }
+
     NavHost(navController = navController, startDestination = Routes.CONNECT) {
         composable(Routes.CONNECT) {
             if (ui.booting) {

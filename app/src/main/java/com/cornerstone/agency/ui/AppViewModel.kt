@@ -1,6 +1,7 @@
 package com.cornerstone.agency.ui
 
 import android.app.Application
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -9,10 +10,14 @@ import androidx.lifecycle.viewModelScope
 import com.cornerstone.agency.data.ApiException
 import com.cornerstone.agency.data.BotProfile
 import com.cornerstone.agency.data.ConnectionRepository
+import com.cornerstone.agency.data.GatewayHub
 import com.cornerstone.agency.data.GatewaySocket
+import com.cornerstone.agency.data.Prefs
 import com.cornerstone.agency.data.SecureStore
 import com.cornerstone.agency.data.SessionInfo
 import com.cornerstone.agency.data.StatusPayload
+import com.cornerstone.agency.service.ConnectionService
+import com.cornerstone.agency.service.NotificationCenter
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -40,11 +45,14 @@ data class UiState(
     val status: StatusPayload? = null,
 )
 
-class AppViewModel(app: Application) : AndroidViewModel(app) {
+/** A notification/intent asking the nav host to open a specific chat. */
+data class ChatDeepLink(val profile: String, val session: String?)
+
+class AppViewModel(private val app: Application) : AndroidViewModel(app) {
 
     private val store = SecureStore(app)
     internal val repo = ConnectionRepository(store)
-    private val prefs = com.cornerstone.agency.data.Prefs(app)
+    private val prefs = Prefs(app)
 
     /** Chats tab: hide cron-job session chatter (DataStore-persisted). */
     val hideCronChatter: StateFlow<Boolean> =
@@ -58,27 +66,56 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         viewModelScope.launch { prefs.setHideCronChatter(hide) }
     }
 
-    /** Shared dashboard socket — chats subscribe to its events/state. */
-    val gateway = GatewaySocket(repo, viewModelScope)
+    /** Keep the socket + process alive in background via ConnectionService. */
+    val stayConnected: StateFlow<Boolean> =
+        prefs.stayConnected.stateIn(
+            viewModelScope,
+            kotlinx.coroutines.flow.SharingStarted.Eagerly,
+            false,
+        )
+
+    fun setStayConnected(stay: Boolean) {
+        viewModelScope.launch {
+            prefs.setStayConnected(stay)
+            syncService()
+        }
+    }
+
+    /** Shared dashboard socket — lives in GatewayHub so it survives the Activity. */
+    val gateway: GatewaySocket = GatewayHub.attach(repo)
+
+    /** Deep-link requested by a notification/share intent; consumed by AppNav. */
+    private val _pendingDeepLink = MutableStateFlow<ChatDeepLink?>(null)
+    val pendingDeepLink: StateFlow<ChatDeepLink?> = _pendingDeepLink.asStateFlow()
+
+    fun requestDeepLink(profile: String, session: String?) {
+        _pendingDeepLink.value = ChatDeepLink(profile, session)
+    }
+
+    fun consumeDeepLink() {
+        _pendingDeepLink.value = null
+    }
 
     private val _ui = MutableStateFlow(UiState())
     val ui: StateFlow<UiState> = _ui.asStateFlow()
 
     private var healthJob: Job? = null
+    private var graceJob: Job? = null
 
     @Volatile
     private var foregrounded = true
 
     init {
-        // Health polling and the gateway socket only run while the app is foregrounded.
         ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
             override fun onStart(owner: LifecycleOwner) {
                 foregrounded = true
+                GatewayHub.foregrounded = true
                 syncBackgroundWork()
             }
 
             override fun onStop(owner: LifecycleOwner) {
                 foregrounded = false
+                GatewayHub.foregrounded = false
                 syncBackgroundWork()
             }
         })
@@ -185,7 +222,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun disconnect() {
+        graceJob?.cancel()
+        app.stopService(ConnectionService.intent(app))
+        NotificationCenter.cancelAll(app)
+        NotificationCenter.unbind()
         gateway.disconnect()
+        GatewayHub.detach()
         repo.disconnect()
         healthJob?.cancel()
         _ui.value = UiState(booting = false)
@@ -203,20 +245,56 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 sessionUser = me.displayName.ifBlank { me.userId },
             )
         }
+        NotificationCenter.bind(app, gateway)
+        viewModelScope.launch { NotificationCenter.warmCronFilter() }
         refreshProfiles()
         refreshStatus()
         syncBackgroundWork()
     }
 
-    /** Polling + socket exist only while connected AND foregrounded. */
+    /**
+     * Foregrounded: socket + health poll live, grace timer cancelled.
+     * Backgrounded with stay-connected: socket stays (service holds process).
+     * Backgrounded without it: 3-minute grace before disconnect, so a quick
+     * app-switch doesn't kill a pending approval.
+     */
     private fun syncBackgroundWork() {
-        if (foregrounded && _ui.value.connected) {
+        val connected = _ui.value.connected
+        if (foregrounded && connected) {
+            graceJob?.cancel()
+            graceJob = null
             startHealthPolling()
             gateway.connect()
-        } else {
+        } else if (connected && !foregrounded && !stayConnected.value) {
+            healthJob?.cancel()
+            healthJob = null
+            graceJob?.cancel()
+            graceJob = viewModelScope.launch {
+                delay(BACKGROUND_GRACE_MS)
+                gateway.disconnect()
+            }
+        } else if (!connected) {
+            graceJob?.cancel()
             healthJob?.cancel()
             healthJob = null
             gateway.disconnect()
+        }
+        // stayConnected && !foregrounded: socket keeps running, health poll rests.
+        if (connected && !foregrounded) {
+            healthJob?.cancel()
+            healthJob = null
+        }
+        syncService()
+    }
+
+    /** The service tracks the toggle + connection state, started while
+     * foreground (background FGS starts are blocked on Android 12+). */
+    private fun syncService() {
+        val want = _ui.value.connected && stayConnected.value
+        if (want) {
+            ContextCompat.startForegroundService(app, ConnectionService.intent(app))
+        } else {
+            app.stopService(ConnectionService.intent(app))
         }
     }
 
@@ -233,5 +311,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 }
             }
         }
+    }
+
+    companion object {
+        private const val BACKGROUND_GRACE_MS = 3 * 60 * 1000L
     }
 }

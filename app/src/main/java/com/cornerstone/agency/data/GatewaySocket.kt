@@ -71,9 +71,14 @@ class GatewayRpcException(val code: Int, message: String) : Exception(message)
  * each attempt; disconnect() is manual and stops the loop.
  */
 class GatewaySocket(
-    private val repo: ConnectionRepository,
+    repo: ConnectionRepository,
     private val scope: CoroutineScope,
 ) {
+    /** Hot-swapped by GatewayHub on Activity recreation so wsTicket()/wsUrl()
+     * always ride the freshest ConnectionRepository (cookie jar). */
+    @Volatile
+    internal var repo: ConnectionRepository = repo
+
     private val json = Json { ignoreUnknownKeys = true }
 
     private val _state = MutableStateFlow(GatewayState.CLOSED)

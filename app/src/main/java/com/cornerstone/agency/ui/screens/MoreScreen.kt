@@ -40,6 +40,7 @@ fun MoreScreen(
     onOpenSkills: () -> Unit = {},
 ) {
     val ui by vm.ui.collectAsState()
+    val stayConnected by vm.stayConnected.collectAsState()
     val colors = AgencyTokens.colors
     val space = AgencyTokens.space
 
@@ -95,6 +96,25 @@ fun MoreScreen(
                         color = if (running) colors.success else colors.destructive,
                     )
                 }
+            }
+            Spacer(Modifier.height(space.sm))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f)) {
+                    Text(
+                        "Stay connected in background",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = colors.foreground,
+                    )
+                    Text(
+                        "Foreground service keeps the socket alive",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = colors.tertiary,
+                    )
+                }
+                androidx.compose.material3.Switch(
+                    checked = stayConnected,
+                    onCheckedChange = { vm.setStayConnected(it) },
+                )
             }
         }
 

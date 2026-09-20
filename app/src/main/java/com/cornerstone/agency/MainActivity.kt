@@ -1,5 +1,6 @@
 package com.cornerstone.agency
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
+import com.cornerstone.agency.service.NotificationCenter
 import com.cornerstone.agency.theme.AgencyTheme
 import com.cornerstone.agency.ui.AppNav
 import com.cornerstone.agency.ui.AppViewModel
@@ -32,6 +34,7 @@ class MainActivity : ComponentActivity() {
                 )
             }
         }
+        handleDeepLink(intent)
 
         setContent {
             AgencyTheme {
@@ -40,5 +43,20 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        handleDeepLink(intent)
+    }
+
+    /** Notification taps carry PROFILE/SESSION extras → AppNav navigates. */
+    private fun handleDeepLink(intent: Intent?) {
+        val profile = intent?.getStringExtra(NotificationCenter.EXTRA_PROFILE)
+            ?.takeIf { it.isNotBlank() } ?: return
+        vm.requestDeepLink(
+            profile,
+            intent.getStringExtra(NotificationCenter.EXTRA_SESSION),
+        )
     }
 }
