@@ -42,7 +42,7 @@ data class UiState(
 class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     private val store = SecureStore(app)
-    private val repo = ConnectionRepository(store)
+    internal val repo = ConnectionRepository(store)
 
     /** Shared dashboard socket — chats subscribe to its events/state. */
     val gateway = GatewaySocket(repo, viewModelScope)

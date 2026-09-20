@@ -17,8 +17,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.cornerstone.agency.theme.AgencyTokens
+import com.cornerstone.agency.ui.screens.BotDetailScreen
 import com.cornerstone.agency.ui.screens.ChatScreen
 import com.cornerstone.agency.ui.screens.ConnectScreen
+import com.cornerstone.agency.ui.screens.NewAgentScreen
 import com.cornerstone.agency.ui.screens.SessionsScreen
 
 object Routes {
@@ -26,12 +28,16 @@ object Routes {
     const val SHELL = "shell"
     const val CHAT = "chat/{profile}?session={session}"
     const val SESSIONS = "sessions/{profile}"
+    const val BOT = "bot/{profile}"
+    const val BOT_NEW = "bot/new"
 
     fun chat(profile: String, session: String? = null): String =
         "chat/${Uri.encode(profile)}" +
             (session?.let { "?session=${Uri.encode(it)}" } ?: "")
 
     fun sessions(profile: String): String = "sessions/${Uri.encode(profile)}"
+
+    fun bot(profile: String): String = "bot/${Uri.encode(profile)}"
 }
 
 @Composable
@@ -70,6 +76,10 @@ fun AppNav(vm: AppViewModel, navController: NavHostController = rememberNavContr
                 onOpenSession = { profile, sessionId ->
                     navController.navigate(Routes.chat(profile, sessionId))
                 },
+                onOpenBot = { profile ->
+                    navController.navigate(Routes.bot(profile))
+                },
+                onNewAgent = { navController.navigate(Routes.BOT_NEW) },
             )
         }
         composable(
@@ -90,6 +100,7 @@ fun AppNav(vm: AppViewModel, navController: NavHostController = rememberNavContr
                 sessionId = entry.arguments?.getString("session"),
                 onBack = { navController.popBackStack() },
                 onOpenSessions = { navController.navigate(Routes.sessions(profile)) },
+                onOpenBotSettings = { navController.navigate(Routes.bot(profile)) },
             )
         }
         composable(
@@ -104,6 +115,30 @@ fun AppNav(vm: AppViewModel, navController: NavHostController = rememberNavContr
                 onOpenSession = { sessionId ->
                     navController.navigate(Routes.chat(profile, sessionId))
                 },
+            )
+        }
+        composable(Routes.BOT_NEW) {
+            NewAgentScreen(
+                vm = vm,
+                onBack = { navController.popBackStack() },
+                onCreated = { name ->
+                    navController.navigate(Routes.bot(name)) {
+                        popUpTo(Routes.SHELL)
+                    }
+                },
+            )
+        }
+        composable(
+            route = Routes.BOT,
+            arguments = listOf(navArgument("profile") { type = NavType.StringType }),
+        ) { entry ->
+            val profile = entry.arguments?.getString("profile") ?: return@composable
+            BotDetailScreen(
+                vm = vm,
+                profileName = profile,
+                onBack = { navController.popBackStack() },
+                onOpenSessions = { navController.navigate(Routes.sessions(profile)) },
+                onDeleted = { navController.popBackStack(Routes.SHELL, inclusive = false) },
             )
         }
     }

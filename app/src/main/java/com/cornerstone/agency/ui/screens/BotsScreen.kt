@@ -2,6 +2,7 @@ package com.cornerstone.agency.ui.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,7 +11,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
@@ -41,7 +46,12 @@ import com.cornerstone.agency.ui.components.relativeTime
 import kotlinx.coroutines.launch
 
 @Composable
-fun BotsScreen(vm: AppViewModel, onOpenChat: (String) -> Unit) {
+fun BotsScreen(
+    vm: AppViewModel,
+    onOpenChat: (String) -> Unit,
+    onOpenBot: (String) -> Unit = {},
+    onNewAgent: () -> Unit = {},
+) {
     val ui by vm.ui.collectAsState()
     val colors = AgencyTokens.colors
     val space = AgencyTokens.space
@@ -63,11 +73,21 @@ fun BotsScreen(vm: AppViewModel, onOpenChat: (String) -> Unit) {
             item {
                 Column(Modifier.padding(horizontal = space.lg)) {
                     Spacer(Modifier.height(space.lg))
-                    Text(
-                        text = "Bots",
-                        style = MaterialTheme.typography.displayLarge,
-                        color = colors.wordmark,
-                    )
+                    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text = "Bots",
+                            style = MaterialTheme.typography.displayLarge,
+                            color = colors.wordmark,
+                            modifier = Modifier.weight(1f),
+                        )
+                        IconButton(onClick = onNewAgent) {
+                            Icon(
+                                Icons.Filled.Add,
+                                contentDescription = "New agent",
+                                tint = colors.secondary,
+                            )
+                        }
+                    }
                     Spacer(Modifier.height(space.md))
                     AgencyTextField(
                         value = query,
@@ -99,6 +119,7 @@ fun BotsScreen(vm: AppViewModel, onOpenChat: (String) -> Unit) {
                         meta = if (profile.description.isNotBlank()) profile.model else "",
                         modifier = Modifier.padding(horizontal = space.sm),
                         onClick = { onOpenChat(profile.name) },
+                        onLongClick = { onOpenBot(profile.name) },
                         leading = {
                             BotAvatar(
                                 name = profile.title,

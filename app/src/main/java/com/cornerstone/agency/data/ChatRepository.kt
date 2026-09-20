@@ -57,6 +57,10 @@ class ChatRepository(
     private val _streaming = MutableStateFlow(false)
     val streaming: StateFlow<Boolean> = _streaming.asStateFlow()
 
+    /** Transient turn status line ("(◇) orchestrating…") — NOT a transcript row. */
+    private val _statusLine = MutableStateFlow("")
+    val statusLine: StateFlow<String> = _statusLine.asStateFlow()
+
     private val _lastError = MutableStateFlow("")
     val lastError: StateFlow<String> = _lastError.asStateFlow()
 
@@ -65,8 +69,11 @@ class ChatRepository(
     var runtimeSessionId: String? = null
         private set
 
-    // The streaming assistant bubble and the coalesced thinking bubble.
+    // Turn-scoped render state: one streaming assistant bubble (its list index is
+    // the insertion point for thinking/tool rows so they always sit ABOVE the
+    // answer), one coalesced thinking bubble, one open tool line.
     private var assistantId: String? = null
+    private var turnAssistantIndex: Int? = null
     private var thinkingId: String? = null
     private var openToolId: String? = null
 
@@ -153,6 +160,7 @@ class ChatRepository(
         }
         append(ChatKind.User, t)
         _streaming.value = true
+        _statusLine.value = ""
         try {
             gateway.call(
                 "prompt.submit",
@@ -253,11 +261,16 @@ class ChatRepository(
                 )
 
                 "assistant" -> {
-                    m.str("reasoning")?.takeIf { it.isNotBlank() }?.let {
-                        list += ChatItem(id = nextId(), kind = ChatKind.Thinking, text = it)
-                    }
+                    val text = m.str("text") ?: ""
+                    // reasoning.available can carry the final ANSWER verbatim —
+                    // don't render it as a duplicate thinking bubble.
+                    m.str("reasoning")
+                        ?.takeIf { it.isNotBlank() && it.trim() != text.trim() }
+                        ?.let {
+                            list += ChatItem(id = nextId(), kind = ChatKind.Thinking, text = it)
+                        }
                     list += ChatItem(
-                        id = nextId(), kind = ChatKind.Assistant, text = m.str("text") ?: "",
+                        id = nextId(), kind = ChatKind.Assistant, text = text,
                     )
                 }
 
@@ -280,8 +293,10 @@ class ChatRepository(
         }
         _items.value = list
         assistantId = null
+        turnAssistantIndex = null
         thinkingId = null
         openToolId = null
+        _statusLine.value = ""
         _streaming.value = res["running"]?.jsonPrimitive?.booleanOrNull == true
     }
 
@@ -303,18 +318,26 @@ class ChatRepository(
                 finalizeStreaming()
             }
 
-            // thinking.delta carries the status line ("(◇) orchestrating…");
-            // reasoning.delta streams the model's chain-of-thought. Both coalesce
-            // into the one collapsible thinking bubble.
-            "thinking.delta", "reasoning.delta" ->
-                appendThinking(p?.str("text") ?: "")
+            // thinking.delta carries the turn status line ("(◇) orchestrating…")
+            // followed by {"text":""} when done — a transient caption, NOT a
+            // transcript row. reasoning.delta is the thinking bubble's only source.
+            "thinking.delta" -> _statusLine.value = p?.str("text") ?: ""
 
-            "reasoning.available" ->
-                p?.str("text")?.takeIf { it.isNotBlank() }?.let { setThinking(it) }
+            "reasoning.delta" -> appendThinking(p?.str("text") ?: "")
+
+            "reasoning.available" -> {
+                // Sometimes carries the final answer text instead of reasoning —
+                // ignore blanks and answer-echoes, else (re)write the thinking row.
+                val t = p?.str("text") ?: ""
+                val answer = assistantId?.let { id ->
+                    _items.value.firstOrNull { it.id == id }?.text
+                } ?: ""
+                if (t.isNotBlank() && t.trim() != answer.trim()) setThinking(t)
+            }
 
             "tool.start" -> {
                 openToolId = nextId()
-                append(
+                insertAboveAssistant(
                     ChatItem(
                         id = openToolId!!, kind = ChatKind.Tool, done = false,
                         text = "▶ ${p?.str("name") ?: "tool"}",
@@ -330,7 +353,12 @@ class ChatRepository(
                     }
                     openToolId = null
                 } else {
-                    append(ChatKind.Tool, "✓ ${p?.str("name") ?: "tool"}")
+                    insertAboveAssistant(
+                        ChatItem(
+                            id = nextId(), kind = ChatKind.Tool, done = true,
+                            text = "✓ ${p?.str("name") ?: "tool"}",
+                        )
+                    )
                 }
             }
 
@@ -368,6 +396,22 @@ class ChatRepository(
         _items.value = _items.value + item
     }
 
+    /**
+     * Insert a row just above the current turn's assistant bubble (keeping
+     * thinking/tool lines visually before the answer) or append if the bubble
+     * doesn't exist yet. Each insert bumps [turnAssistantIndex] so later rows
+     * stay ordered.
+     */
+    private fun insertAboveAssistant(item: ChatItem) {
+        val idx = turnAssistantIndex
+        if (idx != null && idx <= _items.value.size) {
+            _items.value = _items.value.toMutableList().apply { add(idx, item) }
+            turnAssistantIndex = idx + 1
+        } else {
+            append(item)
+        }
+    }
+
     private fun mutate(id: String, f: (ChatItem) -> ChatItem) {
         _items.value = _items.value.map { if (it.id == id) f(it) else it }
     }
@@ -376,6 +420,7 @@ class ChatRepository(
         thinkingId = null
         val id = nextId()
         assistantId = id
+        turnAssistantIndex = _items.value.size
         append(ChatItem(id = id, kind = ChatKind.Assistant, text = "", streaming = true))
         _streaming.value = true
     }
@@ -393,6 +438,7 @@ class ChatRepository(
         val id = assistantId ?: run {
             val newId = nextId()
             assistantId = newId
+            turnAssistantIndex = _items.value.size
             append(ChatItem(id = newId, kind = ChatKind.Assistant, text = text))
             newId
         }
@@ -405,7 +451,7 @@ class ChatRepository(
         if (id == null) {
             val newId = nextId()
             thinkingId = newId
-            append(ChatItem(id = newId, kind = ChatKind.Thinking, text = delta))
+            insertAboveAssistant(ChatItem(id = newId, kind = ChatKind.Thinking, text = delta))
         } else {
             mutate(id) { it.copy(text = it.text + delta) }
         }
@@ -416,7 +462,7 @@ class ChatRepository(
         if (id == null) {
             val newId = nextId()
             thinkingId = newId
-            append(ChatItem(id = newId, kind = ChatKind.Thinking, text = text))
+            insertAboveAssistant(ChatItem(id = newId, kind = ChatKind.Thinking, text = text))
         } else {
             mutate(id) { it.copy(text = text) }
         }
@@ -424,10 +470,12 @@ class ChatRepository(
 
     private fun finalizeStreaming() {
         _streaming.value = false
+        _statusLine.value = ""
         _items.value = _items.value.map {
             if (it.streaming || !it.done) it.copy(streaming = false, done = true) else it
         }
         assistantId = null
+        turnAssistantIndex = null
         thinkingId = null
         openToolId = null
     }

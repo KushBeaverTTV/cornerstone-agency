@@ -2,6 +2,7 @@ package com.cornerstone.agency.ui.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,6 +27,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -305,6 +310,101 @@ fun StatusBanner(message: String, modifier: Modifier = Modifier) {
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
+    }
+}
+
+/**
+ * Bottom sheet listing every provider's models (/api/model/options), grouped by
+ * provider with a check on the current selection. [onPick] gets (providerSlug, modelId).
+ */
+@OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
+@Composable
+fun ModelPickerSheet(
+    providers: List<com.cornerstone.agency.data.ModelProvider>,
+    currentProvider: String,
+    currentModel: String,
+    loading: Boolean,
+    onPick: (providerSlug: String, modelId: String) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    val colors = AgencyTokens.colors
+    var filter by remember { mutableStateOf("") }
+    androidx.compose.material3.ModalBottomSheet(
+        onDismissRequest = onDismiss,
+        containerColor = colors.elevated,
+    ) {
+        Column(Modifier.fillMaxWidth().padding(horizontal = AgencyTokens.space.lg)) {
+            Text(
+                "Model",
+                style = MaterialTheme.typography.titleLarge,
+                color = colors.foreground,
+            )
+            Spacer(Modifier.height(AgencyTokens.space.sm))
+            AgencyTextField(
+                value = filter,
+                onValueChange = { filter = it },
+                placeholder = "Search models",
+            )
+            Spacer(Modifier.height(AgencyTokens.space.sm))
+        }
+        if (loading) {
+            Row(
+                Modifier.fillMaxWidth().padding(AgencyTokens.space.lg),
+                horizontalArrangement = Arrangement.Center,
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp),
+                    color = colors.gold, strokeWidth = 2.dp,
+                )
+            }
+        } else {
+            androidx.compose.foundation.lazy.LazyColumn(
+                Modifier.fillMaxWidth().height(420.dp),
+            ) {
+                providers.forEach { provider ->
+                    val models = provider.models.filter {
+                        filter.isBlank() || it.contains(filter, ignoreCase = true)
+                    }
+                    if (models.isEmpty()) return@forEach
+                    item(key = "prov-${provider.slug}") {
+                        SectionKicker(
+                            provider.name,
+                            modifier = Modifier.padding(
+                                horizontal = AgencyTokens.space.lg,
+                                vertical = AgencyTokens.space.xs,
+                            ),
+                        )
+                    }
+                    items(models.size) { i ->
+                        val model = models[i]
+                        val selected =
+                            provider.slug == currentProvider && model.equals(currentModel, true)
+                        Row(
+                            Modifier
+                                .fillMaxWidth()
+                                .clickable { onPick(provider.slug, model) }
+                                .padding(
+                                    horizontal = AgencyTokens.space.lg,
+                                    vertical = AgencyTokens.space.sm,
+                                ),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text(
+                                model,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = if (selected) colors.gold else colors.foreground,
+                                modifier = Modifier.weight(1f),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                            if (selected) {
+                                Text("✓", color = colors.gold)
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 

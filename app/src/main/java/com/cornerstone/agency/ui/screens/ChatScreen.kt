@@ -77,6 +77,7 @@ fun ChatScreen(
     sessionId: String?,
     onBack: () -> Unit,
     onOpenSessions: () -> Unit,
+    onOpenBotSettings: () -> Unit,
 ) {
     val colors = AgencyTokens.colors
     val space = AgencyTokens.space
@@ -88,6 +89,7 @@ fun ChatScreen(
     val title by chat.title.collectAsState()
     val opening by chat.opening.collectAsState()
     val streaming by chat.streaming.collectAsState()
+    val statusLine by chat.statusLine.collectAsState()
     val lastError by chat.lastError.collectAsState()
 
     val botName = botDisplayName(ui.profiles, profileName)
@@ -182,6 +184,10 @@ fun ChatScreen(
                             renameOpen = true
                         },
                     )
+                    DropdownMenuItem(
+                        text = { Text("Bot settings") },
+                        onClick = { menuOpen = false; onOpenBotSettings() },
+                    )
                 }
             }
         }
@@ -228,6 +234,18 @@ fun ChatScreen(
                     Spacer(Modifier.height(space.xs))
                 }
             }
+        }
+
+        // Transient turn status ("(◇) orchestrating…") — under the streaming
+        // bubble, above the composer. Cleared on empty text / message.complete.
+        if (statusLine.isNotEmpty()) {
+            Text(
+                statusLine,
+                color = colors.tertiary,
+                style = MaterialTheme.typography.labelSmall,
+                fontStyle = FontStyle.Italic,
+                modifier = Modifier.padding(horizontal = space.lg, vertical = space.xxs),
+            )
         }
 
         if (lastError.isNotEmpty()) {

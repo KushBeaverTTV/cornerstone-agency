@@ -129,6 +129,41 @@ data class ChatItem(
     val meta: String = "",
 )
 
+// ---- M3: bot settings / model options -------------------------------------
+
+/** GET /api/profiles/{name}/soul — verified: {"content": "...", "exists": true} */
+@Serializable
+data class SoulResponse(
+    val content: String = "",
+    val exists: Boolean = false,
+)
+
+/** Generic {"ok": true} mutation acknowledgement. */
+@Serializable
+data class OkResponse(
+    val ok: Boolean = false,
+    val name: String = "",
+    val path: String = "",
+    @SerialName("model_set") val modelSet: Boolean = false,
+    @SerialName("model_error") val modelError: String = "",
+)
+
+/** One provider bucket inside GET /api/model/options. */
+@Serializable
+data class ModelProvider(
+    val slug: String = "",
+    val name: String = "",
+    @SerialName("is_current") val isCurrent: Boolean = false,
+    @SerialName("is_user_defined") val isUserDefined: Boolean = false,
+    @SerialName("total_models") val totalModels: Int = 0,
+    val models: List<String> = emptyList(),
+)
+
+@Serializable
+data class ModelOptionsResponse(
+    val providers: List<ModelProvider> = emptyList(),
+)
+
 /** Response bodies sometimes nest under a key, sometimes come bare — keep a tolerant decode path. */
 @Serializable
 data class ApiErrorBody(

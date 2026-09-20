@@ -123,6 +123,7 @@ class ConnectionRepository(private val store: SecureStore) {
                     when (method) {
                         "POST" -> post((body ?: "").toRequestBody(JSON_MEDIA))
                         "PUT" -> put((body ?: "").toRequestBody(JSON_MEDIA))
+                        "PATCH" -> patch((body ?: "").toRequestBody(JSON_MEDIA))
                         "DELETE" -> delete()
                     }
                 }
@@ -204,6 +205,65 @@ class ConnectionRepository(private val store: SecureStore) {
         json.decodeFromString<ProfilesResponse>(api("/api/profiles")).profiles
 
     suspend fun status(): StatusPayload = json.decodeFromString(api("/api/status"))
+
+    // ---- M3: profile management ------------------------------------------
+    // Contract verified against hermes serve 0.21.3 (probe: agency_m3_probe.json):
+    // GET /api/profiles/{name} is 404 in headless mode; PATCH is rename-only;
+    // soul PUT takes {"content"}; model PUT needs {provider, model} together;
+    // description has its own PUT; profile create takes no soul field.
+
+    suspend fun soul(name: String): SoulResponse =
+        json.decodeFromString(api("/api/profiles/$name/soul"))
+
+    suspend fun updateSoul(name: String, content: String) {
+        api("/api/profiles/$name/soul", "PUT", """{"content":${json.encodeToString(content)}}""")
+    }
+
+    suspend fun updateDescription(name: String, description: String) {
+        api(
+            "/api/profiles/$name/description", "PUT",
+            """{"description":${json.encodeToString(description)}}""",
+        )
+    }
+
+    suspend fun updateModel(name: String, provider: String, model: String) {
+        api(
+            "/api/profiles/$name/model", "PUT",
+            """{"provider":${json.encodeToString(provider)},"model":${json.encodeToString(model)}}""",
+        )
+    }
+
+    suspend fun renameProfile(name: String, newName: String) {
+        api(
+            "/api/profiles/$name", "PATCH",
+            """{"new_name":${json.encodeToString(newName)}}""",
+        )
+    }
+
+    /** Create a profile; the POST takes name/description/provider/model — no soul field. */
+    suspend fun createProfile(
+        name: String,
+        description: String,
+        provider: String,
+        model: String,
+    ): OkResponse {
+        val body = buildString {
+            append("""{"name":${json.encodeToString(name)}""")
+            if (description.isNotBlank()) append(""","description":${json.encodeToString(description)}""")
+            if (provider.isNotBlank() && model.isNotBlank()) {
+                append(""","provider":${json.encodeToString(provider)},"model":${json.encodeToString(model)}""")
+            }
+            append("}")
+        }
+        return json.decodeFromString(api("/api/profiles", "POST", body))
+    }
+
+    suspend fun deleteProfile(name: String) {
+        api("/api/profiles/$name", "DELETE")
+    }
+
+    suspend fun modelOptions(): List<ModelProvider> =
+        json.decodeFromString<ModelOptionsResponse>(api("/api/model/options")).providers
 
     /**
      * Mint a single-use WebSocket ticket (POST /api/auth/ws-ticket, cookie-authed).
