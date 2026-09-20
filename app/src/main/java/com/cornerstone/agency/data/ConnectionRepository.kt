@@ -23,7 +23,8 @@ class ApiException(val status: Int, message: String) : Exception(message)
  */
 class ConnectionRepository(private val store: SecureStore) {
 
-    private val json = Json { ignoreUnknownKeys = true }
+    // coerceInputValues: server emits explicit nulls for never-run cron jobs etc.
+    private val json = Json { ignoreUnknownKeys = true; coerceInputValues = true }
 
     var baseUrl: String = ""
         private set
@@ -264,6 +265,70 @@ class ConnectionRepository(private val store: SecureStore) {
 
     suspend fun modelOptions(): List<ModelProvider> =
         json.decodeFromString<ModelOptionsResponse>(api("/api/model/options")).providers
+
+    // ---- M4: cron jobs ------------------------------------------------------
+    // /api/cron/jobs returns a BARE array (merged across profiles); the bot
+    // association is the "[bot:<name>] " prefix in job.name.
+
+    suspend fun cronJobs(): List<CronJob> =
+        json.decodeFromString(api("/api/cron/jobs"))
+
+    suspend fun cronJob(id: String): CronJob =
+        json.decodeFromString(api("/api/cron/jobs/${enc(id)}"))
+
+    suspend fun cronJobRuns(id: String, limit: Int = 10): List<SessionSummary> =
+        json.decodeFromString<CronRunsResponse>(
+            api("/api/cron/jobs/${enc(id)}/runs?limit=$limit"),
+        ).runs
+
+    suspend fun cronAction(id: String, action: String) {
+        api("/api/cron/jobs/${enc(id)}/$action", "POST", "{}")
+    }
+
+    suspend fun deleteCronJob(id: String) {
+        api("/api/cron/jobs/${enc(id)}", "DELETE")
+    }
+
+    suspend fun createCronJob(body: String): String = api("/api/cron/jobs", "POST", body)
+
+    // ---- M4: skills -----------------------------------------------------------
+
+    suspend fun skills(): List<Skill> = json.decodeFromString(api("/api/skills"))
+
+    suspend fun toggleSkill(name: String, enabled: Boolean) {
+        api(
+            "/api/skills/toggle", "PUT",
+            """{"name":${json.encodeToString(name)},"enabled":$enabled}""",
+        )
+    }
+
+    suspend fun skillHubSearch(query: String): List<HubSkill> =
+        json.decodeFromString<HubSearchResponse>(
+            api("/api/skills/hub/search?q=${java.net.URLEncoder.encode(query, "UTF-8")}"),
+        ).results
+
+    suspend fun skillHubInstall(identifier: String) {
+        api("/api/skills/hub/install", "POST", """{"identifier":${json.encodeToString(identifier)}}""")
+    }
+
+    // ---- M4: system -------------------------------------------------------------
+
+    suspend fun systemStats(): SystemStats = json.decodeFromString(api("/api/system/stats"))
+
+    suspend fun analyticsUsage(): AnalyticsUsage =
+        json.decodeFromString(api("/api/analytics/usage"))
+
+    /** Raw YAML config text — {yaml: "..."} */
+    suspend fun configRaw(): String {
+        val body = api("/api/config/raw")
+        val el = json.parseToJsonElement(body)
+        return (el as? kotlinx.serialization.json.JsonObject)
+            ?.get("yaml")
+            ?.let { (it as? kotlinx.serialization.json.JsonPrimitive)?.content }
+            ?: body
+    }
+
+    private fun enc(s: String): String = java.net.URLEncoder.encode(s, "UTF-8")
 
     /**
      * Mint a single-use WebSocket ticket (POST /api/auth/ws-ticket, cookie-authed).

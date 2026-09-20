@@ -40,6 +40,7 @@ import com.cornerstone.agency.ui.components.AgencyRow
 import com.cornerstone.agency.ui.components.AgencyTextField
 import com.cornerstone.agency.ui.components.BotAvatar
 import com.cornerstone.agency.ui.components.EmptyState
+import com.cornerstone.agency.ui.components.EyeIcon
 import com.cornerstone.agency.ui.components.SectionKicker
 import com.cornerstone.agency.ui.components.botAvatarColor
 import com.cornerstone.agency.ui.components.relativeTime
@@ -148,6 +149,7 @@ fun ChatsScreen(
     val colors = AgencyTokens.colors
     val space = AgencyTokens.space
     val socketState by vm.gateway.state.collectAsState()
+    val hideCronChatter by vm.hideCronChatter.collectAsState()
     val scope = rememberCoroutineScope()
 
     // Sessions grouped by bot, in roster order.
@@ -156,6 +158,15 @@ fun ChatsScreen(
     }
     var loading by remember { mutableStateOf(true) }
     var error by remember { mutableStateOf("") }
+    // Cron job names for the chatter filter (display name + raw [bot:x] name).
+    var cronNames by remember { mutableStateOf<Set<String>>(emptySet()) }
+
+    LaunchedEffect(Unit) {
+        cronNames = runCatching { vm.repo.cronJobs() }
+            .getOrDefault(emptyList())
+            .flatMap { listOf(it.name, it.displayName) }
+            .toSet()
+    }
 
     fun refresh() {
         val profiles = vm.ui.value.profiles
@@ -188,23 +199,48 @@ fun ChatsScreen(
         }
     }
 
+    val visibleGroups = if (!hideCronChatter) groups else groups.map { (p, sessions) ->
+        p to sessions.filterNot { s ->
+            val hay = "${s.title}\n${s.preview}"
+            val title = s.title.trim()
+            hay.contains("running as a scheduled cron job", ignoreCase = true) ||
+                cronNames.any { title == it || title.startsWith("$it ·") }
+        }
+    }.filter { it.second.isNotEmpty() }
+
     Column(Modifier.fillMaxSize()) {
-        ScreenTitle("Chats")
+        Row(
+            Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            ScreenTitle("Chats", Modifier.weight(1f))
+            IconButton(onClick = { vm.setHideCronChatter(!hideCronChatter) }) {
+                Icon(
+                    EyeIcon,
+                    contentDescription = "Hide cron chatter",
+                    tint = if (hideCronChatter) colors.gold else colors.tertiary,
+                    modifier = Modifier.padding(end = space.lg),
+                )
+            }
+        }
         when {
-            loading && groups.isEmpty() -> Box(Modifier.fillMaxSize(), Alignment.Center) {
+            loading && visibleGroups.isEmpty() -> Box(Modifier.fillMaxSize(), Alignment.Center) {
                 CircularProgressIndicator(
                     color = colors.gold, strokeWidth = 2.dp,
                     modifier = Modifier.size(28.dp),
                 )
             }
 
-            groups.isEmpty() -> EmptyState(
+            visibleGroups.isEmpty() -> EmptyState(
                 if (error.isEmpty()) "No chats yet" else "Couldn't load chats",
-                if (error.isEmpty()) "Open a bot to start a conversation" else error,
+                if (error.isEmpty()) {
+                    if (hideCronChatter && groups.isNotEmpty()) "All visible sessions are cron chatter"
+                    else "Open a bot to start a conversation"
+                } else error,
             )
 
             else -> LazyColumn(Modifier.fillMaxSize()) {
-                groups.forEach { (profile, sessions) ->
+                visibleGroups.forEach { (profile, sessions) ->
                     item(key = "kicker-${profile.name}") {
                         SectionKicker(
                             profile.title,
@@ -235,21 +271,13 @@ fun ChatsScreen(
 }
 
 @Composable
-fun JobsScreen() {
-    Column(Modifier.fillMaxSize()) {
-        ScreenTitle("Jobs")
-        EmptyState("No jobs yet", "Scheduled work lands here in a later milestone")
-    }
-}
-
-@Composable
-private fun ScreenTitle(title: String) {
+private fun ScreenTitle(title: String, modifier: Modifier = Modifier) {
     val colors = AgencyTokens.colors
     Text(
         text = title,
         style = MaterialTheme.typography.displayLarge,
         color = colors.wordmark,
-        modifier = Modifier.padding(
+        modifier = modifier.padding(
             horizontal = AgencyTokens.space.lg,
             vertical = AgencyTokens.space.lg,
         ),

@@ -20,8 +20,11 @@ import com.cornerstone.agency.theme.AgencyTokens
 import com.cornerstone.agency.ui.screens.BotDetailScreen
 import com.cornerstone.agency.ui.screens.ChatScreen
 import com.cornerstone.agency.ui.screens.ConnectScreen
+import com.cornerstone.agency.ui.screens.JobDetailScreen
 import com.cornerstone.agency.ui.screens.NewAgentScreen
 import com.cornerstone.agency.ui.screens.SessionsScreen
+import com.cornerstone.agency.ui.screens.SkillsScreen
+import com.cornerstone.agency.ui.screens.StatusScreen
 
 object Routes {
     const val CONNECT = "connect"
@@ -30,6 +33,9 @@ object Routes {
     const val SESSIONS = "sessions/{profile}"
     const val BOT = "bot/{profile}"
     const val BOT_NEW = "bot/new"
+    const val JOB = "job/{id}"
+    const val SKILLS = "skills"
+    const val SYSTEM = "system"
 
     fun chat(profile: String, session: String? = null): String =
         "chat/${Uri.encode(profile)}" +
@@ -38,6 +44,8 @@ object Routes {
     fun sessions(profile: String): String = "sessions/${Uri.encode(profile)}"
 
     fun bot(profile: String): String = "bot/${Uri.encode(profile)}"
+
+    fun job(id: String): String = "job/${Uri.encode(id)}"
 }
 
 @Composable
@@ -80,6 +88,9 @@ fun AppNav(vm: AppViewModel, navController: NavHostController = rememberNavContr
                     navController.navigate(Routes.bot(profile))
                 },
                 onNewAgent = { navController.navigate(Routes.BOT_NEW) },
+                onOpenJob = { id -> navController.navigate(Routes.job(id)) },
+                onOpenSystem = { navController.navigate(Routes.SYSTEM) },
+                onOpenSkills = { navController.navigate(Routes.SKILLS) },
             )
         }
         composable(
@@ -116,6 +127,27 @@ fun AppNav(vm: AppViewModel, navController: NavHostController = rememberNavContr
                     navController.navigate(Routes.chat(profile, sessionId))
                 },
             )
+        }
+        composable(
+            route = Routes.JOB,
+            arguments = listOf(navArgument("id") { type = NavType.StringType }),
+        ) { entry ->
+            val id = entry.arguments?.getString("id") ?: return@composable
+            JobDetailScreen(
+                vm = vm,
+                jobId = id,
+                onBack = { navController.popBackStack() },
+                onDeleted = { navController.popBackStack() },
+                onOpenSession = { profile, sessionId ->
+                    navController.navigate(Routes.chat(profile, sessionId))
+                },
+            )
+        }
+        composable(Routes.SKILLS) {
+            SkillsScreen(vm = vm, onBack = { navController.popBackStack() })
+        }
+        composable(Routes.SYSTEM) {
+            StatusScreen(vm = vm, onBack = { navController.popBackStack() })
         }
         composable(Routes.BOT_NEW) {
             NewAgentScreen(

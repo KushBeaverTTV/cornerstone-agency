@@ -25,13 +25,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.cornerstone.agency.BuildConfig
 import com.cornerstone.agency.theme.AgencyTokens
 import com.cornerstone.agency.ui.AppViewModel
 import com.cornerstone.agency.ui.components.AgencyCard
+import com.cornerstone.agency.ui.components.AgencyRow
 import com.cornerstone.agency.ui.components.SectionKicker
 
+/** More tab — settings hub: connection, gateway pill, rows to sub-screens. */
 @Composable
-fun MoreScreen(vm: AppViewModel) {
+fun MoreScreen(
+    vm: AppViewModel,
+    onOpenSystem: () -> Unit = {},
+    onOpenSkills: () -> Unit = {},
+) {
     val ui by vm.ui.collectAsState()
     val colors = AgencyTokens.colors
     val space = AgencyTokens.space
@@ -62,15 +69,16 @@ fun MoreScreen(vm: AppViewModel) {
                 Spacer(Modifier.height(space.sm))
                 InfoRow("Hermes", "v$v")
             }
-        }
-
-        Spacer(Modifier.height(space.lg))
-        SectionKicker("Gateway")
-        Spacer(Modifier.height(space.sm))
-        AgencyCard(Modifier.fillMaxWidth()) {
-            val status = ui.status
-            val running = status?.gatewayRunning == true
+            Spacer(Modifier.height(space.sm))
+            // Compact gateway pill — details live on the System screen.
             Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    "Gateway",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = colors.tertiary,
+                    modifier = Modifier.weight(1f),
+                )
+                val running = ui.status?.gatewayRunning == true
                 Box(
                     Modifier
                         .clip(RoundedCornerShape(999.dp))
@@ -81,35 +89,44 @@ fun MoreScreen(vm: AppViewModel) {
                         .padding(horizontal = space.md, vertical = space.xs),
                 ) {
                     Text(
-                        text = if (status == null) "Checking…" else if (running) "Running" else "Stopped",
+                        text = if (ui.status == null) "…" else if (running) "Running" else "Stopped",
                         style = MaterialTheme.typography.labelMedium,
                         fontWeight = FontWeight.Medium,
                         color = if (running) colors.success else colors.destructive,
                     )
                 }
             }
-            if (status != null && status.gatewayPlatforms.isNotEmpty()) {
-                Spacer(Modifier.height(space.md))
-                status.gatewayPlatforms.forEach { (name, p) ->
-                    Row(
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 2.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                    ) {
-                        Text(
-                            name,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = colors.secondary,
-                        )
-                        Text(
-                            p.state,
-                            style = MaterialTheme.typography.labelMedium,
-                            color = if (p.state == "connected") colors.success else colors.tertiary,
-                        )
-                    }
-                }
-            }
+        }
+
+        Spacer(Modifier.height(space.lg))
+        SectionKicker("Hub")
+        Spacer(Modifier.height(space.sm))
+        AgencyRow(
+            title = "System",
+            subtitle = "Host metrics, gateway platforms, usage, plugins",
+            meta = "",
+            onClick = onOpenSystem,
+        )
+        AgencyRow(
+            title = "Skills",
+            subtitle = "Installed skills and the skills hub",
+            meta = "",
+            onClick = onOpenSkills,
+        )
+        AgencyRow(
+            title = "Appearance",
+            subtitle = "Theme: Hermes dark",
+            meta = "",
+            onClick = {},
+        )
+
+        Spacer(Modifier.height(space.lg))
+        SectionKicker("About")
+        Spacer(Modifier.height(space.sm))
+        AgencyCard(Modifier.fillMaxWidth()) {
+            InfoRow("Cornerstone Agency", "v${BuildConfig.VERSION_NAME}")
+            Spacer(Modifier.height(space.sm))
+            InfoRow("Build", "${BuildConfig.VERSION_CODE} · debug")
         }
 
         Spacer(Modifier.height(space.xl))

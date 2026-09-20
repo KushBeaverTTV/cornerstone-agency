@@ -44,6 +44,9 @@ fun AppShell(
     onOpenSession: (profile: String, sessionId: String) -> Unit = { _, _ -> },
     onOpenBot: (profile: String) -> Unit = {},
     onNewAgent: () -> Unit = {},
+    onOpenJob: (jobId: String) -> Unit = {},
+    onOpenSystem: () -> Unit = {},
+    onOpenSkills: () -> Unit = {},
 ) {
     val ui by vm.ui.collectAsState()
     val colors = AgencyTokens.colors
@@ -78,8 +81,8 @@ fun AppShell(
                 when (Tab.entries[tab]) {
                     Tab.BOTS -> BotsScreen(vm, onOpenChat, onOpenBot, onNewAgent)
                     Tab.CHATS -> ChatsScreen(vm, onOpenSession)
-                    Tab.JOBS -> JobsScreen()
-                    Tab.MORE -> MoreScreen(vm)
+                    Tab.JOBS -> JobsScreen(vm, onOpenJob)
+                    Tab.MORE -> MoreScreen(vm, onOpenSystem, onOpenSkills)
                 }
             }
         }

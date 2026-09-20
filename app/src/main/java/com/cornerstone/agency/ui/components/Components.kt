@@ -37,6 +37,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -116,6 +117,7 @@ fun AgencyRow(
     dimmed: Boolean = false,
     onLongClick: (() -> Unit)? = null,
     leading: @Composable () -> Unit = {},
+    trailing: (@Composable () -> Unit)? = null,
 ) {
     val colors = AgencyTokens.colors
     Row(
@@ -148,7 +150,10 @@ fun AgencyRow(
                 )
             }
         }
-        if (meta.isNotEmpty()) {
+        if (trailing != null) {
+            Spacer(Modifier.width(AgencyTokens.space.sm))
+            trailing()
+        } else if (meta.isNotEmpty()) {
             Spacer(Modifier.width(AgencyTokens.space.sm))
             Text(
                 text = meta,
@@ -157,6 +162,38 @@ fun AgencyRow(
             )
         }
     }
+}
+
+/** Material "visibility" eye glyph (icons-extended isn't a dependency). */
+val EyeIcon: androidx.compose.ui.graphics.vector.ImageVector by lazy {
+    androidx.compose.ui.graphics.vector.ImageVector.Builder(
+        name = "Eye",
+        defaultWidth = 24.dp,
+        defaultHeight = 24.dp,
+        viewportWidth = 24f,
+        viewportHeight = 24f,
+    ).path(
+        fill = androidx.compose.ui.graphics.SolidColor(Color.White),
+    ) {
+        moveTo(12f, 4.5f)
+        curveTo(7f, 4.5f, 2.73f, 7.61f, 1f, 12f)
+        curveTo(2.73f, 16.39f, 7f, 19.5f, 12f, 19.5f)
+        reflectiveCurveTo(21.27f, 16.39f, 23f, 12f)
+        curveTo(21.27f, 7.61f, 17f, 4.5f, 12f, 4.5f)
+        close()
+        moveTo(12f, 17f)
+        curveTo(9.24f, 17f, 7f, 14.76f, 7f, 12f)
+        reflectiveCurveTo(9.24f, 7f, 12f, 7f)
+        reflectiveCurveTo(17f, 9.24f, 17f, 12f)
+        reflectiveCurveTo(14.76f, 17f, 12f, 17f)
+        close()
+        moveTo(12f, 9f)
+        curveTo(10.34f, 9f, 9f, 10.34f, 9f, 12f)
+        reflectiveCurveTo(10.34f, 15f, 12f, 15f)
+        reflectiveCurveTo(15f, 13.66f, 15f, 12f)
+        reflectiveCurveTo(13.66f, 9f, 12f, 9f)
+        close()
+    }.build()
 }
 
 private val AVATAR_COLORS = listOf(

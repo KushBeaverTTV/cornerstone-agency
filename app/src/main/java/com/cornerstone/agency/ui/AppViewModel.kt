@@ -18,6 +18,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -43,6 +44,19 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     private val store = SecureStore(app)
     internal val repo = ConnectionRepository(store)
+    private val prefs = com.cornerstone.agency.data.Prefs(app)
+
+    /** Chats tab: hide cron-job session chatter (DataStore-persisted). */
+    val hideCronChatter: StateFlow<Boolean> =
+        prefs.hideCronChatter.stateIn(
+            viewModelScope,
+            kotlinx.coroutines.flow.SharingStarted.Eagerly,
+            false,
+        )
+
+    fun setHideCronChatter(hide: Boolean) {
+        viewModelScope.launch { prefs.setHideCronChatter(hide) }
+    }
 
     /** Shared dashboard socket — chats subscribe to its events/state. */
     val gateway = GatewaySocket(repo, viewModelScope)
