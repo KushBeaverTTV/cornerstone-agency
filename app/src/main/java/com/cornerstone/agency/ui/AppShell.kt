@@ -1,9 +1,11 @@
 package com.cornerstone.agency.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -43,6 +45,11 @@ private enum class Tab(val label: String, val icon: ImageVector) {
     MORE("More", Icons.Outlined.MoreVert),
 }
 
+/** Material3 Compact height class = window height < 480dp (cover displays, landscape). */
+@Composable
+fun isCompactHeight(): Boolean =
+    androidx.compose.ui.platform.LocalConfiguration.current.screenHeightDp < 480
+
 @Composable
 fun AppShell(
     vm: AppViewModel,
@@ -74,9 +81,55 @@ fun AppShell(
         }
     }
 
+    val compact = isCompactHeight()
+
     AgencyScaffold(
+        topBar = {
+            if (compact) {
+                androidx.compose.foundation.layout.Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .background(colors.sidebar)
+                        .padding(horizontal = 8.dp, vertical = 2.dp),
+                    horizontalArrangement = androidx.compose.foundation.layout.Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Tab.entries.forEach { t ->
+                        Box(
+                            Modifier
+                                .clip(CircleShape)
+                                .background(
+                                    if (tab == t.ordinal) colors.primarySoft
+                                    else androidx.compose.ui.graphics.Color.Transparent,
+                                )
+                                .clickable { tab = t.ordinal }
+                                .padding(8.dp),
+                        ) {
+                            Box {
+                                Icon(
+                                    t.icon,
+                                    contentDescription = t.label,
+                                    tint = if (tab == t.ordinal) colors.foreground else colors.tertiary,
+                                    modifier = Modifier.size(28.dp),
+                                )
+                                if (t == Tab.CHATS && needsAttention) {
+                                    Box(
+                                        Modifier
+                                            .align(Alignment.TopEnd)
+                                            .size(7.dp)
+                                            .clip(CircleShape)
+                                            .background(colors.gold),
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         bottomBar = {
-            NavigationBar(containerColor = colors.sidebar) {
+            if (!compact) {
+                NavigationBar(containerColor = colors.sidebar) {
                 Tab.entries.forEach { t ->
                     NavigationBarItem(
                         selected = tab == t.ordinal,
@@ -104,6 +157,7 @@ fun AppShell(
                             unselectedTextColor = colors.tertiary,
                         ),
                     )
+                }
                 }
             }
         },

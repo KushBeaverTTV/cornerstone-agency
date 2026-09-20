@@ -52,6 +52,7 @@ import java.util.Locale
 @Composable
 fun AgencyScaffold(
     modifier: Modifier = Modifier,
+    topBar: @Composable () -> Unit = {},
     bottomBar: @Composable () -> Unit = {},
     content: @Composable (Modifier) -> Unit,
 ) {
@@ -59,6 +60,7 @@ fun AgencyScaffold(
     Scaffold(
         modifier = modifier,
         containerColor = colors.chrome,
+        topBar = topBar,
         bottomBar = bottomBar,
     ) { padding ->
         content(Modifier.padding(padding))

@@ -66,6 +66,7 @@ import com.cornerstone.agency.data.ChatRepository
 import com.cornerstone.agency.data.GatewayState
 import com.cornerstone.agency.theme.AgencyTokens
 import com.cornerstone.agency.ui.AppViewModel
+import com.cornerstone.agency.ui.isCompactHeight
 import com.cornerstone.agency.ui.components.AgencyTextField
 import com.cornerstone.agency.ui.components.BotAvatar
 import com.cornerstone.agency.ui.components.MicIcon
@@ -93,6 +94,7 @@ fun ChatScreen(
 ) {
     val colors = AgencyTokens.colors
     val space = AgencyTokens.space
+    val compact = isCompactHeight()
     val ui by vm.ui.collectAsState()
     val socketState by vm.gateway.state.collectAsState()
 
@@ -152,19 +154,23 @@ fun ChatScreen(
         Row(
             Modifier
                 .fillMaxWidth()
-                .padding(horizontal = space.sm, vertical = space.xs),
+                .padding(
+                    horizontal = space.sm,
+                    vertical = if (compact) 0.dp else space.xs,
+                ),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            IconButton(onClick = onBack) {
+            IconButton(onClick = onBack, modifier = if (compact) Modifier.size(36.dp) else Modifier) {
                 Icon(
                     Icons.AutoMirrored.Filled.ArrowBack, "Back",
                     tint = colors.foreground,
+                    modifier = if (compact) Modifier.size(18.dp) else Modifier,
                 )
             }
             BotAvatar(
                 name = botName,
                 color = botAvatarColor(profileName, profileName == "default"),
-                size = 30.dp,
+                size = if (compact) 22.dp else 30.dp,
             )
             Spacer(Modifier.width(space.sm))
             Column(Modifier.weight(1f)) {
@@ -175,13 +181,15 @@ fun ChatScreen(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-                Text(
-                    title.ifBlank { "New session" },
-                    style = MaterialTheme.typography.labelSmall,
-                    color = colors.tertiary,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
+                if (!compact) {
+                    Text(
+                        title.ifBlank { "New session" },
+                        style = MaterialTheme.typography.labelSmall,
+                        color = colors.tertiary,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
             }
             Box {
                 IconButton(onClick = { menuOpen = true }) {
@@ -287,7 +295,10 @@ fun ChatScreen(
         Row(
             Modifier
                 .fillMaxWidth()
-                .padding(horizontal = space.lg, vertical = space.sm),
+                .padding(
+                    horizontal = if (compact) space.sm else space.lg,
+                    vertical = if (compact) space.xs else space.sm,
+                ),
             verticalAlignment = Alignment.Bottom,
         ) {
             AgencyTextField(
