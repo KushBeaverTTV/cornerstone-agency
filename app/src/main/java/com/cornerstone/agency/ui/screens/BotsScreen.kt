@@ -126,15 +126,24 @@ fun BotsScreen(
                 val res = vm.bridge.layaRoute(text, routeBots)
                 val pick = res["bot"]?.let { it as? kotlinx.serialization.json.JsonPrimitive }
                     ?.contentOrNull ?: ""
-                val conf = (res["confidence"] as? kotlinx.serialization.json.JsonPrimitive)
-                    ?.contentOrNull?.toDoubleOrNull()
-                    ?: (res["probs"] as? kotlinx.serialization.json.JsonObject)
-                        ?.get(pick)?.let {
-                            (it as? kotlinx.serialization.json.JsonPrimitive)?.contentOrNull
-                        }?.toDoubleOrNull() ?: 0.0
+                val probs = res["probs"] as? kotlinx.serialization.json.JsonObject
+                fun probOf(name: String): Double =
+                    (probs?.get(name) as? kotlinx.serialization.json.JsonPrimitive)
+                        ?.contentOrNull?.toDoubleOrNull() ?: 0.0
+                // `confidence` is a margin score, not a probability — the chip
+                // shows the pick's probability and the picker auto-opens only
+                // when the route is genuinely ambiguous.
+                val topProb = probOf(pick)
+                val secondProb = probs?.entries
+                    ?.filter { it.key != pick }
+                    ?.mapNotNull {
+                        (it.value as? kotlinx.serialization.json.JsonPrimitive)
+                            ?.contentOrNull?.toDoubleOrNull()
+                    }
+                    ?.maxOrNull() ?: 0.0
                 routedBot = pick.ifBlank { null }
-                routeConf = conf
-                if (conf < 0.55) pickerOpen = true
+                routeConf = topProb
+                if (topProb < 0.30 || (topProb - secondProb) < 0.05) pickerOpen = true
             } catch (e: Exception) {
                 routeError = e.message ?: "route failed"
             } finally {

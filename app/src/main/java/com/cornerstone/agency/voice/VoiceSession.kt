@@ -41,6 +41,9 @@ class VoiceSession(
     private var linkWasOpen = false
     private var tearingDown = false
     private var turnSeq = 0L
+    private var transcriptThisTurn = false
+    private var audioThisTurn = false
+    private var transcriptWatchdog: kotlinx.coroutines.Job? = null
 
     val uiState = MutableStateFlow(State.CONNECTING)
     val uiText = MutableStateFlow("Connecting…")
@@ -132,6 +135,7 @@ class VoiceSession(
         when (msg) {
             is VoiceClient.Incoming.Status -> onBridgeStatus(msg.text)
             is VoiceClient.Incoming.Audio -> {
+                audioThisTurn = true
                 setState(State.SPEAKING, "Speaking…")
                 player.play(msg.bytes)
             }
@@ -146,8 +150,11 @@ class VoiceSession(
         when {
             t.equals("connected", ignoreCase = true) ->
                 setState(State.LISTENING, "Listening…")
-            t.startsWith("Listening", ignoreCase = true) ->
+            t.startsWith("Listening", ignoreCase = true) -> {
+                transcriptThisTurn = false
+                audioThisTurn = false
                 setState(State.LISTENING, t)
+            }
             t.startsWith("Transcribing", ignoreCase = true) ->
                 setState(State.THINKING, t)
             t.contains("Thinking", ignoreCase = true) -> {
@@ -157,8 +164,21 @@ class VoiceSession(
                 transcript?.let { raw ->
                     val clean = raw.trim().trim('"', '\u201C', '\u201D').trim()
                     if (clean.isNotEmpty()) {
+                        transcriptThisTurn = true
+                        transcriptWatchdog?.cancel()
                         addTurn(Speaker.USER, clean)
                         onTranscript(clean)
+                    }
+                }
+                // Some turns return audio with no STT transcript frame — flag it
+                // after a grace period instead of leaving a blank detail line.
+                if (!transcriptThisTurn) {
+                    transcriptWatchdog?.cancel()
+                    transcriptWatchdog = scope.launch {
+                        kotlinx.coroutines.delay(10_000)
+                        if (!transcriptThisTurn && audioThisTurn) {
+                            detailLine.value = "(no transcript)"
+                        }
                     }
                 }
                 setState(State.THINKING, "Thinking…", detail = transcript?.trim())

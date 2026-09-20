@@ -27,7 +27,6 @@ import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.put
 import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.atomic.AtomicInteger
 
 /**
  * System-notification surface for the dashboard socket. Owns the three
@@ -48,8 +47,21 @@ object NotificationCenter {
     const val EXTRA_PROFILE = "com.cornerstone.agency.extra.PROFILE"
     const val EXTRA_SESSION = "com.cornerstone.agency.extra.SESSION"
 
+    private const val MESSAGE_NOTIF_BASE = 20000
+    private const val MESSAGE_NOTIF_SPAN = 9000
+    private const val REQUEST_NOTIF_BASE = 30000
+    private const val REQUEST_NOTIF_SPAN = 9000
+
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
-    private val notifIds = AtomicInteger(1000)
+
+    // Stable, collision-free notification id ranges: requests keyed by request
+    // id (30000+), messages by session key (20000+). A message heads-up must
+    // never overwrite a pending request card notification.
+    private fun requestNotifId(key: String): Int =
+        REQUEST_NOTIF_BASE + (key.hashCode() and 0x7FFF) % REQUEST_NOTIF_SPAN
+
+    private fun messageNotifId(sessionKey: String): Int =
+        MESSAGE_NOTIF_BASE + (sessionKey.hashCode() and 0x7FFF) % MESSAGE_NOTIF_SPAN
 
     /** Request keys resolved outside a chat card (notification action, TTL,
      * server event). ChatRepository collects this to collapse the card too —
@@ -177,7 +189,7 @@ object NotificationCenter {
         val profile = ref?.profile ?: "default"
         val sessionKey = ref?.storedId?.takeIf { it.isNotEmpty() } ?: runtimeSid
 
-        val notifId = notifIds.getAndIncrement()
+        val notifId = requestNotifId(key)
         tracked[key] = Tracked(notifId, sessionKey, profile)
         reportCounts()
 
@@ -213,7 +225,7 @@ object NotificationCenter {
                 val text = ev.payload?.str("text")?.takeIf { it.isNotBlank() } ?: return
                 val ref = GatewayHub.sessions[sid]
                 if (isCronChatter(ref?.title ?: "")) return
-                postMessageNotification(app, ref, text)
+                postMessageNotification(app, ref, text, sid)
             }
         }
     }
@@ -319,12 +331,14 @@ object NotificationCenter {
         app: Context,
         ref: GatewayHub.SessionRef?,
         text: String,
+        runtimeSid: String,
     ) {
         ensureChannels(app)
         val nm = app.getSystemService(NotificationManager::class.java) ?: return
         val profile = ref?.profile ?: "default"
         val bot = profileTitle(profile)
-        val notifId = notifIds.getAndIncrement()
+        val sessionKey = ref?.storedId?.takeIf { it.isNotEmpty() } ?: runtimeSid
+        val notifId = messageNotifId(sessionKey)
         val tap = PendingIntent.getActivity(
             app, notifId,
             chatIntent(app, profile, ref?.storedId ?: ""),

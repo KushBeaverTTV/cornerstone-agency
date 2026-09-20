@@ -157,6 +157,7 @@ fun MoreScreen(
                 modifier = Modifier.fillMaxWidth(),
                 placeholder = "HERMES_VOICE_BRIDGE_TOKEN",
                 singleLine = true,
+                secret = true,
             )
             if (voiceBridgeDraft != null || voiceTokenDraft != null) {
                 Spacer(Modifier.height(space.xs))
@@ -208,6 +209,7 @@ fun MoreScreen(
                 modifier = Modifier.fillMaxWidth(),
                 placeholder = "agb_…",
                 singleLine = true,
+                secret = true,
             )
             if (bridgeHostDraft != null || bridgeTokenDraft != null) {
                 Spacer(Modifier.height(space.xs))
