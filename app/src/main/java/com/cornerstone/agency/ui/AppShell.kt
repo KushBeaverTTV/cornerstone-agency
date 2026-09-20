@@ -38,7 +38,11 @@ private enum class Tab(val label: String, val icon: ImageVector) {
 }
 
 @Composable
-fun AppShell(vm: AppViewModel) {
+fun AppShell(
+    vm: AppViewModel,
+    onOpenChat: (profile: String) -> Unit = {},
+    onOpenSession: (profile: String, sessionId: String) -> Unit = { _, _ -> },
+) {
     val ui by vm.ui.collectAsState()
     val colors = AgencyTokens.colors
     var tab by rememberSaveable { mutableIntStateOf(Tab.BOTS.ordinal) }
@@ -70,8 +74,8 @@ fun AppShell(vm: AppViewModel) {
             }
             Box(Modifier.weight(1f).fillMaxWidth()) {
                 when (Tab.entries[tab]) {
-                    Tab.BOTS -> BotsScreen(vm)
-                    Tab.CHATS -> ChatsScreen()
+                    Tab.BOTS -> BotsScreen(vm, onOpenChat)
+                    Tab.CHATS -> ChatsScreen(vm, onOpenSession)
                     Tab.JOBS -> JobsScreen()
                     Tab.MORE -> MoreScreen(vm)
                 }

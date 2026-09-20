@@ -74,7 +74,8 @@ class ConnectionRepository(private val store: SecureStore) {
 
     private val jar = SessionCookieJar()
 
-    private val client = OkHttpClient.Builder()
+    /** Shared with GatewaySocket so the WebSocket upgrade rides the same cookie jar. */
+    internal val client = OkHttpClient.Builder()
         .cookieJar(jar)
         .connectTimeout(8, TimeUnit.SECONDS)
         .readTimeout(30, TimeUnit.SECONDS)
@@ -203,6 +204,33 @@ class ConnectionRepository(private val store: SecureStore) {
         json.decodeFromString<ProfilesResponse>(api("/api/profiles")).profiles
 
     suspend fun status(): StatusPayload = json.decodeFromString(api("/api/status"))
+
+    /**
+     * Mint a single-use WebSocket ticket (POST /api/auth/ws-ticket, cookie-authed).
+     * Server replies {"ticket": "..."} but accept {"token": "..."} or a bare string.
+     */
+    suspend fun wsTicket(): String {
+        val body = api("/api/auth/ws-ticket", method = "POST", body = "{}").trim()
+        val el = runCatching { json.parseToJsonElement(body) }.getOrNull()
+        val ticket = when {
+            el is kotlinx.serialization.json.JsonPrimitive && el.isString -> el.content
+            el is kotlinx.serialization.json.JsonObject ->
+                (el["ticket"] ?: el["token"])
+                    ?.let { (it as? kotlinx.serialization.json.JsonPrimitive)?.content }
+            else -> null
+        }
+        return ticket?.takeIf { it.isNotBlank() }
+            ?: body.trim('"').takeIf { it.isNotBlank() }
+            ?: throw ApiException(500, "empty ws ticket")
+    }
+
+    /** ws(s)://host[:port]/api/ws?ticket=<urlenc> derived from the REST base URL. */
+    fun wsUrl(ticket: String): String {
+        val scheme = if (baseUrl.startsWith("https://")) "wss" else "ws"
+        val host = baseUrl.removePrefix("http://").removePrefix("https://")
+        val enc = java.net.URLEncoder.encode(ticket, "UTF-8")
+        return "$scheme://$host/api/ws?ticket=$enc"
+    }
 
     companion object {
         private val JSON_MEDIA = "application/json".toMediaType()

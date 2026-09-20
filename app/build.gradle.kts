@@ -41,6 +41,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.process)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.datastore.preferences)
 
@@ -57,4 +58,8 @@ dependencies {
 
     // Literal coordinate — same as the sibling project, not yet in the catalog.
     implementation("androidx.security:security-crypto:1.1.0-alpha07")
+
+    // Markdown rendering for assistant bubbles.
+    // 0.42+ declares minCompileSdk 37; 0.40.2 is the newest that compiles against SDK 36.
+    implementation("com.mikepenz:multiplatform-markdown-renderer-m3:0.40.2")
 }

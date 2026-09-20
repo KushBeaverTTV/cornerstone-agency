@@ -94,6 +94,41 @@ data class StatusPayload(
     @SerialName("auth_required") val authRequired: Boolean = false,
 )
 
+/** session.list entry — id is the STORED session id (resume/delete target), not the runtime id. */
+@Serializable
+data class SessionSummary(
+    val id: String = "",
+    val title: String = "",
+    val preview: String = "",
+    @SerialName("started_at") val startedAt: Double = 0.0,
+    @SerialName("message_count") val messageCount: Int = 0,
+    val source: String = "",
+    // Some server builds attach routing metadata; this one does not — stay tolerant.
+    val profile: String? = null,
+    @SerialName("profile_name") val profileName: String? = null,
+) {
+    val label: String
+        get() = title.ifBlank { preview.lineSequence().firstOrNull()?.take(60) ?: "" }
+            .ifBlank { "Session ${id.take(8)}" }
+}
+
+@Serializable
+data class SessionListResult(
+    val sessions: List<SessionSummary> = emptyList(),
+)
+
+enum class ChatKind { User, Assistant, Thinking, Tool, Status, Error, Request }
+
+/** One rendered row in a chat transcript. Streaming items mutate until finalized. */
+data class ChatItem(
+    val id: String,
+    val kind: ChatKind,
+    val text: String,
+    val streaming: Boolean = false,
+    val done: Boolean = true,
+    val meta: String = "",
+)
+
 /** Response bodies sometimes nest under a key, sometimes come bare — keep a tolerant decode path. */
 @Serializable
 data class ApiErrorBody(

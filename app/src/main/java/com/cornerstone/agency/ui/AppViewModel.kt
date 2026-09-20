@@ -2,10 +2,14 @@ package com.cornerstone.agency.ui
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.lifecycle.viewModelScope
 import com.cornerstone.agency.data.ApiException
 import com.cornerstone.agency.data.BotProfile
 import com.cornerstone.agency.data.ConnectionRepository
+import com.cornerstone.agency.data.GatewaySocket
 import com.cornerstone.agency.data.SecureStore
 import com.cornerstone.agency.data.SessionInfo
 import com.cornerstone.agency.data.StatusPayload
@@ -40,12 +44,30 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     private val store = SecureStore(app)
     private val repo = ConnectionRepository(store)
 
+    /** Shared dashboard socket — chats subscribe to its events/state. */
+    val gateway = GatewaySocket(repo, viewModelScope)
+
     private val _ui = MutableStateFlow(UiState())
     val ui: StateFlow<UiState> = _ui.asStateFlow()
 
     private var healthJob: Job? = null
 
+    @Volatile
+    private var foregrounded = true
+
     init {
+        // Health polling and the gateway socket only run while the app is foregrounded.
+        ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
+            override fun onStart(owner: LifecycleOwner) {
+                foregrounded = true
+                syncBackgroundWork()
+            }
+
+            override fun onStop(owner: LifecycleOwner) {
+                foregrounded = false
+                syncBackgroundWork()
+            }
+        })
         viewModelScope.launch {
             if (repo.restore()) {
                 try {
@@ -149,6 +171,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun disconnect() {
+        gateway.disconnect()
         repo.disconnect()
         healthJob?.cancel()
         _ui.value = UiState(booting = false)
@@ -168,7 +191,19 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         }
         refreshProfiles()
         refreshStatus()
-        startHealthPolling()
+        syncBackgroundWork()
+    }
+
+    /** Polling + socket exist only while connected AND foregrounded. */
+    private fun syncBackgroundWork() {
+        if (foregrounded && _ui.value.connected) {
+            startHealthPolling()
+            gateway.connect()
+        } else {
+            healthJob?.cancel()
+            healthJob = null
+            gateway.disconnect()
+        }
     }
 
     private fun startHealthPolling() {

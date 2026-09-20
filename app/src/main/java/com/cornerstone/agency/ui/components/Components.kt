@@ -1,7 +1,8 @@
 package com.cornerstone.agency.ui.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -98,6 +99,7 @@ fun AgencyHairline(modifier: Modifier = Modifier) {
 }
 
 /** Roster row: leading avatar slot, title + subtitle, trailing meta. */
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun AgencyRow(
     title: String,
@@ -107,6 +109,7 @@ fun AgencyRow(
     modifier: Modifier = Modifier,
     selected: Boolean = false,
     dimmed: Boolean = false,
+    onLongClick: (() -> Unit)? = null,
     leading: @Composable () -> Unit = {},
 ) {
     val colors = AgencyTokens.colors
@@ -115,7 +118,7 @@ fun AgencyRow(
             .fillMaxWidth()
             .clip(RoundedCornerShape(10.dp))
             .background(if (selected) colors.rowActive else Color.Transparent)
-            .clickable(onClick = onClick)
+            .combinedClickable(onClick = onClick, onLongClick = onLongClick)
             .padding(horizontal = AgencyTokens.space.sm, vertical = AgencyTokens.space.sm),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -148,6 +151,37 @@ fun AgencyRow(
                 color = colors.tertiary,
             )
         }
+    }
+}
+
+private val AVATAR_COLORS = listOf(
+    Color(0xFFFFD24A), // gold
+    Color(0xFF8B5CF6), // violet
+    Color(0xFF0053FD), // primary
+    Color(0xFFCF806D), // warm
+    Color(0xFF55A583), // success
+    Color(0xFFE75E78), // destructive
+)
+
+/** Stable per-bot avatar color; the default profile (Kaori) always takes gold. */
+fun botAvatarColor(name: String, isDefault: Boolean = false): Color {
+    if (isDefault || name == "default") return AVATAR_COLORS[0]
+    val idx = kotlin.math.abs(name.hashCode()) % (AVATAR_COLORS.size - 1) + 1
+    return AVATAR_COLORS[idx]
+}
+
+/** "just now" / "4m" / "2h" / "3d" / absolute date for old timestamps. */
+fun relativeTime(epochSeconds: Double): String {
+    if (epochSeconds <= 0.0) return ""
+    val now = System.currentTimeMillis() / 1000.0
+    val diff = (now - epochSeconds).toLong()
+    return when {
+        diff < 60 -> "just now"
+        diff < 3600 -> "${diff / 60}m"
+        diff < 86400 -> "${diff / 3600}h"
+        diff < 86400 * 7 -> "${diff / 86400}d"
+        else -> java.text.SimpleDateFormat("MMM d", Locale.US)
+            .format(java.util.Date((epochSeconds * 1000).toLong()))
     }
 }
 

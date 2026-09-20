@@ -1,12 +1,13 @@
 package com.cornerstone.agency.ui.screens
 
-import android.widget.Toast
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
@@ -14,16 +15,20 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import com.cornerstone.agency.data.BotProfile
+import com.cornerstone.agency.data.GatewayState
+import com.cornerstone.agency.data.SessionSummary
+import com.cornerstone.agency.data.listProfileSessions
 import com.cornerstone.agency.theme.AgencyTokens
 import com.cornerstone.agency.ui.AppViewModel
 import com.cornerstone.agency.ui.components.AgencyRow
@@ -31,29 +36,15 @@ import com.cornerstone.agency.ui.components.AgencyTextField
 import com.cornerstone.agency.ui.components.BotAvatar
 import com.cornerstone.agency.ui.components.EmptyState
 import com.cornerstone.agency.ui.components.SectionKicker
-
-private val AVATAR_COLORS = listOf(
-    Color(0xFFFFD24A), // gold
-    Color(0xFF8B5CF6), // violet
-    Color(0xFF0053FD), // primary
-    Color(0xFFCF806D), // warm
-    Color(0xFF55A583), // success
-    Color(0xFFE75E78), // destructive
-)
-
-private fun avatarColor(profile: BotProfile): Color {
-    // Stable per-bot color; Kaori (default) takes gold.
-    if (profile.isDefault || profile.name == "default") return AVATAR_COLORS[0]
-    val idx = kotlin.math.abs(profile.name.hashCode()) % (AVATAR_COLORS.size - 1) + 1
-    return AVATAR_COLORS[idx]
-}
+import com.cornerstone.agency.ui.components.botAvatarColor
+import com.cornerstone.agency.ui.components.relativeTime
+import kotlinx.coroutines.launch
 
 @Composable
-fun BotsScreen(vm: AppViewModel) {
+fun BotsScreen(vm: AppViewModel, onOpenChat: (String) -> Unit) {
     val ui by vm.ui.collectAsState()
     val colors = AgencyTokens.colors
     val space = AgencyTokens.space
-    val context = LocalContext.current
     var query by remember { mutableStateOf("") }
 
     val filtered = ui.profiles.filter {
@@ -107,15 +98,12 @@ fun BotsScreen(vm: AppViewModel) {
                         subtitle = profile.subtitle,
                         meta = if (profile.description.isNotBlank()) profile.model else "",
                         modifier = Modifier.padding(horizontal = space.sm),
-                        onClick = {
-                            Toast.makeText(
-                                context,
-                                "${profile.title} — detail view lands in a later milestone",
-                                Toast.LENGTH_SHORT,
-                            ).show()
-                        },
+                        onClick = { onOpenChat(profile.name) },
                         leading = {
-                            BotAvatar(name = profile.title, color = avatarColor(profile))
+                            BotAvatar(
+                                name = profile.title,
+                                color = botAvatarColor(profile.name, profile.isDefault),
+                            )
                         },
                     )
                 }
@@ -131,10 +119,97 @@ fun BotsScreen(vm: AppViewModel) {
 }
 
 @Composable
-fun ChatsScreen() {
+fun ChatsScreen(
+    vm: AppViewModel,
+    onOpenSession: (profile: String, sessionId: String) -> Unit,
+) {
+    val ui by vm.ui.collectAsState()
+    val colors = AgencyTokens.colors
+    val space = AgencyTokens.space
+    val socketState by vm.gateway.state.collectAsState()
+    val scope = rememberCoroutineScope()
+
+    // Sessions grouped by bot, in roster order.
+    var groups by remember {
+        mutableStateOf<List<Pair<BotProfile, List<SessionSummary>>>>(emptyList())
+    }
+    var loading by remember { mutableStateOf(true) }
+    var error by remember { mutableStateOf("") }
+
+    fun refresh() {
+        val profiles = vm.ui.value.profiles
+        if (profiles.isEmpty() || socketState != GatewayState.OPEN) return
+        scope.launch {
+            try {
+                val out = mutableListOf<Pair<BotProfile, List<SessionSummary>>>()
+                for (p in profiles) {
+                    val sessions = runCatching { listProfileSessions(vm.gateway, p.name) }
+                        .getOrDefault(emptyList())
+                    if (sessions.isNotEmpty()) out += p to sessions
+                }
+                groups = out
+                error = ""
+            } catch (e: Exception) {
+                error = e.message ?: "Failed to load sessions"
+            } finally {
+                loading = false
+            }
+        }
+    }
+
+    LaunchedEffect(socketState, ui.profiles) {
+        if (socketState == GatewayState.OPEN && ui.profiles.isNotEmpty()) refresh()
+    }
+    // sessions.changed is a global push — refresh opportunistically.
+    LaunchedEffect(Unit) {
+        vm.gateway.events.collect { ev ->
+            if (ev.type == "sessions.changed") refresh()
+        }
+    }
+
     Column(Modifier.fillMaxSize()) {
         ScreenTitle("Chats")
-        EmptyState("No chats yet", "Conversations land here in a later milestone")
+        when {
+            loading && groups.isEmpty() -> Box(Modifier.fillMaxSize(), Alignment.Center) {
+                CircularProgressIndicator(
+                    color = colors.gold, strokeWidth = 2.dp,
+                    modifier = Modifier.size(28.dp),
+                )
+            }
+
+            groups.isEmpty() -> EmptyState(
+                if (error.isEmpty()) "No chats yet" else "Couldn't load chats",
+                if (error.isEmpty()) "Open a bot to start a conversation" else error,
+            )
+
+            else -> LazyColumn(Modifier.fillMaxSize()) {
+                groups.forEach { (profile, sessions) ->
+                    item(key = "kicker-${profile.name}") {
+                        SectionKicker(
+                            profile.title,
+                            modifier = Modifier.padding(
+                                horizontal = space.lg, vertical = space.xs,
+                            ),
+                        )
+                    }
+                    items(sessions, key = { "${profile.name}:${it.id}" }) { s ->
+                        AgencyRow(
+                            title = s.label,
+                            subtitle = s.preview.lineSequence().firstOrNull() ?: "",
+                            meta = relativeTime(s.startedAt),
+                            onClick = { onOpenSession(profile.name, s.id) },
+                            modifier = Modifier.padding(horizontal = space.sm),
+                            leading = {
+                                BotAvatar(
+                                    name = profile.title,
+                                    color = botAvatarColor(profile.name, profile.isDefault),
+                                )
+                            },
+                        )
+                    }
+                }
+            }
+        }
     }
 }
 
