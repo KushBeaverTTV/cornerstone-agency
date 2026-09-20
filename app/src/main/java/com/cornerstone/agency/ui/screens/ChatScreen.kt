@@ -1,5 +1,9 @@
 package com.cornerstone.agency.ui.screens
 
+import android.Manifest
+import android.content.pm.PackageManager
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,7 +36,9 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -47,6 +53,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.ContextCompat
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
@@ -60,7 +68,10 @@ import com.cornerstone.agency.theme.AgencyTokens
 import com.cornerstone.agency.ui.AppViewModel
 import com.cornerstone.agency.ui.components.AgencyTextField
 import com.cornerstone.agency.ui.components.BotAvatar
+import com.cornerstone.agency.ui.components.MicIcon
 import com.cornerstone.agency.ui.components.botAvatarColor
+import com.cornerstone.agency.voice.VoicePlate
+import com.cornerstone.agency.voice.VoiceSession
 import com.mikepenz.markdown.m3.Markdown
 import com.mikepenz.markdown.m3.markdownColor
 import com.mikepenz.markdown.m3.markdownTypography
@@ -70,6 +81,7 @@ fun botDisplayName(profiles: List<com.cornerstone.agency.data.BotProfile>, name:
     profiles.find { it.name == name }?.title
         ?: if (name == "default") "Kaori" else name.replaceFirstChar { it.uppercase() }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChatScreen(
     vm: AppViewModel,
@@ -103,6 +115,16 @@ fun ChatScreen(
     LaunchedEffect(Unit) {
         vm.consumeShareDraft()?.let { if (it.isNotBlank()) draft = it }
     }
+
+    // Voice plate — created when the sheet opens, torn down when it closes.
+    val context = LocalContext.current
+    val voiceBridge by vm.voiceBridge.collectAsState()
+    val voiceToken by vm.voiceToken.collectAsState()
+    var voiceOpen by remember { mutableStateOf(false) }
+    var voiceSession by remember { mutableStateOf<VoiceSession?>(null) }
+    val micPermission = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+    ) { granted -> if (granted) voiceOpen = true }
 
     // Resolve the session once the socket is open; re-resume on every reconnect.
     var resolvedOnce by remember { mutableStateOf(false) }
@@ -276,6 +298,17 @@ fun ChatScreen(
                 singleLine = false,
             )
             Spacer(Modifier.width(space.sm))
+            IconButton(
+                onClick = {
+                    val granted = ContextCompat.checkSelfPermission(
+                        context, Manifest.permission.RECORD_AUDIO,
+                    ) == PackageManager.PERMISSION_GRANTED
+                    if (granted) voiceOpen = true
+                    else micPermission.launch(Manifest.permission.RECORD_AUDIO)
+                },
+            ) {
+                Icon(MicIcon, "Voice", tint = colors.tertiary, modifier = Modifier.size(20.dp))
+            }
             Box(
                 Modifier
                     .size(44.dp)
@@ -298,6 +331,34 @@ fun ChatScreen(
                     tint = colors.foreground,
                     modifier = Modifier.size(18.dp),
                 )
+            }
+        }
+    }
+
+    if (voiceOpen) {
+        // Fresh session per open; transcript flows back into this chat.
+        val vs = remember(voiceBridge, voiceToken) {
+            val (host, port) = voiceBridge.split(':', limit = 2)
+                .let { it[0] to (it.getOrNull(1)?.toIntOrNull() ?: 8766) }
+            VoiceSession(
+                context = context,
+                host = host,
+                port = port,
+                token = voiceToken,
+                onTranscript = { text -> scope.launch { chat.send(text) } },
+            ).also { it.start() }
+        }
+        voiceSession = vs
+        ModalBottomSheet(
+            onDismissRequest = { voiceOpen = false },
+            containerColor = colors.elevated,
+        ) {
+            VoicePlate(session = vs, onClose = { voiceOpen = false })
+        }
+        DisposableEffect(vs) {
+            onDispose {
+                vs.stop()
+                voiceSession = null
             }
         }
     }

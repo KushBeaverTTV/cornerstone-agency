@@ -45,10 +45,19 @@ class Prefs(private val app: Context) {
         app.prefsStore.edit { it[VOICE_BRIDGE] = addr }
     }
 
+    /** Voice bridge bearer token (HERMES_VOICE_BRIDGE_TOKEN on the host). */
+    val voiceToken: Flow<String> =
+        app.prefsStore.data.map { it[VOICE_TOKEN] ?: "" }
+
+    suspend fun setVoiceToken(token: String) {
+        app.prefsStore.edit { it[VOICE_TOKEN] = token }
+    }
+
     private companion object {
         val HIDE_CRON_CHATTER = booleanPreferencesKey("hide_cron_chatter")
         val STAY_CONNECTED = booleanPreferencesKey("stay_connected")
         val LAST_SHARE_PROFILE = stringPreferencesKey("last_share_profile")
         val VOICE_BRIDGE = stringPreferencesKey("voice_bridge")
+        val VOICE_TOKEN = stringPreferencesKey("voice_token")
     }
 }

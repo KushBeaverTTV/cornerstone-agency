@@ -135,6 +135,28 @@ class AppViewModel(private val app: Application) : AndroidViewModel(app) {
         viewModelScope.launch { prefs.setLastShareProfile(profile) }
     }
 
+    val voiceBridge: StateFlow<String> =
+        prefs.voiceBridge.stateIn(
+            viewModelScope,
+            kotlinx.coroutines.flow.SharingStarted.Eagerly,
+            "127.0.0.1:8766",
+        )
+
+    fun setVoiceBridge(addr: String) {
+        viewModelScope.launch { prefs.setVoiceBridge(addr) }
+    }
+
+    val voiceToken: StateFlow<String> =
+        prefs.voiceToken.stateIn(
+            viewModelScope,
+            kotlinx.coroutines.flow.SharingStarted.Eagerly,
+            "",
+        )
+
+    fun setVoiceToken(token: String) {
+        viewModelScope.launch { prefs.setVoiceToken(token) }
+    }
+
     private val _ui = MutableStateFlow(UiState())
     val ui: StateFlow<UiState> = _ui.asStateFlow()
 

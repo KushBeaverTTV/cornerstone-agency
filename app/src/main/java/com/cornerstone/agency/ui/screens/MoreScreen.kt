@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,8 +42,16 @@ fun MoreScreen(
 ) {
     val ui by vm.ui.collectAsState()
     val stayConnected by vm.stayConnected.collectAsState()
+    val voiceBridge by vm.voiceBridge.collectAsState()
+    val voiceToken by vm.voiceToken.collectAsState()
     val colors = AgencyTokens.colors
     val space = AgencyTokens.space
+    var voiceBridgeDraft by androidx.compose.runtime.remember {
+        androidx.compose.runtime.mutableStateOf<String?>(null)
+    }
+    var voiceTokenDraft by androidx.compose.runtime.remember {
+        androidx.compose.runtime.mutableStateOf<String?>(null)
+    }
 
     LaunchedEffect(Unit) { vm.refreshStatus() }
 
@@ -115,6 +124,46 @@ fun MoreScreen(
                     checked = stayConnected,
                     onCheckedChange = { vm.setStayConnected(it) },
                 )
+            }
+            Spacer(Modifier.height(space.sm))
+            Text(
+                "Voice bridge",
+                style = MaterialTheme.typography.labelSmall,
+                color = colors.tertiary,
+            )
+            com.cornerstone.agency.ui.components.AgencyTextField(
+                value = voiceBridgeDraft ?: voiceBridge,
+                onValueChange = { voiceBridgeDraft = it },
+                modifier = Modifier.fillMaxWidth(),
+                placeholder = "127.0.0.1:8766",
+                singleLine = true,
+            )
+            Spacer(Modifier.height(space.xs))
+            Text(
+                "Voice token",
+                style = MaterialTheme.typography.labelSmall,
+                color = colors.tertiary,
+            )
+            com.cornerstone.agency.ui.components.AgencyTextField(
+                value = voiceTokenDraft ?: voiceToken,
+                onValueChange = { voiceTokenDraft = it },
+                modifier = Modifier.fillMaxWidth(),
+                placeholder = "HERMES_VOICE_BRIDGE_TOKEN",
+                singleLine = true,
+            )
+            if (voiceBridgeDraft != null || voiceTokenDraft != null) {
+                Spacer(Modifier.height(space.xs))
+                TextButton(
+                    onClick = {
+                        voiceBridgeDraft?.let { vm.setVoiceBridge(it.trim()) }
+                        voiceTokenDraft?.let { vm.setVoiceToken(it.trim()) }
+                        voiceBridgeDraft = null
+                        voiceTokenDraft = null
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text("Save voice settings", color = colors.gold)
+                }
             }
         }
 

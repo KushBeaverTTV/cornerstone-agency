@@ -196,6 +196,39 @@ val EyeIcon: androidx.compose.ui.graphics.vector.ImageVector by lazy {
     }.build()
 }
 
+/** Material "mic" glyph (icons-extended isn't a dependency). */
+val MicIcon: androidx.compose.ui.graphics.vector.ImageVector by lazy {
+    androidx.compose.ui.graphics.vector.ImageVector.Builder(
+        name = "Mic",
+        defaultWidth = 24.dp,
+        defaultHeight = 24.dp,
+        viewportWidth = 24f,
+        viewportHeight = 24f,
+    ).path(
+        fill = androidx.compose.ui.graphics.SolidColor(Color.White),
+    ) {
+        moveTo(12f, 14f)
+        curveTo(13.66f, 14f, 14.99f, 12.66f, 14.99f, 11f)
+        lineTo(15f, 5f)
+        curveTo(15f, 3.34f, 13.66f, 2f, 12f, 2f)
+        curveTo(10.34f, 2f, 9f, 3.34f, 9f, 5f)
+        verticalLineTo(11f)
+        curveTo(9f, 12.66f, 10.34f, 14f, 12f, 14f)
+        close()
+        moveTo(17.3f, 11f)
+        curveTo(17.3f, 14f, 14.76f, 16.1f, 12f, 16.1f)
+        curveTo(9.24f, 16.1f, 6.7f, 14f, 6.7f, 11f)
+        lineTo(5f, 11f)
+        curveTo(5f, 14.41f, 7.72f, 17.23f, 11f, 17.72f)
+        lineTo(11f, 21f)
+        horizontalLineToRelative(2f)
+        lineTo(13f, 17.72f)
+        curveTo(16.28f, 17.24f, 19f, 14.42f, 19f, 11f)
+        lineTo(17.3f, 11f)
+        close()
+    }.build()
+}
+
 private val AVATAR_COLORS = listOf(
     Color(0xFFFFD24A), // gold
     Color(0xFF8B5CF6), // violet
