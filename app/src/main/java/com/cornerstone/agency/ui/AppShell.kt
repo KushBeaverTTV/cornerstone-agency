@@ -1,9 +1,12 @@
 package com.cornerstone.agency.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material.icons.outlined.Face
@@ -20,8 +23,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
 import com.cornerstone.agency.theme.AgencyTokens
 import com.cornerstone.agency.ui.components.AgencyScaffold
 import com.cornerstone.agency.ui.components.StatusBanner
@@ -51,6 +57,7 @@ fun AppShell(
     val ui by vm.ui.collectAsState()
     val colors = AgencyTokens.colors
     var tab by rememberSaveable { mutableIntStateOf(Tab.BOTS.ordinal) }
+    val needsAttention by com.cornerstone.agency.data.PendingRequests.anyOpen.collectAsState()
 
     AgencyScaffold(
         bottomBar = {
@@ -59,7 +66,20 @@ fun AppShell(
                     NavigationBarItem(
                         selected = tab == t.ordinal,
                         onClick = { tab = t.ordinal },
-                        icon = { Icon(t.icon, contentDescription = t.label) },
+                        icon = {
+                            Box {
+                                Icon(t.icon, contentDescription = t.label)
+                                if (t == Tab.CHATS && needsAttention) {
+                                    Box(
+                                        Modifier
+                                            .align(Alignment.TopEnd)
+                                            .size(7.dp)
+                                            .clip(CircleShape)
+                                            .background(colors.gold),
+                                    )
+                                }
+                            }
+                        },
                         label = { Text(t.label) },
                         colors = NavigationBarItemDefaults.colors(
                             selectedIconColor = colors.foreground,

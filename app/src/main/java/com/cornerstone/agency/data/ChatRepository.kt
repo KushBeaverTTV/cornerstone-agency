@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.booleanOrNull
 import kotlinx.serialization.json.buildJsonObject
@@ -28,6 +29,9 @@ private val REQUEST_EVENTS = setOf(
     "approval.request", "clarify.request", "secret.request",
     "sudo.request", "mcp.setup.request",
 )
+
+/** *.resolved/.expired/.answered/.cancelled/.timeout events close the card they name. */
+private val RESOLVE_SUFFIX = Regex("\\.(resolved|expired|answered|cancelled|canceled|timeout)$")
 
 /**
  * One bot's chat: resolves a live session for [profile], hydrates the transcript
@@ -77,8 +81,14 @@ class ChatRepository(
     private var thinkingId: String? = null
     private var openToolId: String? = null
 
+    // Interactive requests: item id -> expiry job, plus dedupe indexes on both
+    // the wire frame id (srq-…) and the payload request_id.
+    private val reqTimers = HashMap<String, kotlinx.coroutines.Job>()
+    private val reqIndex = HashMap<String, String>()
+
     init {
         scope.launch { gateway.events.collect(::onEvent) }
+        scope.launch { gateway.requests.collect(::onRequestFrame) }
     }
 
     // ---- session resolution ---------------------------------------------
@@ -123,13 +133,42 @@ class ChatRepository(
     private suspend fun resume(storedId: String) {
         val res = gateway.call(
             "session.resume",
-            buildJsonObject { put("session_id", storedId) },
+            buildJsonObject {
+                put("session_id", storedId)
+                put("profile", profile)
+            },
         ).asObj()
         runtimeSessionId = res.str("session_id") ?: runtimeSessionId
         storedSessionId = res.str("stored_session_id")
             ?: res.str("session_key") ?: res.str("resumed") ?: storedId
         hydrate(res)
+        seedPendingFromResume(res)
         fetchTitle()
+        seedPendingApprovals()
+    }
+
+    /** session.resume can carry still-open requests (open_requests entries look
+     * like serialized request frames {id, method, params}; pending_* fields are
+     * per-kind payloads). Seeded cards dedupe against live replays by request_id. */
+    private fun seedPendingFromResume(res: JsonObject) {
+        (res["open_requests"] as? JsonArray)?.forEach { el ->
+            val r = el as? JsonObject ?: return@forEach
+            val method = r.str("method") ?: r.str("type")?.removeSuffix(".request")
+                ?: return@forEach
+            val params = (r["params"] as? JsonObject)
+                ?: (r["payload"] as? JsonObject) ?: r
+            val srq = r["id"]?.takeIf {
+                it.jsonPrimitive.contentOrNull?.startsWith("srq-") == true
+            }
+            pushRequest(method, params, srqId = srq)
+        }
+        mapOf(
+            "pending_approval" to "approval", "pending_clarify" to "clarify",
+            "pending_secret" to "secret", "pending_sudo" to "sudo",
+            "pending_mcp_setup" to "mcp.setup",
+        ).forEach { (key, method) ->
+            (res[key] as? JsonObject)?.let { pushRequest(method, it, srqId = null) }
+        }
     }
 
     private suspend fun create() {
@@ -140,6 +179,28 @@ class ChatRepository(
         runtimeSessionId = res.str("session_id")
         storedSessionId = res.str("stored_session_id") ?: storedSessionId
         hydrate(res)
+        seedPendingFromResume(res)
+        seedPendingApprovals()
+    }
+
+    /** approval.pending catches requests still open after a reconnect — the
+     * resume snapshot's open_requests is empty when the old transport died. */
+    private suspend fun seedPendingApprovals() {
+        val rt = runtimeSessionId ?: return
+        try {
+            val res = gateway.call(
+                "approval.pending",
+                buildJsonObject { put("session_id", rt) },
+            ).asObj()
+            val list = (res["approvals"] as? JsonArray)
+                ?: (res["pending"] as? JsonArray)
+                ?: JsonArray(emptyList())
+            list.forEach { el ->
+                (el as? JsonObject)?.let { pushRequest("approval", it, srqId = null) }
+            }
+        } catch (_: Exception) {
+            // Older servers may not implement approval.pending.
+        }
     }
 
     suspend fun listSessions(): List<SessionSummary> =
@@ -230,6 +291,10 @@ class ChatRepository(
     /** Leaving the chat: best-effort interrupt of a live turn, then tear down. */
     @OptIn(DelicateCoroutinesApi::class)
     fun close() {
+        reqTimers.values.forEach { it.cancel() }
+        reqTimers.clear()
+        reqIndex.clear()
+        PendingRequests.clear(storedSessionId ?: runtimeSessionId ?: "", profile)
         if (_streaming.value) {
             val rt = runtimeSessionId
             if (rt != null) {
@@ -281,23 +346,19 @@ class ChatRepository(
                 )
             }
         }
-        // Requests still open on the server come back as placeholders too.
-        (res["open_requests"] as? JsonArray)?.forEach { el ->
-            val r = el as? JsonObject ?: return@forEach
-            val payload = r["payload"] as? JsonObject ?: r
-            list += ChatItem(
-                id = nextId(), kind = ChatKind.Request,
-                text = payload.str("title") ?: payload.str("prompt")
-                    ?: r.str("type") ?: "Request pending",
-            )
-        }
         _items.value = list
         assistantId = null
         turnAssistantIndex = null
         thinkingId = null
         openToolId = null
+        // Hydration replaces the transcript — request cards must be re-seeded
+        // from open_requests, so drop the stale dedupe index and timers.
+        reqTimers.values.forEach { it.cancel() }
+        reqTimers.clear()
+        reqIndex.clear()
         _statusLine.value = ""
         _streaming.value = res["running"]?.jsonPrimitive?.booleanOrNull == true
+        reportOpenRequests()
     }
 
     // ---- live events ---------------------------------------------------------
@@ -369,10 +430,17 @@ class ChatRepository(
                 finalizeStreaming()
             }
 
-            in REQUEST_EVENTS -> append(
-                ChatKind.Request,
-                p?.str("title") ?: p?.str("prompt") ?: ev.type,
-            )
+            // Legacy event-style requests (some builds emit *.request events
+            // instead of srq frames) become the same cards; they answer via
+            // the *.respond RPCs since they carry no frame id.
+            in REQUEST_EVENTS ->
+                pushRequest(ev.type.removeSuffix(".request"), p ?: JsonObject(emptyMap()), srqId = null)
+
+            // The backend withdrew an open request: {id, method, reason}.
+            "request.cancel" -> {
+                val rid = p?.str("id")
+                resolveRequest(rid, p?.str("reason") ?: "cancelled")
+            }
 
             "session.info" -> {
                 val info = p?.get("info") as? JsonObject ?: p
@@ -380,7 +448,185 @@ class ChatRepository(
             }
 
             // sessions.changed / everything else: no transcript row.
-            else -> Unit
+            else -> {
+                // *.resolved / *.expired / *.answered / *.cancelled / *.timeout
+                // carry the request_id they closed.
+                if (RESOLVE_SUFFIX.containsMatchIn(ev.type)) {
+                    resolveRequest(p?.str("request_id") ?: p?.str("requestId"), "handled elsewhere")
+                }
+            }
+        }
+    }
+
+    // ---- interactive requests ------------------------------------------------
+
+    /** A server→client request frame (srq id) scoped to this session. */
+    private fun onRequestFrame(req: GatewayRequest) {
+        val sid = req.params.str("session_id")
+        if (sid != null && sid != runtimeSessionId && sid != storedSessionId) return
+        pushRequest(req.method, req.params, srqId = req.id)
+    }
+
+    /** Push a request card; dedupe by request_id / srq id; start the TTL timer. */
+    private fun pushRequest(method: String, params: JsonObject, srqId: JsonElement?) {
+        val req = pendingRequestFrom(method, params, srqId)
+        val dedupeKeys = listOfNotNull(req.requestId, srqIdString(req))
+        if (dedupeKeys.any { reqIndex.containsKey(it) }) return
+
+        val id = nextId()
+        reqIndex += dedupeKeys.associateWith { id }
+        append(
+            ChatItem(
+                id = id, kind = ChatKind.Request,
+                text = req.command.ifBlank {
+                    req.questions.firstOrNull()?.question ?: req.prompt.ifBlank { req.title }
+                },
+                request = req,
+            )
+        )
+        reqTimers[id] = scope.launch {
+            val wait = req.expiresAt - System.currentTimeMillis()
+            if (wait > 0) kotlinx.coroutines.delay(wait)
+            patchRequest(id) { it.copy(state = RequestState.Expired, resolution = "timed out") }
+        }
+        reportOpenRequests()
+    }
+
+    private fun patchRequest(itemId: String, f: (PendingRequest) -> PendingRequest) {
+        val item = _items.value.firstOrNull { it.id == itemId } ?: return
+        val req = item.request ?: return
+        val patched = f(req)
+        if (patched.state == RequestState.Resolved || patched.state == RequestState.Expired) {
+            reqTimers.remove(itemId)?.cancel()
+        }
+        mutate(itemId) { it.copy(request = patched) }
+        reportOpenRequests()
+    }
+
+    /** Server-side resolution noticed via request.cancel / *.resolved events. */
+    private fun resolveRequest(requestIdOrSrq: String?, resolution: String) {
+        if (requestIdOrSrq == null) return
+        val itemId = reqIndex[requestIdOrSrq] ?: return
+        patchRequest(itemId) {
+            if (it.open) it.copy(state = RequestState.Resolved, resolution = resolution) else it
+        }
+    }
+
+    private fun srqIdString(req: PendingRequest): String? =
+        req.srqId?.jsonPrimitive?.contentOrNull
+
+    private fun reportOpenRequests() {
+        val open = _items.value.count { it.request?.open == true }
+        PendingRequests.report(storedSessionId ?: runtimeSessionId ?: "", profile, open)
+    }
+
+    /** Optimistic respond: mark Resolved immediately, revert to Open on failure. */
+    private suspend fun respond(
+        itemId: String,
+        resolution: String,
+        result: JsonObject,
+        rpcFallback: suspend (PendingRequest) -> Unit,
+    ) {
+        val req = _items.value.firstOrNull { it.id == itemId }?.request ?: return
+        if (req.state != RequestState.Open) return
+        patchRequest(itemId) { it.copy(state = RequestState.Sending, respondError = "") }
+        try {
+            val srq = req.srqId
+            if (srq != null) {
+                if (!gateway.respond(srq, result)) throw java.io.IOException("socket closed")
+            } else {
+                rpcFallback(req)
+            }
+            patchRequest(itemId) {
+                it.copy(state = RequestState.Resolved, resolution = resolution)
+            }
+        } catch (e: Exception) {
+            patchRequest(itemId) {
+                it.copy(state = RequestState.Open, respondError = friendly(e))
+            }
+        }
+    }
+
+    suspend fun approveRequest(itemId: String, choice: String) {
+        val resolution = if (choice == "deny") "Denied" else "Approved $choice"
+        respond(
+            itemId, resolution,
+            buildJsonObject { put("choice", choice) },
+        ) { req ->
+            gateway.call(
+                "approval.respond",
+                buildJsonObject {
+                    put("session_id", runtimeSessionId ?: req.sessionId)
+                    put("choice", choice)
+                    req.requestId?.let { put("request_id", it) }
+                },
+            )
+            Unit
+        }
+    }
+
+    /** [answers] maps question qid → answer; a single "" key means {answer}. */
+    suspend fun answerClarify(itemId: String, answers: Map<String, String>) {
+        val single = answers[""] ?: answers.values.firstOrNull().orEmpty()
+        val result = if (answers.size <= 1) {
+            buildJsonObject { put("answer", single) }
+        } else {
+            buildJsonObject {
+                put("answers", buildJsonObject {
+                    answers.forEach { (qid, a) -> if (qid.isNotEmpty()) put(qid, a) }
+                })
+            }
+        }
+        respond(itemId, "Answered: $single", result) { req ->
+            gateway.call(
+                "clarify.respond",
+                buildJsonObject {
+                    req.requestId?.let { put("request_id", it) }
+                    if (answers.size <= 1) {
+                        put("answer", single)
+                    } else {
+                        put("answers", buildJsonObject {
+                            answers.forEach { (qid, a) -> if (qid.isNotEmpty()) put(qid, a) }
+                        })
+                    }
+                },
+            )
+            Unit
+        }
+    }
+
+    /** secret / sudo / vault.* / other one-string prompts. Never logged or persisted. */
+    suspend fun submitRequestValue(itemId: String, value: String) {
+        respond(itemId, "Sent", buildJsonObject { put("value", value) }) { req ->
+            val rpc = when (req.kind) {
+                RequestKind.Secret -> "secret.respond" to "value"
+                RequestKind.Sudo -> "sudo.respond" to "password"
+                else -> return@respond Unit
+            }
+            gateway.call(
+                rpc.first,
+                buildJsonObject {
+                    req.requestId?.let { put("request_id", it) }
+                    put(rpc.second, value)
+                },
+            )
+            Unit
+        }
+    }
+
+    suspend fun respondMcp(itemId: String, approved: Boolean) {
+        respond(
+            itemId, if (approved) "Approved" else "Denied",
+            buildJsonObject { put("approved", approved) },
+        ) { req ->
+            gateway.call(
+                "mcp.setup.respond",
+                buildJsonObject {
+                    req.requestId?.let { put("request_id", it) }
+                    put("result", "{\"approved\":$approved}")
+                },
+            )
+            Unit
         }
     }
 

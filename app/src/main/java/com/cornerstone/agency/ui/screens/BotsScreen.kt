@@ -1,5 +1,6 @@
 package com.cornerstone.agency.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -7,10 +8,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.CircularProgressIndicator
@@ -29,9 +32,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.cornerstone.agency.data.BotProfile
 import com.cornerstone.agency.data.GatewayState
+import com.cornerstone.agency.data.PendingRequests
 import com.cornerstone.agency.data.SessionSummary
 import com.cornerstone.agency.data.listProfileSessions
 import com.cornerstone.agency.theme.AgencyTokens
@@ -57,6 +62,7 @@ fun BotsScreen(
     val colors = AgencyTokens.colors
     val space = AgencyTokens.space
     var query by remember { mutableStateOf("") }
+    val openProfiles by PendingRequests.openProfiles.collectAsState()
 
     val filtered = ui.profiles.filter {
         query.isBlank() ||
@@ -127,6 +133,9 @@ fun BotsScreen(
                                 color = botAvatarColor(profile.name, profile.isDefault),
                             )
                         },
+                        trailing = if (profile.name in openProfiles) {
+                            { NeedsDot() }
+                        } else null,
                     )
                 }
             }
@@ -150,6 +159,7 @@ fun ChatsScreen(
     val space = AgencyTokens.space
     val socketState by vm.gateway.state.collectAsState()
     val hideCronChatter by vm.hideCronChatter.collectAsState()
+    val openSessions by PendingRequests.openSessions.collectAsState()
     val scope = rememberCoroutineScope()
 
     // Sessions grouped by bot, in roster order.
@@ -253,7 +263,7 @@ fun ChatsScreen(
                         AgencyRow(
                             title = s.label,
                             subtitle = s.preview.lineSequence().firstOrNull() ?: "",
-                            meta = relativeTime(s.startedAt),
+                            meta = "",
                             onClick = { onOpenSession(profile.name, s.id) },
                             modifier = Modifier.padding(horizontal = space.sm),
                             leading = {
@@ -262,12 +272,52 @@ fun ChatsScreen(
                                     color = botAvatarColor(profile.name, profile.isDefault),
                                 )
                             },
+                            trailing = {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    if (s.id in openSessions) NeedsYouPill()
+                                    val t = relativeTime(s.startedAt)
+                                    if (t.isNotEmpty()) {
+                                        Spacer(Modifier.width(space.xs))
+                                        Text(
+                                            text = t,
+                                            style = MaterialTheme.typography.labelMedium,
+                                            color = colors.tertiary,
+                                        )
+                                    }
+                                }
+                            },
                         )
                     }
                 }
             }
         }
     }
+}
+
+/** Gold "needs you" pill for session rows with an unanswered request card. */
+@Composable
+private fun NeedsYouPill() {
+    val colors = AgencyTokens.colors
+    Text(
+        text = "needs you",
+        style = MaterialTheme.typography.labelSmall,
+        color = colors.gold,
+        modifier = Modifier
+            .clip(RoundedCornerShape(999.dp))
+            .background(colors.gold.copy(alpha = 0.15f))
+            .padding(horizontal = AgencyTokens.space.sm, vertical = 2.dp),
+    )
+}
+
+/** Small gold dot on a bot row when one of its sessions needs input. */
+@Composable
+private fun NeedsDot() {
+    Box(
+        Modifier
+            .size(8.dp)
+            .clip(RoundedCornerShape(999.dp))
+            .background(AgencyTokens.colors.gold),
+    )
 }
 
 @Composable

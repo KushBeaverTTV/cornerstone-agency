@@ -127,6 +127,7 @@ data class ChatItem(
     val streaming: Boolean = false,
     val done: Boolean = true,
     val meta: String = "",
+    val request: PendingRequest? = null,
 )
 
 // ---- M3: bot settings / model options -------------------------------------

@@ -230,7 +230,7 @@ fun ChatScreen(
                 ),
             ) {
                 items(items.asReversed(), key = { it.id }) { item ->
-                    ChatBubble(item)
+                    ChatBubble(item, chat, scope)
                     Spacer(Modifier.height(space.xs))
                 }
             }
@@ -325,7 +325,11 @@ fun ChatScreen(
 }
 
 @Composable
-private fun ChatBubble(item: ChatItem) {
+private fun ChatBubble(
+    item: ChatItem,
+    chat: ChatRepository,
+    scope: kotlinx.coroutines.CoroutineScope,
+) {
     val colors = AgencyTokens.colors
     when (item.kind) {
         ChatKind.User -> Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
@@ -396,19 +400,32 @@ private fun ChatBubble(item: ChatItem) {
             )
         }
 
-        ChatKind.Request -> Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
-            Bubble(colors.elevated, Modifier.widthIn(max = 300.dp)) {
-                Text(
-                    "Request",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = colors.gold,
+        ChatKind.Request -> {
+            val req = item.request
+            if (req != null) {
+                com.cornerstone.agency.ui.components.RequestCard(
+                    req = req,
+                    onApprove = { choice -> scope.launch { chat.approveRequest(item.id, choice) } },
+                    onClarify = { answers -> scope.launch { chat.answerClarify(item.id, answers) } },
+                    onValue = { v -> scope.launch { chat.submitRequestValue(item.id, v) } },
+                    onMcp = { ok -> scope.launch { chat.respondMcp(item.id, ok) } },
                 )
-                Spacer(Modifier.height(2.dp))
-                Text(
-                    item.text,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = colors.secondary,
-                )
+            } else {
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
+                    Bubble(colors.elevated, Modifier.widthIn(max = 300.dp)) {
+                        Text(
+                            "Request",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = colors.gold,
+                        )
+                        Spacer(Modifier.height(2.dp))
+                        Text(
+                            item.text,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = colors.secondary,
+                        )
+                    }
+                }
             }
         }
     }

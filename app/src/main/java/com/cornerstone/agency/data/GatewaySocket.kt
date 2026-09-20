@@ -46,6 +46,21 @@ data class GatewayEvent(
     val seq: Long? = null,
 )
 
+/**
+ * Server→client JSON-RPC request ({id:"srq-…", method, params}) — the agent
+ * thread blocks until we answer this exact frame id. approval / clarify /
+ * secret / sudo / vault.* / mcp.setup all arrive in this shape.
+ */
+data class GatewayRequest(
+    /** Raw frame id — echoed verbatim in the response (usually "srq-…"). */
+    val id: JsonElement,
+    val method: String,
+    val params: JsonObject,
+) {
+    val idString: String
+        get() = (id as? kotlinx.serialization.json.JsonPrimitive)?.content ?: id.toString()
+}
+
 class GatewayRpcException(val code: Int, message: String) : Exception(message)
 
 /**
@@ -66,6 +81,9 @@ class GatewaySocket(
 
     private val _events = MutableSharedFlow<GatewayEvent>(extraBufferCapacity = 512)
     val events: SharedFlow<GatewayEvent> = _events.asSharedFlow()
+
+    private val _requests = MutableSharedFlow<GatewayRequest>(extraBufferCapacity = 64)
+    val requests: SharedFlow<GatewayRequest> = _requests.asSharedFlow()
 
     // WebSocket needs no read timeout (idle is normal) and keepalive pings.
     private val wsClient by lazy {
@@ -105,6 +123,17 @@ class GatewaySocket(
         s?.close(1000, null)
         failPending(IOException("socket disconnected"))
         _state.value = GatewayState.CLOSED
+    }
+
+    /** Answer a server→client request frame, echoing its raw id. */
+    fun respond(requestId: JsonElement, result: JsonObject): Boolean {
+        val s = socket ?: return false
+        val frame = buildJsonObject {
+            put("jsonrpc", "2.0")
+            put("id", requestId)
+            put("result", result)
+        }
+        return s.send(frame.toString())
     }
 
     suspend fun call(method: String, params: JsonObject = JsonObject(emptyMap())): JsonElement {
@@ -214,6 +243,21 @@ class GatewaySocket(
 
     private fun dispatch(text: String) {
         val obj = runCatching { json.parseToJsonElement(text).jsonObject }.getOrNull() ?: return
+
+        // Server→client request: carries BOTH id and method (our call
+        // responses never have a method). Answered via respond(id, result).
+        val methodField = obj["method"]?.jsonPrimitive?.contentOrNull
+        val rawId = obj["id"]
+        if (methodField != null && rawId != null) {
+            _requests.tryEmit(
+                GatewayRequest(
+                    id = rawId,
+                    method = methodField,
+                    params = obj["params"] as? JsonObject ?: JsonObject(emptyMap()),
+                )
+            )
+            return
+        }
 
         // JSON-RPC response: {id, result} | {id, error:{code,message}}
         val id = obj["id"]?.jsonPrimitive?.longOrNull
