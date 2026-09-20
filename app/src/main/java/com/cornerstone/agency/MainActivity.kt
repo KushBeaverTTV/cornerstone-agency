@@ -35,6 +35,7 @@ class MainActivity : ComponentActivity() {
             }
         }
         handleDeepLink(intent)
+        handleShare(intent)
 
         setContent {
             AgencyTheme {
@@ -48,6 +49,7 @@ class MainActivity : ComponentActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         handleDeepLink(intent)
+        handleShare(intent)
     }
 
     /** Notification taps carry PROFILE/SESSION extras → AppNav navigates. */
@@ -58,5 +60,40 @@ class MainActivity : ComponentActivity() {
             profile,
             intent.getStringExtra(NotificationCenter.EXTRA_SESSION),
         )
+    }
+
+    /**
+     * ACTION_SEND / ACTION_SEND_MULTIPLE → ShareTargetScreen via the VM.
+     * Text goes through verbatim; images become [image: name] markers (the
+     * dashboard socket has no artifact upload path).
+     */
+    private fun handleShare(intent: Intent?) {
+        intent ?: return
+        val text = intent.getStringExtra(Intent.EXTRA_TEXT).orEmpty()
+        val images = mutableListOf<String>()
+        when (intent.action) {
+            Intent.ACTION_SEND -> {
+                intent.getParcelableExtra<android.net.Uri>(Intent.EXTRA_STREAM)
+                    ?.let { images += shareName(it) }
+            }
+            Intent.ACTION_SEND_MULTIPLE -> {
+                intent.getParcelableArrayListExtra<android.net.Uri>(Intent.EXTRA_STREAM)
+                    ?.forEach { images += shareName(it) }
+            }
+            else -> return
+        }
+        if (text.isBlank() && images.isEmpty()) return
+        vm.requestShare(text, images)
+    }
+
+    private fun shareName(uri: android.net.Uri): String {
+        val cursor = contentResolver.query(uri, null, null, null, null)
+        cursor?.use {
+            val col = it.getColumnIndex(android.provider.OpenableColumns.DISPLAY_NAME)
+            if (col >= 0 && it.moveToFirst()) {
+                it.getString(col)?.let { n -> return n }
+            }
+        }
+        return uri.lastPathSegment ?: "attachment"
     }
 }

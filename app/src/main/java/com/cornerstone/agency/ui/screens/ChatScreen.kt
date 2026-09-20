@@ -99,6 +99,10 @@ fun ChatScreen(
     var renameOpen by remember { mutableStateOf(false) }
     var renameText by remember { mutableStateOf("") }
     var draft by remember { mutableStateOf("") }
+    // Share-intent handoff: ShareTargetScreen stashes a draft on the VM.
+    LaunchedEffect(Unit) {
+        vm.consumeShareDraft()?.let { if (it.isNotBlank()) draft = it }
+    }
 
     // Resolve the session once the socket is open; re-resume on every reconnect.
     var resolvedOnce by remember { mutableStateOf(false) }

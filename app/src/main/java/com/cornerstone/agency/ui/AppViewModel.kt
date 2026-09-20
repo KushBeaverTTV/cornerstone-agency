@@ -96,6 +96,45 @@ class AppViewModel(private val app: Application) : AndroidViewModel(app) {
         _pendingDeepLink.value = null
     }
 
+    /** ACTION_SEND payload waiting for the share-target picker. */
+    data class ShareContent(val text: String, val imageNames: List<String>)
+
+    private val _pendingShare = MutableStateFlow<ShareContent?>(null)
+    val pendingShare: StateFlow<ShareContent?> = _pendingShare.asStateFlow()
+
+    fun requestShare(text: String, imageNames: List<String>) {
+        _pendingShare.value = ShareContent(text, imageNames)
+    }
+
+    fun consumeShare() {
+        _pendingShare.value = null
+    }
+
+    /** Composer prefill handed from ShareTargetScreen to ChatScreen. */
+    private val _shareDraft = MutableStateFlow<String?>(null)
+    val shareDraft: StateFlow<String?> = _shareDraft.asStateFlow()
+
+    fun setShareDraft(text: String) {
+        _shareDraft.value = text
+    }
+
+    fun consumeShareDraft(): String? {
+        val d = _shareDraft.value
+        _shareDraft.value = null
+        return d
+    }
+
+    val lastShareProfile: StateFlow<String> =
+        prefs.lastShareProfile.stateIn(
+            viewModelScope,
+            kotlinx.coroutines.flow.SharingStarted.Eagerly,
+            "",
+        )
+
+    fun setLastShareProfile(profile: String) {
+        viewModelScope.launch { prefs.setLastShareProfile(profile) }
+    }
+
     private val _ui = MutableStateFlow(UiState())
     val ui: StateFlow<UiState> = _ui.asStateFlow()
 

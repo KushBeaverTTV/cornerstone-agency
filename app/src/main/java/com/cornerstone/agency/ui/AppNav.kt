@@ -23,6 +23,7 @@ import com.cornerstone.agency.ui.screens.ConnectScreen
 import com.cornerstone.agency.ui.screens.JobDetailScreen
 import com.cornerstone.agency.ui.screens.NewAgentScreen
 import com.cornerstone.agency.ui.screens.SessionsScreen
+import com.cornerstone.agency.ui.screens.ShareTargetScreen
 import com.cornerstone.agency.ui.screens.SkillsScreen
 import com.cornerstone.agency.ui.screens.StatusScreen
 
@@ -36,6 +37,7 @@ object Routes {
     const val JOB = "job/{id}"
     const val SKILLS = "skills"
     const val SYSTEM = "system"
+    const val SHARE = "share"
 
     fun chat(profile: String, session: String? = null): String =
         "chat/${Uri.encode(profile)}" +
@@ -72,6 +74,13 @@ fun AppNav(vm: AppViewModel, navController: NavHostController = rememberNavContr
         if (!ui.connected) return@LaunchedEffect
         vm.consumeDeepLink()
         navController.navigate(Routes.chat(link.profile, link.session))
+    }
+
+    // ACTION_SEND: only navigate once the shell is up.
+    val share by vm.pendingShare.collectAsState()
+    LaunchedEffect(share, ui.connected) {
+        if (share == null || !ui.connected) return@LaunchedEffect
+        navController.navigate(Routes.SHARE)
     }
 
     NavHost(navController = navController, startDestination = Routes.CONNECT) {
@@ -149,6 +158,32 @@ fun AppNav(vm: AppViewModel, navController: NavHostController = rememberNavContr
                 onDeleted = { navController.popBackStack() },
                 onOpenSession = { profile, sessionId ->
                     navController.navigate(Routes.chat(profile, sessionId))
+                },
+            )
+        }
+        composable(Routes.SHARE) {
+            ShareTargetScreen(
+                vm = vm,
+                onPick = { profile ->
+                    val content = vm.pendingShare.value
+                    vm.consumeShare()
+                    vm.setLastShareProfile(profile)
+                    val draft = buildString {
+                        val t = content?.text.orEmpty()
+                        if (t.isNotBlank()) append(t)
+                        content?.imageNames?.forEach {
+                            if (isNotEmpty()) append('\n')
+                            append("[image: $it]")
+                        }
+                    }
+                    vm.setShareDraft(draft)
+                    navController.navigate(Routes.chat(profile)) {
+                        popUpTo(Routes.SHELL)
+                    }
+                },
+                onCancel = {
+                    vm.consumeShare()
+                    navController.popBackStack()
                 },
             )
         }
