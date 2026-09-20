@@ -83,12 +83,16 @@ Raw prime-agent events the phone must map to the existing `ChatItem` stream
 |-------------------------------------------|----------------------------------------------------|
 | `agent_start` / `turn_start`              | streaming=true, statusLine "working…"              |
 | `message_start` (assistant)               | new Assistant bubble                               |
-| `message_update` `text_delta`             | append to Assistant text                           |
-| `message_update` `thinking` deltas        | Thinking bubble (before the Assistant bubble)      |
+| `message_update` → `assistantMessageEvent.type` `text_delta` | append to Assistant text                  |
+| `message_update` → `assistantMessageEvent.type` `thinking_delta` | Thinking bubble (before the Assistant bubble) |
 | `tool_execution_start`                    | Tool row "▶ <tool>" before the Assistant bubble    |
 | `tool_execution_end`                      | flip to "✓ <tool>" (or "✗" on error)               |
 | `message_end`                             | finalize Assistant text                            |
-| `agent_end`                               | streaming=false, clear statusLine                  |
+| `turn_end` / `agent_end`                  | streaming=false, clear statusLine                  |
+
+Observed on the wire (prime-agent 0.9.5): `message_update` also emits
+`assistantMessageEvent` subtypes `text_start`/`text_end`, `thinking_start`/`thinking_end`
+— safely ignorable; deltas carry `delta` and `contentIndex` fields.
 | `extension_ui_request` `confirm`/`select`/`input` | Request card (Approval-style for confirm, Clarify-style for select/input) → `ui_response` |
 
 ### Laya (`/laya`)
