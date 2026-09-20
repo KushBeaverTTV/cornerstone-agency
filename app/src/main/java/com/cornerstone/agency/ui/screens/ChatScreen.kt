@@ -136,7 +136,14 @@ fun ChatScreen(
     var resolvedOnce by remember { mutableStateOf(false) }
     LaunchedEffect(socketState) {
         if (socketState == GatewayState.OPEN) {
-            if (resolvedOnce) chat.refreshAfterReconnect() else chat.open(sessionId)
+            if (resolvedOnce) {
+                chat.refreshAfterReconnect()
+            } else {
+                chat.open(sessionId)
+                // Dispatch composer: auto-send the routed message once the
+                // session is open (sessionId must be resolved first).
+                vm.consumeDispatch()?.let { chat.send(it) }
+            }
             resolvedOnce = true
         }
     }

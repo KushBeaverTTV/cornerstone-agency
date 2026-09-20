@@ -54,7 +54,7 @@ fun isCompactHeight(): Boolean =
 fun AppShell(
     vm: AppViewModel,
     onOpenChat: (profile: String) -> Unit = {},
-    onOpenSession: (profile: String, sessionId: String) -> Unit = { _, _ -> },
+    onOpenSession: (profile: String, sessionId: String?) -> Unit = { _, _ -> },
     onOpenBot: (profile: String) -> Unit = {},
     onNewAgent: () -> Unit = {},
     onOpenJob: (jobId: String) -> Unit = {},
@@ -62,7 +62,7 @@ fun AppShell(
     onOpenSkills: () -> Unit = {},
     onOpenPrima: () -> Unit = {},
     onOpenPrimaSessions: () -> Unit = {},
-    onOpenPrimaSession: (sessionId: String) -> Unit = {},
+    onOpenPrimaSession: (sessionId: String?) -> Unit = {},
 ) {
     val ui by vm.ui.collectAsState()
     val colors = AgencyTokens.colors
@@ -175,6 +175,8 @@ fun AppShell(
                         vm, onOpenChat, onOpenBot, onNewAgent,
                         onOpenPrima = onOpenPrima,
                         onOpenPrimaSessions = onOpenPrimaSessions,
+                        onOpenSession = onOpenSession,
+                        onOpenPrimaSession = onOpenPrimaSession,
                     )
                     Tab.CHATS -> ChatsScreen(vm, onOpenSession, onOpenPrimaSession)
                     Tab.JOBS -> JobsScreen(vm, onOpenJob)

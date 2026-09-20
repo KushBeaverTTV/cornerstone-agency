@@ -164,6 +164,20 @@ class AppViewModel(private val app: Application) : AndroidViewModel(app) {
         return d
     }
 
+    /** Dispatch composer handoff: text to auto-send once the target chat opens. */
+    private val _dispatchText = MutableStateFlow<String?>(null)
+    val dispatchText: StateFlow<String?> = _dispatchText.asStateFlow()
+
+    fun setDispatchText(text: String) {
+        _dispatchText.value = text
+    }
+
+    fun consumeDispatch(): String? {
+        val d = _dispatchText.value
+        _dispatchText.value = null
+        return d
+    }
+
     val lastShareProfile: StateFlow<String> =
         prefs.lastShareProfile.stateIn(
             viewModelScope,

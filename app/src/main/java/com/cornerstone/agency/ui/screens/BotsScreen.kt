@@ -1,6 +1,7 @@
 package com.cornerstone.agency.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -50,6 +52,9 @@ import com.cornerstone.agency.ui.components.SectionKicker
 import com.cornerstone.agency.ui.components.botAvatarColor
 import com.cornerstone.agency.ui.components.relativeTime
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.contentOrNull
 
 @Composable
 fun BotsScreen(
@@ -59,6 +64,8 @@ fun BotsScreen(
     onNewAgent: () -> Unit = {},
     onOpenPrima: () -> Unit = {},
     onOpenPrimaSessions: () -> Unit = {},
+    onOpenSession: (profile: String, sessionId: String?) -> Unit = { _, _ -> },
+    onOpenPrimaSession: (sessionId: String?) -> Unit = {},
 ) {
     val ui by vm.ui.collectAsState()
     val colors = AgencyTokens.colors
@@ -67,6 +74,74 @@ fun BotsScreen(
     val openProfiles by PendingRequests.openProfiles.collectAsState()
     val bridgeHealth by vm.bridgeHealth.collectAsState()
     val primaUp = bridgeHealth?.ok == true && bridgeHealth?.prima?.available == true
+    val bridgeUp = bridgeHealth?.ok == true
+    val scope = rememberCoroutineScope()
+
+    // -- M6-P3: Laya dispatch composer --------------------------------------
+    val desktopPrimaName = "Prima (desktop)"
+    val routeBots = ui.profiles.map { it.title to it.description } +
+        if (primaUp) listOf(
+            desktopPrimaName to "Prime Agent — desktop coding agent on this PC, reached via the agency bridge",
+        ) else emptyList()
+    var dispatchText by remember { mutableStateOf("") }
+    var routing by remember { mutableStateOf(false) }
+    var routedBot by remember { mutableStateOf<String?>(null) }
+    var routeConf by remember { mutableStateOf(0.0) }
+    var pickerOpen by remember { mutableStateOf(false) }
+    var routeError by remember { mutableStateOf("") }
+
+    fun sendDispatch() {
+        val bot = routedBot ?: return
+        val text = dispatchText.trim()
+        if (text.isEmpty()) return
+        dispatchText = ""
+        routedBot = null
+        routeError = ""
+        vm.setDispatchText(text)
+        scope.launch {
+            if (bot == desktopPrimaName) {
+                val sid = runCatching {
+                    vm.bridge.primaSessions().maxByOrNull { it.last_activity }?.id
+                }.getOrNull()
+                onOpenPrimaSession(sid)
+            } else {
+                val profile = ui.profiles.find {
+                    it.title.equals(bot, true) || it.name.equals(bot, true)
+                } ?: return@launch
+                val sid = runCatching {
+                    listProfileSessions(vm.gateway, profile.name).firstOrNull()?.id
+                }.getOrNull()
+                onOpenSession(profile.name, sid)
+            }
+        }
+    }
+
+    fun routeDispatch() {
+        val text = dispatchText.trim()
+        if (text.isEmpty() || routing) return
+        routing = true
+        routeError = ""
+        scope.launch {
+            try {
+                val res = vm.bridge.layaRoute(text, routeBots)
+                val pick = res["bot"]?.let { it as? kotlinx.serialization.json.JsonPrimitive }
+                    ?.contentOrNull ?: ""
+                val conf = (res["confidence"] as? kotlinx.serialization.json.JsonPrimitive)
+                    ?.contentOrNull?.toDoubleOrNull()
+                    ?: (res["probs"] as? kotlinx.serialization.json.JsonObject)
+                        ?.get(pick)?.let {
+                            (it as? kotlinx.serialization.json.JsonPrimitive)?.contentOrNull
+                        }?.toDoubleOrNull() ?: 0.0
+                routedBot = pick.ifBlank { null }
+                routeConf = conf
+                if (conf < 0.55) pickerOpen = true
+            } catch (e: Exception) {
+                routeError = e.message ?: "route failed"
+            } finally {
+                routing = false
+            }
+        }
+    }
 
     LaunchedEffect(Unit) { vm.refreshBridge() }
 
@@ -77,10 +152,11 @@ fun BotsScreen(
             it.name.contains(query, ignoreCase = true)
     }
 
+    Column(Modifier.fillMaxSize()) {
     PullToRefreshBox(
         isRefreshing = ui.profilesLoading,
         onRefresh = { vm.refreshProfiles() },
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.weight(1f).fillMaxWidth(),
     ) {
         LazyColumn(Modifier.fillMaxSize()) {
             item {
@@ -177,6 +253,124 @@ fun BotsScreen(
                 color = colors.gold,
             )
         }
+    }
+
+    // -- M6-P3: Laya dispatch composer (bridge healthy only) -----------------
+    if (bridgeUp) {
+        if (routeError.isNotEmpty()) {
+            Text(
+                routeError,
+                color = colors.destructive,
+                style = MaterialTheme.typography.labelSmall,
+                modifier = Modifier.padding(horizontal = space.lg, vertical = space.xxs),
+            )
+        }
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = space.lg, vertical = space.sm),
+            verticalAlignment = Alignment.Bottom,
+        ) {
+            routedBot?.let { bot ->
+                // Routing chip — tap to change the target bot.
+                Text(
+                    "→ $bot · ${(routeConf * 100).toInt()}%",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = colors.gold,
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(colors.gold.copy(alpha = 0.15f))
+                        .clickable { pickerOpen = true }
+                        .padding(horizontal = space.sm, vertical = space.xs),
+                )
+                Spacer(Modifier.width(space.xs))
+            }
+            AgencyTextField(
+                value = dispatchText,
+                onValueChange = { dispatchText = it },
+                modifier = Modifier.weight(1f),
+                placeholder = "Ask anyone…",
+                singleLine = true,
+            )
+            Spacer(Modifier.width(space.sm))
+            if (routing) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp).padding(bottom = space.xs),
+                    color = colors.gold,
+                    strokeWidth = 2.dp,
+                )
+            } else {
+                Icon(
+                    Icons.AutoMirrored.Filled.Send,
+                    contentDescription = if (routedBot == null) "Route" else "Send",
+                    tint = if (dispatchText.isNotBlank() || routedBot != null) colors.primary
+                        else colors.tertiary,
+                    modifier = Modifier
+                        .padding(bottom = space.xs)
+                        .clickable {
+                            if (routedBot != null) sendDispatch() else routeDispatch()
+                        },
+                )
+            }
+        }
+    }
+    }
+
+    if (pickerOpen) {
+        androidx.compose.material3.AlertDialog(
+            onDismissRequest = { pickerOpen = false },
+            title = { Text("Send to…") },
+            text = {
+                Column {
+                    routeBots.forEach { (name, desc) ->
+                        Row(
+                            Modifier
+                                .fillMaxWidth()
+                                .clip(RoundedCornerShape(8.dp))
+                                .clickable {
+                                    routedBot = name
+                                    pickerOpen = false
+                                }
+                                .padding(vertical = space.xs),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            BotAvatar(
+                                name = name.removeSuffix(" (desktop)"),
+                                color = if (name == desktopPrimaName) colors.defaultViolet
+                                    else botAvatarColor(
+                                        ui.profiles.find { it.title == name }?.name ?: name,
+                                        ui.profiles.find { it.title == name }?.isDefault == true,
+                                    ),
+                                size = 30.dp,
+                            )
+                            Spacer(Modifier.width(space.sm))
+                            Column {
+                                Text(
+                                    name,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = colors.foreground,
+                                )
+                                if (desc.isNotBlank()) {
+                                    Text(
+                                        desc,
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = colors.tertiary,
+                                        maxLines = 1,
+                                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            confirmButton = {},
+            dismissButton = {
+                androidx.compose.material3.TextButton(onClick = { pickerOpen = false }) {
+                    Text("Cancel")
+                }
+            },
+        )
     }
 }
 
