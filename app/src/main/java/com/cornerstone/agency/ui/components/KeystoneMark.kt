@@ -11,6 +11,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -43,20 +44,30 @@ fun KeystoneMark(
     level: Float = 0f,
 ) {
     val t = rememberInfiniteTransition(label = "keystone")
-    val breathe by t.animateFloat(
+    val breatheS = t.animateFloat(
         0f, 1f, infiniteRepeatable(tween(3200, easing = FastOutSlowInEasing), RepeatMode.Reverse), label = "breathe",
     )
-    val spin by t.animateFloat(
+    val spinS = t.animateFloat(
         0f, 360f, infiniteRepeatable(tween(2600, easing = LinearEasing), RepeatMode.Restart), label = "spin",
     )
-    val pulse by t.animateFloat(
+    val pulseS = t.animateFloat(
         0f, 1f, infiniteRepeatable(tween(520), RepeatMode.Reverse), label = "pulse",
     )
-    val wobble by t.animateFloat(
+    val wobbleS = t.animateFloat(
         -1f, 1f, infiniteRepeatable(tween(900, easing = FastOutSlowInEasing), RepeatMode.Reverse), label = "wobble",
     )
 
+    // Reduce motion: honour the system animator scale (0 = animations off).
+    val ctx = androidx.compose.ui.platform.LocalContext.current
+    val still = remember {
+        android.provider.Settings.Global.getFloat(ctx.contentResolver, android.provider.Settings.Global.ANIMATOR_DURATION_SCALE, 1f) == 0f
+    }
+    // Values are read inside the draw lambda, so frames redraw without recomposing.
     Canvas(modifier.size(size)) {
+        val breathe = if (still) 0.5f else breatheS.value
+        val spin = if (still) 0f else spinS.value
+        val pulse = if (still) 0.5f else pulseS.value
+        val wobble = if (still) 0f else wobbleS.value
         val w = this.size.width
         val h = this.size.height
         val dim = if (state == KeystoneState.ERROR) 0.35f else 1f
