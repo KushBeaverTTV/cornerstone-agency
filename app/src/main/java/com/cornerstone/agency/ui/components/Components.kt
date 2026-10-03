@@ -49,6 +49,7 @@ import androidx.compose.ui.unit.sp
 import com.cornerstone.agency.theme.AgencyFonts
 import com.cornerstone.agency.theme.AgencyTokens
 import java.util.Locale
+import androidx.compose.foundation.layout.heightIn
 
 @Composable
 fun AgencyScaffold(
@@ -134,6 +135,7 @@ fun AgencyRow(
             .clip(RoundedCornerShape(10.dp))
             .background(if (selected) colors.rowActive else Color.Transparent)
             .combinedClickable(onClick = onClick, onLongClick = onLongClick)
+            .heightIn(min = 56.dp)
             .padding(horizontal = AgencyTokens.space.sm, vertical = AgencyTokens.space.sm),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -281,7 +283,15 @@ fun botAvatarColor(name: String, isDefault: Boolean = false): Color {
 /** "meta/muse-spark-1.3-contributor" -> "muse-spark-1.3-contributor". */
 fun shortModelLabel(modelId: String): String {
     if (modelId.isBlank()) return "Select model"
-    return modelId.substringAfterLast("/")
+    val id = modelId.substringAfterLast("/")
+    // claude-sonnet-5-5 -> "Sonnet 5.5", claude-opus-4-8 -> "Opus 4.8"; anything else stays as-is.
+    val m = Regex("^claude-([a-z]+)-(\\d+)(?:-(\\d{1,2}))?(?:-\\d{8})?$").matchEntire(id)
+    if (m != null) {
+        val family = m.groupValues[1].replaceFirstChar { it.uppercase() }
+        val minor = m.groupValues[3]
+        return "$family ${m.groupValues[2]}" + if (minor.isNotEmpty()) ".$minor" else ""
+    }
+    return id
 }
 
 /** "just now" / "4m" / "2h" / "3d" / absolute date for old timestamps. */

@@ -40,6 +40,8 @@ import com.cornerstone.agency.data.RequestKind
 import com.cornerstone.agency.data.RequestState
 import com.cornerstone.agency.theme.AgencyTokens
 import kotlinx.coroutines.delay
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.wrapContentHeight
 
 private val CHOICE_LABEL = mapOf(
     "once" to "Allow once",
@@ -460,6 +462,8 @@ private fun Chip(
             .clip(RoundedCornerShape(8.dp))
             .background(bg)
             .clickable(enabled = enabled) { onClick() }
-            .padding(horizontal = 12.dp, vertical = 7.dp),
+            .heightIn(min = 48.dp)
+            .padding(horizontal = 16.dp)
+            .wrapContentHeight(Alignment.CenterVertically),
     )
 }

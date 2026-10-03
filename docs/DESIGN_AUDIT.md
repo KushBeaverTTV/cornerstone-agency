@@ -49,3 +49,33 @@ Settings
 4. Home = chat list + dock; 3-tab nav; Activity merge; Me restructure.
 5. Working strip + approvals inbox + keystone avatar states + widget.
 Note: ~10 files in this repo have uncommitted edits from other work; commit or branch before starting.
+
+
+---
+# Addendum (same day): verified research + what was built
+
+## Verified research (second pass; sources in the agent reports, summarized)
+Muse (Meta, "Muse from Meta", iOS+Android+WhatsApp):
+- 5 bottom tabs: Chat, Feed, Ideas, Goals, Library. No drawer. One long persistent main chat + optional side chats; interrupt / queue tasks.
+- Header = large centred animated avatar + name + one-line live status ("Checking price"); tap -> panel of what it's doing / did / will do / pending permissions (4-icon segmented control; Soul + Memory files reachable). Avatar can be described, regenerated, renamed.
+- Chat: Muse text is plain (no bubble) on white; user = right-aligned light-grey rounded bubble; inline file cards; emoji reaction when it starts work; composer = rounded field with attach left, dictation right. No live voice orb at launch (voice = dictation / WhatsApp voice notes; live avatar calls announced).
+- Approvals are deterministic cards, not chat: title, instruction, embedded preview, payment row, then Deny (grey) / Allow (blue) pills; options allow once / always / deny. Proactive messages held to a "high bar".
+- Goals grouped under coloured headers with checkbox rows; Ideas = plain list of first-person headlines; Library = rounded cards with thumbnails; Feed = personal "newspaper" from a prompt.
+- Look: light, large corner radii, one sans, blue primary only.
+Grok (xAI) app: top bar (sidebar icon | Ask / Imagine toggle | new chat), NO bottom tabs; user = dark-grey right bubble, Grok = full-width plain text; composer = rounded field with mode pill (Auto/Fast) bottom-left, attach, and a light "Speak" pill with waveform bottom-right; black-to-#1E1E1E, almost no accent colour; Android widget (Chat / Imagine / Voice); Companions retired (Sept 2026).
+**Grok Bot** (separate xAI agent app - the closest match to Cornerstone Agency): sidebar roster of Bots (avatar, name, last-message preview, timestamp); avatar motion = state (calm / acknowledging / working / waiting for help); inline cards instead of prose (e.g. email draft "Ready to send"); routines list ("Every day at 8:00 AM", "Paused"); side panel showing the Bot's computer; approvals come back to you. Voice = floating call card: pill with avatar + live waveform, bottom row of four round buttons (settings, transcript, mic, red end-call; red is the only saturated colour).
+Unverifiable: Muse dark mode, Grok's consumer voice orb.
+
+=> Direction confirmed: keep the roster as a first-class surface (Grok Bot), make chat plain-text + pill composer (both), put agent state in the header via an animated keystone avatar + status line (Muse/Grok Bot), approvals as Deny/Allow(Once/Always) cards (Muse), voice as a call card with live waveform + 4 buttons incl. red end (Grok Bot).
+
+## Built on branch `design/chat-first` (debug APK installed on the phone)
+- Theme: secondary/tertiary text contrast raised (tertiary 2.8:1 -> ~4.6:1), body 14->16sp, smallest label 11->12sp, row min height 56dp.
+- Approval/clarify chips: 30dp -> 48dp+ hit areas.
+- Chat: composer is one 56dp pill (focus ring), single 48dp trailing button = mic (empty) / send (text) / stop (streaming); assistant text full width, no bubble; user bubble clamps to 8 lines with Show more; thinking + tool rows collapse into one "Thought · N tools" chip per turn (pulsing yellow dot while live, tap to expand); empty state with avatar, name, tagline and 3 suggestion pills; New-chat button in the header; header targets always 48dp; long-press any message = copy; soft fade under the header; model chip 48dp tall and shows "Sonnet 5.5" instead of "claude-sonnet-5-5"; neutral hairline pill borders (gold on focus).
+- Not yet: nav restructure (3 tabs / Activity merge), voice call card, avatar states, working strip, approvals inbox, widget.
+
+## Known issues
+- Status-bar clock/icons render dark-on-dark inside the app (dumpsys shows the app window requesting light bars; setting appearance in code, theme attr, and DeviceDefault parent did not change it). Telegram on the same phone shows them correctly. Unresolved.
+- The round bubble with a "2" badge that overlaps content on screenshots is NOT from this app: it is a floating bubble from `co.thefabulous.app` (the Fabulous habit app).
+- Swarm/agent sessions appear in the app's Chats list while they run (they are deleted after tests).
+- App connects over USB reverse (127.0.0.1); the Tailscale switch is still to do.

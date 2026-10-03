@@ -20,7 +20,16 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        enableEdgeToEdge(
+            statusBarStyle = androidx.activity.SystemBarStyle.dark(android.graphics.Color.TRANSPARENT),
+            navigationBarStyle = androidx.activity.SystemBarStyle.dark(android.graphics.Color.TRANSPARENT),
+        )
+        // The app is dark-only: always request LIGHT system-bar icons (the OS default flips
+        // them dark when the phone itself is in light mode, which made the clock vanish).
+        androidx.core.view.WindowCompat.getInsetsController(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false
+            isAppearanceLightNavigationBars = false
+        }
         vm = ViewModelProvider(this)[AppViewModel::class.java]
 
         // Debug-only dev seed: `am start --es seed_url <u> --es seed_user <u> --es seed_cookie <c>`
@@ -43,6 +52,24 @@ class MainActivity : ComponentActivity() {
                     AppNav(vm)
                 }
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        applyDarkBars()
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) applyDarkBars()
+    }
+
+    /** Dark-only app: light status/nav icons no matter the phone's own light/dark setting. */
+    private fun applyDarkBars() {
+        androidx.core.view.WindowCompat.getInsetsController(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false
+            isAppearanceLightNavigationBars = false
         }
     }
 

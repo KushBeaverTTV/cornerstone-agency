@@ -31,8 +31,8 @@ val AgencyRowActive = Color(0x14FCEE0A)
 val AgencyGold = Color(0xFFFCEE0A)
 val AgencyEdge = Color(0x2EFCEE0A)
 val AgencyForeground = Color(0xF0F4F4F5)
-val AgencySecondaryText = Color(0xBDB1B3B8)
-val AgencyTertiaryText = Color(0x8A9A9B9E)
+val AgencySecondaryText = Color(0xD6B1B3B8)
+val AgencyTertiaryText = Color(0xD09A9B9E)
 val AgencyStroke = Color(0x1FFFFFFF)
 val AgencyDestructive = Color(0xFFE75E78)
 val AgencySuccess = Color(0xFF55A583)
@@ -115,8 +115,8 @@ private val AgencyTypography = Typography(
         fontFamily = AgencyFonts.Sans, lineHeight = 17.sp,
     ),
     bodyLarge = TextStyle(
-        color = AgencyForeground, fontSize = 14.sp, fontWeight = FontWeight.Normal,
-        fontFamily = AgencyFonts.Sans, lineHeight = 20.sp,
+        color = AgencyForeground, fontSize = 16.sp, fontWeight = FontWeight.Normal,
+        fontFamily = AgencyFonts.Sans, lineHeight = 23.sp,
     ),
     bodyMedium = TextStyle(
         color = AgencyForeground, fontSize = 13.sp, fontWeight = FontWeight.Normal,
@@ -135,8 +135,8 @@ private val AgencyTypography = Typography(
         fontFamily = AgencyFonts.Sans, lineHeight = 16.sp,
     ),
     labelSmall = TextStyle(
-        color = AgencyTertiaryText, fontSize = 11.sp, fontWeight = FontWeight.Medium,
-        fontFamily = AgencyFonts.Sans, letterSpacing = 0.06.em, lineHeight = 14.sp,
+        color = AgencyTertiaryText, fontSize = 12.sp, fontWeight = FontWeight.Medium,
+        fontFamily = AgencyFonts.Sans, letterSpacing = 0.06.em, lineHeight = 16.sp,
     ),
 )
 

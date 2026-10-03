@@ -81,6 +81,31 @@ import com.mikepenz.markdown.m3.Markdown
 import com.mikepenz.markdown.m3.markdownColor
 import com.mikepenz.markdown.m3.markdownTypography
 import kotlinx.coroutines.launch
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.rotate
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
+import android.widget.Toast
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 
 fun botDisplayName(profiles: List<com.cornerstone.agency.data.BotProfile>, name: String): String =
     profiles.find { it.name == name }?.title
@@ -121,6 +146,7 @@ fun ChatScreen(
     var renameOpen by remember { mutableStateOf(false) }
     var renameText by remember { mutableStateOf("") }
     var draft by remember { mutableStateOf("") }
+    var draftFocused by remember { mutableStateOf(false) }
 
     // Grok-style quick model switcher (hidden for Prima, which has no models).
     val profile = ui.profiles.find { it.name == profileName }
@@ -192,12 +218,8 @@ fun ChatScreen(
                 ),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            IconButton(onClick = onBack, modifier = if (compact) Modifier.size(36.dp) else Modifier) {
-                Icon(
-                    Icons.AutoMirrored.Filled.ArrowBack, "Back",
-                    tint = colors.foreground,
-                    modifier = if (compact) Modifier.size(18.dp) else Modifier,
-                )
+            IconButton(onClick = onBack) {
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = colors.foreground)
             }
             BotAvatar(
                 name = botName,
@@ -224,9 +246,12 @@ fun ChatScreen(
                     )
                 }
             }
+            IconButton(onClick = { scope.launch { chat.newSession() } }) {
+                Icon(Icons.Filled.Add, "New chat", tint = colors.foreground)
+            }
             Box {
                 IconButton(onClick = { menuOpen = true }) {
-                    Icon(Icons.Filled.MoreVert, "Menu", tint = colors.secondary)
+                    Icon(Icons.Filled.MoreVert, "Menu", tint = colors.foreground)
                 }
                 DropdownMenu(
                     expanded = menuOpen,
@@ -290,6 +315,16 @@ fun ChatScreen(
                     color = colors.gold, strokeWidth = 2.dp,
                 )
             }
+            if (!opening && items.isEmpty()) {
+                EmptyChat(
+                    botName = botName,
+                    avatarColor = if (prima) colors.defaultViolet
+                        else botAvatarColor(profileName, profileName == "default"),
+                    onPick = { text -> scope.launch { chat.send(text) } },
+                    modifier = Modifier.align(Alignment.Center),
+                )
+            }
+            val rows = remember(items, streaming) { buildChatRows(items, streaming) }
             LazyColumn(
                 state = listState,
                 reverseLayout = true,
@@ -298,11 +333,21 @@ fun ChatScreen(
                     horizontal = space.md, vertical = space.sm,
                 ),
             ) {
-                items(items.asReversed(), key = { it.id }) { item ->
-                    ChatBubble(item, chat, scope)
-                    Spacer(Modifier.height(space.xs))
+                items(rows.asReversed(), key = { it.key }) { row ->
+                    when (row) {
+                        is ChatRow.Single -> ChatBubble(row.item, chat, scope)
+                        is ChatRow.Work -> WorkGroup(row)
+                    }
+                    Spacer(Modifier.height(space.sm))
                 }
             }
+            Box(
+                Modifier
+                    .align(Alignment.TopCenter)
+                    .fillMaxWidth()
+                    .height(18.dp)
+                    .background(Brush.verticalGradient(listOf(colors.chrome, Color.Transparent))),
+            )
         }
 
         // Transient turn status ("(◇) orchestrating…") — under the streaming
@@ -337,10 +382,11 @@ fun ChatScreen(
                 Row(
                     Modifier
                         .clip(RoundedCornerShape(999.dp))
-                        .border(1.dp, colors.edge, RoundedCornerShape(999.dp))
+                        .border(1.dp, colors.stroke, RoundedCornerShape(999.dp))
                         .background(colors.card)
                         .clickable { openModelSheet() }
-                        .padding(horizontal = 10.dp, vertical = 6.dp),
+                        .heightIn(min = 48.dp)
+                        .padding(horizontal = 14.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Box(
@@ -369,56 +415,83 @@ fun ChatScreen(
             Spacer(Modifier.height(space.xs))
         }
 
-        // Composer
+        // Composer - one tall pill; the trailing button is mic when empty, send when
+        // there is text, stop while a turn streams (Grok-style).
+        val hasText = draft.isNotBlank()
+        val pill = RoundedCornerShape(28.dp)
         Row(
             Modifier
                 .fillMaxWidth()
                 .padding(
                     horizontal = if (compact) space.sm else space.lg,
-                    vertical = if (compact) space.xs else space.sm,
-                ),
-            verticalAlignment = Alignment.Bottom,
+                    vertical = space.sm,
+                )
+                .heightIn(min = 56.dp)
+                .clip(pill)
+                .border(1.dp, if (draftFocused) colors.gold else colors.stroke, pill)
+                .background(colors.card)
+                .padding(start = space.lg, end = 4.dp, top = 4.dp, bottom = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            AgencyTextField(
-                value = draft,
-                onValueChange = { draft = it },
-                modifier = Modifier.weight(1f),
-                placeholder = "Message $botName",
-                singleLine = false,
-            )
-            Spacer(Modifier.width(space.sm))
-            IconButton(
-                onClick = {
-                    val granted = ContextCompat.checkSelfPermission(
-                        context, Manifest.permission.RECORD_AUDIO,
-                    ) == PackageManager.PERMISSION_GRANTED
-                    if (granted) voiceOpen = true
-                    else micPermission.launch(Manifest.permission.RECORD_AUDIO)
-                },
-            ) {
-                Icon(MicIcon, "Voice", tint = colors.tertiary, modifier = Modifier.size(20.dp))
+            Box(Modifier.weight(1f).padding(vertical = space.sm)) {
+                BasicTextField(
+                    value = draft,
+                    onValueChange = { draft = it },
+                    modifier = Modifier.fillMaxWidth().onFocusChanged { draftFocused = it.isFocused },
+                    maxLines = 6,
+                    textStyle = MaterialTheme.typography.bodyLarge.copy(color = colors.foreground),
+                    cursorBrush = SolidColor(colors.gold),
+                    decorationBox = { inner ->
+                        Box {
+                            if (draft.isEmpty()) {
+                                Text(
+                                    "Message $botName",
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = colors.tertiary,
+                                )
+                            }
+                            inner()
+                        }
+                    },
+                )
             }
             Box(
                 Modifier
-                    .size(44.dp)
+                    .size(48.dp)
                     .clip(CircleShape)
                     .background(if (streaming) colors.destructive else colors.primary)
                     .clickable {
-                        if (streaming) {
-                            scope.launch { chat.stop() }
-                        } else if (draft.isNotBlank()) {
-                            val t = draft
-                            draft = ""
-                            scope.launch { chat.send(t) }
+                        when {
+                            streaming -> scope.launch { chat.stop() }
+                            hasText -> {
+                                val t = draft
+                                draft = ""
+                                scope.launch { chat.send(t) }
+                            }
+                            else -> {
+                                val granted = ContextCompat.checkSelfPermission(
+                                    context, Manifest.permission.RECORD_AUDIO,
+                                ) == PackageManager.PERMISSION_GRANTED
+                                if (granted) voiceOpen = true
+                                else micPermission.launch(Manifest.permission.RECORD_AUDIO)
+                            }
                         }
                     },
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
-                    if (streaming) Icons.Filled.Close else Icons.AutoMirrored.Filled.Send,
-                    contentDescription = if (streaming) "Stop" else "Send",
+                    when {
+                        streaming -> Icons.Filled.Close
+                        hasText -> Icons.AutoMirrored.Filled.Send
+                        else -> MicIcon
+                    },
+                    contentDescription = when {
+                        streaming -> "Stop"
+                        hasText -> "Send"
+                        else -> "Voice"
+                    },
                     tint = if (streaming) colors.foreground else colors.onPrimary,
-                    modifier = Modifier.size(18.dp),
+                    modifier = Modifier.size(22.dp),
                 )
             }
         }
@@ -510,39 +583,63 @@ private fun ChatBubble(
 ) {
     val colors = AgencyTokens.colors
     when (item.kind) {
-        ChatKind.User -> Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-            Bubble(colors.primarySoft, Modifier.widthIn(max = 300.dp)) {
-                Text(
-                    item.text,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = colors.foreground,
-                )
+        ChatKind.User -> {
+            var exp by remember(item.id) { mutableStateOf(false) }
+            var overflow by remember(item.id) { mutableStateOf(false) }
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                Bubble(
+                    colors.primarySoft,
+                    Modifier.widthIn(max = 340.dp).copyOnLongPress(item.text),
+                ) {
+                    Column {
+                        Text(
+                            item.text,
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = colors.foreground,
+                            maxLines = if (exp) Int.MAX_VALUE else 8,
+                            overflow = TextOverflow.Ellipsis,
+                            onTextLayout = { if (!exp) overflow = it.hasVisualOverflow },
+                        )
+                        if (overflow || exp) {
+                            Text(
+                                if (exp) "Show less" else "Show more",
+                                style = MaterialTheme.typography.labelLarge,
+                                color = colors.gold,
+                                modifier = Modifier
+                                    .clickable { exp = !exp }
+                                    .heightIn(min = 48.dp)
+                                    .wrapContentHeight(Alignment.CenterVertically),
+                            )
+                        }
+                    }
+                }
             }
         }
 
-        ChatKind.Assistant -> Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
-            Bubble(colors.card, Modifier.widthIn(max = 300.dp)) {
-                if (item.text.isEmpty() && item.streaming) {
-                    Text("▌", color = colors.tertiary, style = MaterialTheme.typography.bodyMedium)
-                } else {
-                    Markdown(
-                        content = item.text + if (item.streaming) " ▌" else "",
-                        colors = markdownColor(
-                            text = colors.foreground,
-                            codeBackground = colors.elevated,
-                            inlineCodeBackground = colors.elevated,
-                            dividerColor = colors.stroke,
-                        ),
-                        typography = markdownTypography(
-                            text = MaterialTheme.typography.bodyMedium,
-                            paragraph = MaterialTheme.typography.bodyMedium,
-                            ordered = MaterialTheme.typography.bodyMedium,
-                            bullet = MaterialTheme.typography.bodyMedium,
-                            list = MaterialTheme.typography.bodyMedium,
-                        ),
-                        modifier = Modifier,
-                    )
-                }
+        // Assistant text is full width and borderless; only the user keeps a bubble.
+        ChatKind.Assistant -> Column(
+            Modifier.fillMaxWidth().copyOnLongPress(item.text).padding(vertical = 2.dp),
+        ) {
+            if (item.text.isEmpty() && item.streaming) {
+                Text("▌", color = colors.gold, style = MaterialTheme.typography.bodyLarge)
+            } else {
+                Markdown(
+                    content = item.text + if (item.streaming) " ▌" else "",
+                    colors = markdownColor(
+                        text = colors.foreground,
+                        codeBackground = colors.elevated,
+                        inlineCodeBackground = colors.elevated,
+                        dividerColor = colors.stroke,
+                    ),
+                    typography = markdownTypography(
+                        text = MaterialTheme.typography.bodyLarge,
+                        paragraph = MaterialTheme.typography.bodyLarge,
+                        ordered = MaterialTheme.typography.bodyLarge,
+                        bullet = MaterialTheme.typography.bodyLarge,
+                        list = MaterialTheme.typography.bodyLarge,
+                    ),
+                    modifier = Modifier,
+                )
             }
         }
 
@@ -649,4 +746,163 @@ private fun ThinkingBubble(item: ChatItem) {
             overflow = TextOverflow.Ellipsis,
         )
     }
+}
+
+
+// ---- grouped "work" rows --------------------------------------------------
+
+private sealed interface ChatRow {
+    val key: String
+    data class Single(val item: ChatItem) : ChatRow { override val key: String get() = item.id }
+    data class Work(val items: List<ChatItem>, val live: Boolean) : ChatRow {
+        override val key: String get() = "work-" + items.first().id
+    }
+}
+
+/** Consecutive thinking + tool items collapse into one quiet chip per turn. */
+private fun buildChatRows(items: List<ChatItem>, streaming: Boolean): List<ChatRow> {
+    val out = ArrayList<ChatRow>()
+    var group = ArrayList<ChatItem>()
+    fun flush(last: Boolean) {
+        if (group.isEmpty()) return
+        val live = (last && streaming) || group.any { it.kind == ChatKind.Tool && !it.done }
+        out += ChatRow.Work(group, live)
+        group = ArrayList()
+    }
+    items.forEachIndexed { i, it ->
+        if (it.kind == ChatKind.Thinking || it.kind == ChatKind.Tool) {
+            group.add(it)
+        } else {
+            flush(false)
+            out += ChatRow.Single(it)
+        }
+    }
+    flush(true)
+    return out
+}
+
+@Composable
+private fun WorkGroup(g: ChatRow.Work) {
+    val colors = AgencyTokens.colors
+    var expanded by remember(g.key) { mutableStateOf(false) }
+    val tools = g.items.filter { it.kind == ChatKind.Tool }
+    val thoughts = g.items.filter { it.kind == ChatKind.Thinking }
+    val label = buildString {
+        if (thoughts.isNotEmpty()) append(if (g.live) "Thinking" else "Thought")
+        if (tools.isNotEmpty()) {
+            if (isNotEmpty()) append(" · ")
+            append(tools.size).append(if (tools.size == 1) " tool" else " tools")
+        }
+    }.ifEmpty { "Working" }
+    val pulse by rememberInfiniteTransition(label = "pulse").animateFloat(
+        initialValue = 0.35f, targetValue = 1f,
+        animationSpec = infiniteRepeatable(tween(700), RepeatMode.Reverse), label = "pulseA",
+    )
+    Column(Modifier.fillMaxWidth()) {
+        Row(
+            Modifier
+                .heightIn(min = 48.dp)
+                .clip(RoundedCornerShape(24.dp))
+                .clickable { expanded = !expanded }
+                .padding(horizontal = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Box(
+                Modifier
+                    .size(8.dp)
+                    .alpha(if (g.live) pulse else 1f)
+                    .clip(CircleShape)
+                    .background(if (g.live) colors.gold else colors.tertiary),
+            )
+            Spacer(Modifier.width(8.dp))
+            Text(label, style = MaterialTheme.typography.labelLarge, color = colors.secondary)
+            Icon(
+                Icons.Filled.KeyboardArrowDown, if (expanded) "Collapse" else "Expand",
+                tint = colors.tertiary,
+                modifier = Modifier.size(20.dp).rotate(if (expanded) 180f else 0f),
+            )
+        }
+        if (expanded) {
+            Column(Modifier.padding(start = 16.dp, bottom = 8.dp)) {
+                g.items.forEach { it ->
+                    when (it.kind) {
+                        ChatKind.Thinking -> Text(
+                            it.text,
+                            style = MaterialTheme.typography.bodySmall,
+                            fontStyle = FontStyle.Italic,
+                            color = colors.tertiary,
+                            modifier = Modifier.padding(vertical = 4.dp),
+                        )
+                        else -> Text(
+                            it.text,
+                            color = colors.secondary,
+                            fontFamily = FontFamily.Monospace,
+                            fontSize = 13.sp,
+                            modifier = Modifier.padding(vertical = 3.dp),
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun EmptyChat(
+    botName: String,
+    avatarColor: androidx.compose.ui.graphics.Color,
+    onPick: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val colors = AgencyTokens.colors
+    val suggestions = listOf(
+        "What's on my plate today?",
+        "Catch me up on what you've been working on",
+        "What can you help me with right now?",
+    )
+    Column(
+        modifier.padding(horizontal = 24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        BotAvatar(name = botName, color = avatarColor, size = 72.dp)
+        Spacer(Modifier.height(16.dp))
+        Text(botName, style = MaterialTheme.typography.displaySmall)
+        Spacer(Modifier.height(4.dp))
+        Text("What's on your mind?", style = MaterialTheme.typography.bodyLarge, color = colors.secondary)
+        Spacer(Modifier.height(24.dp))
+        suggestions.forEach { text ->
+            Box(
+                Modifier
+                    .padding(vertical = 4.dp)
+                    .widthIn(max = 360.dp)
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(24.dp))
+                    .border(1.dp, colors.stroke, RoundedCornerShape(24.dp))
+                    .background(colors.card)
+                    .clickable { onPick(text) }
+                    .heightIn(min = 48.dp)
+                    .padding(horizontal = 18.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    text, style = MaterialTheme.typography.bodyMedium,
+                    color = colors.foreground, textAlign = TextAlign.Center,
+                )
+            }
+        }
+    }
+}
+
+/** Long-press copies the message text. */
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun Modifier.copyOnLongPress(text: String): Modifier {
+    val clip = LocalClipboardManager.current
+    val haptic = LocalHapticFeedback.current
+    val ctx = LocalContext.current
+    return this.combinedClickable(onClick = {}, onLongClick = {
+        clip.setText(AnnotatedString(text))
+        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+        Toast.makeText(ctx, "Copied", Toast.LENGTH_SHORT).show()
+    })
 }
