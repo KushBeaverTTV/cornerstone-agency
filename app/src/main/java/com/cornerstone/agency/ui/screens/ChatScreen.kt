@@ -106,6 +106,9 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.LiveRegionMode
 
 fun botDisplayName(profiles: List<com.cornerstone.agency.data.BotProfile>, name: String): String =
     profiles.find { it.name == name }?.title
@@ -179,6 +182,16 @@ fun ChatScreen(
         ActivityResultContracts.RequestPermission(),
     ) { granted -> if (granted) voiceOpen = true }
 
+    // Widget "talk" button: open straight into the voice card.
+    LaunchedEffect(Unit) {
+        if (vm.consumeVoiceRequest()) {
+            val granted = ContextCompat.checkSelfPermission(
+                context, Manifest.permission.RECORD_AUDIO,
+            ) == PackageManager.PERMISSION_GRANTED
+            if (granted) voiceOpen = true else micPermission.launch(Manifest.permission.RECORD_AUDIO)
+        }
+    }
+
     // Resolve the session once the socket is open; re-resume on every reconnect.
     var resolvedOnce by remember { mutableStateOf(false) }
     LaunchedEffect(socketState) {
@@ -221,13 +234,17 @@ fun ChatScreen(
             IconButton(onClick = onBack) {
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = colors.foreground)
             }
-            BotAvatar(
+            val agent = remember(items, streaming, socketState) {
+                agentActivity(items, streaming, socketState != GatewayState.OPEN)
+            }
+            StatusAvatar(
                 name = botName,
                 color = if (prima) colors.defaultViolet
                     else botAvatarColor(profileName, profileName == "default"),
-                size = if (compact) 22.dp else 30.dp,
+                state = agent.state,
+                size = if (compact) 28.dp else 36.dp,
             )
-            Spacer(Modifier.width(space.sm))
+            Spacer(Modifier.width(space.md))
             Column(Modifier.weight(1f)) {
                 Text(
                     botName,
@@ -237,12 +254,19 @@ fun ChatScreen(
                     overflow = TextOverflow.Ellipsis,
                 )
                 if (!compact) {
+                    val line = agent.label ?: title.ifBlank { "New session" }
                     Text(
-                        title.ifBlank { "New session" },
-                        style = MaterialTheme.typography.labelSmall,
-                        color = colors.tertiary,
+                        line,
+                        style = MaterialTheme.typography.labelMedium,
+                        color = when (agent.state) {
+                            AgentState.WORKING -> colors.gold
+                            AgentState.WAITING -> colors.warm
+                            AgentState.OFFLINE -> colors.destructive
+                            AgentState.IDLE -> colors.tertiary
+                        },
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
                     )
                 }
             }
@@ -905,4 +929,57 @@ private fun Modifier.copyOnLongPress(text: String): Modifier {
         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
         Toast.makeText(ctx, "Copied", Toast.LENGTH_SHORT).show()
     })
+}
+
+
+// ---- agent status (header) -------------------------------------------------
+
+private enum class AgentState { IDLE, WORKING, WAITING, OFFLINE }
+
+private data class AgentActivity(val state: AgentState, val label: String?)
+
+/** One-line "what is it doing" derived from the transcript, Muse/Grok-Bot style. */
+private fun agentActivity(items: List<ChatItem>, streaming: Boolean, offline: Boolean): AgentActivity {
+    if (offline) return AgentActivity(AgentState.OFFLINE, "Reconnecting…")
+    if (items.any { it.kind == ChatKind.Request && it.request?.state == com.cornerstone.agency.data.RequestState.Open }) {
+        return AgentActivity(AgentState.WAITING, "Waiting for you")
+    }
+    if (!streaming) return AgentActivity(AgentState.IDLE, null)
+    val tool = items.lastOrNull { it.kind == ChatKind.Tool && !it.done }
+    if (tool != null) {
+        val name = tool.text.removePrefix("▶").trim().take(28)
+        return AgentActivity(AgentState.WORKING, "Using $name")
+    }
+    val last = items.lastOrNull()
+    return AgentActivity(
+        AgentState.WORKING,
+        if (last?.kind == ChatKind.Thinking) "Thinking…" else "Replying…",
+    )
+}
+
+/** Avatar whose ring tells the story: pulsing gold = working, solid amber = needs you. */
+@Composable
+private fun StatusAvatar(name: String, color: Color, state: AgentState, size: androidx.compose.ui.unit.Dp) {
+    val colors = AgencyTokens.colors
+    val t = rememberInfiniteTransition(label = "avatar")
+    val pulse by t.animateFloat(
+        0f, 1f, infiniteRepeatable(tween(1100), RepeatMode.Reverse), label = "avatarPulse",
+    )
+    val ring = when (state) {
+        AgentState.WORKING -> colors.gold
+        AgentState.WAITING -> colors.warm
+        AgentState.OFFLINE -> colors.destructive
+        AgentState.IDLE -> Color.Transparent
+    }
+    Box(Modifier.size(size + 12.dp), contentAlignment = Alignment.Center) {
+        if (state != AgentState.IDLE) {
+            val a = if (state == AgentState.WORKING) 0.25f + 0.75f * pulse else 1f
+            Box(
+                Modifier
+                    .size(size + 8.dp + if (state == AgentState.WORKING) (4.dp * pulse) else 0.dp)
+                    .border(2.dp, ring.copy(alpha = a), CircleShape),
+            )
+        }
+        BotAvatar(name = name, color = color, size = size)
+    }
 }

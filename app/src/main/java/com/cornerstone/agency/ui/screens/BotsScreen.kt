@@ -535,13 +535,30 @@ fun ChatsScreen(
 
             else -> {
                 // One flat list, newest first, across every bot and desktop Prima.
-                val feed = remember(visibleGroups, primaSessions) {
+                val feed = remember(visibleGroups, primaSessions, openSessions) {
                     val out = ArrayList<Triple<Double, String, Any>>()
                     visibleGroups.forEach { (p, ss) -> ss.forEach { out += Triple(it.startedAt, "${p.name}:${it.id}", p to it) } }
                     primaSessions.forEach { out += Triple(it.last_activity, "dprima:${it.id}", it) }
-                    out.sortedByDescending { it.first }
+                    // Sessions waiting on an answer float to the top, then newest first.
+                    out.sortedWith(
+                        compareByDescending<Triple<Double, String, Any>> {
+                            val a = it.third
+                            a is Pair<*, *> && (a.second as SessionSummary).id in openSessions
+                        }.thenByDescending { it.first },
+                    )
                 }
                 LazyColumn(Modifier.fillMaxSize()) {
+                    if (openSessions.isNotEmpty()) {
+                        item(key = "needs-you-banner") {
+                            Text(
+                                if (openSessions.size == 1) "1 chat needs your answer"
+                                else "${openSessions.size} chats need your answer",
+                                style = MaterialTheme.typography.labelLarge,
+                                color = colors.warm,
+                                modifier = Modifier.padding(horizontal = space.lg, vertical = space.sm),
+                            )
+                        }
+                    }
                     items(feed, key = { it.second }) { (_, _, any) ->
                         if (any is Pair<*, *>) {
                             @Suppress("UNCHECKED_CAST")
@@ -550,7 +567,7 @@ fun ChatsScreen(
                             val s = pair.second
                             AgencyRow(
                                 title = s.label,
-                                subtitle = s.preview.lineSequence().firstOrNull() ?: "",
+                                subtitle = cleanPreview(s.preview).takeUnless { pv -> s.label.isNotBlank() && (pv.startsWith(s.label.trimEnd('…', '.', ' ').take(40)) || s.label.startsWith(pv.take(40))) } ?: "",
                                 meta = "",
                                 onClick = { onOpenSession(profile.name, s.id) },
                                 modifier = Modifier.padding(horizontal = space.sm),
@@ -637,4 +654,15 @@ private fun ScreenTitle(title: String, modifier: Modifier = Modifier) {
             vertical = AgencyTokens.space.lg,
         ),
     )
+}
+
+
+/** System-prompt boilerplate makes useless previews; show something human instead. */
+private fun cleanPreview(raw: String): String {
+    val first = raw.lineSequence().firstOrNull { it.isNotBlank() }?.trim() ?: return ""
+    return when {
+        first.startsWith("[IMPORTANT: You are running as a scheduled cron", true) -> "Scheduled job"
+        first.startsWith("You are being used through a hands-free voice", true) -> "Voice conversation"
+        else -> first
+    }
 }

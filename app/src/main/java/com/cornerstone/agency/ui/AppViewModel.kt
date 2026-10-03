@@ -136,6 +136,10 @@ class AppViewModel(private val app: Application) : AndroidViewModel(app) {
         _pendingDeepLink.value = ChatDeepLink(profile, session)
     }
 
+    private var voiceRequested = false
+    fun requestVoice() { voiceRequested = true }
+    fun consumeVoiceRequest(): Boolean = voiceRequested.also { voiceRequested = false }
+
     fun consumeDeepLink() {
         _pendingDeepLink.value = null
     }

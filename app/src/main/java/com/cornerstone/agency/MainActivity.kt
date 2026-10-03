@@ -43,6 +43,7 @@ class MainActivity : ComponentActivity() {
                 )
             }
         }
+        handleWidget(intent)
         handleDeepLink(intent)
         handleShare(intent)
 
@@ -75,8 +76,18 @@ class MainActivity : ComponentActivity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
+        handleWidget(intent)
         handleDeepLink(intent)
         handleShare(intent)
+    }
+
+    /** Widget taps: open the default bot's latest chat, optionally straight into voice. */
+    private fun handleWidget(intent: Intent?) {
+        if (intent?.action != com.cornerstone.agency.service.AgencyWidget.ACTION_WIDGET) return
+        if (intent.getBooleanExtra(com.cornerstone.agency.service.AgencyWidget.EXTRA_VOICE, false)) {
+            vm.requestVoice()
+        }
+        vm.requestDeepLink("default", null)
     }
 
     /** Notification taps carry PROFILE/SESSION extras → AppNav navigates. */
