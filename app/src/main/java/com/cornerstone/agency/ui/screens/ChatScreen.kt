@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,6 +30,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
@@ -70,7 +72,9 @@ import com.cornerstone.agency.ui.isCompactHeight
 import com.cornerstone.agency.ui.components.AgencyTextField
 import com.cornerstone.agency.ui.components.BotAvatar
 import com.cornerstone.agency.ui.components.MicIcon
+import com.cornerstone.agency.ui.components.ModelPickerSheet
 import com.cornerstone.agency.ui.components.botAvatarColor
+import com.cornerstone.agency.ui.components.shortModelLabel
 import com.cornerstone.agency.voice.VoicePlate
 import com.cornerstone.agency.voice.VoiceSession
 import com.mikepenz.markdown.m3.Markdown
@@ -117,6 +121,23 @@ fun ChatScreen(
     var renameOpen by remember { mutableStateOf(false) }
     var renameText by remember { mutableStateOf("") }
     var draft by remember { mutableStateOf("") }
+
+    // Grok-style quick model switcher (hidden for Prima, which has no models).
+    val profile = ui.profiles.find { it.name == profileName }
+    var modelSheet by remember { mutableStateOf(false) }
+    var providers by remember { mutableStateOf<List<com.cornerstone.agency.data.ModelProvider>>(emptyList()) }
+    var providersLoading by remember { mutableStateOf(false) }
+    var modelBusy by remember { mutableStateOf(false) }
+    fun openModelSheet() {
+        modelSheet = true
+        if (providers.isEmpty() && !providersLoading) {
+            providersLoading = true
+            scope.launch {
+                providers = runCatching { vm.repo.modelOptions() }.getOrDefault(emptyList())
+                providersLoading = false
+            }
+        }
+    }
     // Share-intent handoff: ShareTargetScreen stashes a draft on the VM.
     LaunchedEffect(Unit) {
         vm.consumeShareDraft()?.let { if (it.isNotBlank()) draft = it }
@@ -305,6 +326,49 @@ fun ChatScreen(
             )
         }
 
+        // Model pill — Grok-style quick switcher above the composer.
+        if (!prima) {
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = if (compact) space.sm else space.lg),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Row(
+                    Modifier
+                        .clip(RoundedCornerShape(999.dp))
+                        .border(1.dp, colors.edge, RoundedCornerShape(999.dp))
+                        .background(colors.card)
+                        .clickable { openModelSheet() }
+                        .padding(horizontal = 10.dp, vertical = 6.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(8.dp)
+                            .clip(CircleShape)
+                            .background(colors.gold),
+                    )
+                    Spacer(Modifier.width(6.dp))
+                    Text(
+                        shortModelLabel(profile?.model ?: ""),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = colors.foreground,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.widthIn(max = 200.dp),
+                    )
+                    Icon(
+                        Icons.Filled.KeyboardArrowDown,
+                        contentDescription = "Change model",
+                        tint = colors.tertiary,
+                        modifier = Modifier.size(16.dp),
+                    )
+                }
+            }
+            Spacer(Modifier.height(space.xs))
+        }
+
         // Composer
         Row(
             Modifier
@@ -353,7 +417,7 @@ fun ChatScreen(
                 Icon(
                     if (streaming) Icons.Filled.Close else Icons.AutoMirrored.Filled.Send,
                     contentDescription = if (streaming) "Stop" else "Send",
-                    tint = colors.foreground,
+                    tint = if (streaming) colors.foreground else colors.onPrimary,
                     modifier = Modifier.size(18.dp),
                 )
             }
@@ -410,6 +474,30 @@ fun ChatScreen(
             dismissButton = {
                 TextButton(onClick = { renameOpen = false }) { Text("Cancel") }
             },
+        )
+    }
+
+    if (modelSheet) {
+        ModelPickerSheet(
+            providers = providers,
+            currentProvider = profile?.provider ?: "",
+            currentModel = profile?.model ?: "",
+            loading = providersLoading || modelBusy,
+            onPick = { slug, model ->
+                modelBusy = true
+                scope.launch {
+                    try {
+                        vm.repo.updateModel(profileName, slug, model)
+                        vm.refreshProfiles()
+                        modelSheet = false
+                    } catch (e: Exception) {
+                        // Keep the sheet open so the user can retry.
+                    } finally {
+                        modelBusy = false
+                    }
+                }
+            },
+            onDismiss = { modelSheet = false },
         )
     }
 }
@@ -526,6 +614,7 @@ private fun Bubble(color: androidx.compose.ui.graphics.Color, modifier: Modifier
     Box(
         modifier
             .clip(RoundedCornerShape(18.dp))
+            .border(1.dp, AgencyTokens.colors.edge, RoundedCornerShape(18.dp))
             .background(color)
             .padding(horizontal = 14.dp, vertical = 10.dp),
     ) {

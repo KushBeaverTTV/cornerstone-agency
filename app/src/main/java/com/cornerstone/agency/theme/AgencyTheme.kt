@@ -16,15 +16,20 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.cornerstone.agency.R
 
-// Palette decoded from the Hermes v1.0.5 prototype (ai.nous.hermes ui/theme).
-val AgencyChrome = Color(0xFF0D0D0E)
+// Palette: Cornerstone signal identity — ink #0A0A0A / signal #FCEE0A / white.
+// (Originally decoded from the Hermes v1.0.5 prototype; reskinned to the
+// Cornerstone yellow/black/white cyberpunk identity.)
+val AgencyChrome = Color(0xFF0A0A0A)
+val AgencyChromeDeep = Color(0xFF100D04)
 val AgencySidebar = Color(0xFF0A0A0B)
 val AgencyCard = Color(0xFF161618)
 val AgencyElevated = Color(0xFF1C1C1F)
-val AgencyPrimary = Color(0xFF0053FD)
-val AgencyPrimarySoft = Color(0xFF1A2A55)
-val AgencyRowActive = Color(0x140053FD)
-val AgencyGold = Color(0xFFFFD24A)
+val AgencyPrimary = Color(0xFFFCEE0A)
+val AgencyOnPrimary = Color(0xFF0A0A0A)
+val AgencyPrimarySoft = Color(0xFF3A310B)
+val AgencyRowActive = Color(0x14FCEE0A)
+val AgencyGold = Color(0xFFFCEE0A)
+val AgencyEdge = Color(0x2EFCEE0A)
 val AgencyForeground = Color(0xF0F4F4F5)
 val AgencySecondaryText = Color(0xBDB1B3B8)
 val AgencyTertiaryText = Color(0x8A9A9B9E)
@@ -39,10 +44,13 @@ val AgencySelection = AgencyGold.copy(alpha = 0.38f)
 
 data class AgencyColors(
     val chrome: Color = AgencyChrome,
+    val chromeDeep: Color = AgencyChromeDeep,
     val sidebar: Color = AgencySidebar,
     val card: Color = AgencyCard,
     val elevated: Color = AgencyElevated,
+    val edge: Color = AgencyEdge,
     val primary: Color = AgencyPrimary,
+    val onPrimary: Color = AgencyOnPrimary,
     val primarySoft: Color = AgencyPrimarySoft,
     val rowActive: Color = AgencyRowActive,
     val gold: Color = AgencyGold,
@@ -79,15 +87,15 @@ object AgencyFonts {
 
 private val AgencyTypography = Typography(
     displayLarge = TextStyle(
-        color = AgencyForeground, fontSize = 28.sp, fontWeight = FontWeight.Bold,
+        color = AgencyGold, fontSize = 28.sp, fontWeight = FontWeight.Bold,
         fontFamily = AgencyFonts.Collapse, letterSpacing = 0.08.em, lineHeight = 26.sp,
     ),
     displayMedium = TextStyle(
-        color = AgencyForeground, fontSize = 22.sp, fontWeight = FontWeight.Bold,
+        color = AgencyGold, fontSize = 22.sp, fontWeight = FontWeight.Bold,
         fontFamily = AgencyFonts.Collapse, letterSpacing = 0.06.em, lineHeight = 22.sp,
     ),
     displaySmall = TextStyle(
-        color = AgencyForeground, fontSize = 20.sp, fontWeight = FontWeight.Bold,
+        color = AgencyGold, fontSize = 20.sp, fontWeight = FontWeight.Bold,
         fontFamily = AgencyFonts.Collapse, letterSpacing = 0.04.em, lineHeight = 22.sp,
     ),
     headlineSmall = TextStyle(
@@ -152,7 +160,7 @@ fun AgencyTheme(content: @Composable () -> Unit) {
         MaterialTheme(
             colorScheme = darkColorScheme(
                 primary = colors.primary,
-                onPrimary = Color.White,
+                onPrimary = colors.onPrimary,
                 primaryContainer = colors.primarySoft,
                 onPrimaryContainer = colors.foreground,
                 secondary = colors.secondary,

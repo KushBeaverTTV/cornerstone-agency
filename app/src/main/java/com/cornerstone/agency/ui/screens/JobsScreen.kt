@@ -103,7 +103,7 @@ private fun StatusPill(health: JobHealth, label: String) {
 
 /** Jobs tab: cron routines grouped by owning bot ([bot:x] name prefix). */
 @Composable
-fun JobsScreen(vm: AppViewModel, onOpenJob: (String) -> Unit = {}) {
+fun JobsScreen(vm: AppViewModel, onOpenJob: (String) -> Unit = {}, onBack: (() -> Unit)? = null) {
     val colors = AgencyTokens.colors
     val space = AgencyTokens.space
     val ui by vm.ui.collectAsState()
@@ -146,14 +146,27 @@ fun JobsScreen(vm: AppViewModel, onOpenJob: (String) -> Unit = {}) {
     ) {
         LazyColumn(Modifier.fillMaxSize()) {
             item {
-                Text(
-                    text = "Jobs",
-                    style = MaterialTheme.typography.displayLarge,
-                    color = colors.wordmark,
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(
                         horizontal = space.lg, vertical = space.lg,
                     ),
-                )
+                ) {
+                    if (onBack != null) {
+                        IconButton(onClick = onBack) {
+                            Icon(
+                                Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = "Back",
+                                tint = colors.gold,
+                            )
+                        }
+                    }
+                    Text(
+                        text = "Jobs",
+                        style = MaterialTheme.typography.displayLarge,
+                        color = colors.wordmark,
+                    )
+                }
             }
 
             if (jobs.isEmpty() && !loading) {

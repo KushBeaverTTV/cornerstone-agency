@@ -9,6 +9,7 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.lifecycle.viewModelScope
 import com.cornerstone.agency.data.ApiException
 import com.cornerstone.agency.data.BotProfile
+import com.cornerstone.agency.data.CompanionRepository
 import com.cornerstone.agency.data.ConnectionRepository
 import com.cornerstone.agency.data.GatewayHub
 import com.cornerstone.agency.data.GatewaySocket
@@ -53,6 +54,9 @@ class AppViewModel(private val app: Application) : AndroidViewModel(app) {
     private val store = SecureStore(app)
     internal val repo = ConnectionRepository(store)
     private val prefs = Prefs(app)
+
+    /** Local-first store for the Feed / Goals / Artifacts tabs. */
+    val companion = CompanionRepository(app)
 
     /** Chats tab: hide cron-job session chatter (DataStore-persisted). */
     val hideCronChatter: StateFlow<Boolean> =

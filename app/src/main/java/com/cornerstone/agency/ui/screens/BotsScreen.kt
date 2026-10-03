@@ -182,7 +182,7 @@ fun BotsScreen(
                             Icon(
                                 Icons.Filled.Add,
                                 contentDescription = "New agent",
-                                tint = colors.secondary,
+                                tint = colors.gold,
                             )
                         }
                     }

@@ -2,6 +2,7 @@ package com.cornerstone.agency.ui.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
@@ -58,8 +59,12 @@ fun AgencyScaffold(
 ) {
     val colors = AgencyTokens.colors
     Scaffold(
-        modifier = modifier,
-        containerColor = colors.chrome,
+        modifier = modifier.background(
+            androidx.compose.ui.graphics.Brush.verticalGradient(
+                listOf(colors.chrome, colors.chromeDeep),
+            ),
+        ),
+        containerColor = androidx.compose.ui.graphics.Color.Transparent,
         topBar = topBar,
         bottomBar = bottomBar,
     ) { padding ->
@@ -73,7 +78,7 @@ fun SectionKicker(text: String, modifier: Modifier = Modifier) {
     Text(
         text = text.uppercase(Locale.US),
         modifier = modifier,
-        color = AgencyTokens.colors.tertiary,
+        color = AgencyTokens.colors.gold,
         fontSize = 11.sp,
         fontWeight = androidx.compose.ui.text.font.FontWeight.Medium,
         fontFamily = AgencyFonts.Sans,
@@ -90,6 +95,7 @@ fun AgencyCard(
     Column(
         modifier = modifier
             .clip(RoundedCornerShape(10.dp))
+            .border(1.dp, colors.edge, RoundedCornerShape(10.dp))
             .background(colors.card)
             .padding(AgencyTokens.space.md),
         content = content,
@@ -166,9 +172,34 @@ fun AgencyRow(
     }
 }
 
-/** Material "visibility" eye glyph (icons-extended isn't a dependency). */
-val EyeIcon: androidx.compose.ui.graphics.vector.ImageVector by lazy {
+/** Material "folder" glyph (icons-extended isn't a dependency). */
+val FolderIcon: androidx.compose.ui.graphics.vector.ImageVector by lazy {
     androidx.compose.ui.graphics.vector.ImageVector.Builder(
+        name = "Folder",
+        defaultWidth = 24.dp,
+        defaultHeight = 24.dp,
+        viewportWidth = 24f,
+        viewportHeight = 24f,
+    ).path(
+        fill = androidx.compose.ui.graphics.SolidColor(Color.White),
+    ) {
+        moveTo(10f, 4f)
+        lineTo(4f, 4f)
+        curveTo(2.9f, 4f, 2f, 4.9f, 2f, 6f)
+        verticalLineTo(18f)
+        curveTo(2f, 19.1f, 2.9f, 20f, 4f, 20f)
+        horizontalLineTo(20f)
+        curveTo(21.1f, 20f, 22f, 19.1f, 22f, 18f)
+        verticalLineTo(8f)
+        curveTo(22f, 6.9f, 21.1f, 6f, 20f, 6f)
+        horizontalLineTo(12f)
+        lineTo(10f, 4f)
+        close()
+    }.build()
+}
+
+/** Material "visibility" eye glyph (icons-extended isn't a dependency). */
+val EyeIcon: androidx.compose.ui.graphics.vector.ImageVector by lazy {    androidx.compose.ui.graphics.vector.ImageVector.Builder(
         name = "Eye",
         defaultWidth = 24.dp,
         defaultHeight = 24.dp,
@@ -232,9 +263,9 @@ val MicIcon: androidx.compose.ui.graphics.vector.ImageVector by lazy {
 }
 
 private val AVATAR_COLORS = listOf(
-    Color(0xFFFFD24A), // gold
+    Color(0xFFFCEE0A), // signal yellow
     Color(0xFF8B5CF6), // violet
-    Color(0xFF0053FD), // primary
+    Color(0xFFF4F4F0), // bone white
     Color(0xFFCF806D), // warm
     Color(0xFF55A583), // success
     Color(0xFFE75E78), // destructive
@@ -245,6 +276,12 @@ fun botAvatarColor(name: String, isDefault: Boolean = false): Color {
     if (isDefault || name == "default") return AVATAR_COLORS[0]
     val idx = kotlin.math.abs(name.hashCode()) % (AVATAR_COLORS.size - 1) + 1
     return AVATAR_COLORS[idx]
+}
+
+/** "meta/muse-spark-1.3-contributor" -> "muse-spark-1.3-contributor". */
+fun shortModelLabel(modelId: String): String {
+    if (modelId.isBlank()) return "Select model"
+    return modelId.substringAfterLast("/")
 }
 
 /** "just now" / "4m" / "2h" / "3d" / absolute date for old timestamps. */
@@ -305,7 +342,7 @@ fun PrimaryButton(
         shape = RoundedCornerShape(8.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = colors.primary,
-            contentColor = Color.White,
+            contentColor = colors.onPrimary,
             disabledContainerColor = colors.primarySoft,
             disabledContentColor = colors.tertiary,
         ),
@@ -313,7 +350,7 @@ fun PrimaryButton(
         if (loading) {
             CircularProgressIndicator(
                 modifier = Modifier.size(18.dp),
-                color = Color.White,
+                color = colors.onPrimary,
                 strokeWidth = 2.dp,
             )
         } else {
@@ -461,14 +498,29 @@ fun ModelPickerSheet(
                                 ),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            Text(
-                                model,
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = if (selected) colors.gold else colors.foreground,
-                                modifier = Modifier.weight(1f),
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis,
+                            androidx.compose.foundation.layout.Box(
+                                modifier = Modifier
+                                    .size(8.dp)
+                                    .clip(androidx.compose.foundation.shape.CircleShape)
+                                    .background(if (selected) colors.gold else colors.tertiary),
                             )
+                            Spacer(Modifier.width(AgencyTokens.space.sm))
+                            Column(Modifier.weight(1f)) {
+                                Text(
+                                    shortModelLabel(model),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = if (selected) colors.gold else colors.foreground,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                )
+                                Text(
+                                    provider.name,
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = colors.tertiary,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                )
+                            }
                             if (selected) {
                                 Text("✓", color = colors.gold)
                             }

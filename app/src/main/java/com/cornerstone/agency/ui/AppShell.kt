@@ -10,10 +10,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material.icons.outlined.Face
+import androidx.compose.material.icons.outlined.List
 import androidx.compose.material.icons.outlined.MailOutline
 import androidx.compose.material.icons.outlined.MoreVert
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -23,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -32,16 +34,22 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.cornerstone.agency.theme.AgencyTokens
 import com.cornerstone.agency.ui.components.AgencyScaffold
+import com.cornerstone.agency.ui.components.FolderIcon
 import com.cornerstone.agency.ui.components.StatusBanner
 import com.cornerstone.agency.ui.screens.BotsScreen
 import com.cornerstone.agency.ui.screens.ChatsScreen
 import com.cornerstone.agency.ui.screens.JobsScreen
 import com.cornerstone.agency.ui.screens.MoreScreen
+import com.cornerstone.agency.ui.screens.FeedScreen
+import com.cornerstone.agency.ui.screens.GoalsScreen
+import com.cornerstone.agency.ui.screens.ArtifactsScreen
 
 private enum class Tab(val label: String, val icon: ImageVector) {
     BOTS("Bots", Icons.Outlined.Face),
     CHATS("Chats", Icons.Outlined.MailOutline),
-    JOBS("Jobs", Icons.Outlined.DateRange),
+    FEED("Feed", Icons.Outlined.List),
+    GOALS("Goals", Icons.Outlined.Star),
+    ARTIFACTS("Artifacts", FolderIcon),
     MORE("More", Icons.Outlined.MoreVert),
 }
 
@@ -67,6 +75,7 @@ fun AppShell(
     val ui by vm.ui.collectAsState()
     val colors = AgencyTokens.colors
     var tab by rememberSaveable { mutableIntStateOf(Tab.BOTS.ordinal) }
+    var showJobs by rememberSaveable { mutableStateOf(false) }
     val needsAttention by com.cornerstone.agency.data.PendingRequests.anyOpen.collectAsState()
 
     // Android 13+: heads-up request/message notifications need the runtime grant.
@@ -153,8 +162,8 @@ fun AppShell(
                         },
                         label = { Text(t.label) },
                         colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = colors.foreground,
-                            selectedTextColor = colors.foreground,
+                            selectedIconColor = colors.gold,
+                            selectedTextColor = colors.gold,
                             indicatorColor = colors.primarySoft,
                             unselectedIconColor = colors.tertiary,
                             unselectedTextColor = colors.tertiary,
@@ -170,17 +179,26 @@ fun AppShell(
                 StatusBanner("Dashboard unreachable — check the URL or VPN")
             }
             Box(Modifier.weight(1f).fillMaxWidth()) {
-                when (Tab.entries[tab]) {
-                    Tab.BOTS -> BotsScreen(
-                        vm, onOpenChat, onOpenBot, onNewAgent,
-                        onOpenPrima = onOpenPrima,
-                        onOpenPrimaSessions = onOpenPrimaSessions,
-                        onOpenSession = onOpenSession,
-                        onOpenPrimaSession = onOpenPrimaSession,
-                    )
-                    Tab.CHATS -> ChatsScreen(vm, onOpenSession, onOpenPrimaSession)
-                    Tab.JOBS -> JobsScreen(vm, onOpenJob)
-                    Tab.MORE -> MoreScreen(vm, onOpenSystem, onOpenSkills)
+                if (showJobs) {
+                    JobsScreen(vm, onOpenJob, onBack = { showJobs = false })
+                } else {
+                    when (Tab.entries[tab]) {
+                        Tab.BOTS -> BotsScreen(
+                            vm, onOpenChat, onOpenBot, onNewAgent,
+                            onOpenPrima = onOpenPrima,
+                            onOpenPrimaSessions = onOpenPrimaSessions,
+                            onOpenSession = onOpenSession,
+                            onOpenPrimaSession = onOpenPrimaSession,
+                        )
+                        Tab.CHATS -> ChatsScreen(vm, onOpenSession, onOpenPrimaSession)
+                        Tab.FEED -> FeedScreen(vm)
+                        Tab.GOALS -> GoalsScreen(vm)
+                        Tab.ARTIFACTS -> ArtifactsScreen(vm)
+                        Tab.MORE -> MoreScreen(
+                            vm, onOpenSystem, onOpenSkills,
+                            onOpenJobs = { showJobs = true },
+                        )
+                    }
                 }
             }
         }

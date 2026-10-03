@@ -39,6 +39,7 @@ fun MoreScreen(
     vm: AppViewModel,
     onOpenSystem: () -> Unit = {},
     onOpenSkills: () -> Unit = {},
+    onOpenJobs: () -> Unit = {},
 ) {
     val ui by vm.ui.collectAsState()
     val stayConnected by vm.stayConnected.collectAsState()
@@ -286,6 +287,12 @@ fun MoreScreen(
             subtitle = "Installed skills and the skills hub",
             meta = "",
             onClick = onOpenSkills,
+        )
+        AgencyRow(
+            title = "Jobs",
+            subtitle = "Scheduled routines and cron jobs",
+            meta = "",
+            onClick = onOpenJobs,
         )
         AgencyRow(
             title = "Appearance",

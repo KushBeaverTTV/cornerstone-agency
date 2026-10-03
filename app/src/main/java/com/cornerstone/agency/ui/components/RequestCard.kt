@@ -449,7 +449,7 @@ private fun Chip(
     val fg = when {
         !enabled -> colors.tertiary
         danger -> colors.destructive
-        filled -> colors.foreground
+        filled -> colors.onPrimary
         else -> colors.secondary
     }
     Text(
