@@ -46,6 +46,9 @@ class MainActivity : ComponentActivity() {
         handleWidget(intent)
         handleDeepLink(intent)
         handleShare(intent)
+        if (BuildConfig.DEBUG && intent?.getBooleanExtra("debug_inbox", false) == true) {
+            com.cornerstone.agency.service.NotificationCenter.debugInject()
+        }
 
         setContent {
             AgencyTheme {

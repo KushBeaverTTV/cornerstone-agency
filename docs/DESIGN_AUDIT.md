@@ -81,9 +81,20 @@ Unverifiable: Muse dark mode, Grok's consumer voice orb.
 - Home-screen widget (4x1): card opens Kaori's latest chat, mic opens straight into voice.
 - Review pass (two sonnet reviewers) fixed: Bots overlay surviving tab switches, widget intent replay on recreate, stale voice flag (20s TTL), Jobs shortcut landing on the wrong pane, unmute while the bot speaks, empty chat overflow on the cover display, roster/routing chip hit targets, call buttons role.
 
+## Pass 5 (verified on device)
+- Needs-you inbox on Chats: approvals answerable in place (monospace command block, "Destructive command" flag, outlined Deny / gold Allow once); single-question clarifies get inline choice chips. Uses the same srq respond path as the notification action. Debug builds can fake items with `am start ... --ez debug_inbox true`.
+- Animated keystone mark (arch of stones, lit keystone): breathes idle, ripples with your voice while listening, sweeps light while working, pulses speaking, tilts when waiting. Used in the voice card and empty chat.
+- Voice card: transcript toggle, equal 64dp buttons with hairline borders.
+- Chat: jump-to-latest button, message add animation, code fences with language label + Copy (monospace, scrolls sideways), table cells 150dp (scrolls), list indent.
+- Verified at 1.4x font scale: no clipping on Chats or voice card.
+- Second sonnet review fixed: inbox race (synchronized), debug items never hit the socket, a11y labels on jump/copy/keystone.
+- Lesson: vision critiques are unreliable on fine detail (claimed code was not monospace; pixel widths proved it was). Verify with measurements.
+
 ## Known issues / not done
 - The earlier "dark status-bar clock" was a stale-build artifact (the APK still held old dex); it renders correctly now. Always `gradlew clean assembleDebug` after structural edits.
-- Approvals still resolve inside the chat itself (the card is there); the Chats list now surfaces which chats need you, but there is no answer-from-the-list inbox.
+- Inbox only shows requests from sessions you are not inside (leaving a chat interrupts its live turn, so only background/Telegram/cron sessions appear). Your config has approvals off, so real ones are rare; clarify and secret requests still show.
+- Multi-question clarifies and secrets open the chat instead of answering inline.
+- KeystoneMark allocates paths each frame (cheap, but could use drawWithCache); no reduce-motion handling yet.
 - No dedicated mute-slash icon (button flips to white + "Muted" label).
 - The floating "2" bubble in screenshots is `co.thefabulous.app`, not this app.
 - Over USB-less use needs Tailscale ON on the phone.

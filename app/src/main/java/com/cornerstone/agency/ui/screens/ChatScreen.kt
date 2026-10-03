@@ -110,6 +110,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.ui.semantics.contentDescription
 
 fun botDisplayName(profiles: List<com.cornerstone.agency.data.BotProfile>, name: String): String =
     profiles.find { it.name == name }?.title
@@ -359,11 +362,13 @@ fun ChatScreen(
                 ),
             ) {
                 items(rows.asReversed(), key = { it.key }) { row ->
-                    when (row) {
-                        is ChatRow.Single -> ChatBubble(row.item, chat, scope)
-                        is ChatRow.Work -> WorkGroup(row)
+                    Column(Modifier.animateItem()) {
+                        when (row) {
+                            is ChatRow.Single -> ChatBubble(row.item, chat, scope)
+                            is ChatRow.Work -> WorkGroup(row)
+                        }
+                        Spacer(Modifier.height(space.sm))
                     }
-                    Spacer(Modifier.height(space.sm))
                 }
             }
             Box(
@@ -373,6 +378,28 @@ fun ChatScreen(
                     .height(18.dp)
                     .background(Brush.verticalGradient(listOf(colors.chrome, Color.Transparent))),
             )
+            val showJump by remember { derivedStateOf { listState.firstVisibleItemIndex > 2 } }
+            androidx.compose.animation.AnimatedVisibility(
+                visible = showJump,
+                modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = space.md),
+                enter = androidx.compose.animation.fadeIn() + androidx.compose.animation.scaleIn(),
+                exit = androidx.compose.animation.fadeOut() + androidx.compose.animation.scaleOut(),
+            ) {
+                Box(
+                    Modifier
+                        .size(48.dp)
+                        .clip(CircleShape)
+                        .background(colors.elevated)
+                        .border(1.dp, colors.stroke, CircleShape)
+                        .clickable(role = androidx.compose.ui.semantics.Role.Button, onClickLabel = "Jump to latest message") {
+                            scope.launch { listState.animateScrollToItem(0) }
+                        }
+                        .semantics(mergeDescendants = true) { contentDescription = "Jump to latest" },
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Icon(Icons.Filled.KeyboardArrowDown, "Jump to latest", tint = colors.foreground)
+                }
+            }
         }
 
         // Transient turn status ("(◇) orchestrating…") — under the streaming
@@ -655,6 +682,7 @@ private fun ChatBubble(
                         codeBackground = colors.elevated,
                         inlineCodeBackground = colors.elevated,
                         dividerColor = colors.stroke,
+                        tableBackground = colors.card,
                     ),
                     typography = markdownTypography(
                         text = MaterialTheme.typography.bodyLarge,
@@ -662,6 +690,28 @@ private fun ChatBubble(
                         ordered = MaterialTheme.typography.bodyLarge,
                         bullet = MaterialTheme.typography.bodyLarge,
                         list = MaterialTheme.typography.bodyLarge,
+                        code = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace, fontSize = 13.sp, lineHeight = 19.sp),
+                        inlineCode = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace, fontSize = 14.sp),
+                        table = MaterialTheme.typography.bodyMedium,
+                    ),
+                    dimens = com.mikepenz.markdown.model.markdownDimens(tableCellWidth = 150.dp),
+                    components = com.mikepenz.markdown.compose.components.markdownComponents(
+                        codeFence = { m ->
+                            val n = m.node
+                            val parts = n.children.filter { it.type == org.intellij.markdown.MarkdownTokenTypes.CODE_FENCE_CONTENT }
+                            val code = if (parts.isEmpty()) "" else m.content.substring(parts.first().startOffset, parts.last().endOffset)
+                            val lang = n.children.firstOrNull { it.type == org.intellij.markdown.MarkdownTokenTypes.FENCE_LANG }
+                                ?.let { m.content.substring(it.startOffset, it.endOffset) }.orEmpty()
+                            CodeBlockCard(code.trimEnd('\n'), lang.trim())
+                        },
+                        codeBlock = { m ->
+                            val parts = m.node.children.filter { it.type == org.intellij.markdown.MarkdownTokenTypes.CODE_LINE }
+                            val code = if (parts.isEmpty()) "" else m.content.substring(parts.first().startOffset, parts.last().endOffset)
+                            CodeBlockCard(code.trimEnd('\n'), "")
+                        },
+                    ),
+                    padding = com.mikepenz.markdown.model.markdownPadding(
+                        listItemTop = 4.dp, listItemBottom = 4.dp, listIndent = 12.dp,
                     ),
                     modifier = Modifier,
                 )
@@ -893,7 +943,7 @@ private fun EmptyChat(
             .padding(horizontal = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        BotAvatar(name = botName, color = avatarColor, size = if (compact) 48.dp else 72.dp)
+        com.cornerstone.agency.ui.components.KeystoneMark(com.cornerstone.agency.ui.components.KeystoneState.IDLE, size = if (compact) 72.dp else 112.dp, color = avatarColor, modifier = Modifier.semantics { contentDescription = "$botName" })
         Spacer(Modifier.height(16.dp))
         Text(botName, style = MaterialTheme.typography.displaySmall)
         Spacer(Modifier.height(4.dp))
@@ -986,5 +1036,63 @@ private fun StatusAvatar(name: String, color: Color, state: AgentState, size: an
             )
         }
         BotAvatar(name = name, color = color, size = size)
+    }
+}
+
+
+/** Fenced code: language label + Copy, monospace, scrolls sideways instead of wrapping. */
+@Composable
+private fun CodeBlockCard(code: String, lang: String) {
+    val colors = AgencyTokens.colors
+    val clip = LocalClipboardManager.current
+    val haptic = LocalHapticFeedback.current
+    val ctx = LocalContext.current
+    val shape = RoundedCornerShape(14.dp)
+    Column(
+        Modifier
+            .padding(vertical = 6.dp)
+            .fillMaxWidth()
+            .clip(shape)
+            .background(colors.card)
+            .border(1.dp, colors.stroke, shape),
+    ) {
+        Row(
+            Modifier.fillMaxWidth().padding(start = 14.dp, end = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                lang.ifBlank { "code" },
+                style = MaterialTheme.typography.labelMedium,
+                color = colors.tertiary,
+                modifier = Modifier.weight(1f),
+            )
+            Text(
+                "Copy",
+                style = MaterialTheme.typography.labelLarge,
+                color = colors.gold,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(12.dp))
+                    .semantics { contentDescription = "Copy code" }
+                    .clickable(role = androidx.compose.ui.semantics.Role.Button) {
+                        clip.setText(AnnotatedString(code))
+                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                        Toast.makeText(ctx, "Code copied", Toast.LENGTH_SHORT).show()
+                    }
+                    .heightIn(min = 48.dp)
+                    .padding(horizontal = 12.dp)
+                    .wrapContentHeight(Alignment.CenterVertically),
+            )
+        }
+        Text(
+            code,
+            style = MaterialTheme.typography.bodyMedium.copy(
+                fontFamily = FontFamily.Monospace, fontSize = 13.sp, lineHeight = 19.sp,
+            ),
+            color = colors.foreground,
+            softWrap = false,
+            modifier = Modifier
+                .horizontalScroll(androidx.compose.foundation.rememberScrollState())
+                .padding(start = 14.dp, end = 14.dp, bottom = 14.dp),
+        )
     }
 }

@@ -1,0 +1,148 @@
+package com.cornerstone.agency.ui.components
+
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.size
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.StrokeJoin
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.rotate
+import androidx.compose.ui.graphics.drawscope.scale
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import kotlin.math.PI
+import kotlin.math.cos
+import kotlin.math.sin
+
+/** What the agent is doing; drives the keystone's motion. */
+enum class KeystoneState { IDLE, LISTENING, WORKING, SPEAKING, WAITING, ERROR }
+
+/**
+ * The Cornerstone keystone as a living mark: breathes when idle, glows with your voice while
+ * listening, sweeps light while working, pulses when speaking, tilts when it needs you.
+ */
+@Composable
+fun KeystoneMark(
+    state: KeystoneState,
+    modifier: Modifier = Modifier,
+    size: Dp = 96.dp,
+    color: Color = Color(0xFFE6B800),
+    level: Float = 0f,
+) {
+    val t = rememberInfiniteTransition(label = "keystone")
+    val breathe by t.animateFloat(
+        0f, 1f, infiniteRepeatable(tween(3200, easing = FastOutSlowInEasing), RepeatMode.Reverse), label = "breathe",
+    )
+    val spin by t.animateFloat(
+        0f, 360f, infiniteRepeatable(tween(2600, easing = LinearEasing), RepeatMode.Restart), label = "spin",
+    )
+    val pulse by t.animateFloat(
+        0f, 1f, infiniteRepeatable(tween(520), RepeatMode.Reverse), label = "pulse",
+    )
+    val wobble by t.animateFloat(
+        -1f, 1f, infiniteRepeatable(tween(900, easing = FastOutSlowInEasing), RepeatMode.Reverse), label = "wobble",
+    )
+
+    Canvas(modifier.size(size)) {
+        val w = this.size.width
+        val h = this.size.height
+        val dim = if (state == KeystoneState.ERROR) 0.35f else 1f
+
+        // --- motion per state
+        val scaleV = when (state) {
+            KeystoneState.IDLE -> 0.96f + 0.05f * breathe
+            KeystoneState.LISTENING -> 0.94f + 0.12f * level.coerceIn(0f, 1f)
+            KeystoneState.WORKING -> 0.97f + 0.02f * pulse
+            KeystoneState.SPEAKING -> 0.95f + 0.07f * pulse
+            KeystoneState.WAITING -> 1f
+            KeystoneState.ERROR -> 0.94f
+        }
+        val tilt = if (state == KeystoneState.WAITING) wobble * 6f else 0f
+        val glow = when (state) {
+            KeystoneState.IDLE -> 0.10f + 0.10f * breathe
+            KeystoneState.LISTENING -> 0.18f + 0.55f * level.coerceIn(0f, 1f)
+            KeystoneState.WORKING -> 0.25f + 0.2f * pulse
+            KeystoneState.SPEAKING -> 0.25f + 0.35f * pulse
+            KeystoneState.WAITING -> 0.30f
+            KeystoneState.ERROR -> 0f
+        }
+
+        // soft halo
+        drawCircle(
+            brush = Brush.radialGradient(
+                listOf(color.copy(alpha = glow * dim), Color.Transparent),
+                center = Offset(w / 2, h * 0.5f), radius = w * 0.5f,
+            ),
+            radius = w * 0.5f, center = Offset(w / 2, h * 0.5f),
+        )
+
+        // An arch of stones with the keystone lit at the crown: reads as "keystone" at a glance.
+        val cx = w / 2f
+        val cy = h * 0.66f
+        val rOut = w * 0.42f
+        val rIn = w * 0.21f
+        val stones = 5
+        val gap = 4.5f
+        val per = 180f / stones
+        fun stone(i: Int, outer: Float, extra: Float = 0f): Path {
+            val a0 = 180f + per * i + gap / 2f - extra / 2f
+            val sw = per - gap + extra
+            val oRect = androidx.compose.ui.geometry.Rect(cx - outer, cy - outer, cx + outer, cy + outer)
+            val iRect = androidx.compose.ui.geometry.Rect(cx - rIn, cy - rIn, cx + rIn, cy + rIn)
+            return Path().apply {
+                arcTo(oRect, a0, sw, true)
+                arcTo(iRect, a0 + sw, -sw, false)
+                close()
+            }
+        }
+        val crown = stone(stones / 2, rOut + w * 0.09f, extra = 5f)
+        rotate(tilt, pivot = Offset(cx, cy)) {
+            scale(scaleV, pivot = Offset(cx, cy)) {
+                for (i in 0 until stones) {
+                    if (i == stones / 2) continue
+                    // side stones dim, with a ripple of light travelling over them while working
+                    val ripple = if (state == KeystoneState.WORKING) {
+                        val ph = ((spin / 360f) * stones + 0.0f) % stones
+                        val d = kotlin.math.abs(ph - i).coerceAtMost(stones - kotlin.math.abs(ph - i))
+                        (1f - d / 1.6f).coerceIn(0f, 1f)
+                    } else when (state) {
+                        KeystoneState.LISTENING -> level.coerceIn(0f, 1f) * kotlin.math.abs(sin((i + 1) * 1.7f + spin * 0.0175f)).coerceAtLeast(0.4f)
+                        KeystoneState.SPEAKING -> pulse * (0.5f + 0.5f * kotlin.math.abs(sin((i + 1) * 1.3f)))
+                        else -> 0f
+                    }
+                    drawPath(stone(i, rOut), color = color.copy(alpha = (0.38f + 0.5f * ripple) * dim))
+                }
+                // base posts
+                val post = w * 0.07f
+                drawRect(color.copy(alpha = 0.38f * dim), Offset(cx - rOut, cy), androidx.compose.ui.geometry.Size(rOut - rIn, h * 0.20f))
+                drawRect(color.copy(alpha = 0.38f * dim), Offset(cx + rIn, cy), androidx.compose.ui.geometry.Size(rOut - rIn, h * 0.20f))
+                // the keystone
+                drawPath(crown, color = color.copy(alpha = dim))
+            }
+        }
+
+        // orbiting dot while working / speaking ring
+        if (state == KeystoneState.WORKING) {
+            val a = spin * (PI / 180f).toFloat()
+            val r = w * 0.46f
+            drawCircle(
+                color = Color.White.copy(alpha = 0.9f),
+                radius = w * 0.028f,
+                center = Offset(w / 2 + r * cos(a), h * 0.58f + r * sin(a)),
+            )
+        }
+    }
+}

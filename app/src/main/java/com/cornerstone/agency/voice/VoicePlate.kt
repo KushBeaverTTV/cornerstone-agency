@@ -49,6 +49,9 @@ import kotlinx.coroutines.flow.StateFlow
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.clickable
 import com.cornerstone.agency.ui.components.MicIcon
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.runtime.setValue
+import androidx.compose.foundation.border
 
 /**
  * Agency-styled voice plate — ink/gold restyle of the Hermes VoicePlate:
@@ -69,6 +72,7 @@ fun VoicePlate(
     val lvl by session.micLevel.collectAsState()
     val turns by session.history.collectAsState()
     val muted by session.muted.collectAsState()
+    var showTranscript by androidx.compose.runtime.saveable.rememberSaveable { androidx.compose.runtime.mutableStateOf(false) }
 
     val accent = when (s) {
         VoiceSession.State.CONNECTING, VoiceSession.State.RECONNECTING -> colors.secondary
@@ -95,7 +99,21 @@ fun VoicePlate(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(Modifier.height(space.md))
-        MicOrb(state = s, level = if (muted) 0f else lvl, accent = accent, orbSize = 112.dp)
+        com.cornerstone.agency.ui.components.KeystoneMark(
+            state = when {
+                muted -> com.cornerstone.agency.ui.components.KeystoneState.IDLE
+                else -> when (s) {
+                    VoiceSession.State.LISTENING -> com.cornerstone.agency.ui.components.KeystoneState.LISTENING
+                    VoiceSession.State.SPEAKING -> com.cornerstone.agency.ui.components.KeystoneState.SPEAKING
+                    VoiceSession.State.ERROR -> com.cornerstone.agency.ui.components.KeystoneState.ERROR
+                    else -> com.cornerstone.agency.ui.components.KeystoneState.WORKING
+                }
+            },
+            size = 132.dp,
+            color = accent,
+            level = lvl,
+            modifier = Modifier.semantics { contentDescription = "Assistant state: ${s.name.lowercase()}" },
+        )
         Spacer(Modifier.height(space.md))
         Text(botName, style = MaterialTheme.typography.displaySmall, color = colors.foreground)
         Text(
@@ -126,24 +144,30 @@ fun VoicePlate(
                 modifier = Modifier.padding(top = space.sm),
             )
         }
-        if (turns.isNotEmpty()) {
+        if (showTranscript && turns.isNotEmpty()) {
             ConversationHistory(turns = turns, accent = accent, botName = botName)
         }
         Spacer(Modifier.height(space.xl))
         Row(
             Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly,
+            horizontalArrangement = Arrangement.spacedBy(28.dp, Alignment.CenterHorizontally),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             CallButton(
+                Icons.Filled.Menu,
+                if (showTranscript) "Hide transcript" else "Show transcript",
+                container = if (showTranscript) colors.primarySoft else colors.elevated,
+                tint = if (showTranscript) colors.gold else colors.foreground,
+            ) { showTranscript = !showTranscript }
+            CallButton(
                 MicIcon,
                 if (muted) "Unmute" else "Mute",
-                container = if (muted) colors.foreground else colors.card,
+                container = if (muted) colors.foreground else colors.elevated,
                 tint = if (muted) colors.chrome else colors.foreground,
             ) { session.setMuted(!muted) }
             CallButton(
                 Icons.Filled.Close, "End call",
-                container = colors.destructive, tint = Color.White, size = 72.dp,
+                container = colors.destructive, tint = Color.White, size = 64.dp,
                 onClick = onClose,
             )
         }
@@ -157,7 +181,7 @@ private fun CallButton(
     label: String,
     container: Color,
     tint: Color,
-    size: androidx.compose.ui.unit.Dp = 60.dp,
+    size: androidx.compose.ui.unit.Dp = 64.dp,
     onClick: () -> Unit,
 ) {
     Box(
@@ -165,6 +189,7 @@ private fun CallButton(
             .size(maxOf(size, 48.dp))
             .clip(androidx.compose.foundation.shape.CircleShape)
             .background(container)
+            .border(1.dp, Color.White.copy(alpha = 0.12f), androidx.compose.foundation.shape.CircleShape)
             .clickable(role = androidx.compose.ui.semantics.Role.Button, onClick = onClick)
             .semantics { contentDescription = label },
         contentAlignment = Alignment.Center,
@@ -180,7 +205,7 @@ private fun Waveform(level: Float, active: Boolean, accent: Color) {
         initialValue = 0f, targetValue = 1f,
         animationSpec = infiniteRepeatable(tween(900), RepeatMode.Restart), label = "waveT",
     )
-    Canvas(Modifier.fillMaxWidth().height(40.dp)) {
+    Canvas(Modifier.fillMaxWidth().padding(horizontal = 24.dp).height(40.dp)) {
         val bars = 28
         val gap = size.width / bars
         for (i in 0 until bars) {

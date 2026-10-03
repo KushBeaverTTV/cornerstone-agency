@@ -60,6 +60,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.border
+import androidx.compose.ui.graphics.compositeOver
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun BotsScreen(
@@ -404,6 +407,7 @@ fun ChatsScreen(
     val socketState by vm.gateway.state.collectAsState()
     val hideCronChatter by vm.hideCronChatter.collectAsState()
     val openSessions by PendingRequests.openSessions.collectAsState()
+    val inbox by com.cornerstone.agency.service.NotificationCenter.inbox.collectAsState()
     val bridgeHealth by vm.bridgeHealth.collectAsState()
     val scope = rememberCoroutineScope()
     var primaSessions by remember {
@@ -554,16 +558,25 @@ fun ChatsScreen(
                     )
                 }
                 LazyColumn(Modifier.fillMaxSize()) {
-                    if (openSessions.isNotEmpty()) {
-                        item(key = "needs-you-banner") {
+                    if (inbox.isNotEmpty()) {
+                        item(key = "inbox-head") {
                             Text(
-                                if (openSessions.size == 1) "1 chat needs your answer"
-                                else "${openSessions.size} chats need your answer",
+                                if (inbox.size == 1) "Needs you" else "Needs you · ${inbox.size}",
                                 style = MaterialTheme.typography.labelLarge,
                                 color = colors.warm,
                                 modifier = Modifier.padding(horizontal = space.lg, vertical = space.sm),
                             )
                         }
+                        items(inbox, key = { "inbox-${it.key}" }) { item ->
+                            InboxCard(
+                                item = item,
+                                botTitle = ui.profiles.find { it.name == item.profile }?.title
+                                    ?: item.profile.replaceFirstChar { it.uppercase() },
+                                avatarColor = botAvatarColor(item.profile, item.profile == "default"),
+                                onOpen = { onOpenSession(item.profile, item.sessionKey) },
+                            )
+                        }
+                        item(key = "inbox-gap") { Spacer(Modifier.height(space.sm)) }
                     }
                     items(feed, key = { it.second }) { (_, _, any) ->
                         if (any is Pair<*, *>) {
@@ -670,5 +683,142 @@ private fun cleanPreview(raw: String): String {
         first.startsWith("[IMPORTANT: You are running as a scheduled cron", true) -> "Scheduled job"
         first.startsWith("You are being used through a hands-free voice", true) -> "Voice conversation"
         else -> first
+    }
+}
+
+
+/** An open request, answerable in place. Approvals get Deny / Allow; the rest open the chat. */
+@Composable
+private fun InboxCard(
+    item: com.cornerstone.agency.service.NotificationCenter.InboxItem,
+    botTitle: String,
+    avatarColor: androidx.compose.ui.graphics.Color,
+    onOpen: () -> Unit,
+) {
+    val colors = AgencyTokens.colors
+    val space = AgencyTokens.space
+    val req = item.req
+    val haptics = androidx.compose.ui.platform.LocalHapticFeedback.current
+    val kind = com.cornerstone.agency.data.RequestKind.Approval
+    val approval = req.kind == kind
+    val headline = when (req.kind) {
+        com.cornerstone.agency.data.RequestKind.Approval -> "$botTitle wants to run ${req.toolName.ifBlank { "a command" }}"
+        com.cornerstone.agency.data.RequestKind.Clarify -> "$botTitle has a question"
+        else -> "$botTitle needs input"
+    }
+    val body = when (req.kind) {
+        com.cornerstone.agency.data.RequestKind.Approval -> req.command.ifBlank { req.description }
+        com.cornerstone.agency.data.RequestKind.Clarify -> req.questions.firstOrNull()?.question ?: req.prompt
+        else -> req.prompt.ifBlank { req.title }
+    }
+    val shape = androidx.compose.foundation.shape.RoundedCornerShape(20.dp)
+    val tone = if (approval) colors.gold else colors.primary
+    val quick = if (req.kind == com.cornerstone.agency.data.RequestKind.Clarify) {
+        req.questions.singleOrNull()?.takeIf { !it.multiSelect && it.choices.isNotEmpty() }?.choices.orEmpty()
+    } else emptyList()
+    Column(
+        Modifier
+            .padding(horizontal = space.sm, vertical = space.xs)
+            .fillMaxWidth()
+            .clip(shape)
+            .background(tone.copy(alpha = 0.07f).compositeOver(colors.card))
+            .border(1.dp, tone.copy(alpha = 0.55f), shape)
+            .clickable(onClick = onOpen)
+            .padding(space.lg),
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            BotAvatar(name = botTitle, color = avatarColor, size = 32.dp)
+            Spacer(Modifier.width(space.md))
+            Text(
+                headline, style = MaterialTheme.typography.titleSmall, color = colors.foreground,
+                maxLines = 2, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+            )
+        }
+        if (body.isNotBlank()) {
+            Spacer(Modifier.height(space.md))
+            if (approval && Regex("""rm\s+-[a-z]*r|sudo |mkfs|dd if=|drop table|format |del /|--force|chmod -R|git reset --hard""", RegexOption.IGNORE_CASE).containsMatchIn(body)) {
+                Text(
+                    "Destructive command",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = colors.destructive,
+                    modifier = Modifier.padding(bottom = space.xs),
+                )
+            }
+            if (approval) {
+                Text(
+                    body,
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace,
+                    fontSize = 13.sp,
+                    color = colors.foreground,
+                    maxLines = 4, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(androidx.compose.foundation.shape.RoundedCornerShape(12.dp))
+                        .background(colors.chrome)
+                        .padding(12.dp),
+                )
+            } else {
+                Text(
+                    body,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = colors.foreground,
+                    maxLines = 4, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                )
+            }
+        }
+        Spacer(Modifier.height(space.lg))
+        if (approval) {
+            Row(horizontalArrangement = Arrangement.spacedBy(space.sm)) {
+                InboxButton("Deny", androidx.compose.ui.graphics.Color.Transparent, colors.foreground, Modifier.weight(1f), outlined = true) {
+                    haptics.performHapticFeedback(androidx.compose.ui.hapticfeedback.HapticFeedbackType.LongPress)
+                    com.cornerstone.agency.service.NotificationCenter.answerApproval(item, "deny")
+                }
+                InboxButton("Allow once", colors.gold, colors.onPrimary, Modifier.weight(1f)) {
+                    haptics.performHapticFeedback(androidx.compose.ui.hapticfeedback.HapticFeedbackType.LongPress)
+                    com.cornerstone.agency.service.NotificationCenter.answerApproval(item, "once")
+                }
+            }
+        } else if (quick.isNotEmpty()) {
+            @OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
+            androidx.compose.foundation.layout.FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(space.sm),
+                verticalArrangement = Arrangement.spacedBy(space.sm),
+            ) {
+                quick.take(6).forEach { c ->
+                    InboxButton(c, colors.gold.copy(alpha = 0.16f), colors.gold, Modifier, outlined = false) {
+                        haptics.performHapticFeedback(androidx.compose.ui.hapticfeedback.HapticFeedbackType.LongPress)
+                        com.cornerstone.agency.service.NotificationCenter.answerClarify(item, c)
+                    }
+                }
+                InboxButton("Other…", androidx.compose.ui.graphics.Color.Transparent, colors.secondary, Modifier, outlined = true, onClick = onOpen)
+            }
+        } else {
+            InboxButton("Open chat", colors.gold.copy(alpha = 0.16f), colors.gold, Modifier.fillMaxWidth(), onClick = onOpen)
+        }
+    }
+}
+
+@Composable
+private fun InboxButton(
+    label: String,
+    container: androidx.compose.ui.graphics.Color,
+    content: androidx.compose.ui.graphics.Color,
+    modifier: Modifier,
+    outlined: Boolean = false,
+    onClick: () -> Unit,
+) {
+    val colors = AgencyTokens.colors
+    Box(
+        modifier
+            .heightIn(min = 48.dp)
+            .clip(androidx.compose.foundation.shape.CircleShape)
+            .background(container)
+            .then(if (outlined) Modifier.border(1.dp, colors.foreground.copy(alpha = 0.4f), androidx.compose.foundation.shape.CircleShape) else Modifier)
+            .clickable(role = androidx.compose.ui.semantics.Role.Button, onClick = onClick)
+            .padding(horizontal = 20.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(label, style = MaterialTheme.typography.labelLarge, color = content)
     }
 }

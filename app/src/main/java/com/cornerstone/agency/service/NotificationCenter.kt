@@ -74,7 +74,68 @@ object NotificationCenter {
         val notificationId: Int,
         val sessionKey: String,
         val profile: String,
+        val key: String = "",
+        val srq: String = "",
+        val req: PendingRequest? = null,
     )
+
+    /** One open request, answerable from the Chats list without opening the chat. */
+    data class InboxItem(
+        val key: String,
+        val srq: String,
+        val req: PendingRequest,
+        val profile: String,
+        val sessionKey: String,
+    )
+
+    private val _inbox = kotlinx.coroutines.flow.MutableStateFlow<List<InboxItem>>(emptyList())
+    val inbox: kotlinx.coroutines.flow.StateFlow<List<InboxItem>> = _inbox
+
+    /** Debug builds only: fake requests so the inbox UI can be verified without a live approval. */
+    fun debugInject() {
+        val a = PendingRequest(
+            kind = RequestKind.Approval, requestId = "dbg-1", toolName = "terminal",
+            command = "rm -rf ./build && ./gradlew assembleRelease",
+        )
+        val c = PendingRequest(
+            kind = RequestKind.Clarify, requestId = "dbg-2",
+            questions = listOf(com.cornerstone.agency.data.ClarifyQuestion("q0", "Which color do you prefer?", listOf("red", "blue"))),
+        )
+        _inbox.value = listOf(
+            InboxItem("dbg-1", "dbg-1", a, "default", "dbg-s1"),
+            InboxItem("dbg-2", "dbg-2", c, "aurora", "dbg-s2"),
+        )
+    }
+
+    private fun dropDebug(item: InboxItem): Boolean {
+        if (!item.key.startsWith("dbg-")) return false
+        _inbox.value = _inbox.value.filterNot { it.key == item.key }
+        return true
+    }
+
+    /** Answer a single-question clarify with one of its choices (mirrors ChatRepository.answerClarify). */
+    fun answerClarify(item: InboxItem, answer: String) {
+        if (dropDebug(item)) return
+        val q = item.req.questions.firstOrNull() ?: return
+        val batch = item.req.questions.any { it.qid.isNotEmpty() }
+        val result = if (batch) {
+            buildJsonObject { put("answers", buildJsonObject { put(q.qid.ifEmpty { "q0" }, answer) }) }
+        } else {
+            buildJsonObject { put("answer", answer) }
+        }
+        GatewayHub.socket?.respond(JsonPrimitive(item.srq), result)
+        resolve(item.key)
+    }
+
+    /** Answer an approval from the inbox: same srq-frame path as the notification action. */
+    fun answerApproval(item: InboxItem, choice: String) {
+        if (dropDebug(item)) return
+        GatewayHub.socket?.respond(
+            JsonPrimitive(item.srq),
+            buildJsonObject { put("choice", choice) },
+        )
+        resolve(item.key)
+    }
 
     /** request_id / srq id -> posted notification + badge routing. */
     private val tracked = ConcurrentHashMap<String, Tracked>()
@@ -162,7 +223,11 @@ object NotificationCenter {
         resolve(ctx, key)
     }
 
-    private fun reportCounts() {
+    private fun reportCounts() = synchronized(tracked) {
+        if (_inbox.value.any { it.key.startsWith("dbg-") } && tracked.isEmpty()) return@synchronized
+        _inbox.value = tracked.values.mapNotNull { t ->
+            t.req?.let { InboxItem(t.key, t.srq, it, t.profile, t.sessionKey) }
+        }.sortedBy { it.req.createdAt }
         PendingRequests.reportExternal(
             tracked.values.groupingBy { it.sessionKey }.eachCount(),
             tracked.values.groupingBy { it.profile }.eachCount(),
@@ -190,7 +255,7 @@ object NotificationCenter {
         val sessionKey = ref?.storedId?.takeIf { it.isNotEmpty() } ?: runtimeSid
 
         val notifId = requestNotifId(key)
-        tracked[key] = Tracked(notifId, sessionKey, profile)
+        tracked[key] = Tracked(notifId, sessionKey, profile, key, srq, req)
         reportCounts()
 
         // When the user is literally looking at that chat, skip the heads-up —
