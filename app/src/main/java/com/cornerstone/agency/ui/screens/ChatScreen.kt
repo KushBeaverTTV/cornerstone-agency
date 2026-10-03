@@ -515,7 +515,7 @@ fun ChatScreen(
             onDismissRequest = { voiceOpen = false },
             containerColor = colors.elevated,
         ) {
-            VoicePlate(session = vs, onClose = { voiceOpen = false })
+            VoicePlate(session = vs, onClose = { voiceOpen = false }, botName = botName)
         }
         DisposableEffect(vs) {
             onDispose {
