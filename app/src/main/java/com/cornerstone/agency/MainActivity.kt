@@ -88,6 +88,8 @@ class MainActivity : ComponentActivity() {
             vm.requestVoice()
         }
         vm.requestDeepLink("default", null)
+        // Consume it so a rotation / process restore does not replay the tap.
+        intent.action = null
     }
 
     /** Notification taps carry PROFILE/SESSION extras → AppNav navigates. */

@@ -56,9 +56,8 @@ private enum class Tab(val label: String, val icon: ImageVector) {
 private enum class ActivityPane(val label: String) { FEED("Feed"), GOALS("Goals"), FILES("Files"), JOBS("Jobs") }
 
 @Composable
-private fun ActivityScreen(vm: AppViewModel, onOpenJob: (String) -> Unit) {
+private fun ActivityScreen(vm: AppViewModel, pane: Int, onPane: (Int) -> Unit, onOpenJob: (String) -> Unit) {
     val colors = AgencyTokens.colors
-    var pane by rememberSaveable { mutableIntStateOf(0) }
     Column(Modifier.fillMaxSize()) {
         androidx.compose.foundation.layout.Row(
             Modifier
@@ -74,7 +73,7 @@ private fun ActivityScreen(vm: AppViewModel, onOpenJob: (String) -> Unit) {
                         .heightIn(min = 48.dp)
                         .clip(CircleShape)
                         .background(if (sel) colors.primarySoft else colors.card)
-                        .clickable { pane = p.ordinal },
+                        .clickable { onPane(p.ordinal) },
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
@@ -119,6 +118,7 @@ fun AppShell(
     val colors = AgencyTokens.colors
     var tab by rememberSaveable { mutableIntStateOf(Tab.CHATS.ordinal) }
     var showBots by rememberSaveable { mutableStateOf(false) }
+    var activityPane by rememberSaveable { mutableIntStateOf(0) }
     val needsAttention by com.cornerstone.agency.data.PendingRequests.anyOpen.collectAsState()
 
     // Android 13+: heads-up request/message notifications need the runtime grant.
@@ -157,7 +157,7 @@ fun AppShell(
                                     if (tab == t.ordinal) colors.primarySoft
                                     else androidx.compose.ui.graphics.Color.Transparent,
                                 )
-                                .clickable { tab = t.ordinal }
+                                .clickable { tab = t.ordinal; showBots = false }
                                 .padding(8.dp),
                         ) {
                             Box {
@@ -188,7 +188,7 @@ fun AppShell(
                 Tab.entries.forEach { t ->
                     NavigationBarItem(
                         selected = tab == t.ordinal,
-                        onClick = { tab = t.ordinal },
+                        onClick = { tab = t.ordinal; showBots = false },
                         icon = {
                             Box {
                                 Icon(t.icon, contentDescription = t.label)
@@ -246,8 +246,8 @@ fun AppShell(
                             onOpenBots = { showBots = true },
                             onOpenBot = onOpenChat,
                         )
-                        Tab.ACTIVITY -> ActivityScreen(vm, onOpenJob)
-                        Tab.ME -> MoreScreen(vm, onOpenSystem, onOpenSkills, onOpenJobs = { tab = Tab.ACTIVITY.ordinal })
+                        Tab.ACTIVITY -> ActivityScreen(vm, activityPane, { activityPane = it }, onOpenJob)
+                        Tab.ME -> MoreScreen(vm, onOpenSystem, onOpenSkills, onOpenJobs = { activityPane = ActivityPane.JOBS.ordinal; tab = Tab.ACTIVITY.ordinal })
                     }
                 }
             }

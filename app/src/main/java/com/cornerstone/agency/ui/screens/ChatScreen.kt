@@ -109,6 +109,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.foundation.verticalScroll
 
 fun botDisplayName(profiles: List<com.cornerstone.agency.data.BotProfile>, name: String): String =
     profiles.find { it.name == name }?.title
@@ -884,17 +885,21 @@ private fun EmptyChat(
         "Catch me up on what you've been working on",
         "What can you help me with right now?",
     )
+    val compact = isCompactHeight()
     Column(
-        modifier.padding(horizontal = 24.dp),
+        modifier
+            .fillMaxWidth()
+            .verticalScroll(androidx.compose.foundation.rememberScrollState())
+            .padding(horizontal = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        BotAvatar(name = botName, color = avatarColor, size = 72.dp)
+        BotAvatar(name = botName, color = avatarColor, size = if (compact) 48.dp else 72.dp)
         Spacer(Modifier.height(16.dp))
         Text(botName, style = MaterialTheme.typography.displaySmall)
         Spacer(Modifier.height(4.dp))
         Text("What's on your mind?", style = MaterialTheme.typography.bodyLarge, color = colors.secondary)
         Spacer(Modifier.height(24.dp))
-        suggestions.forEach { text ->
+        suggestions.take(if (compact) 2 else 3).forEach { text ->
             Box(
                 Modifier
                     .padding(vertical = 4.dp)

@@ -57,6 +57,9 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.contentOrNull
 import androidx.compose.material.icons.outlined.Face
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.wrapContentHeight
 
 @Composable
 fun BotsScreen(
@@ -292,7 +295,9 @@ fun BotsScreen(
                         .clip(RoundedCornerShape(8.dp))
                         .background(colors.gold.copy(alpha = 0.15f))
                         .clickable { pickerOpen = true }
-                        .padding(horizontal = space.sm, vertical = space.xs),
+                        .heightIn(min = 48.dp)
+                        .padding(horizontal = space.sm)
+                        .wrapContentHeight(Alignment.CenterVertically),
                 )
                 Spacer(Modifier.width(space.xs))
             }
@@ -498,7 +503,8 @@ fun ChatsScreen(
                 items(ui.profiles, key = { "roster-${it.name}" }) { p ->
                     Column(
                         Modifier
-                            .width(64.dp)
+                            .widthIn(min = 64.dp)
+                            .heightIn(min = 48.dp)
                             .clip(androidx.compose.foundation.shape.RoundedCornerShape(12.dp))
                             .clickable { onOpenBot(p.name) }
                             .padding(vertical = 4.dp),

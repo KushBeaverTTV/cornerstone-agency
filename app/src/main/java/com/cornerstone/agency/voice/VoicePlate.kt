@@ -162,10 +162,10 @@ private fun CallButton(
 ) {
     Box(
         Modifier
-            .size(size)
+            .size(maxOf(size, 48.dp))
             .clip(androidx.compose.foundation.shape.CircleShape)
             .background(container)
-            .clickable(onClick = onClick)
+            .clickable(role = androidx.compose.ui.semantics.Role.Button, onClick = onClick)
             .semantics { contentDescription = label },
         contentAlignment = Alignment.Center,
     ) {

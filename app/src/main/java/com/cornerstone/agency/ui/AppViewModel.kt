@@ -136,9 +136,15 @@ class AppViewModel(private val app: Application) : AndroidViewModel(app) {
         _pendingDeepLink.value = ChatDeepLink(profile, session)
     }
 
-    private var voiceRequested = false
-    fun requestVoice() { voiceRequested = true }
-    fun consumeVoiceRequest(): Boolean = voiceRequested.also { voiceRequested = false }
+    private var voiceRequestedAt = 0L
+    fun requestVoice() { voiceRequestedAt = System.currentTimeMillis() }
+
+    /** True once per widget tap, and only if the tap is fresh (never leaks into a later chat). */
+    fun consumeVoiceRequest(): Boolean {
+        val fresh = voiceRequestedAt != 0L && System.currentTimeMillis() - voiceRequestedAt < 20_000
+        voiceRequestedAt = 0L
+        return fresh
+    }
 
     fun consumeDeepLink() {
         _pendingDeepLink.value = null

@@ -74,8 +74,16 @@ Unverifiable: Muse dark mode, Grok's consumer voice orb.
 - Chat: composer is one 56dp pill (focus ring), single 48dp trailing button = mic (empty) / send (text) / stop (streaming); assistant text full width, no bubble; user bubble clamps to 8 lines with Show more; thinking + tool rows collapse into one "Thought · N tools" chip per turn (pulsing yellow dot while live, tap to expand); empty state with avatar, name, tagline and 3 suggestion pills; New-chat button in the header; header targets always 48dp; long-press any message = copy; soft fade under the header; model chip 48dp tall and shows "Sonnet 5.5" instead of "claude-sonnet-5-5"; neutral hairline pill borders (gold on focus).
 - Not yet: nav restructure (3 tabs / Activity merge), voice call card, avatar states, working strip, approvals inbox, widget.
 
-## Known issues
-- Status-bar clock/icons render dark-on-dark inside the app (dumpsys shows the app window requesting light bars; setting appearance in code, theme attr, and DeviceDefault parent did not change it). Telegram on the same phone shows them correctly. Unresolved.
-- The round bubble with a "2" badge that overlaps content on screenshots is NOT from this app: it is a floating bubble from `co.thefabulous.app` (the Fabulous habit app).
-- Swarm/agent sessions appear in the app's Chats list while they run (they are deleted after tests).
-- App connects over USB reverse (127.0.0.1); the Tailscale switch is still to do.
+## Passes 2-4 (built, installed, verified on device)
+- Navigation: 3 tabs (Chats / Activity / Me). Chats = roster strip + one recency list (bots + desktop Prima), sessions waiting on an answer float to the top with a banner, cron/voice previews cleaned. Activity = Feed / Goals / Files / Jobs chips. Bots page reachable from the face icon in Chats.
+- Voice: call card (orb, live waveform, state, last words, Mute + red End). Mute keeps the mic closed until unmuted.
+- Chat header: avatar ring + one-line live status ("Using terminal", "Thinking...", "Replying...", "Waiting for you", "Reconnecting...") derived from the transcript.
+- Home-screen widget (4x1): card opens Kaori's latest chat, mic opens straight into voice.
+- Review pass (two sonnet reviewers) fixed: Bots overlay surviving tab switches, widget intent replay on recreate, stale voice flag (20s TTL), Jobs shortcut landing on the wrong pane, unmute while the bot speaks, empty chat overflow on the cover display, roster/routing chip hit targets, call buttons role.
+
+## Known issues / not done
+- The earlier "dark status-bar clock" was a stale-build artifact (the APK still held old dex); it renders correctly now. Always `gradlew clean assembleDebug` after structural edits.
+- Approvals still resolve inside the chat itself (the card is there); the Chats list now surfaces which chats need you, but there is no answer-from-the-list inbox.
+- No dedicated mute-slash icon (button flips to white + "Muted" label).
+- The floating "2" bubble in screenshots is `co.thefabulous.app`, not this app.
+- Over USB-less use needs Tailscale ON on the phone.

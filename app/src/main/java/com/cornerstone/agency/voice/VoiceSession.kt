@@ -54,7 +54,7 @@ class VoiceSession(
     /** User mute: mic stays closed until unmuted, regardless of bridge record hints. */
     fun setMuted(m: Boolean) {
         muted.value = m
-        if (m) recorder.pause() else recorder.resume()
+        if (m || uiState.value != State.LISTENING) recorder.pause() else recorder.resume()
     }
     val history = MutableStateFlow<List<HistoryTurn>>(emptyList())
 
