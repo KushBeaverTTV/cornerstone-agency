@@ -71,7 +71,7 @@ fun MoreScreen(
     ) {
         Spacer(Modifier.height(space.lg))
         Text(
-            text = "More",
+            text = "Me",
             style = MaterialTheme.typography.displayLarge,
             color = colors.wordmark,
         )

@@ -547,12 +547,14 @@ fun ModelPickerSheet(
 fun EmptyState(title: String, hint: String, modifier: Modifier = Modifier) {
     val colors = AgencyTokens.colors
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize().padding(horizontal = 32.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(title, style = MaterialTheme.typography.displaySmall, color = colors.wordmark)
+        Text(title, style = MaterialTheme.typography.displaySmall, color = colors.wordmark,
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center)
         Spacer(Modifier.height(AgencyTokens.space.sm))
-        Text(hint, style = MaterialTheme.typography.bodyMedium, color = colors.tertiary)
+        Text(hint, style = MaterialTheme.typography.bodyMedium, color = colors.secondary,
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center)
     }
 }

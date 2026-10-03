@@ -10,10 +10,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.outlined.Face
 import androidx.compose.material.icons.outlined.List
 import androidx.compose.material.icons.outlined.MailOutline
 import androidx.compose.material.icons.outlined.MoreVert
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -45,12 +48,52 @@ import com.cornerstone.agency.ui.screens.GoalsScreen
 import com.cornerstone.agency.ui.screens.ArtifactsScreen
 
 private enum class Tab(val label: String, val icon: ImageVector) {
-    BOTS("Bots", Icons.Outlined.Face),
     CHATS("Chats", Icons.Outlined.MailOutline),
-    FEED("Feed", Icons.Outlined.List),
-    GOALS("Goals", Icons.Outlined.Star),
-    ARTIFACTS("Artifacts", FolderIcon),
-    MORE("More", Icons.Outlined.MoreVert),
+    ACTIVITY("Activity", Icons.Outlined.List),
+    ME("Me", Icons.Outlined.Person),
+}
+
+private enum class ActivityPane(val label: String) { FEED("Feed"), GOALS("Goals"), FILES("Files"), JOBS("Jobs") }
+
+@Composable
+private fun ActivityScreen(vm: AppViewModel, onOpenJob: (String) -> Unit) {
+    val colors = AgencyTokens.colors
+    var pane by rememberSaveable { mutableIntStateOf(0) }
+    Column(Modifier.fillMaxSize()) {
+        androidx.compose.foundation.layout.Row(
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            horizontalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(8.dp),
+        ) {
+            ActivityPane.entries.forEach { p ->
+                val sel = pane == p.ordinal
+                Box(
+                    Modifier
+                        .weight(1f)
+                        .heightIn(min = 48.dp)
+                        .clip(CircleShape)
+                        .background(if (sel) colors.primarySoft else colors.card)
+                        .clickable { pane = p.ordinal },
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(
+                        p.label,
+                        style = androidx.compose.material3.MaterialTheme.typography.labelLarge,
+                        color = if (sel) colors.gold else colors.secondary,
+                    )
+                }
+            }
+        }
+        Box(Modifier.weight(1f).fillMaxWidth()) {
+            when (ActivityPane.entries[pane]) {
+                ActivityPane.FEED -> FeedScreen(vm)
+                ActivityPane.GOALS -> GoalsScreen(vm)
+                ActivityPane.FILES -> ArtifactsScreen(vm)
+                ActivityPane.JOBS -> JobsScreen(vm, onOpenJob)
+            }
+        }
+    }
 }
 
 /** Material3 Compact height class = window height < 480dp (cover displays, landscape). */
@@ -74,8 +117,8 @@ fun AppShell(
 ) {
     val ui by vm.ui.collectAsState()
     val colors = AgencyTokens.colors
-    var tab by rememberSaveable { mutableIntStateOf(Tab.BOTS.ordinal) }
-    var showJobs by rememberSaveable { mutableStateOf(false) }
+    var tab by rememberSaveable { mutableIntStateOf(Tab.CHATS.ordinal) }
+    var showBots by rememberSaveable { mutableStateOf(false) }
     val needsAttention by com.cornerstone.agency.data.PendingRequests.anyOpen.collectAsState()
 
     // Android 13+: heads-up request/message notifications need the runtime grant.
@@ -179,25 +222,32 @@ fun AppShell(
                 StatusBanner("Dashboard unreachable — check the URL or VPN")
             }
             Box(Modifier.weight(1f).fillMaxWidth()) {
-                if (showJobs) {
-                    JobsScreen(vm, onOpenJob, onBack = { showJobs = false })
-                } else {
-                    when (Tab.entries[tab]) {
-                        Tab.BOTS -> BotsScreen(
+                if (showBots) {
+                    androidx.activity.compose.BackHandler { showBots = false }
+                    Column(Modifier.fillMaxSize()) {
+                        androidx.compose.material3.IconButton(onClick = { showBots = false }) {
+                            Icon(
+                                Icons.AutoMirrored.Filled.ArrowBack,
+                                "Back", tint = colors.foreground,
+                            )
+                        }
+                        BotsScreen(
                             vm, onOpenChat, onOpenBot, onNewAgent,
                             onOpenPrima = onOpenPrima,
                             onOpenPrimaSessions = onOpenPrimaSessions,
                             onOpenSession = onOpenSession,
                             onOpenPrimaSession = onOpenPrimaSession,
                         )
-                        Tab.CHATS -> ChatsScreen(vm, onOpenSession, onOpenPrimaSession)
-                        Tab.FEED -> FeedScreen(vm)
-                        Tab.GOALS -> GoalsScreen(vm)
-                        Tab.ARTIFACTS -> ArtifactsScreen(vm)
-                        Tab.MORE -> MoreScreen(
-                            vm, onOpenSystem, onOpenSkills,
-                            onOpenJobs = { showJobs = true },
+                    }
+                } else {
+                    when (Tab.entries[tab]) {
+                        Tab.CHATS -> ChatsScreen(
+                            vm, onOpenSession, onOpenPrimaSession,
+                            onOpenBots = { showBots = true },
+                            onOpenBot = onOpenChat,
                         )
+                        Tab.ACTIVITY -> ActivityScreen(vm, onOpenJob)
+                        Tab.ME -> MoreScreen(vm, onOpenSystem, onOpenSkills, onOpenJobs = { tab = Tab.ACTIVITY.ordinal })
                     }
                 }
             }

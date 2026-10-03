@@ -55,6 +55,8 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.contentOrNull
+import androidx.compose.material.icons.outlined.Face
+import androidx.compose.foundation.layout.Arrangement
 
 @Composable
 fun BotsScreen(
@@ -388,6 +390,8 @@ fun ChatsScreen(
     vm: AppViewModel,
     onOpenSession: (profile: String, sessionId: String) -> Unit,
     onOpenPrimaSession: (sessionId: String) -> Unit = {},
+    onOpenBots: () -> Unit = {},
+    onOpenBot: (profile: String) -> Unit = {},
 ) {
     val ui by vm.ui.collectAsState()
     val colors = AgencyTokens.colors
@@ -473,8 +477,44 @@ fun ChatsScreen(
                     EyeIcon,
                     contentDescription = "Hide cron chatter",
                     tint = if (hideCronChatter) colors.gold else colors.tertiary,
-                    modifier = Modifier.padding(end = space.lg),
                 )
+            }
+            IconButton(onClick = onOpenBots) {
+                Icon(
+                    androidx.compose.material.icons.Icons.Outlined.Face,
+                    contentDescription = "All bots",
+                    tint = colors.foreground,
+                )
+            }
+            Spacer(Modifier.width(space.xs))
+        }
+        // Roster strip: tap a bot to jump straight into its latest conversation.
+        if (ui.profiles.isNotEmpty()) {
+            androidx.compose.foundation.lazy.LazyRow(
+                contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = space.sm + 4.dp),
+                horizontalArrangement = Arrangement.spacedBy(space.sm),
+                modifier = Modifier.padding(bottom = space.sm),
+            ) {
+                items(ui.profiles, key = { "roster-${it.name}" }) { p ->
+                    Column(
+                        Modifier
+                            .width(64.dp)
+                            .clip(androidx.compose.foundation.shape.RoundedCornerShape(12.dp))
+                            .clickable { onOpenBot(p.name) }
+                            .padding(vertical = 4.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        BotAvatar(name = p.title, color = botAvatarColor(p.name, p.isDefault))
+                        Text(
+                            p.title,
+                            style = MaterialTheme.typography.labelMedium,
+                            color = colors.secondary,
+                            maxLines = 1,
+                            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                            modifier = Modifier.padding(top = 4.dp),
+                        )
+                    }
+                }
             }
         }
         when {
@@ -493,66 +533,65 @@ fun ChatsScreen(
                 } else error,
             )
 
-            else -> LazyColumn(Modifier.fillMaxSize()) {
-                visibleGroups.forEach { (profile, sessions) ->
-                    item(key = "kicker-${profile.name}") {
-                        SectionKicker(
-                            profile.title,
-                            modifier = Modifier.padding(
-                                horizontal = space.lg, vertical = space.xs,
-                            ),
-                        )
-                    }
-                    items(sessions, key = { "${profile.name}:${it.id}" }) { s ->
-                        AgencyRow(
-                            title = s.label,
-                            subtitle = s.preview.lineSequence().firstOrNull() ?: "",
-                            meta = "",
-                            onClick = { onOpenSession(profile.name, s.id) },
-                            modifier = Modifier.padding(horizontal = space.sm),
-                            leading = {
-                                BotAvatar(
-                                    name = profile.title,
-                                    color = botAvatarColor(profile.name, profile.isDefault),
-                                )
-                            },
-                            trailing = {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    if (s.id in openSessions) NeedsYouPill()
-                                    val t = relativeTime(s.startedAt)
-                                    if (t.isNotEmpty()) {
-                                        Spacer(Modifier.width(space.xs))
-                                        Text(
-                                            text = t,
-                                            style = MaterialTheme.typography.labelMedium,
-                                            color = colors.tertiary,
-                                        )
-                                    }
-                                }
-                            },
-                        )
-                    }
+            else -> {
+                // One flat list, newest first, across every bot and desktop Prima.
+                val feed = remember(visibleGroups, primaSessions) {
+                    val out = ArrayList<Triple<Double, String, Any>>()
+                    visibleGroups.forEach { (p, ss) -> ss.forEach { out += Triple(it.startedAt, "${p.name}:${it.id}", p to it) } }
+                    primaSessions.forEach { out += Triple(it.last_activity, "dprima:${it.id}", it) }
+                    out.sortedByDescending { it.first }
                 }
-                if (primaSessions.isNotEmpty()) {
-                    item(key = "kicker-desktop-prima") {
-                        SectionKicker(
-                            "PRIMA",
-                            modifier = Modifier.padding(
-                                horizontal = space.lg, vertical = space.xs,
-                            ),
-                        )
-                    }
-                    items(primaSessions, key = { "dprima:${it.id}" }) { s ->
-                        AgencyRow(
-                            title = s.label,
-                            subtitle = s.cwd,
-                            meta = if (s.is_streaming) "streaming" else "",
-                            onClick = { onOpenPrimaSession(s.id) },
-                            modifier = Modifier.padding(horizontal = space.sm),
-                            leading = {
-                                BotAvatar(name = "Prima", color = colors.defaultViolet)
-                            },
-                        )
+                LazyColumn(Modifier.fillMaxSize()) {
+                    items(feed, key = { it.second }) { (_, _, any) ->
+                        if (any is Pair<*, *>) {
+                            @Suppress("UNCHECKED_CAST")
+                            val pair = any as Pair<BotProfile, SessionSummary>
+                            val profile = pair.first
+                            val s = pair.second
+                            AgencyRow(
+                                title = s.label,
+                                subtitle = s.preview.lineSequence().firstOrNull() ?: "",
+                                meta = "",
+                                onClick = { onOpenSession(profile.name, s.id) },
+                                modifier = Modifier.padding(horizontal = space.sm),
+                                leading = {
+                                    BotAvatar(
+                                        name = profile.title,
+                                        color = botAvatarColor(profile.name, profile.isDefault),
+                                    )
+                                },
+                                trailing = {
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        if (s.id in openSessions) NeedsYouPill()
+                                        val t = relativeTime(s.startedAt)
+                                        if (t.isNotEmpty()) {
+                                            Spacer(Modifier.width(space.xs))
+                                            Text(
+                                                text = t,
+                                                style = MaterialTheme.typography.labelMedium,
+                                                color = colors.tertiary,
+                                            )
+                                        }
+                                    }
+                                },
+                            )
+                        } else {
+                            val s = any as com.cornerstone.agency.data.PrimaSession
+                            AgencyRow(
+                                title = s.label,
+                                subtitle = s.cwd,
+                                meta = if (s.is_streaming) "streaming" else "",
+                                onClick = { onOpenPrimaSession(s.id) },
+                                modifier = Modifier.padding(horizontal = space.sm),
+                                leading = { BotAvatar(name = "Prima", color = colors.defaultViolet) },
+                                trailing = {
+                                    val t = relativeTime(s.last_activity)
+                                    if (t.isNotEmpty()) Text(
+                                        t, style = MaterialTheme.typography.labelMedium, color = colors.tertiary,
+                                    )
+                                },
+                            )
+                        }
                     }
                 }
             }
