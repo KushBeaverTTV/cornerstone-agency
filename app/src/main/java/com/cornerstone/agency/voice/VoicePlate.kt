@@ -107,7 +107,7 @@ fun VoicePlate(
         Spacer(Modifier.height(space.md))
         Waveform(level = if (muted) 0f else lvl, active = s == VoiceSession.State.LISTENING || s == VoiceSession.State.SPEAKING, accent = accent)
         Spacer(Modifier.height(space.md))
-        Text(
+        if (!t.trimEnd('…', '.').equals(status, ignoreCase = true)) Text(
             t,
             color = colors.secondary,
             style = MaterialTheme.typography.bodyLarge,
@@ -129,7 +129,7 @@ fun VoicePlate(
         if (turns.isNotEmpty()) {
             ConversationHistory(turns = turns, accent = accent, botName = botName)
         }
-        Spacer(Modifier.weight(1f, fill = true).heightIn(min = space.lg))
+        Spacer(Modifier.height(space.xl))
         Row(
             Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly,
