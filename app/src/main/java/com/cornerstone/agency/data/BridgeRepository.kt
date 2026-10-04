@@ -162,6 +162,41 @@ class BridgeRepository(private val store: SecureStore) {
         api("/prima/sessions/$sid/name", "POST", body.toString())
     }
 
+    /** Current model + everything this Prima worker can switch to, grouped like Hermes' picker. */
+    suspend fun primaModels(sid: String): Pair<Pair<String, String>?, List<ModelProvider>> {
+        val res = json.parseToJsonElement(api("/prima/sessions/$sid/models")) as JsonObject
+        val cur = (res["current"] as? JsonObject)?.let {
+            val p = (it["provider"] as? kotlinx.serialization.json.JsonPrimitive)?.content.orEmpty()
+            val id = (it["id"] as? kotlinx.serialization.json.JsonPrimitive)?.content.orEmpty()
+            if (id.isBlank()) null else p to id
+        }
+        val groups = LinkedHashMap<String, MutableList<String>>()
+        (res["models"] as? JsonArray)?.forEach { el ->
+            val m = el as? JsonObject ?: return@forEach
+            val p = (m["provider"] as? kotlinx.serialization.json.JsonPrimitive)?.content.orEmpty()
+            val id = (m["id"] as? kotlinx.serialization.json.JsonPrimitive)?.content ?: return@forEach
+            groups.getOrPut(p) { mutableListOf() } += id
+        }
+        val providers = groups.map { (slug, ids) ->
+            ModelProvider(
+                slug = slug,
+                name = slug.replaceFirstChar { it.uppercase() },
+                isCurrent = slug == cur?.first,
+                totalModels = ids.size,
+                models = ids,
+            )
+        }
+        return cur to providers
+    }
+
+    suspend fun primaSetModel(sid: String, provider: String, modelId: String) {
+        val body = buildJsonObject {
+            put("provider", provider)
+            put("model_id", modelId)
+        }
+        api("/prima/sessions/$sid/model", "POST", body.toString())
+    }
+
     suspend fun primaDelete(sid: String) {
         api("/prima/sessions/$sid", "DELETE")
     }

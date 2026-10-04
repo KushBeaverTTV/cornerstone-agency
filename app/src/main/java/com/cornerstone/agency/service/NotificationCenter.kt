@@ -42,10 +42,14 @@ object NotificationCenter {
     const val CH_CONNECTION = "connection"
     const val CH_REQUESTS = "requests"
     const val CH_MESSAGES = "messages"
+    const val CH_FEED = "feed"
     const val CONN_NOTIFICATION_ID = 100
+    const val FEED_NOTIFICATION_ID = 101
 
     const val EXTRA_PROFILE = "com.cornerstone.agency.extra.PROFILE"
     const val EXTRA_SESSION = "com.cornerstone.agency.extra.SESSION"
+    /** Open the shell on a tab ("feed"). */
+    const val EXTRA_TAB = "com.cornerstone.agency.extra.TAB"
 
     private const val MESSAGE_NOTIF_BASE = 20000
     private const val MESSAGE_NOTIF_SPAN = 9000
@@ -74,7 +78,68 @@ object NotificationCenter {
         val notificationId: Int,
         val sessionKey: String,
         val profile: String,
+        val key: String = "",
+        val srq: String = "",
+        val req: PendingRequest? = null,
     )
+
+    /** One open request, answerable from the Chats list without opening the chat. */
+    data class InboxItem(
+        val key: String,
+        val srq: String,
+        val req: PendingRequest,
+        val profile: String,
+        val sessionKey: String,
+    )
+
+    private val _inbox = kotlinx.coroutines.flow.MutableStateFlow<List<InboxItem>>(emptyList())
+    val inbox: kotlinx.coroutines.flow.StateFlow<List<InboxItem>> = _inbox
+
+    /** Debug builds only: fake requests so the inbox UI can be verified without a live approval. */
+    fun debugInject() {
+        val a = PendingRequest(
+            kind = RequestKind.Approval, requestId = "dbg-1", toolName = "terminal",
+            command = "rm -rf ./build && ./gradlew assembleRelease",
+        )
+        val c = PendingRequest(
+            kind = RequestKind.Clarify, requestId = "dbg-2",
+            questions = listOf(com.cornerstone.agency.data.ClarifyQuestion("q0", "Which color do you prefer?", listOf("red", "blue"))),
+        )
+        _inbox.value = listOf(
+            InboxItem("dbg-1", "dbg-1", a, "default", "dbg-s1"),
+            InboxItem("dbg-2", "dbg-2", c, "aurora", "dbg-s2"),
+        )
+    }
+
+    private fun dropDebug(item: InboxItem): Boolean {
+        if (!item.key.startsWith("dbg-")) return false
+        _inbox.value = _inbox.value.filterNot { it.key == item.key }
+        return true
+    }
+
+    /** Answer a single-question clarify with one of its choices (mirrors ChatRepository.answerClarify). */
+    fun answerClarify(item: InboxItem, answer: String) {
+        if (dropDebug(item)) return
+        val q = item.req.questions.firstOrNull() ?: return
+        val batch = item.req.questions.any { it.qid.isNotEmpty() }
+        val result = if (batch) {
+            buildJsonObject { put("answers", buildJsonObject { put(q.qid.ifEmpty { "q0" }, answer) }) }
+        } else {
+            buildJsonObject { put("answer", answer) }
+        }
+        GatewayHub.socket?.respond(JsonPrimitive(item.srq), result)
+        resolve(item.key)
+    }
+
+    /** Answer an approval from the inbox: same srq-frame path as the notification action. */
+    fun answerApproval(item: InboxItem, choice: String) {
+        if (dropDebug(item)) return
+        GatewayHub.socket?.respond(
+            JsonPrimitive(item.srq),
+            buildJsonObject { put("choice", choice) },
+        )
+        resolve(item.key)
+    }
 
     /** request_id / srq id -> posted notification + badge routing. */
     private val tracked = ConcurrentHashMap<String, Tracked>()
@@ -97,7 +162,36 @@ object NotificationCenter {
                 NotificationChannel(
                     CH_MESSAGES, "Messages", NotificationManager.IMPORTANCE_DEFAULT,
                 ).apply { description = "Agent replies while the app is closed" },
+                NotificationChannel(
+                    CH_FEED, "Feed", NotificationManager.IMPORTANCE_LOW,
+                ).apply { description = "A new issue of your Feed is ready" },
             ),
+        )
+    }
+
+    /** "Kaori wrote today's issue · 7 new posts" — quiet, tap opens the Feed tab. */
+    fun postFeedReady(context: Context, botTitle: String, added: Int) {
+        val app = context.applicationContext
+        ensureChannels(app)
+        val nm = app.getSystemService(NotificationManager::class.java) ?: return
+        val tap = PendingIntent.getActivity(
+            app, FEED_NOTIFICATION_ID,
+            Intent(app, MainActivity::class.java).apply {
+                putExtra(EXTRA_TAB, "feed")
+                addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            },
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
+        )
+        val posts = if (added == 1) "1 new post" else "$added new posts"
+        nm.notify(
+            FEED_NOTIFICATION_ID,
+            NotificationCompat.Builder(app, CH_FEED)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle("$botTitle wrote today's issue")
+                .setContentText(posts)
+                .setAutoCancel(true)
+                .setContentIntent(tap)
+                .build(),
         )
     }
 
@@ -162,7 +256,11 @@ object NotificationCenter {
         resolve(ctx, key)
     }
 
-    private fun reportCounts() {
+    private fun reportCounts() = synchronized(tracked) {
+        if (_inbox.value.any { it.key.startsWith("dbg-") } && tracked.isEmpty()) return@synchronized
+        _inbox.value = tracked.values.mapNotNull { t ->
+            t.req?.let { InboxItem(t.key, t.srq, it, t.profile, t.sessionKey) }
+        }.sortedBy { it.req.createdAt }
         PendingRequests.reportExternal(
             tracked.values.groupingBy { it.sessionKey }.eachCount(),
             tracked.values.groupingBy { it.profile }.eachCount(),
@@ -190,7 +288,7 @@ object NotificationCenter {
         val sessionKey = ref?.storedId?.takeIf { it.isNotEmpty() } ?: runtimeSid
 
         val notifId = requestNotifId(key)
-        tracked[key] = Tracked(notifId, sessionKey, profile)
+        tracked[key] = Tracked(notifId, sessionKey, profile, key, srq, req)
         reportCounts()
 
         // When the user is literally looking at that chat, skip the heads-up —

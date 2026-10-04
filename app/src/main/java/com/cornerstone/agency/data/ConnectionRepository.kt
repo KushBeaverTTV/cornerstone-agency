@@ -56,11 +56,11 @@ class ConnectionRepository(private val store: SecureStore) {
             cookies.values.joinToString("; ") { "${it.name}=${it.value}" }
 
         @Synchronized
-        override fun saveFromResponse(url: HttpUrl, newCookies: List<Cookie>) {
+        override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
             var touched = false
-            for (c in newCookies) {
+            for (c in cookies) {
                 if (!c.name.startsWith("hermes_session_")) continue
-                if (c.value.isEmpty()) cookies.remove(c.name) else cookies[c.name] = c
+                if (c.value.isEmpty()) this.cookies.remove(c.name) else this.cookies[c.name] = c
                 touched = true
             }
             if (touched) store.saveCookie(snapshotHeader())
@@ -265,6 +265,25 @@ class ConnectionRepository(private val store: SecureStore) {
 
     suspend fun modelOptions(): List<ModelProvider> =
         json.decodeFromString<ModelOptionsResponse>(api("/api/model/options")).providers
+
+    /**
+     * Newest [limit] rows of a stored session straight from the state DB (read-only REST).
+     * The gateway's runtime copy of a session is a snapshot: another client (the desktop app)
+     * appends to the same stored session without this process ever hearing about it, so this
+     * is how a phone chat catches up. Returned oldest-first.
+     */
+    suspend fun sessionTail(
+        storedId: String,
+        profile: String,
+        limit: Int,
+    ): List<kotlinx.serialization.json.JsonObject> {
+        val text = api(
+            "/api/sessions/${enc(storedId)}/messages?limit=$limit&order=latest&profile=${enc(profile)}",
+        )
+        val arr = (json.parseToJsonElement(text) as? kotlinx.serialization.json.JsonObject)
+            ?.get("messages") as? kotlinx.serialization.json.JsonArray
+        return arr?.mapNotNull { it as? kotlinx.serialization.json.JsonObject }.orEmpty()
+    }
 
     // ---- M4: cron jobs ------------------------------------------------------
     // /api/cron/jobs returns a BARE array (merged across profiles); the bot

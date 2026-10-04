@@ -49,6 +49,13 @@ class VoiceSession(
     val uiText = MutableStateFlow("Connecting…")
     val detailLine = MutableStateFlow("")
     val micLevel = MutableStateFlow(0f)
+    val muted = MutableStateFlow(false)
+
+    /** User mute: mic stays closed until unmuted, regardless of bridge record hints. */
+    fun setMuted(m: Boolean) {
+        muted.value = m
+        if (m || uiState.value != State.LISTENING) recorder.pause() else recorder.resume()
+    }
     val history = MutableStateFlow<List<HistoryTurn>>(emptyList())
 
     fun start() {
@@ -78,10 +85,10 @@ class VoiceSession(
                 if (ctl.interrupt) {
                     // barge-in: flush queued speech, reopen mic
                     player.flush()
-                    recorder.resume()
+                    if (!muted.value) recorder.resume()
                     setState(State.LISTENING, "Listening…")
                 }
-                ctl.record?.let { if (it) recorder.resume() else recorder.pause() }
+                ctl.record?.let { if (it && !muted.value) recorder.resume() else recorder.pause() }
             }
         }
         scope.launch { client.link.collect { onLinkChange(it) } }

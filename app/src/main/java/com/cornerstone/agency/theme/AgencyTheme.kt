@@ -16,18 +16,23 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.cornerstone.agency.R
 
-// Palette decoded from the Hermes v1.0.5 prototype (ai.nous.hermes ui/theme).
-val AgencyChrome = Color(0xFF0D0D0E)
+// Palette: Cornerstone signal identity — ink #0A0A0A / signal #FCEE0A / white.
+// (Originally decoded from the Hermes v1.0.5 prototype; reskinned to the
+// Cornerstone yellow/black/white cyberpunk identity.)
+val AgencyChrome = Color(0xFF0A0A0A)
+val AgencyChromeDeep = Color(0xFF100D04)
 val AgencySidebar = Color(0xFF0A0A0B)
 val AgencyCard = Color(0xFF161618)
 val AgencyElevated = Color(0xFF1C1C1F)
-val AgencyPrimary = Color(0xFF0053FD)
-val AgencyPrimarySoft = Color(0xFF1A2A55)
-val AgencyRowActive = Color(0x140053FD)
-val AgencyGold = Color(0xFFFFD24A)
+val AgencyPrimary = Color(0xFFFCEE0A)
+val AgencyOnPrimary = Color(0xFF0A0A0A)
+val AgencyPrimarySoft = Color(0xFF3A310B)
+val AgencyRowActive = Color(0x14FCEE0A)
+val AgencyGold = Color(0xFFFCEE0A)
+val AgencyEdge = Color(0x2EFCEE0A)
 val AgencyForeground = Color(0xF0F4F4F5)
-val AgencySecondaryText = Color(0xBDB1B3B8)
-val AgencyTertiaryText = Color(0x8A9A9B9E)
+val AgencySecondaryText = Color(0xD6B1B3B8)
+val AgencyTertiaryText = Color(0xD09A9B9E)
 val AgencyStroke = Color(0x1FFFFFFF)
 val AgencyDestructive = Color(0xFFE75E78)
 val AgencySuccess = Color(0xFF55A583)
@@ -36,13 +41,20 @@ val AgencyDefaultViolet = Color(0xFF8B5CF6)
 val AgencyWordmark = AgencyForeground.copy(alpha = 0.9f)
 val AgencyHairline = AgencyStroke
 val AgencySelection = AgencyGold.copy(alpha = 0.38f)
+/** Neutral user bubble (Muse/Grok): gold stays reserved for state and primary actions. */
+val AgencyBubble = Color(0xFF232327)
+/** Quiet surface for grouped rows and docked composers. */
+val AgencySurface = Color(0xFF121214)
 
 data class AgencyColors(
     val chrome: Color = AgencyChrome,
+    val chromeDeep: Color = AgencyChromeDeep,
     val sidebar: Color = AgencySidebar,
     val card: Color = AgencyCard,
     val elevated: Color = AgencyElevated,
+    val edge: Color = AgencyEdge,
     val primary: Color = AgencyPrimary,
+    val onPrimary: Color = AgencyOnPrimary,
     val primarySoft: Color = AgencyPrimarySoft,
     val rowActive: Color = AgencyRowActive,
     val gold: Color = AgencyGold,
@@ -57,6 +69,15 @@ data class AgencyColors(
     val wordmark: Color = AgencyWordmark,
     val hairline: Color = AgencyHairline,
     val selection: Color = AgencySelection,
+    val bubble: Color = AgencyBubble,
+    val surface: Color = AgencySurface,
+)
+
+/** Corner radii: one small, one for cards/rows, one pill. */
+data class AgencyShapes(
+    val sm: androidx.compose.ui.unit.Dp = 10.dp,
+    val md: androidx.compose.ui.unit.Dp = 18.dp,
+    val lg: androidx.compose.ui.unit.Dp = 24.dp,
 )
 
 data class AgencySpacing(
@@ -79,15 +100,15 @@ object AgencyFonts {
 
 private val AgencyTypography = Typography(
     displayLarge = TextStyle(
-        color = AgencyForeground, fontSize = 28.sp, fontWeight = FontWeight.Bold,
+        color = AgencyGold, fontSize = 28.sp, fontWeight = FontWeight.Bold,
         fontFamily = AgencyFonts.Collapse, letterSpacing = 0.08.em, lineHeight = 26.sp,
     ),
     displayMedium = TextStyle(
-        color = AgencyForeground, fontSize = 22.sp, fontWeight = FontWeight.Bold,
+        color = AgencyGold, fontSize = 22.sp, fontWeight = FontWeight.Bold,
         fontFamily = AgencyFonts.Collapse, letterSpacing = 0.06.em, lineHeight = 22.sp,
     ),
     displaySmall = TextStyle(
-        color = AgencyForeground, fontSize = 20.sp, fontWeight = FontWeight.Bold,
+        color = AgencyGold, fontSize = 20.sp, fontWeight = FontWeight.Bold,
         fontFamily = AgencyFonts.Collapse, letterSpacing = 0.04.em, lineHeight = 22.sp,
     ),
     headlineSmall = TextStyle(
@@ -107,8 +128,8 @@ private val AgencyTypography = Typography(
         fontFamily = AgencyFonts.Sans, lineHeight = 17.sp,
     ),
     bodyLarge = TextStyle(
-        color = AgencyForeground, fontSize = 14.sp, fontWeight = FontWeight.Normal,
-        fontFamily = AgencyFonts.Sans, lineHeight = 20.sp,
+        color = AgencyForeground, fontSize = 16.sp, fontWeight = FontWeight.Normal,
+        fontFamily = AgencyFonts.Sans, lineHeight = 23.sp,
     ),
     bodyMedium = TextStyle(
         color = AgencyForeground, fontSize = 13.sp, fontWeight = FontWeight.Normal,
@@ -127,19 +148,22 @@ private val AgencyTypography = Typography(
         fontFamily = AgencyFonts.Sans, lineHeight = 16.sp,
     ),
     labelSmall = TextStyle(
-        color = AgencyTertiaryText, fontSize = 11.sp, fontWeight = FontWeight.Medium,
-        fontFamily = AgencyFonts.Sans, letterSpacing = 0.06.em, lineHeight = 14.sp,
+        color = AgencyTertiaryText, fontSize = 12.sp, fontWeight = FontWeight.Medium,
+        fontFamily = AgencyFonts.Sans, letterSpacing = 0.06.em, lineHeight = 16.sp,
     ),
 )
 
 val LocalAgencyColors = staticCompositionLocalOf { AgencyColors() }
 val LocalAgencySpacing = staticCompositionLocalOf { AgencySpacing() }
+val LocalAgencyShapes = staticCompositionLocalOf { AgencyShapes() }
 
 object AgencyTokens {
     val colors: AgencyColors
         @Composable get() = LocalAgencyColors.current
     val space: AgencySpacing
         @Composable get() = LocalAgencySpacing.current
+    val shapes: AgencyShapes
+        @Composable get() = LocalAgencyShapes.current
 }
 
 @Composable
@@ -148,11 +172,12 @@ fun AgencyTheme(content: @Composable () -> Unit) {
     CompositionLocalProvider(
         LocalAgencyColors provides colors,
         LocalAgencySpacing provides AgencySpacing(),
+        LocalAgencyShapes provides AgencyShapes(),
     ) {
         MaterialTheme(
             colorScheme = darkColorScheme(
                 primary = colors.primary,
-                onPrimary = Color.White,
+                onPrimary = colors.onPrimary,
                 primaryContainer = colors.primarySoft,
                 onPrimaryContainer = colors.foreground,
                 secondary = colors.secondary,

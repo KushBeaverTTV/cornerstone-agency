@@ -73,6 +73,9 @@ class PrimaWorker:
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.STDOUT,
             env=env,
+            # One JSONL line can be huge (get_available_models, long get_messages); the
+            # 64 KiB default made the reader raise and kill the worker.
+            limit=64 * 1024 * 1024,
         )
         self._reader_task = asyncio.create_task(self._reader())
         await self._broadcast(
@@ -109,6 +112,12 @@ class PrimaWorker:
 
     async def get_messages(self) -> Dict[str, Any]:
         return await self.command("get_messages", timeout=120.0)
+
+    async def get_available_models(self) -> Dict[str, Any]:
+        return await self.command("get_available_models", timeout=30.0)
+
+    async def set_model(self, provider: str, model_id: str) -> Dict[str, Any]:
+        return await self.command("set_model", timeout=30.0, provider=provider, modelId=model_id)
 
     async def abort(self) -> Dict[str, Any]:
         return await self.command("abort", timeout=15.0)

@@ -109,15 +109,15 @@ class VoiceClient(
         _link.value = Link.CONNECTING
         _authed.value = false
         webSocket = client.newWebSocket(request, object : WebSocketListener() {
-            override fun onOpen(ws: WebSocket, response: Response) {
-                if (ws !== webSocket) {
-                    ws.close(1000, "stale socket")
+            override fun onOpen(webSocket: WebSocket, response: Response) {
+                if (webSocket !== this@VoiceClient.webSocket) {
+                    webSocket.close(1000, "stale socket")
                     return
                 }
                 _link.value = Link.OPEN
                 _reconnectAttempt.value = 0
                 _lastError.value = null
-                ws.send(
+                webSocket.send(
                     json.encodeToString(
                         AuthMessage.serializer(),
                         AuthMessage(token = token, caps = listOf("control")),
@@ -125,20 +125,20 @@ class VoiceClient(
                 )
             }
 
-            override fun onMessage(ws: WebSocket, text: String) {
-                if (ws !== webSocket) return
+            override fun onMessage(webSocket: WebSocket, text: String) {
+                if (webSocket !== this@VoiceClient.webSocket) return
                 handleMessage(text)
             }
 
-            override fun onFailure(ws: WebSocket, t: Throwable, response: Response?) {
-                if (ws !== webSocket) return
+            override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
+                if (webSocket !== this@VoiceClient.webSocket) return
                 val detail =
                     response?.let { "HTTP ${it.code}" } ?: (t.message ?: t.javaClass.simpleName)
                 onLinkLost(reason = "bridge unreachable: $detail", wasFailure = true)
             }
 
-            override fun onClosed(ws: WebSocket, code: Int, reason: String) {
-                if (ws !== webSocket) return
+            override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
+                if (webSocket !== this@VoiceClient.webSocket) return
                 onLinkLost(reason = "socket closed ($code) ${reason.trim()}", wasFailure = false)
             }
         })

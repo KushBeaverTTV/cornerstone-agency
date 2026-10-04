@@ -5,3 +5,6 @@ app/build/
 .idea/
 .cxx/
 local.properties.tmp
+
+.kotlin/
+dist/

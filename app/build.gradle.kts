@@ -12,16 +12,31 @@ android {
         applicationId = "com.cornerstone.agency"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 12
+        versionName = "1.2.0"
+    }
+
+    // Release signing reuses the KBP release key. Values come from the environment
+    // (Cornerstone_Secrets/signing.env, loaded by the release script); nothing is committed.
+    val releaseKeystore = System.getenv("KBP_RELEASE_KEYSTORE_PATH")
+    signingConfigs {
+        if (!releaseKeystore.isNullOrBlank()) {
+            create("release") {
+                storeFile = file(releaseKeystore)
+                storePassword = System.getenv("KBP_RELEASE_KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("KBP_RELEASE_KEY_ALIAS")
+                keyPassword = System.getenv("KBP_RELEASE_KEY_PASSWORD")
+            }
+        }
     }
 
     buildTypes {
         debug {
-            // Debug-only build for M1; default debug signing, no release config.
+            // Debug build: default debug signing, dev seed intents enabled.
         }
         release {
             isMinifyEnabled = false
+            signingConfigs.findByName("release")?.let { signingConfig = it }
         }
     }
 
@@ -55,6 +70,12 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.okhttp)
+
+    // Scheduled Feed issues run as a CoroutineWorker so they survive the Activity.
+    implementation(libs.androidx.work.runtime.ktx)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
 
     // Literal coordinate — same as the sibling project, not yet in the catalog.
     implementation("androidx.security:security-crypto:1.1.0-alpha07")

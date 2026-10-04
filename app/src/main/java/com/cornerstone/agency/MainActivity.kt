@@ -20,7 +20,16 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        enableEdgeToEdge(
+            statusBarStyle = androidx.activity.SystemBarStyle.dark(android.graphics.Color.TRANSPARENT),
+            navigationBarStyle = androidx.activity.SystemBarStyle.dark(android.graphics.Color.TRANSPARENT),
+        )
+        // The app is dark-only: always request LIGHT system-bar icons (the OS default flips
+        // them dark when the phone itself is in light mode, which made the clock vanish).
+        androidx.core.view.WindowCompat.getInsetsController(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false
+            isAppearanceLightNavigationBars = false
+        }
         vm = ViewModelProvider(this)[AppViewModel::class.java]
 
         // Debug-only dev seed: `am start --es seed_url <u> --es seed_user <u> --es seed_cookie <c>`
@@ -34,8 +43,12 @@ class MainActivity : ComponentActivity() {
                 )
             }
         }
+        handleWidget(intent)
         handleDeepLink(intent)
         handleShare(intent)
+        if (BuildConfig.DEBUG && intent?.getBooleanExtra("debug_inbox", false) == true) {
+            com.cornerstone.agency.service.NotificationCenter.debugInject()
+        }
 
         setContent {
             AgencyTheme {
@@ -46,14 +59,48 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        applyDarkBars()
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) applyDarkBars()
+    }
+
+    /** Dark-only app: light status/nav icons no matter the phone's own light/dark setting. */
+    private fun applyDarkBars() {
+        androidx.core.view.WindowCompat.getInsetsController(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false
+            isAppearanceLightNavigationBars = false
+        }
+    }
+
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
+        handleWidget(intent)
         handleDeepLink(intent)
         handleShare(intent)
     }
 
-    /** Notification taps carry PROFILE/SESSION extras → AppNav navigates. */
+    /** Widget taps: open the default bot's latest chat, optionally straight into voice. */
+    private fun handleWidget(intent: Intent?) {
+        if (intent?.action != com.cornerstone.agency.service.AgencyWidget.ACTION_WIDGET) return
+        if (intent.getBooleanExtra(com.cornerstone.agency.service.AgencyWidget.EXTRA_VOICE, false)) {
+            vm.requestVoice()
+        }
+        vm.requestDeepLink("default", null)
+        // Consume it so a rotation / process restore does not replay the tap.
+        intent.action = null
+    }
+
+    /** Notification taps carry PROFILE/SESSION extras → AppNav navigates; TAB → AppShell switches. */
     private fun handleDeepLink(intent: Intent?) {
+        intent?.getStringExtra(NotificationCenter.EXTRA_TAB)?.takeIf { it.isNotBlank() }?.let { tab ->
+            vm.requestTab(tab)
+            intent.removeExtra(NotificationCenter.EXTRA_TAB)
+        }
         val profile = intent?.getStringExtra(NotificationCenter.EXTRA_PROFILE)
             ?.takeIf { it.isNotBlank() } ?: return
         vm.requestDeepLink(
@@ -73,11 +120,11 @@ class MainActivity : ComponentActivity() {
         val images = mutableListOf<String>()
         when (intent.action) {
             Intent.ACTION_SEND -> {
-                intent.getParcelableExtra<android.net.Uri>(Intent.EXTRA_STREAM)
+                androidx.core.content.IntentCompat.getParcelableExtra(intent, Intent.EXTRA_STREAM, android.net.Uri::class.java)
                     ?.let { images += shareName(it) }
             }
             Intent.ACTION_SEND_MULTIPLE -> {
-                intent.getParcelableArrayListExtra<android.net.Uri>(Intent.EXTRA_STREAM)
+                androidx.core.content.IntentCompat.getParcelableArrayListExtra(intent, Intent.EXTRA_STREAM, android.net.Uri::class.java)
                     ?.forEach { images += shareName(it) }
             }
             else -> return

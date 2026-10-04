@@ -106,6 +106,20 @@ def test_prima_session_lifecycle(client):
     assert client.get(f"/prima/sessions/{sid}", headers=AUTH).status_code == 404
 
 
+def test_prima_model_switch(client):
+    sid = client.post("/prima/sessions", json={}, headers=AUTH).json()["id"]
+    r = client.get(f"/prima/sessions/{sid}/models", headers=AUTH).json()
+    assert {m["id"] for m in r["models"]} == {"claude-sonnet-5-5", "claude-opus-4-8"}
+    ok = client.post(
+        f"/prima/sessions/{sid}/model",
+        json={"provider": "anthropic", "model_id": "claude-opus-4-8"}, headers=AUTH,
+    )
+    assert ok.json() == {"ok": True}
+    cur = client.get(f"/prima/sessions/{sid}/models", headers=AUTH).json()["current"]
+    assert cur == {"provider": "anthropic", "id": "claude-opus-4-8"}
+    client.delete(f"/prima/sessions/{sid}", headers=AUTH)
+
+
 def test_prima_409_when_streaming(client):
     r = client.post("/prima/sessions", headers=AUTH, json={})
     sid = r.json()["id"]

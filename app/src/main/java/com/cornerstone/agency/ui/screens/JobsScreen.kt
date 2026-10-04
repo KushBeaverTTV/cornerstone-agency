@@ -17,12 +17,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -47,6 +43,7 @@ import androidx.compose.ui.unit.sp
 import com.cornerstone.agency.data.CronJob
 import com.cornerstone.agency.data.SessionSummary
 import com.cornerstone.agency.theme.AgencyTokens
+import com.cornerstone.agency.ui.components.PageHeader
 import com.cornerstone.agency.ui.AppViewModel
 import com.cornerstone.agency.ui.components.AgencyCard
 import com.cornerstone.agency.ui.components.AgencyRow
@@ -103,7 +100,7 @@ private fun StatusPill(health: JobHealth, label: String) {
 
 /** Jobs tab: cron routines grouped by owning bot ([bot:x] name prefix). */
 @Composable
-fun JobsScreen(vm: AppViewModel, onOpenJob: (String) -> Unit = {}) {
+fun JobsScreen(vm: AppViewModel, onOpenJob: (String) -> Unit = {}, onBack: (() -> Unit)? = null) {
     val colors = AgencyTokens.colors
     val space = AgencyTokens.space
     val ui by vm.ui.collectAsState()
@@ -119,7 +116,7 @@ fun JobsScreen(vm: AppViewModel, onOpenJob: (String) -> Unit = {}) {
                 jobs = vm.repo.cronJobs()
                 error = ""
             } catch (e: Exception) {
-                error = e.message ?: "Failed to load jobs"
+                error = e.message ?: "Failed to load routines"
             } finally {
                 loading = false
             }
@@ -142,24 +139,16 @@ fun JobsScreen(vm: AppViewModel, onOpenJob: (String) -> Unit = {}) {
     PullToRefreshBox(
         isRefreshing = loading && jobs.isNotEmpty(),
         onRefresh = { loading = true; load() },
-        modifier = Modifier.fillMaxSize(),
+        // As a pushed route (from Me) this screen sits outside the shell scaffold.
+        modifier = Modifier.fillMaxSize().then(if (onBack != null) Modifier.safeDrawingPadding() else Modifier),
     ) {
         LazyColumn(Modifier.fillMaxSize()) {
-            item {
-                Text(
-                    text = "Jobs",
-                    style = MaterialTheme.typography.displayLarge,
-                    color = colors.wordmark,
-                    modifier = Modifier.padding(
-                        horizontal = space.lg, vertical = space.lg,
-                    ),
-                )
-            }
+            item { PageHeader("Routines", onBack = onBack) }
 
             if (jobs.isEmpty() && !loading) {
                 item {
                     EmptyState(
-                        if (error.isEmpty()) "No routines" else "Couldn't load jobs",
+                        if (error.isEmpty()) "No routines" else "Couldn't load routines",
                         if (error.isEmpty()) "Scheduled work lands here" else error,
                     )
                 }
@@ -266,21 +255,7 @@ fun JobDetailScreen(
 
     Box(Modifier.fillMaxSize().safeDrawingPadding()) {
         Column(Modifier.fillMaxSize()) {
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = space.sm, vertical = space.xs),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                IconButton(onClick = onBack) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = colors.foreground)
-                }
-                Text(
-                    "Job",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = colors.foreground,
-                )
-            }
+            PageHeader("Routine", onBack = onBack)
 
             Column(
                 Modifier
@@ -332,7 +307,7 @@ fun JobDetailScreen(
                             InfoLine("Next run", j.nextRunAt ?: "—")
                             InfoLine("Last run", j.lastRunAt ?: "—")
                             InfoLine("Last status", j.lastStatus.ifBlank { "—" })
-                            if (!j.lastError.isNullOrBlank()) InfoLine("Last error", j.lastError!!)
+                            j.lastError?.takeIf { it.isNotBlank() }?.let { InfoLine("Last error", it) }
                             InfoLine("Deliver", j.deliver.ifBlank { "local" })
                             j.model?.let { InfoLine("Model", it) }
                             j.skill?.let { InfoLine("Skill", it) }

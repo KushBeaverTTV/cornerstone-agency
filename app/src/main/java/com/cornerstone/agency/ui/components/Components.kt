@@ -2,6 +2,7 @@ package com.cornerstone.agency.ui.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,9 +21,13 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -36,7 +41,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -48,6 +52,10 @@ import androidx.compose.ui.unit.sp
 import com.cornerstone.agency.theme.AgencyFonts
 import com.cornerstone.agency.theme.AgencyTokens
 import java.util.Locale
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 
 @Composable
 fun AgencyScaffold(
@@ -58,8 +66,12 @@ fun AgencyScaffold(
 ) {
     val colors = AgencyTokens.colors
     Scaffold(
-        modifier = modifier,
-        containerColor = colors.chrome,
+        modifier = modifier.background(
+            androidx.compose.ui.graphics.Brush.verticalGradient(
+                listOf(colors.chrome, colors.chromeDeep),
+            ),
+        ),
+        containerColor = androidx.compose.ui.graphics.Color.Transparent,
         topBar = topBar,
         bottomBar = bottomBar,
     ) { padding ->
@@ -73,7 +85,7 @@ fun SectionKicker(text: String, modifier: Modifier = Modifier) {
     Text(
         text = text.uppercase(Locale.US),
         modifier = modifier,
-        color = AgencyTokens.colors.tertiary,
+        color = AgencyTokens.colors.gold,
         fontSize = 11.sp,
         fontWeight = androidx.compose.ui.text.font.FontWeight.Medium,
         fontFamily = AgencyFonts.Sans,
@@ -87,13 +99,66 @@ fun AgencyCard(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val colors = AgencyTokens.colors
+    val shape = RoundedCornerShape(AgencyTokens.shapes.md)
+    // Quiet by default: neutral hairline, no yellow edge — gold is for state, not chrome.
     Column(
         modifier = modifier
-            .clip(RoundedCornerShape(10.dp))
+            .clip(shape)
+            .border(1.dp, colors.stroke, shape)
             .background(colors.card)
-            .padding(AgencyTokens.space.md),
+            .padding(AgencyTokens.space.lg),
         content = content,
     )
+}
+
+/**
+ * Large page title in the display face, with optional trailing actions. On a compact-height
+ * window (cover display) it shrinks to a single tight line so the actions stay reachable.
+ */
+@Composable
+fun PageHeader(
+    title: String,
+    modifier: Modifier = Modifier,
+    onBack: (() -> Unit)? = null,
+    actions: @Composable () -> Unit = {},
+) {
+    val compact = com.cornerstone.agency.ui.isCompactHeight()
+    val space = AgencyTokens.space
+    Row(
+        modifier
+            .fillMaxWidth()
+            .padding(
+                start = if (onBack != null) space.xs else space.lg, end = space.xs,
+                top = if (compact) 0.dp else space.md,
+                bottom = if (compact) 0.dp else space.sm,
+            )
+            .heightIn(min = if (compact) 40.dp else 48.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        if (onBack != null) {
+            IconButton(onClick = onBack) {
+                Icon(
+                    Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back",
+                    tint = AgencyTokens.colors.foreground,
+                )
+            }
+        }
+        Text(
+            text = title,
+            // Pushed screens sit one level down, so their title is one step smaller.
+            style = when {
+                compact -> MaterialTheme.typography.headlineSmall
+                onBack != null -> MaterialTheme.typography.displayMedium
+                else -> MaterialTheme.typography.displayLarge
+            },
+            color = AgencyTokens.colors.wordmark,
+            maxLines = 1,
+            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+            modifier = Modifier.weight(1f),
+        )
+        actions()
+    }
 }
 
 @Composable
@@ -128,6 +193,7 @@ fun AgencyRow(
             .clip(RoundedCornerShape(10.dp))
             .background(if (selected) colors.rowActive else Color.Transparent)
             .combinedClickable(onClick = onClick, onLongClick = onLongClick)
+            .heightIn(min = 56.dp)
             .padding(horizontal = AgencyTokens.space.sm, vertical = AgencyTokens.space.sm),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -166,9 +232,34 @@ fun AgencyRow(
     }
 }
 
-/** Material "visibility" eye glyph (icons-extended isn't a dependency). */
-val EyeIcon: androidx.compose.ui.graphics.vector.ImageVector by lazy {
+/** Material "folder" glyph (icons-extended isn't a dependency). */
+val FolderIcon: androidx.compose.ui.graphics.vector.ImageVector by lazy {
     androidx.compose.ui.graphics.vector.ImageVector.Builder(
+        name = "Folder",
+        defaultWidth = 24.dp,
+        defaultHeight = 24.dp,
+        viewportWidth = 24f,
+        viewportHeight = 24f,
+    ).path(
+        fill = androidx.compose.ui.graphics.SolidColor(Color.White),
+    ) {
+        moveTo(10f, 4f)
+        lineTo(4f, 4f)
+        curveTo(2.9f, 4f, 2f, 4.9f, 2f, 6f)
+        verticalLineTo(18f)
+        curveTo(2f, 19.1f, 2.9f, 20f, 4f, 20f)
+        horizontalLineTo(20f)
+        curveTo(21.1f, 20f, 22f, 19.1f, 22f, 18f)
+        verticalLineTo(8f)
+        curveTo(22f, 6.9f, 21.1f, 6f, 20f, 6f)
+        horizontalLineTo(12f)
+        lineTo(10f, 4f)
+        close()
+    }.build()
+}
+
+/** Material "visibility" eye glyph (icons-extended isn't a dependency). */
+val EyeIcon: androidx.compose.ui.graphics.vector.ImageVector by lazy {    androidx.compose.ui.graphics.vector.ImageVector.Builder(
         name = "Eye",
         defaultWidth = 24.dp,
         defaultHeight = 24.dp,
@@ -232,9 +323,9 @@ val MicIcon: androidx.compose.ui.graphics.vector.ImageVector by lazy {
 }
 
 private val AVATAR_COLORS = listOf(
-    Color(0xFFFFD24A), // gold
+    Color(0xFFFCEE0A), // signal yellow
     Color(0xFF8B5CF6), // violet
-    Color(0xFF0053FD), // primary
+    Color(0xFFF4F4F0), // bone white
     Color(0xFFCF806D), // warm
     Color(0xFF55A583), // success
     Color(0xFFE75E78), // destructive
@@ -247,22 +338,24 @@ fun botAvatarColor(name: String, isDefault: Boolean = false): Color {
     return AVATAR_COLORS[idx]
 }
 
-/** "just now" / "4m" / "2h" / "3d" / absolute date for old timestamps. */
-fun relativeTime(epochSeconds: Double): String {
-    if (epochSeconds <= 0.0) return ""
-    val now = System.currentTimeMillis() / 1000.0
-    val diff = (now - epochSeconds).toLong()
-    return when {
-        diff < 60 -> "just now"
-        diff < 3600 -> "${diff / 60}m"
-        diff < 86400 -> "${diff / 3600}h"
-        diff < 86400 * 7 -> "${diff / 86400}d"
-        else -> java.text.SimpleDateFormat("MMM d", Locale.US)
-            .format(java.util.Date((epochSeconds * 1000).toLong()))
+/** "meta/muse-spark-1.3-contributor" -> "muse-spark-1.3-contributor". */
+fun shortModelLabel(modelId: String): String {
+    if (modelId.isBlank()) return "Select model"
+    val id = modelId.substringAfterLast("/")
+    // claude-sonnet-5-5 -> "Sonnet 5.5", claude-opus-4-8 -> "Opus 4.8"; anything else stays as-is.
+    val m = Regex("^claude-([a-z]+)-(\\d+)(?:-(\\d{1,2}))?(?:-\\d{8})?$").matchEntire(id)
+    if (m != null) {
+        val family = m.groupValues[1].replaceFirstChar { it.uppercase() }
+        val minor = m.groupValues[3]
+        return "$family ${m.groupValues[2]}" + if (minor.isNotEmpty()) ".$minor" else ""
     }
+    return id
 }
 
-/** Circle avatar with the bot's initial on a per-bot fill color. */
+/**
+ * Bot avatar. Historically an initial in a filled circle; now the same keystone mark used
+ * everywhere else, so a bot looks like itself in every list. [name] is the a11y label.
+ */
 @Composable
 fun BotAvatar(
     name: String,
@@ -270,21 +363,37 @@ fun BotAvatar(
     modifier: Modifier = Modifier,
     size: androidx.compose.ui.unit.Dp = 34.dp,
 ) {
-    val letter = name.trim().firstOrNull()?.uppercaseChar()?.toString() ?: "?"
-    val onFill = if (color.luminance() < 0.43f) Color.White else Color(0xFF0D0D14)
+    BotMark(color = color, modifier = modifier, size = size, contentDescription = name)
+}
+
+/**
+ * The agent's face: the living keystone mark on a soft disc, tinted per bot.
+ * Replaces the initial-in-a-circle wherever a bot is the subject (rows, headers).
+ */
+@Composable
+fun BotMark(
+    color: Color,
+    modifier: Modifier = Modifier,
+    size: androidx.compose.ui.unit.Dp = 48.dp,
+    state: KeystoneState = KeystoneState.IDLE,
+    contentDescription: String? = null,
+) {
     Box(
-        modifier = modifier
+        modifier
             .size(size)
             .clip(CircleShape)
-            .background(color),
+            .background(color.copy(alpha = 0.10f))
+            .then(
+                if (contentDescription != null) {
+                    Modifier.semantics { this.contentDescription = contentDescription }
+                } else Modifier,
+            ),
         contentAlignment = Alignment.Center,
     ) {
-        Text(
-            text = letter,
-            color = onFill,
-            fontSize = (size.value * 0.44f).sp,
-            fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
-            fontFamily = AgencyFonts.Sans,
+        // The arch's visual mass sits low in its box; nudge it up so it reads centred.
+        KeystoneMark(
+            state = state, size = size * 0.80f, color = color,
+            modifier = Modifier.offset(y = -(size * 0.07f)),
         )
     }
 }
@@ -305,7 +414,7 @@ fun PrimaryButton(
         shape = RoundedCornerShape(8.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = colors.primary,
-            contentColor = Color.White,
+            contentColor = colors.onPrimary,
             disabledContainerColor = colors.primarySoft,
             disabledContentColor = colors.tertiary,
         ),
@@ -313,7 +422,7 @@ fun PrimaryButton(
         if (loading) {
             CircularProgressIndicator(
                 modifier = Modifier.size(18.dp),
-                color = Color.White,
+                color = colors.onPrimary,
                 strokeWidth = 2.dp,
             )
         } else {
@@ -461,14 +570,29 @@ fun ModelPickerSheet(
                                 ),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            Text(
-                                model,
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = if (selected) colors.gold else colors.foreground,
-                                modifier = Modifier.weight(1f),
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis,
+                            androidx.compose.foundation.layout.Box(
+                                modifier = Modifier
+                                    .size(8.dp)
+                                    .clip(androidx.compose.foundation.shape.CircleShape)
+                                    .background(if (selected) colors.gold else colors.tertiary),
                             )
+                            Spacer(Modifier.width(AgencyTokens.space.sm))
+                            Column(Modifier.weight(1f)) {
+                                Text(
+                                    shortModelLabel(model),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = if (selected) colors.gold else colors.foreground,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                )
+                                Text(
+                                    provider.name,
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = colors.tertiary,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                )
+                            }
                             if (selected) {
                                 Text("✓", color = colors.gold)
                             }
@@ -485,12 +609,14 @@ fun ModelPickerSheet(
 fun EmptyState(title: String, hint: String, modifier: Modifier = Modifier) {
     val colors = AgencyTokens.colors
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize().padding(horizontal = 32.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(title, style = MaterialTheme.typography.displaySmall, color = colors.wordmark)
+        Text(title, style = MaterialTheme.typography.displaySmall, color = colors.wordmark,
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center)
         Spacer(Modifier.height(AgencyTokens.space.sm))
-        Text(hint, style = MaterialTheme.typography.bodyMedium, color = colors.tertiary)
+        Text(hint, style = MaterialTheme.typography.bodyMedium, color = colors.secondary,
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center)
     }
 }
