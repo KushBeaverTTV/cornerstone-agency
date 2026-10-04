@@ -95,6 +95,34 @@ fun defaultGoals(): List<Goal> {
     )
 }
 
+/** When the daily issue is written. Off by default; the user turns it on from the Feed menu. */
+@Serializable
+data class FeedSchedule(
+    val enabled: Boolean = false,
+    val hour: Int = 7,
+    val minute: Int = 0,
+) {
+    /** "7:00 AM" style label. */
+    fun label(): String {
+        val h12 = when (hour % 12) { 0 -> 12; else -> hour % 12 }
+        val ampm = if (hour < 12) "AM" else "PM"
+        return "%d:%02d %s".format(h12, minute, ampm)
+    }
+
+    /** Epoch millis of the next occurrence strictly after [nowMs] in the default zone. */
+    fun nextRunAfter(nowMs: Long, zone: java.util.TimeZone = java.util.TimeZone.getDefault()): Long {
+        val cal = java.util.Calendar.getInstance(zone).apply {
+            timeInMillis = nowMs
+            set(java.util.Calendar.HOUR_OF_DAY, hour)
+            set(java.util.Calendar.MINUTE, minute)
+            set(java.util.Calendar.SECOND, 0)
+            set(java.util.Calendar.MILLISECOND, 0)
+        }
+        if (cal.timeInMillis <= nowMs) cal.add(java.util.Calendar.DAY_OF_YEAR, 1)
+        return cal.timeInMillis
+    }
+}
+
 /** Whole companion store, persisted as one JSON file. */
 @Serializable
 data class CompanionState(
@@ -102,4 +130,11 @@ data class CompanionState(
     val posts: List<FeedPost> = emptyList(),
     val goals: List<Goal> = defaultGoals(),
     val artifacts: List<ArtifactEntry> = emptyList(),
+    val feedSchedule: FeedSchedule = FeedSchedule(),
+    /** Profile name the writer uses — the default bot as last resolved by the app. */
+    val feedProfile: String = "default",
+    /** Display name of that bot, for notifications written while the app is closed. */
+    val feedBotTitle: String = "Kaori",
+    /** Epoch millis of the last successful issue (scheduled or manual). */
+    val lastFeedRunAt: Long = 0L,
 )

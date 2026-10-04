@@ -16,12 +16,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -43,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cornerstone.agency.data.ModelProvider
 import com.cornerstone.agency.theme.AgencyTokens
+import com.cornerstone.agency.ui.components.PageHeader
 import com.cornerstone.agency.ui.AppViewModel
 import com.cornerstone.agency.ui.components.AgencyCard
 import com.cornerstone.agency.ui.components.AgencyRow
@@ -153,25 +150,7 @@ fun BotDetailScreen(
             }
         } else {
             Column(Modifier.fillMaxSize()) {
-                // Top bar
-                Row(
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = space.sm, vertical = space.xs),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    IconButton(onClick = onBack) {
-                        Icon(
-                            Icons.AutoMirrored.Filled.ArrowBack, "Back",
-                            tint = colors.foreground,
-                        )
-                    }
-                    Text(
-                        "Bot settings",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = colors.foreground,
-                    )
-                }
+                PageHeader("Agent", onBack = onBack)
 
                 Column(
                     Modifier
@@ -196,8 +175,8 @@ fun BotDetailScreen(
                                 color = colors.wordmark,
                             )
                             Spacer(Modifier.height(space.xs))
-                            val modelLabel =
-                                profile?.model?.ifBlank { null } ?: "No model"
+                            val modelLabel = profile?.model?.ifBlank { null }
+                                ?.let { com.cornerstone.agency.ui.components.shortModelLabel(it) } ?: "No model"
                             Box(
                                 Modifier
                                     .clip(RoundedCornerShape(999.dp))
@@ -215,7 +194,7 @@ fun BotDetailScreen(
                     if (!profile?.description.isNullOrBlank()) {
                         Spacer(Modifier.height(space.sm))
                         Text(
-                            profile!!.description,
+                            profile.description,
                             style = MaterialTheme.typography.bodyMedium,
                             color = colors.secondary,
                         )

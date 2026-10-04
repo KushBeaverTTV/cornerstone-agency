@@ -117,14 +117,15 @@ has no Hermes credentials.
 
 - More → **Bridge** card: host:port (default `127.0.0.1:9121`), token field, "Test" button
   (`/health`). Stored in `SecureStore`.
-- When the bridge is healthy and `prima.available`, the Bots roster shows **Prima** (violet
-  `defaultViolet` avatar "P", subtitle "Prime Agent · <version>") under a `DESKTOP` kicker.
+- When the bridge is healthy and `prima.available`, the Chats home shows **Prima** (violet
+  `defaultViolet` keystone, subtitle "Prime Agent on this PC") under a `DESKTOP` kicker.
   Tap → `PrimaChatScreen` (reuses `ChatScreen` UI with a `PrimaChatRepository` producing the
   same `ChatItem` flow). Long-press → sessions list (`/prima/sessions`).
-- **Dispatch** composer on the Bots tab (only when Laya is `loaded` or loadable): one text
-  field "Ask anyone…". On submit: `/laya/route` with the current roster → show a chip
-  "→ Kyoko (82%)" with a tap-to-change picker → send into that bot's most recent session.
-  If confidence < 0.55 always show the picker first.
+- **Dock composer** on Chats ("Ask anyone…", `ChatsScreen.kt`): when the bridge is up and
+  there is more than one target, submit calls `/laya/route` with the roster descriptions.
+  `Routing.decide` (`data/Routing.kt`) accepts the pick only when `probs[pick] ≥ 0.30` and it
+  beats the runner-up by `≥ 0.05`; otherwise a picker sheet asks "Who should take this?".
+  A hand-picked target skips routing. Routing errors fall back to the default bot.
 - Request notifications (M7): before posting, call `/laya/triage` when the bridge is
   reachable; `level==2 || needs_human>0.7` → heads-up high priority, else silent channel.
   Failure/unreachable → fall back to today's behaviour.

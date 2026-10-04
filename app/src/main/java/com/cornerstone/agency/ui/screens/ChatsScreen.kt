@@ -32,6 +32,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -39,6 +40,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -69,8 +71,11 @@ import com.cornerstone.agency.data.GatewayState
 import com.cornerstone.agency.data.PendingRequests
 import com.cornerstone.agency.data.PrimaSession
 import com.cornerstone.agency.data.RequestKind
+import com.cornerstone.agency.data.Routing
 import com.cornerstone.agency.data.SessionSummary
+import com.cornerstone.agency.data.hideStoredSession
 import com.cornerstone.agency.data.listProfileSessions
+import com.cornerstone.agency.data.removeStoredSession
 import com.cornerstone.agency.service.NotificationCenter
 import com.cornerstone.agency.theme.AgencyTokens
 import com.cornerstone.agency.ui.AppViewModel
@@ -191,6 +196,14 @@ fun ChatsScreen(
     var routing by remember { mutableStateOf(false) }
     var pickerOpen by remember { mutableStateOf(false) }
     var pendingSend by remember { mutableStateOf<String?>(null) }
+    // Long-pressed Recent row: hide or delete it.
+    var recentMenu by remember { mutableStateOf<Pair<BotProfile, SessionSummary>?>(null) }
+    var confirmDelete by remember { mutableStateOf<Pair<BotProfile, SessionSummary>?>(null) }
+
+    fun dropSession(profile: String, id: String) {
+        // Optimistic: it disappears now; the gateway's sessions.changed event confirms.
+        sessions = sessions.mapValues { (k, v) -> if (k == profile) v.filterNot { it.id == id } else v }
+    }
 
     fun go(t: Target, text: String?) {
         if (text != null) vm.setDispatchText(text)
@@ -221,14 +234,12 @@ fun ChatsScreen(
                 }
                 val res = vm.bridge.layaRoute(text, desc)
                 val pick = (res["bot"] as? JsonPrimitive)?.contentOrNull.orEmpty()
-                val probs = res["probs"] as? JsonObject
-                fun probOf(n: String) = (probs?.get(n) as? JsonPrimitive)?.contentOrNull?.toDoubleOrNull() ?: 0.0
-                val top = probOf(pick)
-                val second = probs?.entries?.filter { it.key != pick }
-                    ?.mapNotNull { (it.value as? JsonPrimitive)?.contentOrNull?.toDoubleOrNull() }
-                    ?.maxOrNull() ?: 0.0
-                val picked = targets.firstOrNull { it.title.equals(pick, true) }
-                if (picked != null && top >= 0.30 && (top - second) >= 0.05) {
+                val probs = (res["probs"] as? JsonObject).orEmpty()
+                    .mapNotNull { (k, v) -> (v as? JsonPrimitive)?.contentOrNull?.toDoubleOrNull()?.let { k to it } }
+                    .toMap()
+                val decided = Routing.decide(pick, probs)
+                val picked = decided?.let { d -> targets.firstOrNull { it.title.equals(d, true) } }
+                if (picked != null) {
                     go(picked, text)
                 } else {
                     pendingSend = text
@@ -309,9 +320,9 @@ fun ChatsScreen(
                     color = botAvatarColor(p.name, p.isDefault),
                     line = when {
                         waiting -> "Waiting for you"
-                        s != null -> sessionLine(s.title, s.preview).ifBlank { p.subtitle }
+                        s != null -> sessionLine(s.title, s.preview).ifBlank { p.subtitle.substringBefore(" — ") }
                         loading -> ""
-                        else -> p.subtitle.ifBlank { "Say hello" }
+                        else -> p.subtitle.substringBefore(" — ").ifBlank { "Say hello" }
                     },
                     lineTone = if (waiting) colors.warm else colors.secondary,
                     time = s?.let { relativeTime(it.startedAt) }.orEmpty(),
@@ -356,6 +367,7 @@ fun ChatsScreen(
                         title = sessionLine(s.title, s.preview).ifBlank { s.label },
                         time = relativeTime(s.startedAt),
                         onClick = { onOpenSession(p.name, s.id) },
+                        onLongClick = { recentMenu = p to s },
                     )
                 }
             }
@@ -373,13 +385,13 @@ fun ChatsScreen(
                     .clip(pill)
                     .border(1.dp, if (focused) colors.gold else colors.stroke, pill)
                     .background(colors.surface)
-                    .padding(start = 6.dp, end = 4.dp, top = 4.dp, bottom = 4.dp),
+                    .padding(start = 4.dp, end = 4.dp, top = 4.dp, bottom = 4.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                // Target chip — who gets this message. Tap to change.
+                // Target chip — who gets this message. Tap to change. 48dp target, 36dp mark.
                 Box(
                     Modifier
-                        .size(44.dp)
+                        .size(48.dp)
                         .clip(CircleShape)
                         .clickable(role = Role.Button, onClickLabel = "Choose who to message") { pickerOpen = true },
                     contentAlignment = Alignment.Center,
@@ -484,6 +496,96 @@ fun ChatsScreen(
             }
         }
     }
+
+    recentMenu?.let { (p, s) ->
+        val line = sessionLine(s.title, s.preview).ifBlank { s.label }
+        ModalBottomSheet(
+            onDismissRequest = { recentMenu = null },
+            containerColor = colors.elevated,
+        ) {
+            Column(Modifier.padding(horizontal = space.lg, vertical = space.sm)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    BotMark(color = botAvatarColor(p.name, p.isDefault), size = 36.dp, contentDescription = p.title)
+                    Spacer(Modifier.width(space.md))
+                    Column(Modifier.weight(1f)) {
+                        Text(
+                            line, style = MaterialTheme.typography.bodyLarge, color = colors.foreground,
+                            maxLines = 2, overflow = TextOverflow.Ellipsis,
+                        )
+                        Text(
+                            "${p.title} · ${relativeTime(s.startedAt)}",
+                            style = MaterialTheme.typography.labelMedium, color = colors.tertiary,
+                        )
+                    }
+                }
+                Spacer(Modifier.height(space.md))
+                SheetAction(
+                    title = "Hide from Recent",
+                    detail = "Still open from ${p.title}'s sessions",
+                    onClick = {
+                        recentMenu = null
+                        dropSession(p.name, s.id)
+                        scope.launch { runCatching { hideStoredSession(vm.gateway, s.id, p.name) } }
+                    },
+                )
+                SheetAction(
+                    title = "Delete conversation",
+                    detail = "Removes it and its transcript from the gateway",
+                    tone = colors.destructive,
+                    onClick = { recentMenu = null; confirmDelete = p to s },
+                )
+                Spacer(Modifier.height(space.lg))
+            }
+        }
+    }
+
+    confirmDelete?.let { (p, s) ->
+        AlertDialog(
+            onDismissRequest = { confirmDelete = null },
+            containerColor = colors.elevated,
+            title = { Text("Delete conversation?") },
+            text = {
+                Text(
+                    sessionLine(s.title, s.preview).ifBlank { s.label },
+                    maxLines = 2, overflow = TextOverflow.Ellipsis,
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    confirmDelete = null
+                    dropSession(p.name, s.id)
+                    scope.launch { runCatching { removeStoredSession(vm.gateway, s.id, p.name) } }
+                }) { Text("Delete", color = colors.destructive) }
+            },
+            dismissButton = {
+                TextButton(onClick = { confirmDelete = null }) { Text("Cancel", color = colors.secondary) }
+            },
+        )
+    }
+}
+
+/** One tappable line in a bottom sheet: title plus a quieter explanation. */
+@Composable
+private fun SheetAction(
+    title: String,
+    detail: String,
+    onClick: () -> Unit,
+    tone: Color = AgencyTokens.colors.foreground,
+) {
+    val colors = AgencyTokens.colors
+    val space = AgencyTokens.space
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(AgencyTokens.shapes.sm))
+            .clickable(role = Role.Button, onClick = onClick)
+            .heightIn(min = 56.dp)
+            .padding(horizontal = space.sm, vertical = space.xs),
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Text(title, style = MaterialTheme.typography.bodyLarge, color = tone)
+        Text(detail, style = MaterialTheme.typography.labelMedium, color = colors.tertiary)
+    }
 }
 
 /** One agent on the home screen. */
@@ -543,8 +645,9 @@ private fun BotRow(
 }
 
 /** A past conversation: bot-coloured tick, one line, time. Deliberately quieter than a bot row. */
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun RecentRow(color: Color, title: String, time: String, onClick: () -> Unit) {
+private fun RecentRow(color: Color, title: String, time: String, onClick: () -> Unit, onLongClick: () -> Unit) {
     val colors = AgencyTokens.colors
     val space = AgencyTokens.space
     Row(
@@ -552,7 +655,7 @@ private fun RecentRow(color: Color, title: String, time: String, onClick: () -> 
             .fillMaxWidth()
             .padding(horizontal = space.sm)
             .clip(RoundedCornerShape(AgencyTokens.shapes.sm))
-            .clickable(onClick = onClick)
+            .combinedClickable(onClick = onClick, onLongClick = onLongClick, onLongClickLabel = "Hide or delete")
             .heightIn(min = 48.dp)
             .padding(horizontal = space.sm + 4.dp, vertical = space.xs),
         verticalAlignment = Alignment.CenterVertically,

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Static keystone mark (same geometry as KeystoneMark.kt, idle state) for RemoteViews. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+    <!-- side stones + base posts, dim -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:fillAlpha="0.42"
+        android:pathData="M 8.03 64.35 A 42 42 0 0 1 15.08 42.67 L 32.54 54.33 A 21 21 0 0 0 29.02 65.18 Z
+M 17.02 40.00 A 42 42 0 0 1 35.46 26.60 L 42.73 46.30 A 21 21 0 0 0 33.51 53.00 Z
+M 64.54 26.60 A 42 42 0 0 1 82.98 40.00 L 66.49 53.00 A 21 21 0 0 0 57.27 46.30 Z
+M 84.92 42.67 A 42 42 0 0 1 91.97 64.35 L 70.98 65.18 A 21 21 0 0 0 67.46 54.33 Z
+M 8 66 h 21 v 20 h -21 Z M 71 66 h 21 v 20 h -21 Z" />
+    <!-- the keystone, lit -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M 34.03 17.57 A 51 51 0 0 1 65.97 17.57 L 56.58 46.06 A 21 21 0 0 0 43.42 46.06 Z" />
+</vector>

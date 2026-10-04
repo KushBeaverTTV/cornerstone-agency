@@ -209,7 +209,7 @@ private fun Waveform(level: Float, active: Boolean, accent: Color) {
         val bars = 28
         val gap = size.width / bars
         for (i in 0 until bars) {
-            val phase = kotlin.math.sin((t * 2f * Math.PI + i * 0.55).toDouble()).toFloat()
+            val phase = kotlin.math.sin(t * 2f * Math.PI + i * 0.55).toFloat()
             val amp = if (active) 0.18f + (0.25f + level * 0.57f) * (0.5f + 0.5f * phase) else 0.10f
             val h = size.height * amp.coerceIn(0.08f, 1f)
             val x = gap * i + gap / 2f

@@ -38,6 +38,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -53,7 +55,6 @@ import com.cornerstone.agency.ui.components.AgencyIcons
 import com.cornerstone.agency.ui.components.AgencyTextField
 import com.cornerstone.agency.ui.components.PageHeader
 import com.cornerstone.agency.ui.components.SectionKicker
-import com.cornerstone.agency.ui.isCompactHeight
 
 /**
  * Me: who you are and what you're connected to. Secrets and hosts stay folded behind
@@ -102,7 +103,8 @@ fun MoreScreen(
                 Modifier
                     .size(56.dp)
                     .clip(CircleShape)
-                    .background(colors.card),
+                    .background(colors.card)
+                    .semantics { contentDescription = "Signed in as ${ui.sessionUser.ifBlank { "unknown" }}" },
                 contentAlignment = Alignment.Center,
             ) {
                 Text(

@@ -96,8 +96,6 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.ui.platform.LocalClipboardManager
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import android.widget.Toast
@@ -1029,15 +1027,20 @@ private fun EmptyChat(
     }
 }
 
+/** System clipboard without the deprecated Compose wrapper. */
+private fun copyToClipboard(ctx: android.content.Context, text: String) {
+    ctx.getSystemService(android.content.ClipboardManager::class.java)
+        ?.setPrimaryClip(android.content.ClipData.newPlainText("text", text))
+}
+
 /** Long-press copies the message text. */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun Modifier.copyOnLongPress(text: String): Modifier {
-    val clip = LocalClipboardManager.current
     val haptic = LocalHapticFeedback.current
     val ctx = LocalContext.current
     return this.combinedClickable(onClick = {}, onLongClick = {
-        clip.setText(AnnotatedString(text))
+        copyToClipboard(ctx, text)
         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
         Toast.makeText(ctx, "Copied", Toast.LENGTH_SHORT).show()
     })
@@ -1073,7 +1076,6 @@ private fun agentActivity(items: List<ChatItem>, streaming: Boolean, offline: Bo
 @Composable
 private fun CodeBlockCard(code: String, lang: String) {
     val colors = AgencyTokens.colors
-    val clip = LocalClipboardManager.current
     val haptic = LocalHapticFeedback.current
     val ctx = LocalContext.current
     val shape = RoundedCornerShape(14.dp)
@@ -1103,7 +1105,7 @@ private fun CodeBlockCard(code: String, lang: String) {
                     .clip(RoundedCornerShape(12.dp))
                     .semantics { contentDescription = "Copy code" }
                     .clickable(role = androidx.compose.ui.semantics.Role.Button) {
-                        clip.setText(AnnotatedString(code))
+                        copyToClipboard(ctx, code)
                         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                         Toast.makeText(ctx, "Code copied", Toast.LENGTH_SHORT).show()
                     }

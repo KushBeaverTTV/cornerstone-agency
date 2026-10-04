@@ -21,9 +21,13 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -115,6 +119,7 @@ fun AgencyCard(
 fun PageHeader(
     title: String,
     modifier: Modifier = Modifier,
+    onBack: (() -> Unit)? = null,
     actions: @Composable () -> Unit = {},
 ) {
     val compact = com.cornerstone.agency.ui.isCompactHeight()
@@ -123,17 +128,33 @@ fun PageHeader(
         modifier
             .fillMaxWidth()
             .padding(
-                start = space.lg, end = space.xs,
+                start = if (onBack != null) space.xs else space.lg, end = space.xs,
                 top = if (compact) 0.dp else space.md,
                 bottom = if (compact) 0.dp else space.sm,
             )
             .heightIn(min = if (compact) 40.dp else 48.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
+        if (onBack != null) {
+            IconButton(onClick = onBack) {
+                Icon(
+                    Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back",
+                    tint = AgencyTokens.colors.foreground,
+                )
+            }
+        }
         Text(
             text = title,
-            style = if (compact) MaterialTheme.typography.headlineSmall else MaterialTheme.typography.displayLarge,
+            // Pushed screens sit one level down, so their title is one step smaller.
+            style = when {
+                compact -> MaterialTheme.typography.headlineSmall
+                onBack != null -> MaterialTheme.typography.displayMedium
+                else -> MaterialTheme.typography.displayLarge
+            },
             color = AgencyTokens.colors.wordmark,
+            maxLines = 1,
+            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
             modifier = Modifier.weight(1f),
         )
         actions()
@@ -329,44 +350,6 @@ fun shortModelLabel(modelId: String): String {
         return "$family ${m.groupValues[2]}" + if (minor.isNotEmpty()) ".$minor" else ""
     }
     return id
-}
-
-/** System-prompt boilerplate makes useless previews; show something human instead. */
-fun cleanPreview(raw: String): String {
-    val first = raw.lineSequence().firstOrNull { it.isNotBlank() }?.trim() ?: return ""
-    return when {
-        first.startsWith("[IMPORTANT: You are running as a scheduled cron", true) -> "Scheduled job"
-        first.startsWith("You are being used through a hands-free voice", true) -> "Voice conversation"
-        else -> first
-    }
-}
-
-/** True for machine-shaped titles like "UI_test:_in_your_terminal_run_exactly" — unreadable as a headline. */
-fun looksMachineTitle(title: String): Boolean =
-    title.length > 24 && !title.contains(' ') && title.count { it == '_' } >= 3
-
-/** Human line for a session: the title unless it's machine-shaped, else the cleaned preview. */
-fun sessionLine(title: String, preview: String): String {
-    val t = title.trim()
-    if (t.isNotBlank() && !looksMachineTitle(t)) return t
-    val pv = cleanPreview(preview)
-    if (pv.isNotBlank() && !looksMachineTitle(pv)) return pv
-    return t.ifBlank { pv }.replace('_', ' ')
-}
-
-/** "just now" / "4m" / "2h" / "3d" / absolute date for old timestamps. */
-fun relativeTime(epochSeconds: Double): String {
-    if (epochSeconds <= 0.0) return ""
-    val now = System.currentTimeMillis() / 1000.0
-    val diff = (now - epochSeconds).toLong()
-    return when {
-        diff < 60 -> "just now"
-        diff < 3600 -> "${diff / 60}m"
-        diff < 86400 -> "${diff / 3600}h"
-        diff < 86400 * 7 -> "${diff / 86400}d"
-        else -> java.text.SimpleDateFormat("MMM d", Locale.US)
-            .format(java.util.Date((epochSeconds * 1000).toLong()))
-    }
 }
 
 /**

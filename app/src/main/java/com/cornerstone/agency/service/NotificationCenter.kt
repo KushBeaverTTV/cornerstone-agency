@@ -42,10 +42,14 @@ object NotificationCenter {
     const val CH_CONNECTION = "connection"
     const val CH_REQUESTS = "requests"
     const val CH_MESSAGES = "messages"
+    const val CH_FEED = "feed"
     const val CONN_NOTIFICATION_ID = 100
+    const val FEED_NOTIFICATION_ID = 101
 
     const val EXTRA_PROFILE = "com.cornerstone.agency.extra.PROFILE"
     const val EXTRA_SESSION = "com.cornerstone.agency.extra.SESSION"
+    /** Open the shell on a tab ("feed"). */
+    const val EXTRA_TAB = "com.cornerstone.agency.extra.TAB"
 
     private const val MESSAGE_NOTIF_BASE = 20000
     private const val MESSAGE_NOTIF_SPAN = 9000
@@ -158,7 +162,36 @@ object NotificationCenter {
                 NotificationChannel(
                     CH_MESSAGES, "Messages", NotificationManager.IMPORTANCE_DEFAULT,
                 ).apply { description = "Agent replies while the app is closed" },
+                NotificationChannel(
+                    CH_FEED, "Feed", NotificationManager.IMPORTANCE_LOW,
+                ).apply { description = "A new issue of your Feed is ready" },
             ),
+        )
+    }
+
+    /** "Kaori wrote today's issue · 7 new posts" — quiet, tap opens the Feed tab. */
+    fun postFeedReady(context: Context, botTitle: String, added: Int) {
+        val app = context.applicationContext
+        ensureChannels(app)
+        val nm = app.getSystemService(NotificationManager::class.java) ?: return
+        val tap = PendingIntent.getActivity(
+            app, FEED_NOTIFICATION_ID,
+            Intent(app, MainActivity::class.java).apply {
+                putExtra(EXTRA_TAB, "feed")
+                addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            },
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
+        )
+        val posts = if (added == 1) "1 new post" else "$added new posts"
+        nm.notify(
+            FEED_NOTIFICATION_ID,
+            NotificationCompat.Builder(app, CH_FEED)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle("$botTitle wrote today's issue")
+                .setContentText(posts)
+                .setAutoCancel(true)
+                .setContentIntent(tap)
+                .build(),
         )
     }
 

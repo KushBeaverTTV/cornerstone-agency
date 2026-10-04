@@ -95,8 +95,12 @@ class MainActivity : ComponentActivity() {
         intent.action = null
     }
 
-    /** Notification taps carry PROFILE/SESSION extras → AppNav navigates. */
+    /** Notification taps carry PROFILE/SESSION extras → AppNav navigates; TAB → AppShell switches. */
     private fun handleDeepLink(intent: Intent?) {
+        intent?.getStringExtra(NotificationCenter.EXTRA_TAB)?.takeIf { it.isNotBlank() }?.let { tab ->
+            vm.requestTab(tab)
+            intent.removeExtra(NotificationCenter.EXTRA_TAB)
+        }
         val profile = intent?.getStringExtra(NotificationCenter.EXTRA_PROFILE)
             ?.takeIf { it.isNotBlank() } ?: return
         vm.requestDeepLink(
@@ -116,11 +120,11 @@ class MainActivity : ComponentActivity() {
         val images = mutableListOf<String>()
         when (intent.action) {
             Intent.ACTION_SEND -> {
-                intent.getParcelableExtra<android.net.Uri>(Intent.EXTRA_STREAM)
+                androidx.core.content.IntentCompat.getParcelableExtra(intent, Intent.EXTRA_STREAM, android.net.Uri::class.java)
                     ?.let { images += shareName(it) }
             }
             Intent.ACTION_SEND_MULTIPLE -> {
-                intent.getParcelableArrayListExtra<android.net.Uri>(Intent.EXTRA_STREAM)
+                androidx.core.content.IntentCompat.getParcelableArrayListExtra(intent, Intent.EXTRA_STREAM, android.net.Uri::class.java)
                     ?.forEach { images += shareName(it) }
             }
             else -> return

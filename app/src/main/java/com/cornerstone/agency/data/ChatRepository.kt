@@ -280,9 +280,8 @@ class ChatRepository(
         }
     }
 
-    suspend fun deleteSession(storedId: String) {
-        gateway.call("session.delete", buildJsonObject { put("session_id", storedId) })
-    }
+    /** Delete, or hide if the gateway still considers it live. True when actually deleted. */
+    suspend fun deleteSession(storedId: String): Boolean = removeStoredSession(gateway, storedId, profile)
 
     override suspend fun rename(newTitle: String) {
         val id = runtimeSessionId ?: storedSessionId ?: return
@@ -799,6 +798,40 @@ internal suspend fun listProfileSessions(
         ?: emptyList()
 }
 
-internal suspend fun deleteStoredSession(gateway: GatewaySocket, storedId: String) {
-    gateway.call("session.delete", buildJsonObject { put("session_id", storedId) })
+internal suspend fun deleteStoredSession(gateway: GatewaySocket, storedId: String, profile: String? = null) {
+    gateway.call(
+        "session.delete",
+        buildJsonObject {
+            put("session_id", storedId)
+            if (!profile.isNullOrBlank()) put("profile", profile)
+        },
+    )
+}
+
+/** Hide (or unhide) a stored session: it leaves every list but stays resumable. */
+internal suspend fun hideStoredSession(gateway: GatewaySocket, storedId: String, profile: String?, hidden: Boolean = true) {
+    gateway.call(
+        "session.set_hidden",
+        buildJsonObject {
+            put("session_id", storedId)
+            put("hidden", hidden)
+            if (!profile.isNullOrBlank()) put("profile", profile)
+        },
+    )
+}
+
+/**
+ * Delete a session the user no longer wants. The gateway refuses to delete one that is still
+ * live (code 4023), so in that case fall back to hiding it — gone from view either way.
+ * Returns true when it was deleted, false when it was only hidden.
+ */
+internal suspend fun removeStoredSession(gateway: GatewaySocket, storedId: String, profile: String?): Boolean {
+    try {
+        deleteStoredSession(gateway, storedId, profile)
+        return true
+    } catch (e: GatewayRpcException) {
+        if (e.code != 4023) throw e
+        hideStoredSession(gateway, storedId, profile)
+        return false
+    }
 }

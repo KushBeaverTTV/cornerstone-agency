@@ -22,7 +22,17 @@ import java.util.UUID
  * future Hermes backend can replace the file implementation without touching
  * the UI.
  */
-class CompanionRepository(private val appContext: Context) {
+class CompanionRepository private constructor(private val appContext: Context) {
+
+    companion object {
+        @Volatile private var instance: CompanionRepository? = null
+
+        /** One store per process: the ViewModel, the widget and the scheduled worker all share it. */
+        fun get(context: Context): CompanionRepository =
+            instance ?: synchronized(this) {
+                instance ?: CompanionRepository(context.applicationContext).also { instance = it }
+            }
+    }
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     private val json = Json { ignoreUnknownKeys = true; prettyPrint = true }
@@ -35,17 +45,26 @@ class CompanionRepository(private val appContext: Context) {
     private val _state = MutableStateFlow(CompanionState())
     val state: StateFlow<CompanionState> = _state.asStateFlow()
 
+    private val loaded = kotlinx.coroutines.CompletableDeferred<Unit>()
+
     init {
         scope.launch { load() }
     }
 
-    private suspend fun load() = withContext(Dispatchers.IO) {
-        val f = storeFile
-        if (f.exists()) {
-            runCatching {
-                _state.value = json.decodeFromString(CompanionState.serializer(), f.readText())
+    /** Suspends until the on-disk state has been read (background callers need this). */
+    suspend fun awaitLoaded() = loaded.await()
+
+    private suspend fun load() {
+        withContext(Dispatchers.IO) {
+            val f = storeFile
+            if (f.exists()) {
+                runCatching {
+                    _state.value = json.decodeFromString(CompanionState.serializer(), f.readText())
+                }
             }
         }
+        loaded.complete(Unit)
+        com.cornerstone.agency.service.AgencyWidget.refresh(appContext)
     }
 
     private fun persist(snapshot: CompanionState) {
@@ -58,15 +77,34 @@ class CompanionRepository(private val appContext: Context) {
     }
 
     private fun update(fn: (CompanionState) -> CompanionState) {
-        val next = fn(_state.value)
+        val prev = _state.value
+        val next = fn(prev)
         _state.value = next
         persist(next)
+        // The widget shows the unread count; keep it honest without polling.
+        if (prev.posts.count { !it.read } != next.posts.count { !it.read }) {
+            com.cornerstone.agency.service.AgencyWidget.refresh(appContext)
+        }
     }
 
     // ---- Feed -----------------------------------------------------------
 
     fun saveFeedInstructions(text: String) =
         update { it.copy(feedInstructions = text) }
+
+    fun setFeedSchedule(schedule: FeedSchedule) =
+        update { it.copy(feedSchedule = schedule) }
+
+    fun setFeedBot(profile: String, title: String) {
+        if (profile.isBlank()) return
+        val s = _state.value
+        if (profile != s.feedProfile || (title.isNotBlank() && title != s.feedBotTitle)) {
+            update { it.copy(feedProfile = profile, feedBotTitle = title.ifBlank { it.feedBotTitle }) }
+        }
+    }
+
+    fun markFeedRun(at: Long = System.currentTimeMillis()) =
+        update { it.copy(lastFeedRunAt = at) }
 
     fun addPost(post: FeedPost) = update {
         val withId = if (post.id.isBlank()) post.copy(id = UUID.randomUUID().toString()) else post

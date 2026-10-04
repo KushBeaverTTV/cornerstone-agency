@@ -52,7 +52,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cornerstone.agency.data.FeedPost
+import com.cornerstone.agency.data.FeedSchedule
 import com.cornerstone.agency.data.FeedWriter
+import com.cornerstone.agency.data.groupPostsByDay
 import com.cornerstone.agency.theme.AgencyTokens
 import com.cornerstone.agency.ui.AppViewModel
 import com.cornerstone.agency.ui.components.AgencyIcons
@@ -65,10 +67,6 @@ import com.cornerstone.agency.ui.components.SectionKicker
 import com.cornerstone.agency.ui.components.botAvatarColor
 import com.cornerstone.agency.ui.components.relativeTime
 import com.cornerstone.agency.ui.isCompactHeight
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
 
 /**
  * Feed (Muse): a personal paper written by your agent from a one-paragraph brief.
@@ -90,6 +88,7 @@ fun FeedScreen(vm: AppViewModel) {
     var draft by remember { mutableStateOf("") }
     var menu by remember { mutableStateOf(false) }
     var clearing by remember { mutableStateOf(false) }
+    var scheduling by remember { mutableStateOf(false) }
 
     // Done/Failed are transient; clear them once the user has had a look.
     LaunchedEffect(writer) {
@@ -130,6 +129,15 @@ fun FeedScreen(vm: AppViewModel) {
                         text = { Text("Edit the brief") },
                         onClick = { menu = false; draft = state.feedInstructions; editing = true },
                     )
+                    DropdownMenuItem(
+                        text = {
+                            Text(
+                                if (state.feedSchedule.enabled) "Daily issue · ${state.feedSchedule.label()}"
+                                else "Daily issue · Off",
+                            )
+                        },
+                        onClick = { menu = false; scheduling = true },
+                    )
                     if (state.posts.any { !it.read }) {
                         DropdownMenuItem(
                             text = { Text("Mark all read") },
@@ -164,6 +172,7 @@ fun FeedScreen(vm: AppViewModel) {
                 botName = botName,
                 botColor = botColor,
                 brief = state.feedInstructions,
+                schedule = state.feedSchedule,
                 writing = writing,
                 status = (writer as? FeedWriter.State.Writing)?.status,
                 onWrite = { vm.writeFeed() },
@@ -171,7 +180,7 @@ fun FeedScreen(vm: AppViewModel) {
                 onEditBrief = { draft = state.feedInstructions; editing = true },
             )
         } else {
-            val groups = remember(state.posts) { groupByDay(state.posts) }
+            val groups = remember(state.posts) { groupPostsByDay(state.posts) }
             LazyColumn(
                 Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(bottom = space.xl),
@@ -218,6 +227,15 @@ fun FeedScreen(vm: AppViewModel) {
         )
     }
 
+    if (scheduling) {
+        ScheduleDialog(
+            current = state.feedSchedule,
+            botName = botName,
+            onDismiss = { scheduling = false },
+            onSave = { vm.setFeedSchedule(it); scheduling = false },
+        )
+    }
+
     if (clearing) {
         AlertDialog(
             onDismissRequest = { clearing = false },
@@ -231,6 +249,73 @@ fun FeedScreen(vm: AppViewModel) {
             dismissButton = { TextButton(onClick = { clearing = false }) { Text("Cancel") } },
         )
     }
+}
+
+/** Daily issue: on/off plus a time. Saving re-arms the scheduler. */
+@OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
+@Composable
+private fun ScheduleDialog(
+    current: FeedSchedule,
+    botName: String,
+    onDismiss: () -> Unit,
+    onSave: (FeedSchedule) -> Unit,
+) {
+    val colors = AgencyTokens.colors
+    val space = AgencyTokens.space
+    var enabled by remember { mutableStateOf(current.enabled) }
+    val time = androidx.compose.material3.rememberTimePickerState(
+        initialHour = current.hour, initialMinute = current.minute, is24Hour = false,
+    )
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Daily issue") },
+        text = {
+            Column {
+                Row(
+                    Modifier.fillMaxWidth().heightIn(min = 48.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Column(Modifier.weight(1f)) {
+                        Text("Write every morning", style = MaterialTheme.typography.bodyLarge, color = colors.foreground)
+                        Text(
+                            "$botName writes while you sleep; you get a quiet notification.",
+                            style = MaterialTheme.typography.bodySmall, color = colors.secondary,
+                        )
+                    }
+                    Spacer(Modifier.width(space.md))
+                    androidx.compose.material3.Switch(
+                        checked = enabled, onCheckedChange = { enabled = it },
+                        colors = androidx.compose.material3.SwitchDefaults.colors(
+                            checkedThumbColor = colors.onPrimary, checkedTrackColor = colors.gold,
+                        ),
+                    )
+                }
+                if (enabled) {
+                    Spacer(Modifier.height(space.md))
+                    androidx.compose.material3.TimeInput(
+                        state = time,
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = androidx.compose.material3.TimePickerDefaults.colors(
+                            timeSelectorSelectedContainerColor = colors.gold.copy(alpha = 0.18f),
+                            timeSelectorSelectedContentColor = colors.foreground,
+                            timeSelectorUnselectedContainerColor = colors.card,
+                            timeSelectorUnselectedContentColor = colors.foreground,
+                            periodSelectorSelectedContainerColor = colors.gold.copy(alpha = 0.18f),
+                            periodSelectorSelectedContentColor = colors.foreground,
+                            periodSelectorUnselectedContentColor = colors.secondary,
+                            periodSelectorBorderColor = colors.stroke,
+                        ),
+                    )
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = { onSave(FeedSchedule(enabled, time.hour, time.minute)) }) {
+                Text("Save", color = colors.gold)
+            }
+        },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
+    )
 }
 
 @Composable
@@ -266,6 +351,7 @@ private fun EmptyFeed(
     botName: String,
     botColor: androidx.compose.ui.graphics.Color,
     brief: String,
+    schedule: FeedSchedule,
     writing: Boolean,
     status: String?,
     onWrite: () -> Unit,
@@ -312,6 +398,13 @@ private fun EmptyFeed(
                 onClick = onWrite,
                 modifier = Modifier.widthIn(min = 220.dp),
             )
+            if (schedule.enabled) {
+                Spacer(Modifier.height(space.sm))
+                Text(
+                    "Next issue arrives at ${schedule.label()}",
+                    style = MaterialTheme.typography.labelMedium, color = colors.tertiary,
+                )
+            }
             Spacer(Modifier.height(space.lg))
             Column(
                 Modifier
@@ -393,23 +486,4 @@ private fun PostRow(post: FeedPost, onOpen: () -> Unit) {
             }
         }
     }
-}
-
-/** "Today" / "Yesterday" / "Mon, Sep 29" buckets, newest first. */
-private fun groupByDay(posts: List<FeedPost>): List<Pair<String, List<FeedPost>>> {
-    val fmt = SimpleDateFormat("EEE, MMM d", Locale.US)
-    val today = Calendar.getInstance()
-    fun dayKey(ms: Long): String {
-        val c = Calendar.getInstance().apply { timeInMillis = ms }
-        val sameYear = c.get(Calendar.YEAR) == today.get(Calendar.YEAR)
-        val dayDiff = today.get(Calendar.DAY_OF_YEAR) - c.get(Calendar.DAY_OF_YEAR)
-        return when {
-            sameYear && dayDiff == 0 -> "Today"
-            sameYear && dayDiff == 1 -> "Yesterday"
-            else -> fmt.format(Date(ms))
-        }
-    }
-    return posts.sortedByDescending { it.publishedAt }
-        .groupBy { dayKey(it.publishedAt) }
-        .map { it.key to it.value }
 }

@@ -19,6 +19,7 @@ import com.cornerstone.agency.data.SessionInfo
 import com.cornerstone.agency.data.StatusPayload
 import com.cornerstone.agency.service.ConnectionService
 import com.cornerstone.agency.service.NotificationCenter
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,6 +28,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.IOException
 
 data class UiState(
@@ -55,20 +57,8 @@ class AppViewModel(private val app: Application) : AndroidViewModel(app) {
     internal val repo = ConnectionRepository(store)
     private val prefs = Prefs(app)
 
-    /** Local-first store for the Feed / Goals / Artifacts tabs. */
-    val companion = CompanionRepository(app)
-
-    /** Chats tab: hide cron-job session chatter (DataStore-persisted). */
-    val hideCronChatter: StateFlow<Boolean> =
-        prefs.hideCronChatter.stateIn(
-            viewModelScope,
-            kotlinx.coroutines.flow.SharingStarted.Eagerly,
-            false,
-        )
-
-    fun setHideCronChatter(hide: Boolean) {
-        viewModelScope.launch { prefs.setHideCronChatter(hide) }
-    }
+    /** Local-first store for the Feed / Goals / Artifacts tabs (process singleton). */
+    val companion = CompanionRepository.get(app)
 
     /** Keep the socket + process alive in background via ConnectionService. */
     val stayConnected: StateFlow<Boolean> =
@@ -88,14 +78,32 @@ class AppViewModel(private val app: Application) : AndroidViewModel(app) {
     /** Shared dashboard socket — lives in GatewayHub so it survives the Activity. */
     val gateway: GatewaySocket = GatewayHub.attach(repo)
 
-    /** Headless Feed writer: the default bot composes posts into [companion]. */
-    val feedWriter = com.cornerstone.agency.data.FeedWriter(gateway, companion)
+    /** Headless Feed writer (process singleton; a run outlives this ViewModel). */
+    val feedWriter = com.cornerstone.agency.data.FeedWriter.get(app)
 
     fun writeFeed() {
         if (feedWriter.busy) return
-        val profile = _ui.value.profiles.firstOrNull { it.isDefault || it.name == "default" }?.name ?: "default"
-        viewModelScope.launch { feedWriter.write(profile) }
+        rememberFeedBot()
+        feedWriter.start()
     }
+
+    /** Persist which bot writes the Feed so scheduled runs in a cold process know too. */
+    private fun rememberFeedBot() {
+        val p = _ui.value.profiles.firstOrNull { it.isDefault || it.name == "default" } ?: return
+        companion.setFeedBot(p.name, p.title)
+    }
+
+    fun setFeedSchedule(schedule: com.cornerstone.agency.data.FeedSchedule) {
+        rememberFeedBot()
+        companion.setFeedSchedule(schedule)
+        com.cornerstone.agency.service.FeedScheduler.sync(app)
+    }
+
+    /** Notification tap asking for a shell tab ("feed"); AppShell consumes it. */
+    private val _pendingTab = MutableStateFlow<String?>(null)
+    val pendingTab: StateFlow<String?> = _pendingTab.asStateFlow()
+    fun requestTab(tab: String) { _pendingTab.value = tab }
+    fun consumeTab() { _pendingTab.value = null }
 
     // -- M6: desktop bridge (Prima + Laya) ----------------------------------
 
@@ -244,6 +252,11 @@ class AppViewModel(private val app: Application) : AndroidViewModel(app) {
     private var foregrounded = true
 
     init {
+        // Re-arm the daily issue (idempotent) once the saved schedule is actually loaded.
+        viewModelScope.launch {
+            companion.awaitLoaded()
+            com.cornerstone.agency.service.FeedScheduler.sync(app)
+        }
         ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
             override fun onStart(owner: LifecycleOwner) {
                 foregrounded = true

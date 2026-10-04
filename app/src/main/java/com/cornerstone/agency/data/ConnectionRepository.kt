@@ -56,11 +56,11 @@ class ConnectionRepository(private val store: SecureStore) {
             cookies.values.joinToString("; ") { "${it.name}=${it.value}" }
 
         @Synchronized
-        override fun saveFromResponse(url: HttpUrl, newCookies: List<Cookie>) {
+        override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
             var touched = false
-            for (c in newCookies) {
+            for (c in cookies) {
                 if (!c.name.startsWith("hermes_session_")) continue
-                if (c.value.isEmpty()) cookies.remove(c.name) else cookies[c.name] = c
+                if (c.value.isEmpty()) this.cookies.remove(c.name) else this.cookies[c.name] = c
                 touched = true
             }
             if (touched) store.saveCookie(snapshotHeader())

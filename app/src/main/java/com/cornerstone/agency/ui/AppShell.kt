@@ -100,6 +100,14 @@ fun AppShell(
         }
     }
 
+    // Feed-ready notification tap lands on the Feed tab.
+    val pendingTab by vm.pendingTab.collectAsState()
+    androidx.compose.runtime.LaunchedEffect(pendingTab) {
+        val want = pendingTab ?: return@LaunchedEffect
+        Tab.entries.firstOrNull { it.name.equals(want, ignoreCase = true) }?.let { tab = it.ordinal }
+        vm.consumeTab()
+    }
+
     val compact = isCompactHeight()
     fun badge(t: Tab): Boolean = when (t) {
         Tab.CHATS -> needsAttention

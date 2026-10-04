@@ -1,3 +1,7 @@
+// androidx.security.crypto is deprecated upstream with no drop-in successor. Keeping it: a swap
+// would re-encrypt every existing install's credentials, which isn't worth a warning-free build.
+@file:Suppress("DEPRECATION")
+
 package com.cornerstone.agency.data
 
 import android.content.Context

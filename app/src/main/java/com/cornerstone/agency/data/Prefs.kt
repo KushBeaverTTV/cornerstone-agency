@@ -13,14 +13,6 @@ private val Context.prefsStore by preferencesDataStore(name = "agency_prefs")
 /** Small user-facing preferences (persisted via DataStore). */
 class Prefs(private val app: Context) {
 
-    /** Hide cron-job session chatter on the Chats tab. */
-    val hideCronChatter: Flow<Boolean> =
-        app.prefsStore.data.map { it[HIDE_CRON_CHATTER] ?: false }
-
-    suspend fun setHideCronChatter(hide: Boolean) {
-        app.prefsStore.edit { it[HIDE_CRON_CHATTER] = hide }
-    }
-
     /** Keep the gateway socket + process alive while backgrounded (foreground service). */
     val stayConnected: Flow<Boolean> =
         app.prefsStore.data.map { it[STAY_CONNECTED] ?: false }
@@ -54,7 +46,6 @@ class Prefs(private val app: Context) {
     }
 
     private companion object {
-        val HIDE_CRON_CHATTER = booleanPreferencesKey("hide_cron_chatter")
         val STAY_CONNECTED = booleanPreferencesKey("stay_connected")
         val LAST_SHARE_PROFILE = stringPreferencesKey("last_share_profile")
         val VOICE_BRIDGE = stringPreferencesKey("voice_bridge")

@@ -56,6 +56,12 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.okhttp)
 
+    // Scheduled Feed issues run as a CoroutineWorker so they survive the Activity.
+    implementation(libs.androidx.work.runtime.ktx)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+
     // Literal coordinate — same as the sibling project, not yet in the catalog.
     implementation("androidx.security:security-crypto:1.1.0-alpha07")
 
