@@ -67,6 +67,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import com.cornerstone.agency.data.BotProfile
+import com.cornerstone.agency.data.activityScores
 import com.cornerstone.agency.data.GatewayState
 import com.cornerstone.agency.data.PendingRequests
 import com.cornerstone.agency.data.PrimaSession
@@ -155,7 +156,6 @@ fun ChatsScreen(
             for (p in profiles) {
                 out[p.name] = runCatching { listProfileSessions(vm.gateway, p.name) }
                     .getOrDefault(emptyList())
-                    .sortedByDescending { it.startedAt }
             }
             sessions = out
             loading = false
@@ -164,10 +164,11 @@ fun ChatsScreen(
 
     // Recent: a short, quiet list of real conversations (no cron chatter), across every bot.
     val recent: List<Pair<BotProfile, SessionSummary>> = remember(sessions, ui.profiles) {
-        ui.profiles.flatMap { p -> sessions[p.name].orEmpty().map { p to it } }
-            .filterNot { (_, s) -> cleanPreview(s.preview) == "Scheduled job" }
-            .sortedByDescending { it.second.startedAt }
+        ui.profiles.flatMap { p -> sessions[p.name].orEmpty().activityScores().map { (s, score) -> Triple(p, s, score) } }
+            .filterNot { (_, s, _) -> cleanPreview(s.preview) == "Scheduled job" }
+            .sortedByDescending { it.third }
             .take(6)
+            .map { (p, s, _) -> p to s }
     }
 
     LaunchedEffect(socketState, ui.profiles, bridgeHealth) {

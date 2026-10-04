@@ -154,8 +154,15 @@ fun ChatScreen(
     var draft by remember { mutableStateOf("") }
     var draftFocused by remember { mutableStateOf(false) }
 
-    // Grok-style quick model switcher (hidden for Prima, which has no models).
+    // Grok-style quick model switcher. Hermes bots read/write the profile's model; Prima reads
+    // and writes its own worker's model through the bridge. Same chip, same picker sheet.
     val profile = ui.profiles.find { it.name == profileName }
+    val primaChat = chat as? com.cornerstone.agency.data.PrimaChatRepository
+    val primaModel by (primaChat?.model
+        ?: remember { kotlinx.coroutines.flow.MutableStateFlow<Pair<String, String>?>(null) })
+        .collectAsState()
+    val currentProvider = if (prima) primaModel?.first.orEmpty() else profile?.provider.orEmpty()
+    val currentModel = if (prima) primaModel?.second.orEmpty() else profile?.model.orEmpty()
     var modelSheet by remember { mutableStateOf(false) }
     var providers by remember { mutableStateOf<List<com.cornerstone.agency.data.ModelProvider>>(emptyList()) }
     var providersLoading by remember { mutableStateOf(false) }
@@ -165,7 +172,9 @@ fun ChatScreen(
         if (providers.isEmpty() && !providersLoading) {
             providersLoading = true
             scope.launch {
-                providers = runCatching { vm.repo.modelOptions() }.getOrDefault(emptyList())
+                providers = runCatching {
+                    primaChat?.modelOptions() ?: vm.repo.modelOptions()
+                }.getOrDefault(emptyList())
                 providersLoading = false
             }
         }
@@ -306,11 +315,11 @@ fun ChatScreen(
                             renameOpen = true
                         },
                     )
+                    DropdownMenuItem(
+                        text = { Text("Model · ${shortModelLabel(currentModel)}") },
+                        onClick = { menuOpen = false; openModelSheet() },
+                    )
                     if (!prima) {
-                        DropdownMenuItem(
-                            text = { Text("Model · ${shortModelLabel(profile?.model ?: "")}") },
-                            onClick = { menuOpen = false; openModelSheet() },
-                        )
                         DropdownMenuItem(
                             text = { Text("Bot settings") },
                             onClick = { menuOpen = false; onOpenBotSettings() },
@@ -518,7 +527,7 @@ fun ChatScreen(
             .clip(shape)
             .border(1.dp, if (draftFocused) colors.gold else colors.stroke, shape)
             .background(colors.surface)
-        if (compact || prima) {
+        if (compact) {
             Row(
                 frame.heightIn(min = 56.dp).padding(start = space.lg, end = 4.dp, top = 4.dp, bottom = 4.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -542,7 +551,7 @@ fun ChatScreen(
                         Box(Modifier.size(6.dp).clip(CircleShape).background(colors.gold))
                         Spacer(Modifier.width(8.dp))
                         Text(
-                            shortModelLabel(profile?.model ?: ""),
+                            shortModelLabel(currentModel),
                             style = MaterialTheme.typography.labelMedium,
                             color = colors.secondary,
                             maxLines = 1,
@@ -619,15 +628,19 @@ fun ChatScreen(
     if (modelSheet) {
         ModelPickerSheet(
             providers = providers,
-            currentProvider = profile?.provider ?: "",
-            currentModel = profile?.model ?: "",
+            currentProvider = currentProvider,
+            currentModel = currentModel,
             loading = providersLoading || modelBusy,
             onPick = { slug, model ->
                 modelBusy = true
                 scope.launch {
                     try {
-                        vm.repo.updateModel(profileName, slug, model)
-                        vm.refreshProfiles()
+                        if (primaChat != null) {
+                            primaChat.setModel(slug, model)
+                        } else {
+                            vm.repo.updateModel(profileName, slug, model)
+                            vm.refreshProfiles()
+                        }
                         modelSheet = false
                     } catch (e: Exception) {
                         // Keep the sheet open so the user can retry.

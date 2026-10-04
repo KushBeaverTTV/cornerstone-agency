@@ -175,6 +175,48 @@ async def session_name(sid: str, body: NameIn) -> dict:
     return {"ok": True}
 
 
+class ModelIn(BaseModel):
+    provider: str
+    model_id: str
+
+
+@app.get("/prima/sessions/{sid}/models", dependencies=[Depends(require_auth)])
+async def session_models(sid: str) -> dict:
+    """Models this worker can switch to + the one it is on now (drives the phone's picker)."""
+    w = prima.get(sid)
+    if not w:
+        raise HTTPException(404, "session not found or worker dead")
+    try:
+        avail = await w.get_available_models()
+        state = await w.get_state()
+    except WorkerDead as e:
+        raise HTTPException(410, str(e)) from e
+    models = (avail.get("data") or {}).get("models") or []
+    cur = (state.get("data") or {}).get("model") or None
+    return {
+        "current": {"provider": cur.get("provider"), "id": cur.get("id")} if cur else None,
+        "models": [
+            {"provider": m.get("provider"), "id": m.get("id"), "name": m.get("name") or m.get("id")}
+            for m in models
+            if m.get("id")
+        ],
+    }
+
+
+@app.post("/prima/sessions/{sid}/model", dependencies=[Depends(require_auth)])
+async def session_set_model(sid: str, body: ModelIn) -> dict:
+    w = prima.get(sid)
+    if not w:
+        raise HTTPException(404, "session not found or worker dead")
+    try:
+        resp = await w.set_model(body.provider, body.model_id)
+    except WorkerDead as e:
+        raise HTTPException(410, str(e)) from e
+    if not resp.get("success"):
+        raise HTTPException(502, {"detail": "set_model rejected", "response": resp})
+    return {"ok": True}
+
+
 @app.delete("/prima/sessions/{sid}", dependencies=[Depends(require_auth)])
 async def session_delete(sid: str) -> dict:
     if not await prima.delete(sid):

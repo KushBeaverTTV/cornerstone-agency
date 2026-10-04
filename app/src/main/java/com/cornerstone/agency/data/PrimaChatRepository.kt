@@ -52,6 +52,24 @@ class PrimaChatRepository(
     private val _lastError = MutableStateFlow("")
     override val lastError: StateFlow<String> = _lastError.asStateFlow()
 
+    /** (provider, model id) the worker is on; null until the first read. */
+    private val _model = MutableStateFlow<Pair<String, String>?>(null)
+    val model: StateFlow<Pair<String, String>?> = _model.asStateFlow()
+
+    /** Everything this worker can switch to (also refreshes [model]). */
+    suspend fun modelOptions(): List<ModelProvider> {
+        val sid = sessionId ?: return emptyList()
+        val (cur, providers) = bridge.primaModels(sid)
+        if (cur != null) _model.value = cur
+        return providers
+    }
+
+    suspend fun setModel(provider: String, modelId: String) {
+        val sid = sessionId ?: throw ApiException(409, "no Prima session yet")
+        bridge.primaSetModel(sid, provider, modelId)
+        _model.value = provider to modelId
+    }
+
     /** Bridge session id (the worker's id) once resolved. */
     var sessionId: String? = null
         private set
@@ -75,10 +93,15 @@ class PrimaChatRepository(
                 sessionId = bridge.createPrimaSession()
             }
             hydrate()
+            refreshModel()
         } catch (e: Exception) {
             _opening.value = false
             _lastError.value = friendly(e)
         }
+    }
+
+    private fun refreshModel() {
+        scope.launch { runCatching { modelOptions() } }
     }
 
     override suspend fun refreshAfterReconnect() {
@@ -139,7 +162,9 @@ class PrimaChatRepository(
             thinkingId = null
             openTools.clear()
             _title.value = ""
+            _model.value = null
             hydrate()
+            refreshModel()
         } catch (e: Exception) {
             append(ChatKind.Error, "New session failed: ${friendly(e)}")
         }

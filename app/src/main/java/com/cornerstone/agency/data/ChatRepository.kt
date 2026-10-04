@@ -25,6 +25,10 @@ import java.util.concurrent.atomic.AtomicLong
 
 private val JSON = Json { ignoreUnknownKeys = true }
 
+/** Cadence of the desktop-sync poll (a `sessions.changed` event short-circuits the wait). */
+private const val SYNC_POLL_MS = 3_000L
+private const val SYNC_FETCH = 200
+
 private val REQUEST_EVENTS = setOf(
     "approval.request", "clarify.request", "secret.request",
     "sudo.request", "mcp.setup.request",
@@ -92,7 +96,82 @@ class ChatRepository(
     // "this chat is open" for notification suppression until close().
     private val registeredSids = HashSet<String>()
 
+    // ---- live sync with other clients (desktop) --------------------------------
+    // The gateway's runtime session is a snapshot; the desktop app appends to the same stored
+    // session in another process. Poll the state DB (read-only REST) and append whatever is new.
+    // [syncCursor] is the highest message row id already shown (-1 = unknown).
+    private var syncCursor = -1L
+    private var syncJob: kotlinx.coroutines.Job? = null
+    private val syncKick = kotlinx.coroutines.channels.Channel<Unit>(kotlinx.coroutines.channels.Channel.CONFLATED)
+    @Volatile private var localEpoch = 0L
+
+    private fun startSync() {
+        if (syncJob?.isActive == true) return
+        syncJob = scope.launch {
+            var wasStreaming = false
+            while (true) {
+                kotlinx.coroutines.withTimeoutOrNull(SYNC_POLL_MS) { syncKick.receive() }
+                if (!GatewayHub.foregrounded || _opening.value) continue
+                val stored = storedSessionId ?: continue
+                val repo = GatewayHub.repo ?: continue
+                // Our own turn writes these rows too; they are already on screen.
+                if (_streaming.value) { wasStreaming = true; continue }
+                val epoch = localEpoch
+                val tail = runCatching { repo.sessionTail(stored, profile, 1) }.getOrNull() ?: continue
+                val newest = tail.lastOrNull()?.rowId() ?: continue
+                if (wasStreaming || syncCursor < 0) {
+                    // Settle after a local turn / first look: adopt the DB head as "seen".
+                    wasStreaming = false
+                    syncCursor = newest
+                    continue
+                }
+                if (newest <= syncCursor) continue
+                val rows = runCatching { repo.sessionTail(stored, profile, SYNC_FETCH) }.getOrNull() ?: continue
+                if (_streaming.value || epoch != localEpoch) continue
+                val fresh = rows.filter { (it.rowId() ?: 0L) > syncCursor }
+                syncCursor = rows.maxOf { it.rowId() ?: 0L }.coerceAtLeast(syncCursor)
+                val items = fresh.flatMap(::dbRowToItems)
+                if (items.isNotEmpty()) _items.value = _items.value + items
+            }
+        }
+    }
+
+    /** Render one raw state-DB row the way [hydrate] renders the gateway's display projection. */
+    private fun dbRowToItems(m: JsonObject): List<ChatItem> {
+        if (m.str("display_kind") == "hidden") return emptyList()
+        val text = dbText(m["display_content"]).ifBlank { dbText(m["content"]) }
+        return when (m.str("role")) {
+            "user" -> if (text.isBlank() || text.startsWith("[System:")) emptyList()
+            else listOf(ChatItem(id = nextId(), kind = ChatKind.User, text = text))
+
+            "assistant" -> buildList {
+                m.str("reasoning")?.takeIf { it.isNotBlank() && it.trim() != text.trim() }
+                    ?.let { add(ChatItem(id = nextId(), kind = ChatKind.Thinking, text = it)) }
+                if (text.isNotBlank()) add(ChatItem(id = nextId(), kind = ChatKind.Assistant, text = text))
+            }
+
+            "tool" -> listOf(
+                ChatItem(
+                    id = nextId(), kind = ChatKind.Tool,
+                    text = "✓ ${m.str("tool_name") ?: "tool"}",
+                ),
+            )
+
+            else -> emptyList()
+        }
+    }
+
+    private fun dbText(el: kotlinx.serialization.json.JsonElement?): String = when (el) {
+        null -> ""
+        is JsonArray -> el.mapNotNull { (it as? JsonObject)?.str("text") }.joinToString("\n")
+        else -> (el as? kotlinx.serialization.json.JsonPrimitive)?.contentOrNull.orEmpty()
+    }
+
+    private fun JsonObject.rowId(): Long? =
+        (this["id"] as? kotlinx.serialization.json.JsonPrimitive)?.contentOrNull?.toLongOrNull()
+
     init {
+        scope.launch { gateway.events.collect { if (it.type == "sessions.changed") syncKick.trySend(Unit) } }
         scope.launch { gateway.events.collect(::onEvent) }
         scope.launch { gateway.requests.collect(::onRequestFrame) }
         // Resolutions that happened outside this transcript (notification
@@ -143,6 +222,10 @@ class ChatRepository(
     }
 
     private suspend fun resume(storedId: String) {
+        // Head of the DB just before the snapshot: anything newer is "not yet shown".
+        val head = runCatching {
+            GatewayHub.repo?.sessionTail(storedId, profile, 1)?.lastOrNull()?.rowId()
+        }.getOrNull()
         val res = gateway.call(
             "session.resume",
             buildJsonObject {
@@ -159,6 +242,8 @@ class ChatRepository(
             GatewayHub.openChats += it
         }
         hydrate(res)
+        if (head != null) syncCursor = head
+        startSync()
         seedPendingFromResume(res)
         fetchTitle()
         seedPendingApprovals()
@@ -201,6 +286,7 @@ class ChatRepository(
             GatewayHub.openChats += it
         }
         hydrate(res)
+        startSync()
         seedPendingFromResume(res)
         seedPendingApprovals()
     }
@@ -241,6 +327,7 @@ class ChatRepository(
                 return
             }
         }
+        localEpoch++
         append(ChatKind.User, t)
         _streaming.value = true
         _statusLine.value = ""
@@ -791,11 +878,28 @@ internal suspend fun listProfileSessions(
             if (includeHidden) put("include_hidden", true)
         },
     )
+    // The server already orders rows by LAST ACTIVITY (newest first). Re-sorting by start time
+    // made the phone open (and list first) the newest-STARTED chat, not the one the user was
+    // actually in on the desktop.
     return runCatching {
         JSON.decodeFromJsonElement(SessionListResult.serializer(), res)
-    }.getOrNull()?.sessions
-        ?.sortedByDescending { it.startedAt }
-        ?: emptyList()
+    }.getOrNull()?.sessions ?: emptyList()
+}
+
+/**
+ * Cross-bot recency for a list that is already in last-activity order. Rows carry only their
+ * start time, but a row can never be less recently active than any row listed after it, so the
+ * largest start time at-or-below each row is a safe, monotone stand-in for "last active".
+ */
+internal fun List<SessionSummary>.activityScores(): List<Pair<SessionSummary, Double>> {
+    var floor = 0.0
+    val out = ArrayList<Pair<SessionSummary, Double>>(size)
+    for (s in asReversed()) {
+        floor = maxOf(floor, s.startedAt)
+        out += s to floor
+    }
+    out.reverse()
+    return out
 }
 
 internal suspend fun deleteStoredSession(gateway: GatewaySocket, storedId: String, profile: String? = null) {

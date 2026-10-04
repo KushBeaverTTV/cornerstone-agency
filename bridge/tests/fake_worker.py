@@ -67,6 +67,14 @@ for raw in sys.stdin:
         respond(True, dict(state))
     elif t == "get_messages":
         respond(True, {"messages": list(messages)})
+    elif t == "get_available_models":
+        respond(True, {"models": [
+            {"provider": "anthropic", "id": "claude-sonnet-5-5", "name": "Claude Sonnet 5.5"},
+            {"provider": "anthropic", "id": "claude-opus-4-8", "name": "Claude Opus 4.8"},
+        ]})
+    elif t == "set_model":
+        state["model"] = {"provider": msg.get("provider"), "id": msg.get("modelId")}
+        respond(True, state["model"])
     elif t == "abort":
         respond(True)
     elif t == "set_session_name":
