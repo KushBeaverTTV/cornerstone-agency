@@ -109,17 +109,15 @@ fun ArtifactsScreen(vm: AppViewModel) {
     }
 
     Column(Modifier.fillMaxSize()) {
-        if (!isCompactHeight()) {
-            PageHeader("Files") {
-                if (busy) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.padding(horizontal = 12.dp).size(20.dp),
-                        color = colors.gold, strokeWidth = 2.dp,
-                    )
-                } else {
-                    IconButton(onClick = { picker.launch("*/*") }) {
-                        Icon(Icons.Filled.Add, contentDescription = "Add file", tint = colors.foreground)
-                    }
+        PageHeader("Files") {
+            if (busy) {
+                CircularProgressIndicator(
+                    modifier = Modifier.padding(horizontal = 12.dp).size(20.dp),
+                    color = colors.gold, strokeWidth = 2.dp,
+                )
+            } else {
+                IconButton(onClick = { picker.launch("*/*") }) {
+                    Icon(Icons.Filled.Add, contentDescription = "Add file", tint = colors.foreground)
                 }
             }
         }

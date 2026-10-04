@@ -119,7 +119,7 @@ fun JobsScreen(vm: AppViewModel, onOpenJob: (String) -> Unit = {}, onBack: (() -
                 jobs = vm.repo.cronJobs()
                 error = ""
             } catch (e: Exception) {
-                error = e.message ?: "Failed to load jobs"
+                error = e.message ?: "Failed to load routines"
             } finally {
                 loading = false
             }
@@ -163,7 +163,7 @@ fun JobsScreen(vm: AppViewModel, onOpenJob: (String) -> Unit = {}, onBack: (() -
                         }
                     }
                     Text(
-                        text = "Jobs",
+                        text = "Routines",
                         style = MaterialTheme.typography.displayLarge,
                         color = colors.wordmark,
                     )
@@ -173,7 +173,7 @@ fun JobsScreen(vm: AppViewModel, onOpenJob: (String) -> Unit = {}, onBack: (() -
             if (jobs.isEmpty() && !loading) {
                 item {
                     EmptyState(
-                        if (error.isEmpty()) "No routines" else "Couldn't load jobs",
+                        if (error.isEmpty()) "No routines" else "Couldn't load routines",
                         if (error.isEmpty()) "Scheduled work lands here" else error,
                     )
                 }

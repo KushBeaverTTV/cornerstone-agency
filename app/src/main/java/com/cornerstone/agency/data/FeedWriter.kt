@@ -35,12 +35,20 @@ class FeedWriter(
 
     val busy: Boolean get() = _state.value is State.Writing
 
+    @Volatile private var cancelRequested = false
+
     fun dismiss() {
         if (!busy) _state.value = State.Idle
     }
 
+    /** Stop the current run. The poll loop notices, interrupts the turn and cleans up. */
+    fun cancel() {
+        if (busy) cancelRequested = true
+    }
+
     suspend fun write(profile: String = "default") {
         if (busy) return
+        cancelRequested = false
         _state.value = State.Writing("Opening a line to the gateway…")
         if (gateway.state.value != GatewayState.OPEN) {
             gateway.connect()
@@ -81,6 +89,11 @@ class FeedWriter(
             var lastSig = ""
             while (System.currentTimeMillis() - started < TIMEOUT_MS) {
                 delay(400)
+                if (cancelRequested) {
+                    chat.stop()
+                    _state.value = State.Idle
+                    return
+                }
                 val items = chat.items.value
                 if (items.any { it.kind == ChatKind.Request && it.request?.open == true }) {
                     keepSession = true
@@ -89,10 +102,12 @@ class FeedWriter(
                 }
                 val last = items.lastOrNull()
                 val tool = items.lastOrNull { it.kind == ChatKind.Tool && !it.done }
+                val mins = (System.currentTimeMillis() - started) / 60_000
+                val suffix = if (mins >= 1) " · ${mins}m" else ""
                 _state.value = when {
-                    tool != null -> State.Writing("Using ${tool.text.removePrefix("▶").trim().take(28)}…")
-                    last?.kind == ChatKind.Thinking -> State.Writing("Thinking…")
-                    last?.kind == ChatKind.Assistant -> State.Writing("Writing…")
+                    tool != null -> State.Writing("Using ${tool.text.removePrefix("▶").trim().take(28)}…$suffix")
+                    last?.kind == ChatKind.Thinking -> State.Writing("Thinking…$suffix")
+                    last?.kind == ChatKind.Assistant -> State.Writing("Writing…$suffix")
                     else -> _state.value
                 }
                 val sig = "${items.size}:${last?.text?.length ?: 0}:${chat.streaming.value}"

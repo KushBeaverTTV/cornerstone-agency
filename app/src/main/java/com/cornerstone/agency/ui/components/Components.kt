@@ -37,7 +37,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -108,23 +107,32 @@ fun AgencyCard(
     )
 }
 
-/** Large page title in the display face, with optional trailing actions. */
+/**
+ * Large page title in the display face, with optional trailing actions. On a compact-height
+ * window (cover display) it shrinks to a single tight line so the actions stay reachable.
+ */
 @Composable
 fun PageHeader(
     title: String,
     modifier: Modifier = Modifier,
     actions: @Composable () -> Unit = {},
 ) {
+    val compact = com.cornerstone.agency.ui.isCompactHeight()
+    val space = AgencyTokens.space
     Row(
         modifier
             .fillMaxWidth()
-            .padding(start = AgencyTokens.space.lg, end = AgencyTokens.space.xs, top = AgencyTokens.space.md, bottom = AgencyTokens.space.sm)
-            .heightIn(min = 48.dp),
+            .padding(
+                start = space.lg, end = space.xs,
+                top = if (compact) 0.dp else space.md,
+                bottom = if (compact) 0.dp else space.sm,
+            )
+            .heightIn(min = if (compact) 40.dp else 48.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = title,
-            style = MaterialTheme.typography.displayLarge,
+            style = if (compact) MaterialTheme.typography.headlineSmall else MaterialTheme.typography.displayLarge,
             color = AgencyTokens.colors.wordmark,
             modifier = Modifier.weight(1f),
         )
@@ -361,7 +369,10 @@ fun relativeTime(epochSeconds: Double): String {
     }
 }
 
-/** Circle avatar with the bot's initial on a per-bot fill color. */
+/**
+ * Bot avatar. Historically an initial in a filled circle; now the same keystone mark used
+ * everywhere else, so a bot looks like itself in every list. [name] is the a11y label.
+ */
 @Composable
 fun BotAvatar(
     name: String,
@@ -369,23 +380,7 @@ fun BotAvatar(
     modifier: Modifier = Modifier,
     size: androidx.compose.ui.unit.Dp = 34.dp,
 ) {
-    val letter = name.trim().firstOrNull()?.uppercaseChar()?.toString() ?: "?"
-    val onFill = if (color.luminance() < 0.43f) Color.White else Color(0xFF0D0D14)
-    Box(
-        modifier = modifier
-            .size(size)
-            .clip(CircleShape)
-            .background(color),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(
-            text = letter,
-            color = onFill,
-            fontSize = (size.value * 0.44f).sp,
-            fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
-            fontFamily = AgencyFonts.Sans,
-        )
-    }
+    BotMark(color = color, modifier = modifier, size = size, contentDescription = name)
 }
 
 /**

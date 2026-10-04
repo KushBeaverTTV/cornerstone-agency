@@ -191,7 +191,6 @@ fun ChatsScreen(
     var routing by remember { mutableStateOf(false) }
     var pickerOpen by remember { mutableStateOf(false) }
     var pendingSend by remember { mutableStateOf<String?>(null) }
-    var routeError by remember { mutableStateOf("") }
 
     fun go(t: Target, text: String?) {
         if (text != null) vm.setDispatchText(text)
@@ -209,7 +208,6 @@ fun ChatsScreen(
         val t = target ?: return
         if (text.isEmpty() || routing) return
         draft = ""
-        routeError = ""
         // A hand-picked target is final. Otherwise let Laya route when the bridge is up.
         if (chosen != null || !bridgeUp || targets.size < 2) { go(t, text); return }
         routing = true
@@ -258,11 +256,9 @@ fun ChatsScreen(
 
     // ---- layout ----------------------------------------------------------------
     Column(Modifier.fillMaxSize()) {
-        if (!compact) {
-            PageHeader("Chats") {
-                IconButton(onClick = onNewAgent) {
-                    Icon(Icons.Filled.Add, contentDescription = "New agent", tint = colors.foreground)
-                }
+        PageHeader("Chats") {
+            IconButton(onClick = onNewAgent) {
+                Icon(Icons.Filled.Add, contentDescription = "New agent", tint = colors.foreground)
             }
         }
 
@@ -367,12 +363,6 @@ fun ChatsScreen(
 
         // ---- dock ---------------------------------------------------------------
         if (target != null) {
-            if (routeError.isNotEmpty()) {
-                Text(
-                    routeError, color = colors.destructive, style = MaterialTheme.typography.labelSmall,
-                    modifier = Modifier.padding(horizontal = space.lg),
-                )
-            }
             val pill = RoundedCornerShape(28.dp)
             val hasText = draft.isNotBlank()
             Row(

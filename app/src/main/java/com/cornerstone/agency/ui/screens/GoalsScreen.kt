@@ -59,7 +59,6 @@ fun GoalsScreen(vm: AppViewModel) {
     val colors = AgencyTokens.colors
     val space = AgencyTokens.space
     val state by vm.companion.state.collectAsState()
-    val compact = isCompactHeight()
 
     var creating by remember { mutableStateOf(false) }
     var title by remember { mutableStateOf("") }
@@ -78,16 +77,14 @@ fun GoalsScreen(vm: AppViewModel) {
     }
 
     Column(Modifier.fillMaxSize()) {
-        if (!compact) {
-            PageHeader("Goals") {
-                IconButton(onClick = {
-                    title = ""
-                    detail = ""
-                    category = "Personal"
-                    creating = true
-                }) {
-                    Icon(Icons.Filled.Add, contentDescription = "New goal", tint = colors.foreground)
-                }
+        PageHeader("Goals") {
+            IconButton(onClick = {
+                title = ""
+                detail = ""
+                category = "Personal"
+                creating = true
+            }) {
+                Icon(Icons.Filled.Add, contentDescription = "New goal", tint = colors.foreground)
             }
         }
         if (state.goals.isEmpty()) {

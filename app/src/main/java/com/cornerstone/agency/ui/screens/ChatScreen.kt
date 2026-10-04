@@ -298,14 +298,9 @@ fun ChatScreen(
                         text = { Text("Sessions") },
                         onClick = { menuOpen = false; onOpenSessions() },
                     )
-                    DropdownMenuItem(
-                        text = { Text("New session") },
-                        onClick = {
-                            menuOpen = false
-                            scope.launch { chat.newSession() }
-                        },
-                    )
-                    DropdownMenuItem(
+                    // "+" in the header already starts a new session; Rename only makes sense once
+                    // there is a conversation to name.
+                    if (items.isNotEmpty()) DropdownMenuItem(
                         text = { Text("Rename") },
                         onClick = {
                             menuOpen = false
@@ -359,6 +354,11 @@ fun ChatScreen(
             if (!opening && items.isEmpty()) {
                 EmptyChat(
                     botName = botName,
+                    tagline = when {
+                        prima -> "Prime Agent on this PC"
+                        else -> profile?.subtitle?.substringBefore(" — ")?.trim().orEmpty()
+                    },
+                    isDefault = !prima && profileName == "default",
                     avatarColor = if (prima) colors.defaultViolet
                         else botAvatarColor(profileName, profileName == "default"),
                     onPick = { text -> scope.launch { chat.send(text) } },
@@ -971,15 +971,22 @@ private fun WorkGroup(g: ChatRow.Work) {
 @Composable
 private fun EmptyChat(
     botName: String,
+    tagline: String,
+    isDefault: Boolean,
     avatarColor: androidx.compose.ui.graphics.Color,
     onPick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val colors = AgencyTokens.colors
-    val suggestions = listOf(
+    // The default bot runs your day; a specialist gets asked about its own lane.
+    val suggestions = if (isDefault) listOf(
         "What's on my plate today?",
         "Catch me up on what you've been working on",
         "What can you help me with right now?",
+    ) else listOf(
+        "Where did we leave off?",
+        "What should we tackle first?",
+        "What could you take off my plate?",
     )
     val compact = isCompactHeight()
     Column(
@@ -993,7 +1000,11 @@ private fun EmptyChat(
         Spacer(Modifier.height(16.dp))
         Text(botName, style = MaterialTheme.typography.displaySmall)
         Spacer(Modifier.height(4.dp))
-        Text("What's on your mind?", style = MaterialTheme.typography.bodyLarge, color = colors.secondary)
+        Text(
+            tagline.ifBlank { "What's on your mind?" },
+            style = MaterialTheme.typography.bodyLarge, color = colors.secondary,
+            textAlign = TextAlign.Center, maxLines = 2, overflow = TextOverflow.Ellipsis,
+        )
         Spacer(Modifier.height(24.dp))
         suggestions.take(if (compact) 2 else 3).forEach { text ->
             Box(

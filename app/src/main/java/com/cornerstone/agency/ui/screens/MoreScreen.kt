@@ -74,7 +74,6 @@ fun MoreScreen(
     val primaSocketState by vm.primaSocket.state.collectAsState()
     val colors = AgencyTokens.colors
     val space = AgencyTokens.space
-    val compact = isCompactHeight()
 
     var editVoice by remember { mutableStateOf(false) }
     var voiceBridgeDraft by remember { mutableStateOf<String?>(null) }
@@ -91,7 +90,7 @@ fun MoreScreen(
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
     ) {
-        if (!compact) PageHeader("Me")
+        PageHeader("Me")
 
         // ---- identity ------------------------------------------------------------
         Row(

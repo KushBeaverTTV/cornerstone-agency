@@ -81,7 +81,6 @@ fun FeedScreen(vm: AppViewModel) {
     val state by vm.companion.state.collectAsState()
     val writer by vm.feedWriter.state.collectAsState()
     val ui by vm.ui.collectAsState()
-    val compact = isCompactHeight()
     val context = LocalContext.current
     val writing = writer is FeedWriter.State.Writing
     val botName = botDisplayName(ui.profiles, "default")
@@ -90,6 +89,7 @@ fun FeedScreen(vm: AppViewModel) {
     var editing by remember { mutableStateOf(false) }
     var draft by remember { mutableStateOf("") }
     var menu by remember { mutableStateOf(false) }
+    var clearing by remember { mutableStateOf(false) }
 
     // Done/Failed are transient; clear them once the user has had a look.
     LaunchedEffect(writer) {
@@ -107,39 +107,40 @@ fun FeedScreen(vm: AppViewModel) {
     }
 
     Column(Modifier.fillMaxSize()) {
-        if (!compact) {
-            PageHeader("Feed") {
-                if (writing) {
-                    CircularProgressIndicator(
-                        Modifier.padding(horizontal = 12.dp).size(20.dp),
-                        color = colors.gold, strokeWidth = 2.dp,
-                    )
-                } else if (state.posts.isNotEmpty()) {
-                    IconButton(onClick = { vm.writeFeed() }) {
-                        Icon(AgencyIcons.Spark, contentDescription = "Write a new issue", tint = colors.gold)
+        PageHeader("Feed") {
+            if (writing) {
+                // The spinner is also the stop button — tap to cancel the run.
+                IconButton(onClick = { vm.feedWriter.cancel() }) {
+                    Box(contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator(Modifier.size(22.dp), color = colors.gold, strokeWidth = 2.dp)
+                        Box(Modifier.size(8.dp).background(colors.gold))
                     }
                 }
-                Box {
-                    IconButton(onClick = { menu = true }) {
-                        Icon(Icons.Filled.MoreVert, contentDescription = "Feed options", tint = colors.foreground)
-                    }
-                    DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
+            } else if (state.posts.isNotEmpty()) {
+                IconButton(onClick = { vm.writeFeed() }) {
+                    Icon(AgencyIcons.Spark, contentDescription = "Write a new issue", tint = colors.gold)
+                }
+            }
+            Box {
+                IconButton(onClick = { menu = true }) {
+                    Icon(Icons.Filled.MoreVert, contentDescription = "Feed options", tint = colors.foreground)
+                }
+                DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
+                    DropdownMenuItem(
+                        text = { Text("Edit the brief") },
+                        onClick = { menu = false; draft = state.feedInstructions; editing = true },
+                    )
+                    if (state.posts.any { !it.read }) {
                         DropdownMenuItem(
-                            text = { Text("Edit the brief") },
-                            onClick = { menu = false; draft = state.feedInstructions; editing = true },
+                            text = { Text("Mark all read") },
+                            onClick = { menu = false; vm.companion.markAllPostsRead() },
                         )
-                        if (state.posts.any { !it.read }) {
-                            DropdownMenuItem(
-                                text = { Text("Mark all read") },
-                                onClick = { menu = false; vm.companion.markAllPostsRead() },
-                            )
-                        }
-                        if (state.posts.isNotEmpty()) {
-                            DropdownMenuItem(
-                                text = { Text("Clear feed") },
-                                onClick = { menu = false; vm.companion.clearPosts() },
-                            )
-                        }
+                    }
+                    if (state.posts.isNotEmpty()) {
+                        DropdownMenuItem(
+                            text = { Text("Clear feed") },
+                            onClick = { menu = false; clearing = true },
+                        )
                     }
                 }
             }
@@ -147,7 +148,9 @@ fun FeedScreen(vm: AppViewModel) {
 
         // Writer status strip — sits under the header while a run is live or just finished.
         when (val w = writer) {
-            is FeedWriter.State.Writing -> if (state.posts.isNotEmpty()) StatusStrip("$botName · ${w.status}", colors.gold)
+            is FeedWriter.State.Writing -> if (state.posts.isNotEmpty()) {
+                StatusStrip("$botName · ${w.status}", colors.gold, action = "Stop", onDismiss = { vm.feedWriter.cancel() })
+            }
             is FeedWriter.State.Failed -> StatusStrip(w.message, colors.destructive, onDismiss = { vm.feedWriter.dismiss() })
             is FeedWriter.State.Done -> StatusStrip(
                 if (w.added == 0) "Nothing new since last time" else "$botName added ${w.added} ${if (w.added == 1) "post" else "posts"}",
@@ -164,6 +167,7 @@ fun FeedScreen(vm: AppViewModel) {
                 writing = writing,
                 status = (writer as? FeedWriter.State.Writing)?.status,
                 onWrite = { vm.writeFeed() },
+                onCancel = { vm.feedWriter.cancel() },
                 onEditBrief = { draft = state.feedInstructions; editing = true },
             )
         } else {
@@ -213,10 +217,29 @@ fun FeedScreen(vm: AppViewModel) {
             },
         )
     }
+
+    if (clearing) {
+        AlertDialog(
+            onDismissRequest = { clearing = false },
+            title = { Text("Clear the feed?") },
+            text = { Text("Removes every post. The brief stays; the next issue starts fresh.") },
+            confirmButton = {
+                TextButton(onClick = { vm.companion.clearPosts(); clearing = false }) {
+                    Text("Clear", color = colors.destructive)
+                }
+            },
+            dismissButton = { TextButton(onClick = { clearing = false }) { Text("Cancel") } },
+        )
+    }
 }
 
 @Composable
-private fun StatusStrip(text: String, tone: androidx.compose.ui.graphics.Color, onDismiss: (() -> Unit)? = null) {
+private fun StatusStrip(
+    text: String,
+    tone: androidx.compose.ui.graphics.Color,
+    action: String = "Dismiss",
+    onDismiss: (() -> Unit)? = null,
+) {
     val space = AgencyTokens.space
     Row(
         Modifier
@@ -233,7 +256,7 @@ private fun StatusStrip(text: String, tone: androidx.compose.ui.graphics.Color, 
             maxLines = 2, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f),
         )
         if (onDismiss != null) {
-            Text("Dismiss", style = MaterialTheme.typography.labelMedium, color = tone)
+            Text(action, style = MaterialTheme.typography.labelMedium, color = tone)
         }
     }
 }
@@ -246,11 +269,11 @@ private fun EmptyFeed(
     writing: Boolean,
     status: String?,
     onWrite: () -> Unit,
+    onCancel: () -> Unit,
     onEditBrief: () -> Unit,
 ) {
     val colors = AgencyTokens.colors
     val space = AgencyTokens.space
-    val compact = isCompactHeight()
     Column(
         Modifier
             .fillMaxSize()
@@ -261,7 +284,7 @@ private fun EmptyFeed(
     ) {
         KeystoneMark(
             state = if (writing) KeystoneState.WORKING else KeystoneState.IDLE,
-            size = if (compact) 72.dp else 120.dp,
+            size = if (isCompactHeight()) 72.dp else 120.dp,
             color = botColor,
         )
         Spacer(Modifier.height(space.lg))
@@ -279,7 +302,10 @@ private fun EmptyFeed(
             textAlign = TextAlign.Center,
             modifier = Modifier.widthIn(max = 320.dp),
         )
-        if (!writing) {
+        if (writing) {
+            Spacer(Modifier.height(space.lg))
+            TextButton(onClick = onCancel) { Text("Stop", color = colors.secondary) }
+        } else {
             Spacer(Modifier.height(space.xl))
             PrimaryButton(
                 label = "Write today's issue",

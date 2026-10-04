@@ -100,9 +100,16 @@ Brief: "the chat section looks like an email inbox", "the feed has nothing", "yo
 - Me: identity row (initial in Collapse, host, Online pill), Connection card, Voice + Desktop bridge sections with Edit → Save/Cancel, More (Routines / Skills / System) with chevrons, Disconnect confirms. Dead "Appearance" row removed.
 - Lessons: build from `C:\Cornerstone\...`, not the `D:` alias (Kotlin incremental compile trips on mismatched roots). `am start`/`input tap` on the phone can land on the notification shade — screenshot before tapping, `cmd statusbar collapse` to recover.
 
+## Pass 6b — finish + polish (verified on device)
+- Feed: Stop. The header spinner is a stop button, the status strip has "Stop", the empty state has "Stop"; cancel interrupts the turn and runs the same hidden-session cleanup (verified: no row left in `state.db`). Status shows elapsed minutes after the first (`Using web_search… · 2m`). "Clear feed" confirms first.
+- Compact height (cover display): `PageHeader` shrinks to one tight line instead of disappearing, so +, Spark and the menu stay reachable; the compact top tab row gets `statusBarsPadding` (it was drawing under the clock).
+- Routines: title matches the Me entry (was "Jobs"); `BotAvatar` now delegates to `BotMark`, so Routines, Bot detail, Prima sessions and the share target show the keystone instead of a letter in a circle.
+- Chat: menu drops the duplicate "New session" (the header "+" does it) and only offers Rename once there is a conversation; empty state shows the bot's role as the tagline ("Social Media Manager") and specialists get their own three openers.
+- Dead `routeError` state removed from Chats.
+- Lesson: do not use `wm size` on the user's phone to simulate the cover display — it resizes the live screen. Ask them to close the phone instead.
+
 ## Known issues / not done
-- Feed writer timing depends on Kaori's search depth (1–5 min); there is no cancel yet beyond leaving it to the 6 min timeout.
-- Cover-display (compact) layout for the new Chats home has not been re-checked.
+- Feed write duration depends on Kaori's search depth (1–5 min).
 - The earlier "dark status-bar clock" was a stale-build artifact (the APK still held old dex); it renders correctly now. Always `gradlew clean assembleDebug` after structural edits.
 - Inbox only shows requests from sessions you are not inside (leaving a chat interrupts its live turn, so only background/Telegram/cron sessions appear). Your config has approvals off, so real ones are rare; clarify and secret requests still show.
 - Multi-question clarifies and secrets open the chat instead of answering inline.
