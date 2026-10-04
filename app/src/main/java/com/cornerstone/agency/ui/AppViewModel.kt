@@ -88,6 +88,15 @@ class AppViewModel(private val app: Application) : AndroidViewModel(app) {
     /** Shared dashboard socket — lives in GatewayHub so it survives the Activity. */
     val gateway: GatewaySocket = GatewayHub.attach(repo)
 
+    /** Headless Feed writer: the default bot composes posts into [companion]. */
+    val feedWriter = com.cornerstone.agency.data.FeedWriter(gateway, companion)
+
+    fun writeFeed() {
+        if (feedWriter.busy) return
+        val profile = _ui.value.profiles.firstOrNull { it.isDefault || it.name == "default" }?.name ?: "default"
+        viewModelScope.launch { feedWriter.write(profile) }
+    }
+
     // -- M6: desktop bridge (Prima + Laya) ----------------------------------
 
     /** REST client for the local bridge (docs/BRIDGE.md). Host/token in SecureStore. */

@@ -782,12 +782,14 @@ internal suspend fun listProfileSessions(
     gateway: GatewaySocket,
     profile: String,
     limit: Int = 200,
+    includeHidden: Boolean = false,
 ): List<SessionSummary> {
     val res = gateway.call(
         "session.list",
         buildJsonObject {
             put("profile", profile)
             put("limit", limit)
+            if (includeHidden) put("include_hidden", true)
         },
     )
     return runCatching {

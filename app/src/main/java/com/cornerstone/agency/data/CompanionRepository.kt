@@ -68,15 +68,35 @@ class CompanionRepository(private val appContext: Context) {
     fun saveFeedInstructions(text: String) =
         update { it.copy(feedInstructions = text) }
 
-    /** Gateway-side writer seam: the Hermes agent will call this when feed publishing lands. */
     fun addPost(post: FeedPost) = update {
         val withId = if (post.id.isBlank()) post.copy(id = UUID.randomUUID().toString()) else post
         it.copy(posts = listOf(withId) + it.posts)
     }
 
+    /** A fresh batch from the writer: skip titles we already have, newest first, cap history. */
+    fun addPosts(posts: List<FeedPost>): Int {
+        var added = 0
+        update { s ->
+            val seen = s.posts.map { it.title.trim().lowercase() }.toHashSet()
+            val fresh = posts.filter { p ->
+                val k = p.title.trim().lowercase()
+                k.isNotEmpty() && seen.add(k)
+            }.map { p -> if (p.id.isBlank()) p.copy(id = UUID.randomUUID().toString()) else p }
+            added = fresh.size
+            s.copy(posts = (fresh + s.posts).take(200))
+        }
+        return added
+    }
+
     fun markPostRead(id: String) = update {
         it.copy(posts = it.posts.map { p -> if (p.id == id) p.copy(read = true) else p })
     }
+
+    fun markAllPostsRead() = update {
+        it.copy(posts = it.posts.map { p -> p.copy(read = true) })
+    }
+
+    fun clearPosts() = update { it.copy(posts = emptyList()) }
 
     // ---- Goals ----------------------------------------------------------
 

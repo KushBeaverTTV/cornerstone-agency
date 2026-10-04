@@ -50,6 +50,9 @@ import com.cornerstone.agency.theme.AgencyFonts
 import com.cornerstone.agency.theme.AgencyTokens
 import java.util.Locale
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 
 @Composable
 fun AgencyScaffold(
@@ -93,14 +96,40 @@ fun AgencyCard(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val colors = AgencyTokens.colors
+    val shape = RoundedCornerShape(AgencyTokens.shapes.md)
+    // Quiet by default: neutral hairline, no yellow edge — gold is for state, not chrome.
     Column(
         modifier = modifier
-            .clip(RoundedCornerShape(10.dp))
-            .border(1.dp, colors.edge, RoundedCornerShape(10.dp))
+            .clip(shape)
+            .border(1.dp, colors.stroke, shape)
             .background(colors.card)
-            .padding(AgencyTokens.space.md),
+            .padding(AgencyTokens.space.lg),
         content = content,
     )
+}
+
+/** Large page title in the display face, with optional trailing actions. */
+@Composable
+fun PageHeader(
+    title: String,
+    modifier: Modifier = Modifier,
+    actions: @Composable () -> Unit = {},
+) {
+    Row(
+        modifier
+            .fillMaxWidth()
+            .padding(start = AgencyTokens.space.lg, end = AgencyTokens.space.xs, top = AgencyTokens.space.md, bottom = AgencyTokens.space.sm)
+            .heightIn(min = 48.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.displayLarge,
+            color = AgencyTokens.colors.wordmark,
+            modifier = Modifier.weight(1f),
+        )
+        actions()
+    }
 }
 
 @Composable
@@ -294,6 +323,29 @@ fun shortModelLabel(modelId: String): String {
     return id
 }
 
+/** System-prompt boilerplate makes useless previews; show something human instead. */
+fun cleanPreview(raw: String): String {
+    val first = raw.lineSequence().firstOrNull { it.isNotBlank() }?.trim() ?: return ""
+    return when {
+        first.startsWith("[IMPORTANT: You are running as a scheduled cron", true) -> "Scheduled job"
+        first.startsWith("You are being used through a hands-free voice", true) -> "Voice conversation"
+        else -> first
+    }
+}
+
+/** True for machine-shaped titles like "UI_test:_in_your_terminal_run_exactly" — unreadable as a headline. */
+fun looksMachineTitle(title: String): Boolean =
+    title.length > 24 && !title.contains(' ') && title.count { it == '_' } >= 3
+
+/** Human line for a session: the title unless it's machine-shaped, else the cleaned preview. */
+fun sessionLine(title: String, preview: String): String {
+    val t = title.trim()
+    if (t.isNotBlank() && !looksMachineTitle(t)) return t
+    val pv = cleanPreview(preview)
+    if (pv.isNotBlank() && !looksMachineTitle(pv)) return pv
+    return t.ifBlank { pv }.replace('_', ' ')
+}
+
 /** "just now" / "4m" / "2h" / "3d" / absolute date for old timestamps. */
 fun relativeTime(epochSeconds: Double): String {
     if (epochSeconds <= 0.0) return ""
@@ -332,6 +384,38 @@ fun BotAvatar(
             fontSize = (size.value * 0.44f).sp,
             fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
             fontFamily = AgencyFonts.Sans,
+        )
+    }
+}
+
+/**
+ * The agent's face: the living keystone mark on a soft disc, tinted per bot.
+ * Replaces the initial-in-a-circle wherever a bot is the subject (rows, headers).
+ */
+@Composable
+fun BotMark(
+    color: Color,
+    modifier: Modifier = Modifier,
+    size: androidx.compose.ui.unit.Dp = 48.dp,
+    state: KeystoneState = KeystoneState.IDLE,
+    contentDescription: String? = null,
+) {
+    Box(
+        modifier
+            .size(size)
+            .clip(CircleShape)
+            .background(color.copy(alpha = 0.10f))
+            .then(
+                if (contentDescription != null) {
+                    Modifier.semantics { this.contentDescription = contentDescription }
+                } else Modifier,
+            ),
+        contentAlignment = Alignment.Center,
+    ) {
+        // The arch's visual mass sits low in its box; nudge it up so it reads centred.
+        KeystoneMark(
+            state = state, size = size * 0.80f, color = color,
+            modifier = Modifier.offset(y = -(size * 0.07f)),
         )
     }
 }

@@ -7,13 +7,15 @@ const val DEFAULT_FEED_INSTRUCTIONS =
         "developer tools, AI agents, PC gaming, and tech news. Keep the tone clear and direct. " +
         "Make it quick to skim. No clickbait."
 
-/** One editorial post in the Feed tab. Written by the Hermes agent (gateway-side, later). */
+/** One editorial post in the Feed tab. Written by the default bot via [FeedWriter]. */
 @Serializable
 data class FeedPost(
     val id: String = "",
     val title: String = "",
     val body: String = "",
     val link: String = "",
+    /** Short section label ("AI models", "Dev tools"). */
+    val topic: String = "",
     /** Epoch millis. */
     val publishedAt: Long = 0L,
     val read: Boolean = false,

@@ -54,9 +54,11 @@ import androidx.compose.ui.unit.dp
 import com.cornerstone.agency.data.ArtifactEntry
 import com.cornerstone.agency.theme.AgencyTokens
 import com.cornerstone.agency.ui.AppViewModel
-import com.cornerstone.agency.ui.components.AgencyCard
 import com.cornerstone.agency.ui.components.EmptyState
+import com.cornerstone.agency.ui.components.PageHeader
 import com.cornerstone.agency.ui.components.relativeTime
+import com.cornerstone.agency.ui.isCompactHeight
+import androidx.compose.foundation.border
 import kotlinx.coroutines.launch
 
 private fun displayNameOf(resolver: ContentResolver, uri: Uri): String? {
@@ -107,41 +109,30 @@ fun ArtifactsScreen(vm: AppViewModel) {
     }
 
     Column(Modifier.fillMaxSize()) {
-        Column(Modifier.padding(horizontal = space.lg)) {
-            Spacer(Modifier.height(space.lg))
-            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    "Artifacts",
-                    style = MaterialTheme.typography.displayLarge,
-                    modifier = Modifier.weight(1f),
-                )
+        if (!isCompactHeight()) {
+            PageHeader("Files") {
                 if (busy) {
                     CircularProgressIndicator(
-                        modifier = Modifier.size(20.dp),
+                        modifier = Modifier.padding(horizontal = 12.dp).size(20.dp),
                         color = colors.gold, strokeWidth = 2.dp,
                     )
                 } else {
                     IconButton(onClick = { picker.launch("*/*") }) {
-                        Icon(Icons.Filled.Add, contentDescription = "Add file", tint = colors.gold)
+                        Icon(Icons.Filled.Add, contentDescription = "Add file", tint = colors.foreground)
                     }
                 }
             }
-            Spacer(Modifier.height(space.md))
         }
         if (state.artifacts.isEmpty()) {
             EmptyState(
-                "No artifacts yet",
-                "Save files here to keep them with your agent — documents, " +
-                    "lists, images, anything.",
+                "Nothing saved yet",
+                "Keep files with your agent — documents, lists, images, anything. Tap + to add one.",
                 modifier = Modifier.fillMaxWidth(),
             )
         } else {
-            LazyColumn(Modifier.fillMaxSize()) {
+            LazyColumn(Modifier.fillMaxSize(), contentPadding = androidx.compose.foundation.layout.PaddingValues(bottom = space.xl)) {
                 items(state.artifacts, key = { it.id }) { entry ->
-                    Column(Modifier.padding(horizontal = space.lg)) {
-                        ArtifactRow(entry, onOpen = { viewer = entry })
-                        Spacer(Modifier.height(space.sm))
-                    }
+                    ArtifactRow(entry, onOpen = { viewer = entry })
                 }
             }
         }
@@ -198,38 +189,46 @@ private fun ArtifactRow(entry: ArtifactEntry, onOpen: () -> Unit) {
     val space = AgencyTokens.space
     val badge = entry.name.substringAfterLast('.', "")
         .uppercase().take(4).ifBlank { "FILE" }
-    AgencyCard(Modifier.fillMaxWidth().clickable { onOpen() }) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Box(
-                Modifier
-                    .size(40.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(colors.primarySoft),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    badge,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = colors.gold,
-                    maxLines = 1,
-                )
-            }
-            Spacer(Modifier.width(space.md))
-            Column(Modifier.weight(1f)) {
-                Text(
-                    entry.name,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = colors.foreground,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-                Spacer(Modifier.height(2.dp))
-                Text(
-                    "${formatSize(entry.size)} · ${relativeTime(entry.addedAt / 1000.0)}",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = colors.tertiary,
-                )
-            }
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .padding(horizontal = space.sm)
+            .clip(RoundedCornerShape(AgencyTokens.shapes.md))
+            .clickable { onOpen() }
+            .heightIn(min = 64.dp)
+            .padding(horizontal = space.sm, vertical = space.sm),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Box(
+            Modifier
+                .size(44.dp)
+                .clip(RoundedCornerShape(AgencyTokens.shapes.sm))
+                .background(colors.card)
+                .border(1.dp, colors.stroke, RoundedCornerShape(AgencyTokens.shapes.sm)),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(
+                badge,
+                style = MaterialTheme.typography.labelSmall,
+                color = colors.gold,
+                maxLines = 1,
+            )
+        }
+        Spacer(Modifier.width(space.md))
+        Column(Modifier.weight(1f)) {
+            Text(
+                entry.name,
+                style = MaterialTheme.typography.bodyLarge,
+                color = colors.foreground,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+            Spacer(Modifier.height(2.dp))
+            Text(
+                "${formatSize(entry.size)} · ${relativeTime(entry.addedAt / 1000.0)}",
+                style = MaterialTheme.typography.labelMedium,
+                color = colors.tertiary,
+            )
         }
     }
 }

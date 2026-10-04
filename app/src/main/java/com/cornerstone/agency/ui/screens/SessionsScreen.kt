@@ -39,9 +39,10 @@ import com.cornerstone.agency.data.SessionSummary
 import com.cornerstone.agency.theme.AgencyTokens
 import com.cornerstone.agency.ui.AppViewModel
 import com.cornerstone.agency.ui.components.AgencyRow
-import com.cornerstone.agency.ui.components.BotAvatar
+import com.cornerstone.agency.ui.components.BotMark
 import com.cornerstone.agency.ui.components.EmptyState
 import com.cornerstone.agency.ui.components.botAvatarColor
+import com.cornerstone.agency.ui.components.cleanPreview
 import com.cornerstone.agency.ui.components.relativeTime
 import kotlinx.coroutines.launch
 
@@ -95,10 +96,10 @@ fun SessionsScreen(
             IconButton(onClick = onBack) {
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = colors.foreground)
             }
-            BotAvatar(
-                name = botName,
+            BotMark(
                 color = botAvatarColor(profileName, profileName == "default"),
-                size = 30.dp,
+                size = 34.dp,
+                contentDescription = botName,
             )
             Spacer(Modifier.width(space.sm))
             Column {
@@ -130,7 +131,7 @@ fun SessionsScreen(
                     items(sessions, key = { it.id }) { s ->
                         AgencyRow(
                             title = s.label,
-                            subtitle = s.preview.lineSequence().firstOrNull() ?: "",
+                            subtitle = cleanPreview(s.preview).takeUnless { it == s.label } ?: "",
                             meta = relativeTime(s.startedAt),
                             onClick = { onOpenSession(s.id) },
                             onLongClick = { pendingDelete = s },

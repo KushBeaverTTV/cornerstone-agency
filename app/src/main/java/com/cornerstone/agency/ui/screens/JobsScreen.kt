@@ -142,7 +142,8 @@ fun JobsScreen(vm: AppViewModel, onOpenJob: (String) -> Unit = {}, onBack: (() -
     PullToRefreshBox(
         isRefreshing = loading && jobs.isNotEmpty(),
         onRefresh = { loading = true; load() },
-        modifier = Modifier.fillMaxSize(),
+        // As a pushed route (from Me) this screen sits outside the shell scaffold.
+        modifier = Modifier.fillMaxSize().then(if (onBack != null) Modifier.safeDrawingPadding() else Modifier),
     ) {
         LazyColumn(Modifier.fillMaxSize()) {
             item {
@@ -157,7 +158,7 @@ fun JobsScreen(vm: AppViewModel, onOpenJob: (String) -> Unit = {}, onBack: (() -
                             Icon(
                                 Icons.AutoMirrored.Filled.ArrowBack,
                                 contentDescription = "Back",
-                                tint = colors.gold,
+                                tint = colors.foreground,
                             )
                         }
                     }

@@ -41,6 +41,10 @@ val AgencyDefaultViolet = Color(0xFF8B5CF6)
 val AgencyWordmark = AgencyForeground.copy(alpha = 0.9f)
 val AgencyHairline = AgencyStroke
 val AgencySelection = AgencyGold.copy(alpha = 0.38f)
+/** Neutral user bubble (Muse/Grok): gold stays reserved for state and primary actions. */
+val AgencyBubble = Color(0xFF232327)
+/** Quiet surface for grouped rows and docked composers. */
+val AgencySurface = Color(0xFF121214)
 
 data class AgencyColors(
     val chrome: Color = AgencyChrome,
@@ -65,6 +69,15 @@ data class AgencyColors(
     val wordmark: Color = AgencyWordmark,
     val hairline: Color = AgencyHairline,
     val selection: Color = AgencySelection,
+    val bubble: Color = AgencyBubble,
+    val surface: Color = AgencySurface,
+)
+
+/** Corner radii: one small, one for cards/rows, one pill. */
+data class AgencyShapes(
+    val sm: androidx.compose.ui.unit.Dp = 10.dp,
+    val md: androidx.compose.ui.unit.Dp = 18.dp,
+    val lg: androidx.compose.ui.unit.Dp = 24.dp,
 )
 
 data class AgencySpacing(
@@ -142,12 +155,15 @@ private val AgencyTypography = Typography(
 
 val LocalAgencyColors = staticCompositionLocalOf { AgencyColors() }
 val LocalAgencySpacing = staticCompositionLocalOf { AgencySpacing() }
+val LocalAgencyShapes = staticCompositionLocalOf { AgencyShapes() }
 
 object AgencyTokens {
     val colors: AgencyColors
         @Composable get() = LocalAgencyColors.current
     val space: AgencySpacing
         @Composable get() = LocalAgencySpacing.current
+    val shapes: AgencyShapes
+        @Composable get() = LocalAgencyShapes.current
 }
 
 @Composable
@@ -156,6 +172,7 @@ fun AgencyTheme(content: @Composable () -> Unit) {
     CompositionLocalProvider(
         LocalAgencyColors provides colors,
         LocalAgencySpacing provides AgencySpacing(),
+        LocalAgencyShapes provides AgencyShapes(),
     ) {
         MaterialTheme(
             colorScheme = darkColorScheme(

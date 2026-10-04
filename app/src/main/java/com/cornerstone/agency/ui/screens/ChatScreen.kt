@@ -70,7 +70,8 @@ import com.cornerstone.agency.theme.AgencyTokens
 import com.cornerstone.agency.ui.AppViewModel
 import com.cornerstone.agency.ui.isCompactHeight
 import com.cornerstone.agency.ui.components.AgencyTextField
-import com.cornerstone.agency.ui.components.BotAvatar
+import com.cornerstone.agency.ui.components.BotMark
+import com.cornerstone.agency.ui.components.KeystoneState
 import com.cornerstone.agency.ui.components.MicIcon
 import com.cornerstone.agency.ui.components.ModelPickerSheet
 import com.cornerstone.agency.ui.components.botAvatarColor
@@ -241,12 +242,18 @@ fun ChatScreen(
             val agent = remember(items, streaming, socketState) {
                 agentActivity(items, streaming, socketState != GatewayState.OPEN)
             }
-            StatusAvatar(
-                name = botName,
+            // The keystone is the avatar; its motion is the status (Muse/Grok Bot).
+            BotMark(
                 color = if (prima) colors.defaultViolet
                     else botAvatarColor(profileName, profileName == "default"),
-                state = agent.state,
-                size = if (compact) 28.dp else 36.dp,
+                size = if (compact) 32.dp else 40.dp,
+                state = when (agent.state) {
+                    AgentState.WORKING -> KeystoneState.WORKING
+                    AgentState.WAITING -> KeystoneState.WAITING
+                    AgentState.OFFLINE -> KeystoneState.ERROR
+                    AgentState.IDLE -> KeystoneState.IDLE
+                },
+                contentDescription = botName,
             )
             Spacer(Modifier.width(space.md))
             Column(Modifier.weight(1f)) {
@@ -258,7 +265,9 @@ fun ChatScreen(
                     overflow = TextOverflow.Ellipsis,
                 )
                 if (!compact) {
-                    val line = agent.label ?: title.ifBlank { "New session" }
+                    val line = agent.label
+                        ?: title.let { if (com.cornerstone.agency.ui.components.looksMachineTitle(it)) it.replace('_', ' ') else it }
+                            .ifBlank { "New session" }
                     Text(
                         line,
                         style = MaterialTheme.typography.labelMedium,
@@ -305,6 +314,10 @@ fun ChatScreen(
                         },
                     )
                     if (!prima) {
+                        DropdownMenuItem(
+                            text = { Text("Model · ${shortModelLabel(profile?.model ?: "")}") },
+                            onClick = { menuOpen = false; openModelSheet() },
+                        )
                         DropdownMenuItem(
                             text = { Text("Bot settings") },
                             onClick = { menuOpen = false; onOpenBotSettings() },
@@ -423,96 +436,24 @@ fun ChatScreen(
             )
         }
 
-        // Model pill — Grok-style quick switcher above the composer.
-        if (!prima) {
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = if (compact) space.sm else space.lg),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Row(
-                    Modifier
-                        .clip(RoundedCornerShape(999.dp))
-                        .border(1.dp, colors.stroke, RoundedCornerShape(999.dp))
-                        .background(colors.card)
-                        .clickable { openModelSheet() }
-                        .heightIn(min = 48.dp)
-                        .padding(horizontal = 14.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .size(8.dp)
-                            .clip(CircleShape)
-                            .background(colors.gold),
-                    )
-                    Spacer(Modifier.width(6.dp))
-                    Text(
-                        shortModelLabel(profile?.model ?: ""),
-                        style = MaterialTheme.typography.labelMedium,
-                        color = colors.foreground,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.widthIn(max = 200.dp),
-                    )
-                    Icon(
-                        Icons.Filled.KeyboardArrowDown,
-                        contentDescription = "Change model",
-                        tint = colors.tertiary,
-                        modifier = Modifier.size(16.dp),
-                    )
-                }
-            }
-            Spacer(Modifier.height(space.xs))
-        }
-
-        // Composer - one tall pill; the trailing button is mic when empty, send when
-        // there is text, stop while a turn streams (Grok-style).
+        // Composer (Grok): one rounded surface. Text on top; below it the model chip on the
+        // left and a single action on the right — mic when empty, send with text, stop while
+        // a turn streams. On the cover display it collapses to one row (model lives in the menu).
         val hasText = draft.isNotBlank()
-        val pill = RoundedCornerShape(28.dp)
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .padding(
-                    horizontal = if (compact) space.sm else space.lg,
-                    vertical = space.sm,
-                )
-                .heightIn(min = 56.dp)
-                .clip(pill)
-                .border(1.dp, if (draftFocused) colors.gold else colors.stroke, pill)
-                .background(colors.card)
-                .padding(start = space.lg, end = 4.dp, top = 4.dp, bottom = 4.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Box(Modifier.weight(1f).padding(vertical = space.sm)) {
-                BasicTextField(
-                    value = draft,
-                    onValueChange = { draft = it },
-                    modifier = Modifier.fillMaxWidth().onFocusChanged { draftFocused = it.isFocused },
-                    maxLines = 6,
-                    textStyle = MaterialTheme.typography.bodyLarge.copy(color = colors.foreground),
-                    cursorBrush = SolidColor(colors.gold),
-                    decorationBox = { inner ->
-                        Box {
-                            if (draft.isEmpty()) {
-                                Text(
-                                    "Message $botName",
-                                    style = MaterialTheme.typography.bodyLarge,
-                                    color = colors.tertiary,
-                                )
-                            }
-                            inner()
-                        }
-                    },
-                )
-            }
+        val shape = RoundedCornerShape(if (compact) 28.dp else 26.dp)
+        val action: @Composable () -> Unit = {
             Box(
                 Modifier
                     .size(48.dp)
                     .clip(CircleShape)
-                    .background(if (streaming) colors.destructive else colors.primary)
-                    .clickable {
+                    .background(
+                        when {
+                            streaming -> colors.destructive
+                            hasText -> colors.primary
+                            else -> colors.elevated
+                        },
+                    )
+                    .clickable(role = androidx.compose.ui.semantics.Role.Button) {
                         when {
                             streaming -> scope.launch { chat.stop() }
                             hasText -> {
@@ -542,9 +483,84 @@ fun ChatScreen(
                         hasText -> "Send"
                         else -> "Voice"
                     },
-                    tint = if (streaming) colors.foreground else colors.onPrimary,
+                    tint = when {
+                        streaming -> colors.foreground
+                        hasText -> colors.onPrimary
+                        else -> colors.foreground
+                    },
                     modifier = Modifier.size(22.dp),
                 )
+            }
+        }
+        val field: @Composable (Modifier) -> Unit = { m ->
+            BasicTextField(
+                value = draft,
+                onValueChange = { draft = it },
+                modifier = m.onFocusChanged { draftFocused = it.isFocused },
+                maxLines = 6,
+                textStyle = MaterialTheme.typography.bodyLarge.copy(color = colors.foreground),
+                cursorBrush = SolidColor(colors.gold),
+                decorationBox = { inner ->
+                    Box {
+                        if (draft.isEmpty()) {
+                            Text(
+                                "Message $botName",
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = colors.tertiary,
+                            )
+                        }
+                        inner()
+                    }
+                },
+            )
+        }
+        val frame = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = if (compact) space.sm else space.lg, vertical = space.sm)
+            .clip(shape)
+            .border(1.dp, if (draftFocused) colors.gold else colors.stroke, shape)
+            .background(colors.surface)
+        if (compact || prima) {
+            Row(
+                frame.heightIn(min = 56.dp).padding(start = space.lg, end = 4.dp, top = 4.dp, bottom = 4.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Box(Modifier.weight(1f).padding(vertical = space.sm)) { field(Modifier.fillMaxWidth()) }
+                action()
+            }
+        } else {
+            Column(frame.padding(start = space.lg, end = 6.dp, top = space.md, bottom = 6.dp)) {
+                field(Modifier.fillMaxWidth().padding(end = space.sm))
+                Spacer(Modifier.height(space.sm))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Row(
+                        Modifier
+                            .clip(CircleShape)
+                            .clickable(role = androidx.compose.ui.semantics.Role.Button, onClickLabel = "Change model") { openModelSheet() }
+                            .heightIn(min = 40.dp)
+                            .padding(horizontal = space.sm),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Box(Modifier.size(6.dp).clip(CircleShape).background(colors.gold))
+                        Spacer(Modifier.width(8.dp))
+                        Text(
+                            shortModelLabel(profile?.model ?: ""),
+                            style = MaterialTheme.typography.labelMedium,
+                            color = colors.secondary,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.widthIn(max = 180.dp),
+                        )
+                        Icon(
+                            Icons.Filled.KeyboardArrowDown,
+                            contentDescription = null,
+                            tint = colors.tertiary,
+                            modifier = Modifier.size(16.dp),
+                        )
+                    }
+                    Spacer(Modifier.weight(1f))
+                    action()
+                }
             }
         }
     }
@@ -636,11 +652,31 @@ private fun ChatBubble(
     val colors = AgencyTokens.colors
     when (item.kind) {
         ChatKind.User -> {
+            // Harness preambles (voice / cron) are not something you said — show a quiet marker.
+            val preamble = preambleLabel(item.text)
+            if (preamble != null) {
+                Row(
+                    Modifier.fillMaxWidth().padding(vertical = 6.dp),
+                    horizontalArrangement = Arrangement.Center,
+                ) {
+                    Text(
+                        preamble,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = colors.tertiary,
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .background(colors.sidebar)
+                            .border(1.dp, colors.stroke, CircleShape)
+                            .padding(horizontal = 12.dp, vertical = 6.dp),
+                    )
+                }
+                return
+            }
             var exp by remember(item.id) { mutableStateOf(false) }
             var overflow by remember(item.id) { mutableStateOf(false) }
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 Bubble(
-                    colors.primarySoft,
+                    colors.bubble,
                     Modifier.widthIn(max = 340.dp).copyOnLongPress(item.text),
                 ) {
                     Column {
@@ -781,14 +817,24 @@ private fun ChatBubble(
     }
 }
 
+/** Voice / cron harness preambles → a short human label; null for real messages. */
+private fun preambleLabel(text: String): String? {
+    val first = text.lineSequence().firstOrNull { it.isNotBlank() }?.trim() ?: return null
+    return when {
+        first.startsWith("You are being used through a hands-free voice", true) -> "Voice conversation"
+        first.startsWith("[IMPORTANT: You are running as a scheduled cron", true) -> "Scheduled job"
+        else -> null
+    }
+}
+
 @Composable
 private fun Bubble(color: androidx.compose.ui.graphics.Color, modifier: Modifier = Modifier, content: @Composable () -> Unit) {
+    // Flat, borderless (Muse): the tint alone separates you from the agent.
     Box(
         modifier
-            .clip(RoundedCornerShape(18.dp))
-            .border(1.dp, AgencyTokens.colors.edge, RoundedCornerShape(18.dp))
+            .clip(RoundedCornerShape(20.dp))
             .background(color)
-            .padding(horizontal = 14.dp, vertical = 10.dp),
+            .padding(horizontal = 16.dp, vertical = 11.dp),
     ) {
         content()
     }
@@ -1011,34 +1057,6 @@ private fun agentActivity(items: List<ChatItem>, streaming: Boolean, offline: Bo
         if (last?.kind == ChatKind.Thinking) "Thinking…" else "Replying…",
     )
 }
-
-/** Avatar whose ring tells the story: pulsing gold = working, solid amber = needs you. */
-@Composable
-private fun StatusAvatar(name: String, color: Color, state: AgentState, size: androidx.compose.ui.unit.Dp) {
-    val colors = AgencyTokens.colors
-    val t = rememberInfiniteTransition(label = "avatar")
-    val pulse by t.animateFloat(
-        0f, 1f, infiniteRepeatable(tween(1100), RepeatMode.Reverse), label = "avatarPulse",
-    )
-    val ring = when (state) {
-        AgentState.WORKING -> colors.gold
-        AgentState.WAITING -> colors.warm
-        AgentState.OFFLINE -> colors.destructive
-        AgentState.IDLE -> Color.Transparent
-    }
-    Box(Modifier.size(size + 12.dp), contentAlignment = Alignment.Center) {
-        if (state != AgentState.IDLE) {
-            val a = if (state == AgentState.WORKING) 0.25f + 0.75f * pulse else 1f
-            Box(
-                Modifier
-                    .size(size + 8.dp + if (state == AgentState.WORKING) (4.dp * pulse) else 0.dp)
-                    .border(2.dp, ring.copy(alpha = a), CircleShape),
-            )
-        }
-        BotAvatar(name = name, color = color, size = size)
-    }
-}
-
 
 /** Fenced code: language label + Copy, monospace, scrolls sideways instead of wrapping. */
 @Composable

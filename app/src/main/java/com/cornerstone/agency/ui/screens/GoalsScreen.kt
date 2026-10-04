@@ -1,18 +1,23 @@
 package com.cornerstone.agency.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.AlertDialog
@@ -33,17 +38,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.cornerstone.agency.data.Goal
 import com.cornerstone.agency.theme.AgencyTokens
 import com.cornerstone.agency.ui.AppViewModel
-import com.cornerstone.agency.ui.components.AgencyCard
 import com.cornerstone.agency.ui.components.AgencyTextField
 import com.cornerstone.agency.ui.components.EmptyState
-import com.cornerstone.agency.ui.components.SectionKicker
+import com.cornerstone.agency.ui.components.PageHeader
 import com.cornerstone.agency.ui.components.relativeTime
+import com.cornerstone.agency.ui.isCompactHeight
 
 private val GOAL_CATEGORIES = listOf("Health", "Relationships", "Finance", "Work", "Personal")
 
@@ -52,6 +59,7 @@ fun GoalsScreen(vm: AppViewModel) {
     val colors = AgencyTokens.colors
     val space = AgencyTokens.space
     val state by vm.companion.state.collectAsState()
+    val compact = isCompactHeight()
 
     var creating by remember { mutableStateOf(false) }
     var title by remember { mutableStateOf("") }
@@ -62,26 +70,25 @@ fun GoalsScreen(vm: AppViewModel) {
 
     val open = state.goals.filter { !it.done }
     val done = state.goals.filter { it.done }
+    // Muse groups goals under coloured category headers; order follows the fixed category list.
+    val byCategory = remember(open) {
+        open.groupBy { it.category }.toList().sortedBy { (c, _) ->
+            GOAL_CATEGORIES.indexOf(c).let { if (it < 0) Int.MAX_VALUE else it }
+        }
+    }
 
     Column(Modifier.fillMaxSize()) {
-        Column(Modifier.padding(horizontal = space.lg)) {
-            Spacer(Modifier.height(space.lg))
-            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    "Goals",
-                    style = MaterialTheme.typography.displayLarge,
-                    modifier = Modifier.weight(1f),
-                )
+        if (!compact) {
+            PageHeader("Goals") {
                 IconButton(onClick = {
                     title = ""
                     detail = ""
                     category = "Personal"
                     creating = true
                 }) {
-                    Icon(Icons.Filled.Add, contentDescription = "New goal", tint = colors.gold)
+                    Icon(Icons.Filled.Add, contentDescription = "New goal", tint = colors.foreground)
                 }
             }
-            Spacer(Modifier.height(space.md))
         }
         if (state.goals.isEmpty()) {
             EmptyState(
@@ -90,44 +97,31 @@ fun GoalsScreen(vm: AppViewModel) {
                 modifier = Modifier.fillMaxWidth(),
             )
         } else {
-            LazyColumn(Modifier.fillMaxSize()) {
-                if (open.isNotEmpty()) {
-                    item {
-                        SectionKicker(
-                            "Tracking",
-                            modifier = Modifier.padding(horizontal = space.lg),
+            LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = space.xl)) {
+                byCategory.forEach { (cat, goals) ->
+                    item(key = "cat-$cat") {
+                        CategoryHeader(cat, goals.size, categoryColor(cat))
+                    }
+                    items(goals, key = { it.id }) { goal ->
+                        GoalRow(
+                            goal = goal,
+                            accent = categoryColor(goal.category),
+                            onToggle = { vm.companion.toggleGoal(goal.id) },
+                            onOpen = { viewing = goal },
                         )
-                        Spacer(Modifier.height(space.xs))
                     }
-                    items(open, key = { it.id }) { goal ->
-                        Column(Modifier.padding(horizontal = space.lg)) {
-                            GoalRow(
-                                goal = goal,
-                                onToggle = { vm.companion.toggleGoal(goal.id) },
-                                onOpen = { viewing = goal },
-                            )
-                            Spacer(Modifier.height(space.sm))
-                        }
-                    }
-                    item { Spacer(Modifier.height(space.md)) }
                 }
                 if (done.isNotEmpty()) {
-                    item {
-                        SectionKicker(
-                            "Done",
-                            modifier = Modifier.padding(horizontal = space.lg),
-                        )
-                        Spacer(Modifier.height(space.xs))
+                    item(key = "done-head") {
+                        CategoryHeader("Done", done.size, colors.tertiary)
                     }
                     items(done, key = { it.id }) { goal ->
-                        Column(Modifier.padding(horizontal = space.lg)) {
-                            GoalRow(
-                                goal = goal,
-                                onToggle = { vm.companion.toggleGoal(goal.id) },
-                                onOpen = { viewing = goal },
-                            )
-                            Spacer(Modifier.height(space.sm))
-                        }
+                        GoalRow(
+                            goal = goal,
+                            accent = colors.tertiary,
+                            onToggle = { vm.companion.toggleGoal(goal.id) },
+                            onOpen = { viewing = goal },
+                        )
                     }
                 }
             }
@@ -228,61 +222,88 @@ fun GoalsScreen(vm: AppViewModel) {
     }
 }
 
+/** Category tint: gold is Work (the agency's business); the rest stay quiet and distinct. */
 @Composable
-private fun GoalRow(goal: Goal, onToggle: () -> Unit, onOpen: () -> Unit) {
+private fun categoryColor(category: String): Color {
+    val colors = AgencyTokens.colors
+    return when (category) {
+        "Work" -> colors.gold
+        "Health" -> colors.success
+        "Finance" -> Color(0xFF7FB3FF)
+        "Relationships" -> colors.warm
+        else -> Color(0xFFF4F4F0)
+    }
+}
+
+@Composable
+private fun CategoryHeader(name: String, count: Int, accent: Color) {
     val colors = AgencyTokens.colors
     val space = AgencyTokens.space
-    AgencyCard(Modifier.fillMaxWidth()) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Checkbox(
-                checked = goal.done,
-                onCheckedChange = { onToggle() },
-                colors = CheckboxDefaults.colors(
-                    checkedColor = colors.gold,
-                    checkmarkColor = colors.onPrimary,
-                    uncheckedColor = colors.tertiary,
-                ),
+    Row(
+        Modifier.padding(start = space.lg, end = space.lg, top = space.lg, bottom = space.xs),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Box(Modifier.size(8.dp).clip(CircleShape).background(accent))
+        Spacer(Modifier.width(space.sm))
+        Text(
+            name.uppercase(),
+            style = MaterialTheme.typography.labelSmall,
+            color = colors.secondary,
+            modifier = Modifier.weight(1f),
+        )
+        Text(count.toString(), style = MaterialTheme.typography.labelSmall, color = colors.tertiary)
+    }
+}
+
+@Composable
+private fun GoalRow(goal: Goal, accent: Color, onToggle: () -> Unit, onOpen: () -> Unit) {
+    val colors = AgencyTokens.colors
+    val space = AgencyTokens.space
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .padding(horizontal = space.sm)
+            .clip(RoundedCornerShape(AgencyTokens.shapes.md))
+            .clickable(onClick = onOpen)
+            .heightIn(min = 56.dp)
+            .padding(start = space.xs, end = space.md, top = space.xs, bottom = space.xs),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Checkbox(
+            checked = goal.done,
+            onCheckedChange = { onToggle() },
+            colors = CheckboxDefaults.colors(
+                checkedColor = accent,
+                checkmarkColor = colors.onPrimary,
+                uncheckedColor = colors.tertiary,
+            ),
+        )
+        Spacer(Modifier.width(space.xs))
+        Column(Modifier.weight(1f).padding(vertical = space.xs)) {
+            Text(
+                goal.title,
+                style = MaterialTheme.typography.bodyLarge,
+                color = if (goal.done) colors.tertiary else colors.foreground,
+                textDecoration = if (goal.done) TextDecoration.LineThrough else null,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
             )
-            Spacer(Modifier.width(space.sm))
-            Column(
-                Modifier
-                    .weight(1f)
-                    .clickable { onOpen() }
-                    .padding(vertical = space.xs),
-            ) {
+            if (goal.detail.isNotBlank()) {
+                Spacer(Modifier.height(2.dp))
                 Text(
-                    goal.title,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = if (goal.done) colors.tertiary else colors.foreground,
-                    textDecoration = if (goal.done) TextDecoration.LineThrough else null,
+                    goal.detail,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = colors.secondary,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                 )
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(space.sm),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Text(
-                        goal.category,
-                        style = MaterialTheme.typography.labelSmall,
-                        color = colors.gold,
-                    )
-                    Text(
-                        relativeTime(goal.createdAt / 1000.0),
-                        style = MaterialTheme.typography.labelSmall,
-                        color = colors.tertiary,
-                    )
-                }
-                if (goal.detail.isNotBlank()) {
-                    Text(
-                        goal.detail,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = colors.secondary,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                }
             }
         }
+        Spacer(Modifier.width(space.sm))
+        Text(
+            relativeTime(goal.createdAt / 1000.0),
+            style = MaterialTheme.typography.labelSmall,
+            color = colors.tertiary,
+        )
     }
 }

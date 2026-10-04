@@ -21,6 +21,7 @@ import com.cornerstone.agency.ui.screens.BotDetailScreen
 import com.cornerstone.agency.ui.screens.ChatScreen
 import com.cornerstone.agency.ui.screens.ConnectScreen
 import com.cornerstone.agency.ui.screens.JobDetailScreen
+import com.cornerstone.agency.ui.screens.JobsScreen
 import com.cornerstone.agency.ui.screens.NewAgentScreen
 import com.cornerstone.agency.ui.screens.PrimaSessionsScreen
 import com.cornerstone.agency.ui.screens.SessionsScreen
@@ -36,6 +37,7 @@ object Routes {
     const val BOT = "bot/{profile}"
     const val BOT_NEW = "bot/new"
     const val JOB = "job/{id}"
+    const val JOBS = "jobs"
     const val SKILLS = "skills"
     const val SYSTEM = "system"
     const val SHARE = "share"
@@ -112,12 +114,18 @@ fun AppNav(vm: AppViewModel, navController: NavHostController = rememberNavContr
                     navController.navigate(Routes.bot(profile))
                 },
                 onNewAgent = { navController.navigate(Routes.BOT_NEW) },
-                onOpenJob = { id -> navController.navigate(Routes.job(id)) },
+                onOpenJobs = { navController.navigate(Routes.JOBS) },
                 onOpenSystem = { navController.navigate(Routes.SYSTEM) },
                 onOpenSkills = { navController.navigate(Routes.SKILLS) },
                 onOpenPrima = { navController.navigate(Routes.prima()) },
-                onOpenPrimaSessions = { navController.navigate(Routes.PRIMA_SESSIONS) },
                 onOpenPrimaSession = { sid -> navController.navigate(Routes.prima(sid)) },
+            )
+        }
+        composable(Routes.JOBS) {
+            JobsScreen(
+                vm = vm,
+                onOpenJob = { id -> navController.navigate(Routes.job(id)) },
+                onBack = { navController.popBackStack() },
             )
         }
         composable(

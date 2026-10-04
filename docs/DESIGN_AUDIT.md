@@ -90,7 +90,19 @@ Unverifiable: Muse dark mode, Grok's consumer voice orb.
 - Second sonnet review fixed: inbox race (synchronized), debug items never hit the socket, a11y labels on jump/copy/keystone.
 - Lesson: vision critiques are unreliable on fine detail (claimed code was not monospace; pixel widths proved it was). Verify with measurements.
 
+## Pass 6 — bot-style home, five tabs, a real Feed (verified on device)
+Brief: "the chat section looks like an email inbox", "the feed has nothing", "you got rid of the tabs", "Muse as inspiration".
+- Navigation: back to five tabs (Chats / Feed / Goals / Files / Me) with a custom bar — hairline top, gold tint + short underline on the active tab, badge dots (Chats = needs-you, Feed = unread). Icons are hand-drawn `ImageVector`s in `AgencyIcons` (only `material-icons-core` is a dependency). Jobs moved under Me > Routines.
+- Chats (`ChatsScreen.kt`, replaces `BotsScreen`): one row per bot with the keystone mark in a tinted disc (`BotMark`), name + last line + relative time; Desktop section for Prima; "Recent" is a quiet dot list capped at 6 and skips cron/voice noise. Machine-looking titles (`UI_test:_in_your…`) are cleaned (`sessionLine`). Docked composer pill ("Ask anyone…") routes via Laya when the bridge is up, otherwise a picker sheet; mic goes straight to voice.
+- Chat: borderless neutral user bubble (`colors.bubble`), voice/cron preambles collapse to a centered chip, two-row Grok-style composer (model chip bottom-left, mic/send right), header avatar is the animated `BotMark` with WORKING / WAITING / ERROR states.
+- Feed: actually written. `FeedWriter` opens a hidden throwaway session with Kaori, sends the brief, waits for a quiet turn (streaming dips between tool rounds, so "finished" = 2.5 s quiet + last row is assistant text), parses the newest assistant text that is a JSON array, dedupes by title into `CompanionRepository`, then `session.close` + `session.delete` (the gateway refuses to delete a live session). The session is marked `session.set_hidden` at creation so it never appears in Chats even if the app dies mid-run. Paper-style rows: topic kicker, Collapse headline, 14/20 body, source host, unread dot; grouped Today / Yesterday / date. Status strip while writing; menu = Edit brief / Mark all read / Clear.
+- Goals grouped by category with a colour accent per group, Done folded at the bottom. Files is a plain list with a bordered type badge. Cards everywhere lost the yellow border (neutral `stroke`, 18dp radius).
+- Me: identity row (initial in Collapse, host, Online pill), Connection card, Voice + Desktop bridge sections with Edit → Save/Cancel, More (Routines / Skills / System) with chevrons, Disconnect confirms. Dead "Appearance" row removed.
+- Lessons: build from `C:\Cornerstone\...`, not the `D:` alias (Kotlin incremental compile trips on mismatched roots). `am start`/`input tap` on the phone can land on the notification shade — screenshot before tapping, `cmd statusbar collapse` to recover.
+
 ## Known issues / not done
+- Feed writer timing depends on Kaori's search depth (1–5 min); there is no cancel yet beyond leaving it to the 6 min timeout.
+- Cover-display (compact) layout for the new Chats home has not been re-checked.
 - The earlier "dark status-bar clock" was a stale-build artifact (the APK still held old dex); it renders correctly now. Always `gradlew clean assembleDebug` after structural edits.
 - Inbox only shows requests from sessions you are not inside (leaving a chat interrupts its live turn, so only background/Telegram/cron sessions appear). Your config has approvals off, so real ones are rare; clarify and secret requests still show.
 - Multi-question clarifies and secrets open the chat instead of answering inline.
