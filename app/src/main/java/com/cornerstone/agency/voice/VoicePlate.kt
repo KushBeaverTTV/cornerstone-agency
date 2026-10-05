@@ -160,7 +160,7 @@ fun VoicePlate(
                 tint = if (showTranscript) colors.gold else colors.foreground,
             ) { showTranscript = !showTranscript }
             CallButton(
-                MicIcon,
+                if (muted) com.cornerstone.agency.ui.components.AgencyIcons.MicOff else MicIcon,
                 if (muted) "Unmute" else "Mute",
                 container = if (muted) colors.foreground else colors.elevated,
                 tint = if (muted) colors.chrome else colors.foreground,

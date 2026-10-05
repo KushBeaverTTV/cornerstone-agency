@@ -1,5 +1,6 @@
 package com.cornerstone.agency.ui.screens
 
+import kotlinx.coroutines.launch
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -120,7 +121,8 @@ fun MoreScreen(
                     color = colors.foreground,
                 )
                 Text(
-                    ui.baseUrl.removePrefix("http://").removePrefix("https://"),
+                    if (vm.repo.viaRelay) "Paired · ${ui.baseUrl.removePrefix("http://").substringBefore('/')}"
+                        else ui.baseUrl.removePrefix("http://").removePrefix("https://"),
                     style = MaterialTheme.typography.labelMedium,
                     color = colors.tertiary,
                     maxLines = 1, overflow = TextOverflow.Ellipsis,
@@ -258,6 +260,75 @@ fun MoreScreen(
                             bridgeHostDraft = null; bridgeTokenDraft = null; editBridge = false
                         },
                     )
+                }
+            }
+        }
+
+        // ---- PC services (health + restart; the watchdog task restarts them too) ------
+        if (vm.bridge.configured) {
+            var board by remember { mutableStateOf<com.cornerstone.agency.data.PcServices?>(null) }
+            var boardError by remember { mutableStateOf("") }
+            var restarting by remember { mutableStateOf<String?>(null) }
+            val boardScope = androidx.compose.runtime.rememberCoroutineScope()
+            fun loadBoard() {
+                boardScope.launch {
+                    board = runCatching { vm.bridge.services() }
+                        .onFailure { boardError = "Couldn't reach the PC" }
+                        .onSuccess { boardError = "" }
+                        .getOrNull() ?: board
+                }
+            }
+            LaunchedEffect(Unit) { loadBoard() }
+            Section("PC services", action = "Refresh", onAction = { loadBoard() }) {
+                AgencyCard(Modifier.fillMaxWidth()) {
+                    val b = board
+                    if (b == null) {
+                        Text(boardError.ifBlank { "Checking…" }, style = MaterialTheme.typography.bodyMedium, color = colors.tertiary)
+                    } else {
+                        InfoRow(
+                            "Live chats",
+                            when (b.hermes.backend) {
+                                "desktop" -> "shared with the desktop app"
+                                "serve" -> "dashboard (desktop app closed)"
+                                else -> "unavailable"
+                            },
+                        )
+                        b.services.forEach { s ->
+                            Spacer(Modifier.height(space.sm))
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Column(Modifier.weight(1f)) {
+                                    Text(s.label, style = MaterialTheme.typography.bodyMedium, color = colors.foreground)
+                                    Text(":${s.port}", style = MaterialTheme.typography.labelSmall, color = colors.tertiary)
+                                }
+                                Pill(
+                                    text = if (restarting == s.name) "Restarting" else if (s.ok) "Up" else "Down",
+                                    tone = if (restarting == s.name) colors.warm else if (s.ok) colors.success else colors.destructive,
+                                )
+                                if (s.restartable) TextButton(
+                                    enabled = restarting == null,
+                                    onClick = {
+                                        restarting = s.name
+                                        boardScope.launch {
+                                            runCatching { vm.bridge.restartService(s.name) }
+                                            // Give it time to come back (the bridge restarting itself drops this call).
+                                            kotlinx.coroutines.delay(6_000)
+                                            restarting = null
+                                            loadBoard()
+                                            if (s.name == "bridge") vm.refreshBridge()
+                                        }
+                                    },
+                                ) { Text("Restart", color = colors.gold) }
+                            }
+                        }
+                        b.watchdog.lastOrNull()?.let { line ->
+                            Spacer(Modifier.height(space.sm))
+                            Text(
+                                "Watchdog: ${line.trim().trimStart('\uFEFF')}",
+                                style = MaterialTheme.typography.labelSmall, color = colors.tertiary,
+                                maxLines = 2, overflow = TextOverflow.Ellipsis,
+                            )
+                        }
+                    }
                 }
             }
         }

@@ -191,6 +191,7 @@ fun ChatScreen(
     var providers by remember { mutableStateOf<List<com.cornerstone.agency.data.ModelProvider>>(emptyList()) }
     var providersLoading by remember { mutableStateOf(false) }
     var modelBusy by remember { mutableStateOf(false) }
+    var modelError by remember { mutableStateOf("") }
     fun openModelSheet() {
         modelSheet = true
         if (providers.isEmpty() && !providersLoading) {
@@ -822,8 +823,12 @@ fun ChatScreen(
             currentProvider = currentProvider,
             currentModel = currentModel,
             loading = providersLoading || modelBusy,
+            note = if (prima) "Switches this chat now and becomes Prima's default for new chats."
+                else "Applies to $botName everywhere — desktop, Telegram and this phone.",
+            error = modelError,
             onPick = { slug, model ->
                 modelBusy = true
+                modelError = ""
                 scope.launch {
                     try {
                         if (primaChat != null) {
@@ -835,12 +840,13 @@ fun ChatScreen(
                         modelSheet = false
                     } catch (e: Exception) {
                         // Keep the sheet open so the user can retry.
+                        modelError = "Couldn't switch: ${e.message ?: "error"}"
                     } finally {
                         modelBusy = false
                     }
                 }
             },
-            onDismiss = { modelSheet = false },
+            onDismiss = { modelSheet = false; modelError = "" },
         )
     }
 }

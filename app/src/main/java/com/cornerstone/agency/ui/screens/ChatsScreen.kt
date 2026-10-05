@@ -694,8 +694,17 @@ private fun InboxCard(
     val approval = req.kind == RequestKind.Approval
     val headline = when (req.kind) {
         RequestKind.Approval -> "$botTitle wants to run ${req.toolName.ifBlank { "a command" }}"
-        RequestKind.Clarify -> "$botTitle has a question"
+        RequestKind.Clarify -> if (req.questions.size > 1) "$botTitle has ${req.questions.size} questions" else "$botTitle has a question"
+        RequestKind.Secret -> "$botTitle needs a secret"
+        RequestKind.Sudo -> "$botTitle needs your password"
         else -> "$botTitle needs input"
+    }
+    // Multi-question clarifies, secrets, sudo and MCP setup are answered with the same card the
+    // chat shows (every question, masked secret entry) instead of "Open chat".
+    val fullCard = when (req.kind) {
+        RequestKind.Clarify -> quickChoices(req).isEmpty()
+        RequestKind.Approval -> false
+        else -> true
     }
     val body = when (req.kind) {
         RequestKind.Approval -> req.command.ifBlank { req.description }
@@ -704,9 +713,7 @@ private fun InboxCard(
     }
     val shape = RoundedCornerShape(AgencyTokens.shapes.md)
     val tone = colors.gold
-    val quick = if (req.kind == RequestKind.Clarify) {
-        req.questions.singleOrNull()?.takeIf { !it.multiSelect && it.choices.isNotEmpty() }?.choices.orEmpty()
-    } else emptyList()
+    val quick = quickChoices(req)
     Column(
         Modifier
             .padding(horizontal = space.lg, vertical = space.xs)
@@ -724,6 +731,19 @@ private fun InboxCard(
                 headline, style = MaterialTheme.typography.titleSmall, color = colors.foreground,
                 maxLines = 2, overflow = TextOverflow.Ellipsis,
             )
+        }
+        if (fullCard) {
+            Spacer(Modifier.height(space.md))
+            com.cornerstone.agency.ui.components.RequestCard(
+                req = req,
+                onApprove = { c -> NotificationCenter.answerApproval(item, c) },
+                onClarify = { answers -> haptics.performHapticFeedback(HapticFeedbackType.LongPress); NotificationCenter.answerClarifyAll(item, answers) },
+                onValue = { v -> NotificationCenter.answerValue(item, v) },
+                onMcp = { ok -> NotificationCenter.answerMcp(item, ok) },
+            )
+            Spacer(Modifier.height(space.sm))
+            InboxButton("Open chat", Color.Transparent, colors.secondary, Modifier.fillMaxWidth(), outlined = true, onClick = onOpen)
+            return@Column
         }
         if (body.isNotBlank()) {
             Spacer(Modifier.height(space.md))
@@ -788,6 +808,12 @@ private fun InboxCard(
         }
     }
 }
+
+/** One-tap answers: a single single-select question with choices. */
+private fun quickChoices(req: com.cornerstone.agency.data.PendingRequest): List<String> =
+    if (req.kind == RequestKind.Clarify) {
+        req.questions.singleOrNull()?.takeIf { !it.multiSelect && it.choices.isNotEmpty() }?.choices.orEmpty()
+    } else emptyList()
 
 @Composable
 private fun InboxButton(

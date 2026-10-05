@@ -89,7 +89,8 @@ class ServiceBoard:
 
     def last_watchdog_lines(self, n: int = 5) -> List[str]:
         try:
-            return WATCHDOG_LOG.read_text(encoding="utf-8", errors="replace").splitlines()[-n:]
+            # utf-8-sig: Windows PowerShell writes the log with a BOM.
+            return WATCHDOG_LOG.read_text(encoding="utf-8-sig", errors="replace").splitlines()[-n:]
         except OSError:
             return []
 

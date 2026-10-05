@@ -507,6 +507,9 @@ fun ModelPickerSheet(
     loading: Boolean,
     onPick: (providerSlug: String, modelId: String) -> Unit,
     onDismiss: () -> Unit,
+    /** What a switch affects (scope differs between Hermes bots and Prima). */
+    note: String = "",
+    error: String = "",
 ) {
     val colors = AgencyTokens.colors
     var filter by remember { mutableStateOf("") }
@@ -520,6 +523,12 @@ fun ModelPickerSheet(
                 style = MaterialTheme.typography.titleLarge,
                 color = colors.foreground,
             )
+            if (note.isNotBlank()) {
+                Text(note, style = MaterialTheme.typography.bodySmall, color = colors.secondary)
+            }
+            if (error.isNotBlank()) {
+                Text(error, style = MaterialTheme.typography.bodySmall, color = colors.destructive)
+            }
             Spacer(Modifier.height(AgencyTokens.space.sm))
             AgencyTextField(
                 value = filter,

@@ -41,6 +41,45 @@ data class BridgeHealth(
     val laya: BridgeHealthLaya = BridgeHealthLaya(),
 )
 
+/** A Prima conversation saved on the PC (~/.prime/agent/sessions), from GET /prima/saved. */
+@Serializable
+data class PrimaSaved(
+    val path: String = "",
+    val session_id: String = "",
+    val title: String = "",
+    val preview: String = "",
+    val cwd: String = "",
+    val message_count: Int = 0,
+    val model: String = "",
+    val updated_at: Double = 0.0,
+    /** Bridge session id when a worker already has it open. */
+    val open_id: String? = null,
+)
+
+@Serializable
+private data class PrimaSavedResponse(val sessions: List<PrimaSaved> = emptyList())
+
+/** One PC service on the Me screen, from GET /services. */
+@Serializable
+data class PcService(
+    val name: String = "",
+    val label: String = "",
+    val port: Int = 0,
+    val ok: Boolean = false,
+    val pid: Int? = null,
+    val restartable: Boolean = false,
+)
+
+@Serializable
+data class HermesRelayStatus(val backend: String = "", val phones: Int = 0)
+
+@Serializable
+data class PcServices(
+    val services: List<PcService> = emptyList(),
+    val hermes: HermesRelayStatus = HermesRelayStatus(),
+    val watchdog: List<String> = emptyList(),
+)
+
 @Serializable
 data class PrimaSession(
     val id: String = "",
@@ -127,10 +166,20 @@ class BridgeRepository(private val store: SecureStore) {
     suspend fun primaSessions(): List<PrimaSession> =
         json.decodeFromString<PrimaSessionsResponse>(api("/prima/sessions")).sessions
 
-    suspend fun createPrimaSession(cwd: String? = null, name: String = ""): String {
+    suspend fun primaSaved(limit: Int = 50): List<PrimaSaved> =
+        json.decodeFromString<PrimaSavedResponse>(api("/prima/saved?limit=$limit")).sessions
+
+    suspend fun services(): PcServices = json.decodeFromString(api("/services"))
+
+    suspend fun restartService(name: String) {
+        api("/services/$name/restart", "POST", "{}")
+    }
+
+    suspend fun createPrimaSession(cwd: String? = null, name: String = "", sessionPath: String? = null): String {
         val body = buildJsonObject {
             if (cwd != null) put("cwd", cwd)
             if (name.isNotBlank()) put("name", name)
+            if (sessionPath != null) put("session_path", sessionPath)
         }
         val res = json.parseToJsonElement(api("/prima/sessions", "POST", body.toString()))
         return (res as? JsonObject)?.get("id")

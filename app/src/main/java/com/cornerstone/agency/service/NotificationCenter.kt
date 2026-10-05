@@ -105,9 +105,19 @@ object NotificationCenter {
             kind = RequestKind.Clarify, requestId = "dbg-2",
             questions = listOf(com.cornerstone.agency.data.ClarifyQuestion("q0", "Which color do you prefer?", listOf("red", "blue"))),
         )
+        val m = PendingRequest(
+            kind = RequestKind.Clarify, requestId = "dbg-3",
+            questions = listOf(
+                com.cornerstone.agency.data.ClarifyQuestion("q0", "Which branch?", listOf("main", "development")),
+                com.cornerstone.agency.data.ClarifyQuestion("q1", "Run the full gate?", listOf("yes", "no")),
+            ),
+        )
+        val s = PendingRequest(kind = RequestKind.Secret, requestId = "dbg-4", prompt = "GitHub token for the release")
         _inbox.value = listOf(
             InboxItem("dbg-1", "dbg-1", a, "default", "dbg-s1"),
             InboxItem("dbg-2", "dbg-2", c, "aurora", "dbg-s2"),
+            InboxItem("dbg-3", "dbg-3", m, "default", "dbg-s3"),
+            InboxItem("dbg-4", "dbg-4", s, "default", "dbg-s4"),
         )
     }
 
@@ -119,15 +129,33 @@ object NotificationCenter {
 
     /** Answer a single-question clarify with one of its choices (mirrors ChatRepository.answerClarify). */
     fun answerClarify(item: InboxItem, answer: String) {
-        if (dropDebug(item)) return
         val q = item.req.questions.firstOrNull() ?: return
+        answerClarifyAll(item, mapOf(q.qid to answer))
+    }
+
+    /** Answer every question of a clarify at once (qid -> answer; "" qid = the single question). */
+    fun answerClarifyAll(item: InboxItem, answers: Map<String, String>) {
+        if (dropDebug(item)) return
         val batch = item.req.questions.any { it.qid.isNotEmpty() }
         val result = if (batch) {
-            buildJsonObject { put("answers", buildJsonObject { put(q.qid.ifEmpty { "q0" }, answer) }) }
+            buildJsonObject { put("answers", buildJsonObject { answers.forEach { (q, a) -> put(q.ifEmpty { "q0" }, a) } }) }
         } else {
-            buildJsonObject { put("answer", answer) }
+            buildJsonObject { put("answer", answers[""] ?: answers.values.firstOrNull().orEmpty()) }
         }
         GatewayHub.socket?.respond(JsonPrimitive(item.srq), result)
+        resolve(item.key)
+    }
+
+    /** Secret / sudo / free-text value, sent straight back on the request frame (never logged). */
+    fun answerValue(item: InboxItem, value: String) {
+        if (dropDebug(item)) return
+        GatewayHub.socket?.respond(JsonPrimitive(item.srq), buildJsonObject { put("value", value) })
+        resolve(item.key)
+    }
+
+    fun answerMcp(item: InboxItem, approved: Boolean) {
+        if (dropDebug(item)) return
+        GatewayHub.socket?.respond(JsonPrimitive(item.srq), buildJsonObject { put("approved", approved) })
         resolve(item.key)
     }
 
