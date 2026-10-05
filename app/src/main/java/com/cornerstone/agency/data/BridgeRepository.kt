@@ -149,8 +149,7 @@ class BridgeRepository(private val store: SecureStore) {
                 val detail = runCatching {
                     (json.parseToJsonElement(text) as? JsonObject)
                         ?.get("detail")
-                        ?.toString()
-                        ?.trim('"')
+                        ?.let { (it as? kotlinx.serialization.json.JsonPrimitive)?.content ?: it.toString() }
                 }.getOrNull() ?: "HTTP ${resp.code}"
                 throw ApiException(resp.code, detail)
             }

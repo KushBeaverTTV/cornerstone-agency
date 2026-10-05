@@ -221,7 +221,8 @@ async def session_prompt(sid: str, body: PromptIn) -> dict:
     except WorkerDead as e:
         raise HTTPException(410, str(e)) from e
     if not resp.get("success"):
-        raise HTTPException(502, {"detail": "prompt rejected", "response": resp})
+        # Prima explains why (e.g. "the selected model does not accept image input"); pass it on.
+        raise HTTPException(422, str(resp.get("error") or "Prima rejected the prompt"))
     return {"accepted": True}
 
 
