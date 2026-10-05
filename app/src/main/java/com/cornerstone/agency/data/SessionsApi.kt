@@ -78,7 +78,24 @@ internal suspend fun removeStoredSession(gateway: GatewayLink, storedId: String,
         return true
     } catch (e: GatewayRpcException) {
         if (e.code != 4023) throw e
-        hideStoredSession(gateway, storedId, profile)
-        return false
     }
+    // "Active" = loaded in the backend (opening it on the phone through the relay does that).
+    // Unload it and delete — unless a turn is running, in which case hide it instead.
+    val closed = runCatching {
+        val res = gateway.call("session.resume", buildJsonObject {
+            put("session_id", storedId)
+            put("omit_messages", true)
+            if (!profile.isNullOrBlank()) put("profile", profile)
+        }) as? kotlinx.serialization.json.JsonObject
+        val running = (res?.get("running") as? kotlinx.serialization.json.JsonPrimitive)?.content == "true"
+        val rt = (res?.get("session_id") as? kotlinx.serialization.json.JsonPrimitive)?.content
+        if (running || rt.isNullOrEmpty()) false
+        else {
+            gateway.call("session.close", buildJsonObject { put("session_id", rt) })
+            deleteStoredSession(gateway, storedId, profile)
+            true
+        }
+    }.getOrDefault(false)
+    if (!closed) hideStoredSession(gateway, storedId, profile)
+    return closed
 }
