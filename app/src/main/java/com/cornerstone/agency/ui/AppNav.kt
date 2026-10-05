@@ -174,6 +174,7 @@ fun AppNav(vm: AppViewModel, navController: NavHostController = rememberNavContr
                 onBack = { navController.popBackStack() },
                 onOpenSessions = { navController.navigate(Routes.sessions(profile)) },
                 onOpenBotSettings = { navController.navigate(Routes.bot(profile)) },
+                onOpenSession = { sid -> navController.navigate(Routes.chat(profile, sid)) },
             )
         }
         composable(

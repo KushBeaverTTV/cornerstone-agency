@@ -145,10 +145,24 @@ class BridgeRepository(private val store: SecureStore) {
         return (obj["messages"] as? JsonArray) ?: JsonArray(emptyList())
     }
 
-    suspend fun primaPrompt(sid: String, message: String, streamingBehavior: String? = null) {
+    suspend fun primaPrompt(
+        sid: String,
+        message: String,
+        streamingBehavior: String? = null,
+        attachments: List<OutgoingAttachment> = emptyList(),
+    ) {
+        fun b64(bytes: ByteArray) = android.util.Base64.encodeToString(bytes, android.util.Base64.NO_WRAP)
         val body = buildJsonObject {
             put("message", message)
             if (streamingBehavior != null) put("streaming_behavior", streamingBehavior)
+            val images = attachments.filter { it.isImage }
+            val files = attachments.filterNot { it.isImage }
+            if (images.isNotEmpty()) put("images", kotlinx.serialization.json.buildJsonArray {
+                images.forEach { a -> add(buildJsonObject { put("data", b64(a.bytes)); put("mime_type", a.mime) }) }
+            })
+            if (files.isNotEmpty()) put("files", kotlinx.serialization.json.buildJsonArray {
+                files.forEach { a -> add(buildJsonObject { put("name", a.name); put("data", b64(a.bytes)) }) }
+            })
         }
         api("/prima/sessions/$sid/prompt", "POST", body.toString())
     }

@@ -133,18 +133,29 @@ class PrimaChatRepository(
 
     // -- commands ---------------------------------------------------------
 
-    override suspend fun send(text: String) {
+    override val acceptsAttachments: Boolean get() = true
+
+    override suspend fun send(text: String) = send(text, emptyList())
+
+    override suspend fun send(text: String, attachments: List<OutgoingAttachment>) {
         val t = text.trim()
-        if (t.isEmpty()) return
+        if (t.isEmpty() && attachments.isEmpty()) return
         _lastError.value = ""
         val sid = sessionId
         if (sid == null) {
             append(ChatKind.Error, "No Prima session — bridge unreachable?")
             return
         }
-        append(ChatKind.User, t)
+        append(
+            ChatItem(
+                id = nextId(), kind = ChatKind.User, text = t,
+                attachments = attachments.map {
+                    ChatAttachment(it.name, if (it.isImage) "image" else "file", it.mime, it.localUri, sizeBytes = it.bytes.size.toLong())
+                },
+            ),
+        )
         try {
-            bridge.primaPrompt(sid, t, if (_streaming.value) "followUp" else null)
+            bridge.primaPrompt(sid, t.ifEmpty { "What do you see?" }, if (_streaming.value) "followUp" else null, attachments)
         } catch (e: Exception) {
             append(ChatKind.Error, "Send failed: ${friendly(e)}")
         }

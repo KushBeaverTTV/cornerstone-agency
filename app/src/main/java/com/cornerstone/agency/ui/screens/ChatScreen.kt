@@ -1,5 +1,7 @@
 package com.cornerstone.agency.ui.screens
 
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.runtime.SideEffect
 import android.Manifest
 import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -127,6 +129,8 @@ fun ChatScreen(
     onOpenSessions: () -> Unit,
     onOpenBotSettings: () -> Unit,
     prima: Boolean = false,
+    /** Open another stored session of this bot (used by "Branch into new chat"). */
+    onOpenSession: (String) -> Unit = {},
 ) {
     val colors = AgencyTokens.colors
     val space = AgencyTokens.space
@@ -144,6 +148,11 @@ fun ChatScreen(
     val streaming by chat.streaming.collectAsState()
     val statusLine by chat.statusLine.collectAsState()
     val lastError by chat.lastError.collectAsState()
+    val actionsApi = chat as? com.cornerstone.agency.data.MessageActions
+    val hermesChat = chat as? ChatRepository
+
+    // On-device copy first, so the chat shows instantly (and offline) before the socket opens.
+    LaunchedEffect(chat) { hermesChat?.preload(sessionId) }
 
     val botName = botDisplayName(ui.profiles, profileName)
     val scope = rememberCoroutineScope()
@@ -153,6 +162,21 @@ fun ChatScreen(
     var renameText by remember { mutableStateOf("") }
     var draft by remember { mutableStateOf("") }
     var draftFocused by remember { mutableStateOf(false) }
+
+    // Composer attachments (photos / camera / files) — staged until Send.
+    val pending = remember { androidx.compose.runtime.mutableStateListOf<PendingAttachment>() }
+    var attachMenu by remember { mutableStateOf(false) }
+    var cameraUri by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf<String?>(null) }
+
+    // Message actions + in-chat search.
+    var actionTarget by remember { mutableStateOf<ChatItem?>(null) }
+    var selectText by remember { mutableStateOf<String?>(null) }
+    var editTarget by remember { mutableStateOf<ChatItem?>(null) }
+    var editText by remember { mutableStateOf("") }
+    var searchOpen by remember { mutableStateOf(false) }
+    var query by remember { mutableStateOf("") }
+    var matchPos by remember { mutableStateOf(0) }
+    var searchCount by remember { mutableStateOf(0) }
 
     // Grok-style quick model switcher. Hermes bots read/write the profile's model; Prima reads
     // and writes its own worker's model through the bridge. Same chip, same picker sheet.
@@ -193,6 +217,50 @@ fun ChatScreen(
     val micPermission = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission(),
     ) { granted -> if (granted) voiceOpen = true }
+
+    fun stage(uris: List<android.net.Uri>) {
+        if (uris.isEmpty()) return
+        scope.launch {
+            for (u in uris.take(10 - pending.size)) {
+                val (att, err) = readAttachment(context, u)
+                if (att != null) pending += att
+                if (err != null) Toast.makeText(context, err, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    val pickMedia = rememberLauncherForActivityResult(
+        ActivityResultContracts.PickMultipleVisualMedia(10),
+    ) { stage(it) }
+    val pickFiles = rememberLauncherForActivityResult(
+        ActivityResultContracts.OpenMultipleDocuments(),
+    ) { stage(it) }
+    val takePicture = rememberLauncherForActivityResult(
+        ActivityResultContracts.TakePicture(),
+    ) { ok -> cameraUri?.let { if (ok) stage(listOf(android.net.Uri.parse(it))) }; cameraUri = null }
+    fun launchCamera() {
+        val dir = java.io.File(context.cacheDir, "camera").apply { mkdirs() }
+        // Old captures are only needed until sent; keep the folder from growing.
+        dir.listFiles()?.filter { System.currentTimeMillis() - it.lastModified() > 86_400_000L }?.forEach { it.delete() }
+        val file = java.io.File(dir, "photo-${System.currentTimeMillis()}.jpg")
+        val uri = androidx.core.content.FileProvider.getUriForFile(context, "${context.packageName}.files", file)
+        cameraUri = uri.toString()
+        takePicture.launch(uri)
+    }
+    fun sendDraft() {
+        val t = draft
+        val atts = pending.map { it.upload }
+        if (t.isBlank() && atts.isEmpty()) return
+        draft = ""
+        pending.clear()
+        scope.launch { chat.send(t, atts) }
+    }
+    fun retryLast() {
+        val last = items.lastOrNull { it.kind == ChatKind.User && it.text.isNotBlank() } ?: return
+        scope.launch {
+            val redone = if (actionsApi != null && last.rowId != null) actionsApi.editAndResend(last.id, last.text) else false
+            if (!redone) chat.send(last.text)
+        }
+    }
 
     // Widget "talk" button: open straight into the voice card.
     LaunchedEffect(Unit) {
@@ -290,6 +358,9 @@ fun ChatScreen(
                     )
                 }
             }
+            IconButton(onClick = { searchOpen = !searchOpen; if (!searchOpen) query = "" }) {
+                Icon(com.cornerstone.agency.ui.components.AgencyIcons.Search, "Search in chat", tint = colors.foreground)
+            }
             IconButton(onClick = { scope.launch { chat.newSession() } }) {
                 Icon(Icons.Filled.Add, "New chat", tint = colors.foreground)
             }
@@ -329,6 +400,21 @@ fun ChatScreen(
             }
         }
 
+        if (searchOpen) {
+            ChatSearchBar(
+                query = query,
+                onQuery = { query = it; matchPos = 0 },
+                count = if (query.isBlank()) 0 else searchCount,
+                position = matchPos,
+                onOlder = { if (matchPos + 1 < searchCount) matchPos++ },
+                onNewer = { if (matchPos > 0) matchPos-- },
+                onClose = { searchOpen = false; query = "" },
+            )
+        }
+
+        val cached by (hermesChat?.fromCache
+            ?: remember { kotlinx.coroutines.flow.MutableStateFlow(false) }).collectAsState()
+
         // Socket status pill
         if (socketState != GatewayState.OPEN) {
             Row(
@@ -343,7 +429,7 @@ fun ChatScreen(
                         GatewayState.CONNECTING -> "Connecting…"
                         GatewayState.RECONNECTING -> "Reconnecting…"
                         else -> "Disconnected"
-                    },
+                    } + if (cached && items.isNotEmpty()) " · showing saved copy" else "",
                     style = MaterialTheme.typography.labelSmall,
                     color = colors.warm,
                 )
@@ -373,6 +459,21 @@ fun ChatScreen(
                 )
             }
             val rows = remember(items, streaming) { buildChatRows(items, streaming) }
+            val shown = rows.asReversed()
+            val matches = remember(shown, query) {
+                if (query.isBlank()) emptyList() else shown.mapIndexedNotNull { i, r ->
+                    val hit = (r as? ChatRow.Single)?.item?.takeIf { it.text.contains(query.trim(), ignoreCase = true) }
+                    if (hit != null) i to hit.id else null
+                }
+            }
+            val currentHit = matches.getOrNull(matchPos)?.second
+            LaunchedEffect(matches, matchPos) {
+                matches.getOrNull(matchPos)?.let { listState.animateScrollToItem(it.first) }
+            }
+            if (searchOpen) {
+                // Hand the numbers to the search bar (it lives in the header).
+                SideEffect { searchCount = matches.size }
+            }
             LazyColumn(
                 state = listState,
                 reverseLayout = true,
@@ -381,10 +482,16 @@ fun ChatScreen(
                     horizontal = space.md, vertical = space.sm,
                 ),
             ) {
-                items(rows.asReversed(), key = { it.key }) { row ->
+                items(shown, key = { it.key }) { row ->
                     Column(Modifier.animateItem()) {
                         when (row) {
-                            is ChatRow.Single -> ChatBubble(row.item, chat, scope)
+                            is ChatRow.Single -> ChatBubble(
+                                row.item, chat, scope,
+                                onLongPress = { actionTarget = it },
+                                onRetry = { retryLast() },
+                                onReact = { it2, e -> scope.launch { actionsApi?.react(it2.id, e) } },
+                                highlighted = row.item.id == currentHit,
+                            )
                             is ChatRow.Work -> WorkGroup(row)
                         }
                         Spacer(Modifier.height(space.sm))
@@ -446,7 +553,7 @@ fun ChatScreen(
         // Composer (Grok): one rounded surface. Text on top; below it the model chip on the
         // left and a single action on the right — mic when empty, send with text, stop while
         // a turn streams. On the cover display it collapses to one row (model lives in the menu).
-        val hasText = draft.isNotBlank()
+        val hasText = draft.isNotBlank() || pending.isNotEmpty()
         val shape = RoundedCornerShape(if (compact) 28.dp else 26.dp)
         val action: @Composable () -> Unit = {
             Box(
@@ -463,11 +570,7 @@ fun ChatScreen(
                     .clickable(role = androidx.compose.ui.semantics.Role.Button) {
                         when {
                             streaming -> scope.launch { chat.stop() }
-                            hasText -> {
-                                val t = draft
-                                draft = ""
-                                scope.launch { chat.send(t) }
-                            }
+                            hasText -> sendDraft()
                             else -> {
                                 val granted = ContextCompat.checkSelfPermission(
                                     context, Manifest.permission.RECORD_AUDIO,
@@ -521,6 +624,33 @@ fun ChatScreen(
                 },
             )
         }
+        val attach: @Composable () -> Unit = {
+            if (chat.acceptsAttachments) Box {
+                IconButton(onClick = { attachMenu = true }) {
+                    Icon(com.cornerstone.agency.ui.components.AgencyIcons.Attach, "Attach", tint = colors.secondary)
+                }
+                DropdownMenu(expanded = attachMenu, onDismissRequest = { attachMenu = false }) {
+                    DropdownMenuItem(
+                        text = { Text("Photos") },
+                        leadingIcon = { Icon(com.cornerstone.agency.ui.components.AgencyIcons.Photo, null) },
+                        onClick = {
+                            attachMenu = false
+                            pickMedia.launch(androidx.activity.result.PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                        },
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Camera") },
+                        leadingIcon = { Icon(com.cornerstone.agency.ui.components.AgencyIcons.Camera, null) },
+                        onClick = { attachMenu = false; runCatching { launchCamera() } },
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Files") },
+                        leadingIcon = { Icon(com.cornerstone.agency.ui.components.AgencyIcons.Files, null) },
+                        onClick = { attachMenu = false; pickFiles.launch(arrayOf("*/*")) },
+                    )
+                }
+            }
+        }
         val frame = Modifier
             .fillMaxWidth()
             .padding(horizontal = if (compact) space.sm else space.lg, vertical = space.sm)
@@ -528,18 +658,24 @@ fun ChatScreen(
             .border(1.dp, if (draftFocused) colors.gold else colors.stroke, shape)
             .background(colors.surface)
         if (compact) {
+            if (pending.isNotEmpty()) Box(Modifier.padding(horizontal = space.sm)) {
+                PendingAttachmentStrip(pending) { pending.remove(it) }
+            }
             Row(
                 frame.heightIn(min = 56.dp).padding(start = space.lg, end = 4.dp, top = 4.dp, bottom = 4.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
+                attach()
                 Box(Modifier.weight(1f).padding(vertical = space.sm)) { field(Modifier.fillMaxWidth()) }
                 action()
             }
         } else {
             Column(frame.padding(start = space.lg, end = 6.dp, top = space.md, bottom = 6.dp)) {
+                if (pending.isNotEmpty()) PendingAttachmentStrip(pending) { pending.remove(it) }
                 field(Modifier.fillMaxWidth().padding(end = space.sm))
                 Spacer(Modifier.height(space.sm))
                 Row(verticalAlignment = Alignment.CenterVertically) {
+                    attach()
                     Row(
                         Modifier
                             .clip(CircleShape)
@@ -625,6 +761,61 @@ fun ChatScreen(
         )
     }
 
+    actionTarget?.let { target ->
+        val busy = streaming
+        MessageActionSheet(
+            item = target,
+            actions = actionsFor(target, actionsApi?.canAddress(target) == true, actionsApi != null, busy),
+            onDismiss = { actionTarget = null },
+            onReact = { e -> actionTarget = null; scope.launch { actionsApi?.react(target.id, e) } },
+            onSelectText = { actionTarget = null; selectText = target.text },
+            onQuote = {
+                actionTarget = null
+                val quoted = target.text.lines().take(6).joinToString("\n") { "> $it" }
+                draft = quoted + "\n\n" + draft
+            },
+            onEdit = { actionTarget = null; editText = target.text; editTarget = target },
+            onRegenerate = { actionTarget = null; scope.launch { actionsApi?.regenerate(target.id) } },
+            onBranch = {
+                actionTarget = null
+                scope.launch {
+                    val id = actionsApi?.branchFrom(target.id)
+                    if (id != null) onOpenSession(id)
+                    else Toast.makeText(context, "Couldn't branch this chat", Toast.LENGTH_SHORT).show()
+                }
+            },
+            onResend = { actionTarget = null; scope.launch { chat.send(target.text) } },
+        )
+    }
+    selectText?.let { SelectTextDialog(it) { selectText = null } }
+    editTarget?.let { target ->
+        AlertDialog(
+            onDismissRequest = { editTarget = null },
+            title = { Text("Edit & resend") },
+            text = {
+                Column {
+                    Text(
+                        "Replies after this message are replaced.",
+                        style = MaterialTheme.typography.bodySmall, color = colors.secondary,
+                    )
+                    Spacer(Modifier.height(space.sm))
+                    AgencyTextField(value = editText, onValueChange = { editText = it }, placeholder = "Message")
+                }
+            },
+            confirmButton = {
+                TextButton(enabled = editText.isNotBlank(), onClick = {
+                    editTarget = null
+                    scope.launch {
+                        if (actionsApi?.editAndResend(target.id, editText) != true) {
+                            Toast.makeText(context, "Can't edit while a reply is running", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }) { Text("Send") }
+            },
+            dismissButton = { TextButton(onClick = { editTarget = null }) { Text("Cancel") } },
+        )
+    }
+
     if (modelSheet) {
         ModelPickerSheet(
             providers = providers,
@@ -651,331 +842,6 @@ fun ChatScreen(
             },
             onDismiss = { modelSheet = false },
         )
-    }
-}
-
-@Composable
-private fun ChatBubble(
-    item: ChatItem,
-    chat: com.cornerstone.agency.data.ChatSource,
-    scope: kotlinx.coroutines.CoroutineScope,
-) {
-    val colors = AgencyTokens.colors
-    when (item.kind) {
-        ChatKind.User -> {
-            // Harness preambles (voice / cron) are not something you said — show a quiet marker.
-            val preamble = preambleLabel(item.text)
-            if (preamble != null) {
-                Row(
-                    Modifier.fillMaxWidth().padding(vertical = 6.dp),
-                    horizontalArrangement = Arrangement.Center,
-                ) {
-                    Text(
-                        preamble,
-                        style = MaterialTheme.typography.labelSmall,
-                        color = colors.tertiary,
-                        modifier = Modifier
-                            .clip(CircleShape)
-                            .background(colors.sidebar)
-                            .border(1.dp, colors.stroke, CircleShape)
-                            .padding(horizontal = 12.dp, vertical = 6.dp),
-                    )
-                }
-                return
-            }
-            var exp by remember(item.id) { mutableStateOf(false) }
-            var overflow by remember(item.id) { mutableStateOf(false) }
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                Bubble(
-                    colors.bubble,
-                    Modifier.widthIn(max = 340.dp).copyOnLongPress(item.text),
-                ) {
-                    Column {
-                        Text(
-                            item.text,
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = colors.foreground,
-                            maxLines = if (exp) Int.MAX_VALUE else 8,
-                            overflow = TextOverflow.Ellipsis,
-                            onTextLayout = { if (!exp) overflow = it.hasVisualOverflow },
-                        )
-                        if (overflow || exp) {
-                            Text(
-                                if (exp) "Show less" else "Show more",
-                                style = MaterialTheme.typography.labelLarge,
-                                color = colors.gold,
-                                modifier = Modifier
-                                    .clickable { exp = !exp }
-                                    .heightIn(min = 48.dp)
-                                    .wrapContentHeight(Alignment.CenterVertically),
-                            )
-                        }
-                    }
-                }
-            }
-        }
-
-        // Assistant text is full width and borderless; only the user keeps a bubble.
-        ChatKind.Assistant -> Column(
-            Modifier.fillMaxWidth().copyOnLongPress(item.text).padding(vertical = 2.dp),
-        ) {
-            if (item.text.isEmpty() && item.streaming) {
-                Text("▌", color = colors.gold, style = MaterialTheme.typography.bodyLarge)
-            } else {
-                Markdown(
-                    content = item.text + if (item.streaming) " ▌" else "",
-                    colors = markdownColor(
-                        text = colors.foreground,
-                        codeBackground = colors.elevated,
-                        inlineCodeBackground = colors.elevated,
-                        dividerColor = colors.stroke,
-                        tableBackground = colors.card,
-                    ),
-                    typography = markdownTypography(
-                        text = MaterialTheme.typography.bodyLarge,
-                        paragraph = MaterialTheme.typography.bodyLarge,
-                        ordered = MaterialTheme.typography.bodyLarge,
-                        bullet = MaterialTheme.typography.bodyLarge,
-                        list = MaterialTheme.typography.bodyLarge,
-                        code = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace, fontSize = 13.sp, lineHeight = 19.sp),
-                        inlineCode = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace, fontSize = 14.sp),
-                        table = MaterialTheme.typography.bodyMedium,
-                    ),
-                    dimens = com.mikepenz.markdown.model.markdownDimens(tableCellWidth = 150.dp),
-                    components = com.mikepenz.markdown.compose.components.markdownComponents(
-                        codeFence = { m ->
-                            val n = m.node
-                            val parts = n.children.filter { it.type == org.intellij.markdown.MarkdownTokenTypes.CODE_FENCE_CONTENT }
-                            val code = if (parts.isEmpty()) "" else m.content.substring(parts.first().startOffset, parts.last().endOffset)
-                            val lang = n.children.firstOrNull { it.type == org.intellij.markdown.MarkdownTokenTypes.FENCE_LANG }
-                                ?.let { m.content.substring(it.startOffset, it.endOffset) }.orEmpty()
-                            CodeBlockCard(code.trimEnd('\n'), lang.trim())
-                        },
-                        codeBlock = { m ->
-                            val parts = m.node.children.filter { it.type == org.intellij.markdown.MarkdownTokenTypes.CODE_LINE }
-                            val code = if (parts.isEmpty()) "" else m.content.substring(parts.first().startOffset, parts.last().endOffset)
-                            CodeBlockCard(code.trimEnd('\n'), "")
-                        },
-                    ),
-                    padding = com.mikepenz.markdown.model.markdownPadding(
-                        listItemTop = 4.dp, listItemBottom = 4.dp, listIndent = 12.dp,
-                    ),
-                    modifier = Modifier,
-                )
-            }
-        }
-
-        ChatKind.Thinking -> ThinkingBubble(item)
-
-        ChatKind.Tool -> Row(
-            Modifier.fillMaxWidth().padding(vertical = 2.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                item.text,
-                color = colors.tertiary,
-                fontFamily = FontFamily.Monospace,
-                fontSize = 12.sp,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-        }
-
-        ChatKind.Status -> Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-            Text(
-                item.text,
-                style = MaterialTheme.typography.labelSmall,
-                color = colors.tertiary,
-            )
-        }
-
-        ChatKind.Error -> Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
-            Text(
-                item.text,
-                style = MaterialTheme.typography.bodyMedium,
-                color = colors.destructive,
-            )
-        }
-
-        ChatKind.Request -> {
-            val req = item.request
-            if (req != null) {
-                com.cornerstone.agency.ui.components.RequestCard(
-                    req = req,
-                    onApprove = { choice -> scope.launch { chat.approveRequest(item.id, choice) } },
-                    onClarify = { answers -> scope.launch { chat.answerClarify(item.id, answers) } },
-                    onValue = { v -> scope.launch { chat.submitRequestValue(item.id, v) } },
-                    onMcp = { ok -> scope.launch { chat.respondMcp(item.id, ok) } },
-                )
-            } else {
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
-                    Bubble(colors.elevated, Modifier.widthIn(max = 300.dp)) {
-                        Text(
-                            "Request",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = colors.gold,
-                        )
-                        Spacer(Modifier.height(2.dp))
-                        Text(
-                            item.text,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = colors.secondary,
-                        )
-                    }
-                }
-            }
-        }
-    }
-}
-
-/** Voice / cron harness preambles → a short human label; null for real messages. */
-private fun preambleLabel(text: String): String? {
-    val first = text.lineSequence().firstOrNull { it.isNotBlank() }?.trim() ?: return null
-    return when {
-        first.startsWith("You are being used through a hands-free voice", true) -> "Voice conversation"
-        first.startsWith("[IMPORTANT: You are running as a scheduled cron", true) -> "Scheduled job"
-        else -> null
-    }
-}
-
-@Composable
-private fun Bubble(color: androidx.compose.ui.graphics.Color, modifier: Modifier = Modifier, content: @Composable () -> Unit) {
-    // Flat, borderless (Muse): the tint alone separates you from the agent.
-    Box(
-        modifier
-            .clip(RoundedCornerShape(20.dp))
-            .background(color)
-            .padding(horizontal = 16.dp, vertical = 11.dp),
-    ) {
-        content()
-    }
-}
-
-@Composable
-private fun ThinkingBubble(item: ChatItem) {
-    val colors = AgencyTokens.colors
-    var expanded by remember(item.id) { mutableStateOf(false) }
-    Column(
-        Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
-            .background(colors.sidebar)
-            .clickable { expanded = !expanded }
-            .padding(horizontal = 12.dp, vertical = 8.dp),
-    ) {
-        Text(
-            "thinking",
-            style = MaterialTheme.typography.labelSmall,
-            color = colors.tertiary,
-        )
-        Spacer(Modifier.height(2.dp))
-        Text(
-            item.text,
-            style = MaterialTheme.typography.bodySmall,
-            fontStyle = FontStyle.Italic,
-            color = colors.tertiary,
-            maxLines = if (expanded) Int.MAX_VALUE else 3,
-            overflow = TextOverflow.Ellipsis,
-        )
-    }
-}
-
-
-// ---- grouped "work" rows --------------------------------------------------
-
-private sealed interface ChatRow {
-    val key: String
-    data class Single(val item: ChatItem) : ChatRow { override val key: String get() = item.id }
-    data class Work(val items: List<ChatItem>, val live: Boolean) : ChatRow {
-        override val key: String get() = "work-" + items.first().id
-    }
-}
-
-/** Consecutive thinking + tool items collapse into one quiet chip per turn. */
-private fun buildChatRows(items: List<ChatItem>, streaming: Boolean): List<ChatRow> {
-    val out = ArrayList<ChatRow>()
-    var group = ArrayList<ChatItem>()
-    fun flush(last: Boolean) {
-        if (group.isEmpty()) return
-        val live = (last && streaming) || group.any { it.kind == ChatKind.Tool && !it.done }
-        out += ChatRow.Work(group, live)
-        group = ArrayList()
-    }
-    items.forEachIndexed { i, it ->
-        if (it.kind == ChatKind.Thinking || it.kind == ChatKind.Tool) {
-            group.add(it)
-        } else {
-            flush(false)
-            out += ChatRow.Single(it)
-        }
-    }
-    flush(true)
-    return out
-}
-
-@Composable
-private fun WorkGroup(g: ChatRow.Work) {
-    val colors = AgencyTokens.colors
-    var expanded by remember(g.key) { mutableStateOf(false) }
-    val tools = g.items.filter { it.kind == ChatKind.Tool }
-    val thoughts = g.items.filter { it.kind == ChatKind.Thinking }
-    val label = buildString {
-        if (thoughts.isNotEmpty()) append(if (g.live) "Thinking" else "Thought")
-        if (tools.isNotEmpty()) {
-            if (isNotEmpty()) append(" · ")
-            append(tools.size).append(if (tools.size == 1) " tool" else " tools")
-        }
-    }.ifEmpty { "Working" }
-    val pulse by rememberInfiniteTransition(label = "pulse").animateFloat(
-        initialValue = 0.35f, targetValue = 1f,
-        animationSpec = infiniteRepeatable(tween(700), RepeatMode.Reverse), label = "pulseA",
-    )
-    Column(Modifier.fillMaxWidth()) {
-        Row(
-            Modifier
-                .heightIn(min = 48.dp)
-                .clip(RoundedCornerShape(24.dp))
-                .clickable { expanded = !expanded }
-                .padding(horizontal = 4.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Box(
-                Modifier
-                    .size(8.dp)
-                    .alpha(if (g.live) pulse else 1f)
-                    .clip(CircleShape)
-                    .background(if (g.live) colors.gold else colors.tertiary),
-            )
-            Spacer(Modifier.width(8.dp))
-            Text(label, style = MaterialTheme.typography.labelLarge, color = colors.secondary)
-            Icon(
-                Icons.Filled.KeyboardArrowDown, if (expanded) "Collapse" else "Expand",
-                tint = colors.tertiary,
-                modifier = Modifier.size(20.dp).rotate(if (expanded) 180f else 0f),
-            )
-        }
-        if (expanded) {
-            Column(Modifier.padding(start = 16.dp, bottom = 8.dp)) {
-                g.items.forEach { it ->
-                    when (it.kind) {
-                        ChatKind.Thinking -> Text(
-                            it.text,
-                            style = MaterialTheme.typography.bodySmall,
-                            fontStyle = FontStyle.Italic,
-                            color = colors.tertiary,
-                            modifier = Modifier.padding(vertical = 4.dp),
-                        )
-                        else -> Text(
-                            it.text,
-                            color = colors.secondary,
-                            fontFamily = FontFamily.Monospace,
-                            fontSize = 13.sp,
-                            modifier = Modifier.padding(vertical = 3.dp),
-                        )
-                    }
-                }
-            }
-        }
     }
 }
 
@@ -1040,25 +906,6 @@ private fun EmptyChat(
     }
 }
 
-/** System clipboard without the deprecated Compose wrapper. */
-private fun copyToClipboard(ctx: android.content.Context, text: String) {
-    ctx.getSystemService(android.content.ClipboardManager::class.java)
-        ?.setPrimaryClip(android.content.ClipData.newPlainText("text", text))
-}
-
-/** Long-press copies the message text. */
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-private fun Modifier.copyOnLongPress(text: String): Modifier {
-    val haptic = LocalHapticFeedback.current
-    val ctx = LocalContext.current
-    return this.combinedClickable(onClick = {}, onLongClick = {
-        copyToClipboard(ctx, text)
-        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-        Toast.makeText(ctx, "Copied", Toast.LENGTH_SHORT).show()
-    })
-}
-
 
 // ---- agent status (header) -------------------------------------------------
 
@@ -1085,58 +932,61 @@ private fun agentActivity(items: List<ChatItem>, streaming: Boolean, offline: Bo
     )
 }
 
-/** Fenced code: language label + Copy, monospace, scrolls sideways instead of wrapping. */
+
+/** In-chat find: matches run newest → oldest; arrows step through them. */
 @Composable
-private fun CodeBlockCard(code: String, lang: String) {
+private fun ChatSearchBar(
+    query: String,
+    onQuery: (String) -> Unit,
+    count: Int,
+    position: Int,
+    onOlder: () -> Unit,
+    onNewer: () -> Unit,
+    onClose: () -> Unit,
+) {
     val colors = AgencyTokens.colors
-    val haptic = LocalHapticFeedback.current
-    val ctx = LocalContext.current
-    val shape = RoundedCornerShape(14.dp)
-    Column(
+    val focus = remember { androidx.compose.ui.focus.FocusRequester() }
+    LaunchedEffect(Unit) { runCatching { focus.requestFocus() } }
+    Row(
         Modifier
-            .padding(vertical = 6.dp)
             .fillMaxWidth()
-            .clip(shape)
-            .background(colors.card)
-            .border(1.dp, colors.stroke, shape),
+            .padding(horizontal = 12.dp, vertical = 4.dp)
+            .clip(RoundedCornerShape(24.dp))
+            .background(colors.surface)
+            .border(1.dp, colors.stroke, RoundedCornerShape(24.dp))
+            .padding(start = 16.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Row(
-            Modifier.fillMaxWidth().padding(start = 14.dp, end = 4.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
+        BasicTextField(
+            value = query,
+            onValueChange = onQuery,
+            singleLine = true,
+            textStyle = MaterialTheme.typography.bodyLarge.copy(color = colors.foreground),
+            cursorBrush = SolidColor(colors.gold),
+            modifier = Modifier.weight(1f).focusRequester(focus).semantics { contentDescription = "Search messages" },
+            decorationBox = { inner ->
+                Box {
+                    if (query.isEmpty()) Text("Search this chat", style = MaterialTheme.typography.bodyLarge, color = colors.tertiary)
+                    inner()
+                }
+            },
+        )
+        if (query.isNotBlank()) {
             Text(
-                lang.ifBlank { "code" },
+                if (count == 0) "No matches" else "${position + 1}/$count",
                 style = MaterialTheme.typography.labelMedium,
-                color = colors.tertiary,
-                modifier = Modifier.weight(1f),
-            )
-            Text(
-                "Copy",
-                style = MaterialTheme.typography.labelLarge,
-                color = colors.gold,
-                modifier = Modifier
-                    .clip(RoundedCornerShape(12.dp))
-                    .semantics { contentDescription = "Copy code" }
-                    .clickable(role = androidx.compose.ui.semantics.Role.Button) {
-                        copyToClipboard(ctx, code)
-                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                        Toast.makeText(ctx, "Code copied", Toast.LENGTH_SHORT).show()
-                    }
-                    .heightIn(min = 48.dp)
-                    .padding(horizontal = 12.dp)
-                    .wrapContentHeight(Alignment.CenterVertically),
+                color = colors.secondary,
+                modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
             )
         }
-        Text(
-            code,
-            style = MaterialTheme.typography.bodyMedium.copy(
-                fontFamily = FontFamily.Monospace, fontSize = 13.sp, lineHeight = 19.sp,
-            ),
-            color = colors.foreground,
-            softWrap = false,
-            modifier = Modifier
-                .horizontalScroll(androidx.compose.foundation.rememberScrollState())
-                .padding(start = 14.dp, end = 14.dp, bottom = 14.dp),
-        )
+        IconButton(onClick = onOlder, enabled = position + 1 < count) {
+            Icon(com.cornerstone.agency.ui.components.AgencyIcons.ArrowUp, "Older match", tint = colors.foreground)
+        }
+        IconButton(onClick = onNewer, enabled = position > 0) {
+            Icon(Icons.Filled.KeyboardArrowDown, "Newer match", tint = colors.foreground)
+        }
+        IconButton(onClick = onClose) {
+            Icon(Icons.Filled.Close, "Close search", tint = colors.foreground)
+        }
     }
 }

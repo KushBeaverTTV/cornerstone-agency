@@ -374,6 +374,8 @@ class AppViewModel(private val app: Application) : AndroidViewModel(app) {
 
     fun disconnect() {
         graceJob?.cancel()
+        // Signed out: the on-device transcripts belong to that sign-in.
+        com.cornerstone.agency.data.ChatCache.clearAll()
         app.stopService(ConnectionService.intent(app))
         NotificationCenter.cancelAll(app)
         NotificationCenter.unbind()

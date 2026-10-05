@@ -46,6 +46,7 @@ for raw in sys.stdin:
 
     if t == "prompt":
         text = msg.get("message", "")
+        state["lastPrompt"] = {"message": text, "images": len(msg.get("images") or [])}
         respond(True)
         state["isStreaming"] = True
         print(json.dumps({"type": "agent_start"}), flush=True)

@@ -81,7 +81,9 @@ class ChatRepository(
     private val history: () -> HistorySource? = { GatewayHub.repo },
     dispatcher: CoroutineDispatcher = Dispatchers.Main.immediate,
     private val cacheEnabled: Boolean = persistent && ChatCache.ready,
-) : ChatRequestCards(gateway, profile, dispatcher) {
+) : ChatRequestCards(gateway, profile, dispatcher), MessageActions {
+
+    override val acceptsAttachments: Boolean get() = true
     // The current turn: where its rows start on screen, and the DB row id they will follow.
     private var turnStartIndex: Int? = null
     private var turnBaseRow: Long = 0
@@ -223,7 +225,7 @@ class ChatRepository(
      * (`image.attach_bytes`, the model sees them natively); other files are staged into the
      * session workspace (`file.attach`) and referenced in the text as `@file:` refs.
      */
-    suspend fun send(text: String, attachments: List<OutgoingAttachment>) {
+    override suspend fun send(text: String, attachments: List<OutgoingAttachment>) {
         val t = text.trim()
         if (t.isEmpty() && attachments.isEmpty()) return
         if (!ensureSession()) return
@@ -325,7 +327,7 @@ class ChatRepository(
     // ---- message actions (Hermes desktop parity) ----------------------------
 
     /** Re-run the conversation from a user message with new text (drops it and everything after). */
-    suspend fun editAndResend(userItemId: String, newText: String): Boolean {
+    override suspend fun editAndResend(userItemId: String, newText: String): Boolean {
         val all = _items.value
         val idx = all.indexOfFirst { it.id == userItemId }
         val item = all.getOrNull(idx) ?: return false
@@ -344,13 +346,13 @@ class ChatRepository(
     }
 
     /** Ask again: re-run the prompt that produced [assistantItemId]. */
-    suspend fun regenerate(assistantItemId: String): Boolean {
+    override suspend fun regenerate(assistantItemId: String): Boolean {
         val prompt = TranscriptMapping.promptFor(_items.value, assistantItemId) ?: return false
         return editAndResend(prompt.id, prompt.text.ifBlank { "Try again." })
     }
 
     /** Copy the conversation up to and including [itemId] into a new chat; returns its stored id. */
-    suspend fun branchFrom(itemId: String): String? {
+    override suspend fun branchFrom(itemId: String): String? {
         val rt = runtimeSessionId ?: return null
         val count = TranscriptMapping.branchCount(_items.value, itemId)
         if (count <= 0) return null
@@ -367,7 +369,7 @@ class ChatRepository(
     }
 
     /** Tapback: same emoji again clears it. */
-    suspend fun react(itemId: String, emoji: String) {
+    override suspend fun react(itemId: String, emoji: String) {
         val rt = runtimeSessionId ?: return
         val item = _items.value.firstOrNull { it.id == itemId } ?: return
         val row = item.rowId ?: return

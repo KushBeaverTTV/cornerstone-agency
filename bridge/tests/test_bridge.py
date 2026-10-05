@@ -192,3 +192,30 @@ def test_laya_status_mocked(client):
     r = client.get("/laya/status", headers=AUTH)
     assert r.status_code == 200
     assert r.json()["loaded"] is True
+
+
+def test_prima_prompt_with_attachments(client, tmp_path, monkeypatch):
+    import base64
+
+    from agency_bridge import app as app_mod
+
+    monkeypatch.setattr(app_mod, "UPLOAD_DIR", tmp_path)
+    sid = client.post("/prima/sessions", json={}, headers=AUTH).json()["id"]
+    img = base64.b64encode(b"\x89PNG fake").decode()
+    doc = base64.b64encode(b"hello file").decode()
+    r = client.post(
+        f"/prima/sessions/{sid}/prompt", headers=AUTH,
+        json={"message": "look", "images": [{"data": img, "mime_type": "image/png"}],
+              "files": [{"name": "../notes?.txt", "data": doc}]},
+    )
+    assert r.status_code == 200, r.text
+    saved = list(tmp_path.iterdir())
+    assert len(saved) == 1 and saved[0].read_bytes() == b"hello file"
+    assert saved[0].name.endswith("notes_.txt")  # path stripped, unsafe chars replaced
+    deadline = time.time() + 5
+    while time.time() < deadline:
+        st = client.get(f"/prima/sessions/{sid}", headers=AUTH).json()
+        if not st["bridge"]["is_streaming"]:
+            break
+        time.sleep(0.1)
+    client.delete(f"/prima/sessions/{sid}", headers=AUTH)

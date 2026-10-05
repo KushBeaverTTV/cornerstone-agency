@@ -107,8 +107,16 @@ class PrimaWorker:
         finally:
             self._pending.pop(rid, None)
 
-    async def prompt(self, message: str, streaming_behavior: Optional[str] = None) -> Dict[str, Any]:
+    async def prompt(
+        self,
+        message: str,
+        streaming_behavior: Optional[str] = None,
+        images: Optional[list] = None,
+    ) -> Dict[str, Any]:
         fields: Dict[str, Any] = {"message": message}
+        if images:
+            # ImageContent blocks: {"type": "image", "data": <base64>, "mimeType": ...}
+            fields["images"] = images
         if streaming_behavior:
             fields["streamingBehavior"] = streaming_behavior
         return await self.command("prompt", **fields)

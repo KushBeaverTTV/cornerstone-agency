@@ -104,9 +104,40 @@ class NewSession(BaseModel):
     session_path: Optional[str] = None
 
 
+class ImageIn(BaseModel):
+    data: str  # base64, no data: prefix
+    mime_type: str = "image/jpeg"
+
+
+class FileIn(BaseModel):
+    name: str
+    data: str  # base64
+
+
 class PromptIn(BaseModel):
     message: str
     streaming_behavior: Optional[str] = None
+    images: list[ImageIn] = []
+    files: list[FileIn] = []
+
+
+# Phone uploads for Prima land here; Prima reads them with its own file tools.
+UPLOAD_DIR = Path.home() / ".prime" / "agent" / "uploads"
+MAX_UPLOAD_BYTES = 25 * 1024 * 1024
+
+
+def _save_upload(f: FileIn) -> Path:
+    import base64
+    import re as _re
+
+    raw = base64.b64decode(f.data, validate=False)
+    if len(raw) > MAX_UPLOAD_BYTES:
+        raise HTTPException(413, f"{f.name} is over 25 MB")
+    safe = _re.sub(r"[^A-Za-z0-9._ -]", "_", Path(f.name).name).strip() or "upload"
+    UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+    dest = UPLOAD_DIR / f"{time.strftime('%Y%m%d-%H%M%S')}-{safe}"
+    dest.write_bytes(raw)
+    return dest
 
 
 class NameIn(BaseModel):
@@ -180,8 +211,13 @@ async def session_prompt(sid: str, body: PromptIn) -> dict:
         raise HTTPException(404, "session not found or worker dead")
     if w.is_streaming and not body.streaming_behavior:
         raise HTTPException(409, "agent is streaming; pass streaming_behavior")
+    message = body.message
+    if body.files:
+        paths = [_save_upload(f) for f in body.files]
+        message = (message + "\n\n" if message else "") + "\n".join(f"[Attached file: {p}]" for p in paths)
+    images = [{"type": "image", "data": i.data, "mimeType": i.mime_type} for i in body.images]
     try:
-        resp = await w.prompt(body.message, body.streaming_behavior)
+        resp = await w.prompt(message, body.streaming_behavior, images or None)
     except WorkerDead as e:
         raise HTTPException(410, str(e)) from e
     if not resp.get("success"):
