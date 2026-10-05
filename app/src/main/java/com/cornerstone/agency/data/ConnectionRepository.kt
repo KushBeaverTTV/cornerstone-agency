@@ -134,11 +134,21 @@ class ConnectionRepository(private val store: SecureStore) : HistorySource {
             attach(prev)
             throw e
         }
-        val me = runCatching { me() }.getOrDefault(SessionInfo())
-        username = me.userId
-        store.save(SecureStore.Connection(baseUrl, username, "", "", bearer))
-        return me
+        store.save(SecureStore.Connection(baseUrl, "", "", "", bearer))
+        return SessionInfo(displayName = "Paired")
     }
+
+    /**
+     * Prove the saved connection still works. The relay's backend (the desktop's own Hermes) has
+     * no dashboard login, so /api/auth/me is not available there — the profile list is the probe.
+     */
+    suspend fun verify(): SessionInfo =
+        if (viaRelay) {
+            profiles()
+            SessionInfo(displayName = "Paired")
+        } else {
+            me()
+        }
 
     /** Newest [limit] DB rows of a session (oldest-first); see [HistorySource]. */
     override suspend fun tail(storedId: String, profile: String, limit: Int) =
@@ -205,9 +215,12 @@ class ConnectionRepository(private val store: SecureStore) : HistorySource {
     // ---- endpoints ------------------------------------------------------
 
     suspend fun health(url: String): Health = withContext(Dispatchers.IO) {
+        // The relay base carries a path (/hermes) that normalizeBaseUrl would strip.
+        val base = if (viaRelay && url == baseUrl) baseUrl else normalizeBaseUrl(url)
         val request = Request.Builder()
-            .url("${normalizeBaseUrl(url)}/api/health")
+            .url("$base/api/health")
             .header("Accept", "application/json")
+            .apply { if (viaRelay && url == baseUrl) header("Authorization", "Bearer $bearer") }
             .build()
         client.newCall(request).execute().use { resp ->
             if (!resp.isSuccessful) throw ApiException(resp.code, "health check failed (${resp.code})")

@@ -21,6 +21,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         com.cornerstone.agency.data.ChatCache.init(this)
+        com.cornerstone.agency.data.ReplyWatch.init(this)
         enableEdgeToEdge(
             statusBarStyle = androidx.activity.SystemBarStyle.dark(android.graphics.Color.TRANSPARENT),
             navigationBarStyle = androidx.activity.SystemBarStyle.dark(android.graphics.Color.TRANSPARENT),
@@ -45,6 +46,7 @@ class MainActivity : ComponentActivity() {
             }
         }
         handleWidget(intent)
+        handlePairing(intent)
         handleDeepLink(intent)
         handleShare(intent)
         if (BuildConfig.DEBUG && intent?.getBooleanExtra("debug_inbox", false) == true) {
@@ -81,8 +83,18 @@ class MainActivity : ComponentActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         handleWidget(intent)
+        handlePairing(intent)
         handleDeepLink(intent)
         handleShare(intent)
+    }
+
+    /** QR pairing: `cornerstone-agency://pair?...` from the PC's `agency-bridge pair` page. */
+    private fun handlePairing(intent: Intent?) {
+        val data = intent?.data ?: return
+        if (intent.action != Intent.ACTION_VIEW || data.scheme != com.cornerstone.agency.data.PairingLink.SCHEME) return
+        com.cornerstone.agency.data.PairingLink.parse(data.toString())?.let { vm.pair(it) }
+        // Consume it so rotation / process restore never re-pairs.
+        intent.data = null
     }
 
     /** Widget taps: open the default bot's latest chat, optionally straight into voice. */

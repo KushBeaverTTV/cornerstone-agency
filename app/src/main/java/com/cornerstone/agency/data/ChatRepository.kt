@@ -305,7 +305,10 @@ class ChatRepository(
                     }
                 },
             ).asObj()
-            res.long("user_row_id")?.let { row -> userItemId?.let { id -> mutate(id) { it.copy(rowId = row) } } }
+            val userRow = res.long("user_row_id")
+            userRow?.let { row -> userItemId?.let { id -> mutate(id) { it.copy(rowId = row) } } }
+            // If the phone goes to sleep before the reply, the catch-up worker notifies for it.
+            if (persistent) storedSessionId?.let { ReplyWatch.expect(profile, it, userRow ?: syncCursor) }
             when (res.str("status")) {
                 "queued" -> append(ChatKind.Status, "Queued — runs after the current reply")
                 "steered" -> append(ChatKind.Status, "Added to the reply in progress")
@@ -633,6 +636,8 @@ class ChatRepository(
     /** The turn finished: settle the UI, then swap the live rows for the persisted ones. */
     private fun endTurn() {
         finalizeStreaming()
+        // Seen on screen: nothing left to notify about.
+        if (GatewayHub.foregrounded) ReplyWatch.clear(storedSessionId)
         if (turnStartIndex != null && persistent) {
             pendingReconcile = true
             scope.launch {

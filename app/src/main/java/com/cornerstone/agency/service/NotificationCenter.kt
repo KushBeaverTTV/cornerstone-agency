@@ -434,12 +434,20 @@ object NotificationCenter {
         ensureChannels(app)
         val nm = app.getSystemService(NotificationManager::class.java) ?: return
         val profile = ref?.profile ?: "default"
-        val bot = profileTitle(profile)
         val sessionKey = ref?.storedId?.takeIf { it.isNotEmpty() } ?: runtimeSid
+        com.cornerstone.agency.data.ReplyWatch.clear(ref?.storedId)
+        postReply(app, profile, ref?.storedId ?: "", text, sessionKey)
+    }
+
+    /** A bot reply notification; tapping opens that chat. Also used by the catch-up worker. */
+    fun postReply(app: Context, profile: String, storedId: String, text: String, sessionKey: String = storedId) {
+        ensureChannels(app)
+        val nm = app.getSystemService(NotificationManager::class.java) ?: return
+        val bot = profileTitle(profile)
         val notifId = messageNotifId(sessionKey)
         val tap = PendingIntent.getActivity(
             app, notifId,
-            chatIntent(app, profile, ref?.storedId ?: ""),
+            chatIntent(app, profile, storedId),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
         nm.notify(

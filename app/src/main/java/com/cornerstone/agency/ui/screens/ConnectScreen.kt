@@ -67,10 +67,40 @@ fun ConnectScreen(vm: AppViewModel) {
         )
         Spacer(Modifier.height(space.sm))
         Text(
-            text = "Connect to your Hermes dashboard.",
+            text = "Pair with your PC, or connect to a Hermes dashboard.",
             style = MaterialTheme.typography.bodyMedium,
             color = colors.secondary,
         )
+        Spacer(Modifier.height(space.xl))
+
+        // Pairing (preferred): `agency-bridge pair` on the PC shows a QR; the phone camera opens
+        // it straight into the app. Pasting the link works too.
+        SectionKicker("Pair with PC")
+        Spacer(Modifier.height(space.xs))
+        Text(
+            text = "On the PC run pair-agency-phone, then scan the QR with your camera.",
+            style = MaterialTheme.typography.bodySmall,
+            color = colors.secondary,
+        )
+        Spacer(Modifier.height(space.sm))
+        var pairText by remember { mutableStateOf("") }
+        val pairLink = remember(pairText) { com.cornerstone.agency.data.PairingLink.parse(pairText) }
+        AgencyTextField(
+            value = pairText,
+            onValueChange = { pairText = it },
+            placeholder = "or paste the cornerstone-agency:// link",
+            keyboardType = KeyboardType.Uri,
+        )
+        if (pairText.isNotBlank()) {
+            Spacer(Modifier.height(space.sm))
+            PrimaryButton(
+                label = if (pairLink == null) "Not a pairing link" else "Pair with ${pairLink.name.ifBlank { pairLink.bridge }}",
+                loading = ui.connectBusy,
+                enabled = pairLink != null,
+                onClick = { pairLink?.let { vm.pair(it) } },
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
         Spacer(Modifier.height(space.xl))
 
         SectionKicker("Dashboard")

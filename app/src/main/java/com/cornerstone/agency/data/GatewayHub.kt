@@ -34,6 +34,10 @@ object GatewayHub {
     @Volatile
     var foregrounded = true
 
+    /** Stored ids of the chats currently on screen. */
+    fun openChatStoredIds(): Set<String> =
+        openChats.mapNotNull { sessions[it]?.storedId?.takeIf { s -> s.isNotEmpty() } }.toSet()
+
     /** Reuse the live socket across Activity/ViewModel recreation, swapping in
      * the freshest repo so ticket mints use current credentials. */
     fun attach(r: ConnectionRepository): GatewaySocket {

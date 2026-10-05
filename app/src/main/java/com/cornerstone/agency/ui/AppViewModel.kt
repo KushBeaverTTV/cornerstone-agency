@@ -273,7 +273,7 @@ class AppViewModel(private val app: Application) : AndroidViewModel(app) {
         viewModelScope.launch {
             if (repo.restore()) {
                 try {
-                    val me = repo.me()
+                    val me = repo.verify()
                     enterShell(me)
                     return@launch
                 } catch (_: Exception) {
@@ -331,6 +331,40 @@ class AppViewModel(private val app: Application) : AndroidViewModel(app) {
         }
     }
 
+    /**
+     * Pair from a QR / deep link: Hermes through the bridge relay (live turns shared with the
+     * desktop), the bridge itself (Prima, services), and the voice bridge — one scan, no password.
+     */
+    fun pair(link: com.cornerstone.agency.data.PairingLink) {
+        viewModelScope.launch {
+            _ui.update { it.copy(connectBusy = true, connectError = "") }
+            try {
+                val me = repo.pairRelay(link.bridge, link.token)
+                bridge.host = link.bridge
+                bridge.token = link.token
+                bridge.save()
+                if (link.voice.isNotEmpty()) prefs.setVoiceBridge(link.voice)
+                if (link.voiceToken.isNotEmpty()) prefs.setVoiceToken(link.voiceToken)
+                refreshBridge()
+                if (_ui.value.connected) {
+                    // Re-pairing while signed in: reconnect the socket to the new backend.
+                    gateway.disconnect()
+                }
+                enterShell(me)
+            } catch (e: ApiException) {
+                _ui.update {
+                    it.copy(
+                        connectBusy = false,
+                        connectError = if (e.status == 401) "Pairing code was rejected — make a new one on the PC"
+                            else "Pairing failed: ${e.message}",
+                    )
+                }
+            } catch (e: Exception) {
+                _ui.update { it.copy(connectBusy = false, connectError = "Can't reach ${link.bridge} — is the PC on Tailscale?") }
+            }
+        }
+    }
+
     /** DEBUG-only seed: attach a pre-minted session cookie (no password round-trip). */
     fun seedConnection(url: String, user: String, cookie: String) {
         viewModelScope.launch {
@@ -376,6 +410,7 @@ class AppViewModel(private val app: Application) : AndroidViewModel(app) {
         graceJob?.cancel()
         // Signed out: the on-device transcripts belong to that sign-in.
         com.cornerstone.agency.data.ChatCache.clearAll()
+        com.cornerstone.agency.service.CatchUpWorker.cancel(app)
         app.stopService(ConnectionService.intent(app))
         NotificationCenter.cancelAll(app)
         NotificationCenter.unbind()
@@ -404,6 +439,7 @@ class AppViewModel(private val app: Application) : AndroidViewModel(app) {
         refreshStatus()
         refreshBridge()
         syncBackgroundWork()
+        com.cornerstone.agency.service.CatchUpWorker.schedule(app)
     }
 
     /**
