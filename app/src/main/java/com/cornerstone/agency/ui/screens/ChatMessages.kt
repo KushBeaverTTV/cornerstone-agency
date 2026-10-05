@@ -134,7 +134,13 @@ internal fun ChatBubble(
             onLongPress(item)
         },
     )
-    val mark = if (highlighted) Modifier.border(2.dp, colors.gold, RoundedCornerShape(16.dp)).padding(4.dp) else Modifier
+    // Current search hit: a soft gold wash (an outline read like the reaction chips).
+    val mark = if (highlighted) {
+        Modifier
+            .clip(RoundedCornerShape(14.dp))
+            .background(colors.gold.copy(alpha = 0.14f))
+            .padding(horizontal = 10.dp, vertical = 6.dp)
+    } else Modifier
     when (item.kind) {
         ChatKind.User -> {
             // Harness preambles (voice / cron) are not something you said — show a quiet marker.
@@ -199,7 +205,7 @@ internal fun ChatBubble(
                 Text("▌", color = colors.gold, style = MaterialTheme.typography.bodyLarge)
             } else {
                 Markdown(
-                    content = item.text + if (item.streaming) " ▌" else "",
+                    content = com.cornerstone.agency.ui.components.keepLineBreaks(item.text) + if (item.streaming) " ▌" else "",
                     colors = markdownColor(
                         text = colors.foreground,
                         codeBackground = colors.elevated,
@@ -259,11 +265,15 @@ internal fun ChatBubble(
             )
         }
 
-        ChatKind.Status -> Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+        ChatKind.Status -> Row(Modifier.fillMaxWidth().then(press), horizontalArrangement = Arrangement.Center) {
+            // Backend notices can be long (provider errors); two lines, full text via long-press.
             Text(
                 item.text,
                 style = MaterialTheme.typography.labelSmall,
                 color = colors.tertiary,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                textAlign = TextAlign.Center,
             )
         }
 

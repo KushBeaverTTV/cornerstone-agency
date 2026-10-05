@@ -150,6 +150,19 @@ class ConnectionRepository(private val store: SecureStore) : HistorySource {
             me()
         }
 
+    /** Session id -> last activity (unix seconds) for a bot's most recent chats. */
+    suspend fun lastActive(profile: String, limit: Int = 50): Map<String, Double> {
+        val text = api("/api/sessions?order=recent&limit=$limit&profile=${enc(profile)}")
+        val rows = (json.parseToJsonElement(text) as? kotlinx.serialization.json.JsonObject)
+            ?.get("sessions") as? kotlinx.serialization.json.JsonArray ?: return emptyMap()
+        return rows.mapNotNull { el ->
+            val o = el as? kotlinx.serialization.json.JsonObject ?: return@mapNotNull null
+            val id = (o["id"] as? kotlinx.serialization.json.JsonPrimitive)?.content ?: return@mapNotNull null
+            val t = (o["last_active"] as? kotlinx.serialization.json.JsonPrimitive)?.content?.toDoubleOrNull() ?: return@mapNotNull null
+            id to t
+        }.toMap()
+    }
+
     /** Newest [limit] DB rows of a session (oldest-first); see [HistorySource]. */
     override suspend fun tail(storedId: String, profile: String, limit: Int) =
         sessionTail(storedId, profile, limit)

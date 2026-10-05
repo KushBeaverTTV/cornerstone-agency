@@ -41,4 +41,14 @@ class TextHelpersTest {
         assertEquals("3d", relativeTime(now - 3 * 86400, now))
         assertEquals("Nov 7", relativeTime(now - 7 * 86400, now))
     }
+
+    @Test
+    fun singleNewlinesBecomeHardBreaksButNotInCodeOrTables() {
+        assertEquals("1  \n2  \n3", keepLineBreaks("1\n2\n3"))
+        assertEquals("a\n\nb", keepLineBreaks("a\n\nb"))
+        val code = "```\nx\ny\n```"
+        assertEquals(code, keepLineBreaks(code))
+        val table = "| a | b |\n|---|---|\n| 1 | 2 |"
+        assertEquals(table, keepLineBreaks(table))
+    }
 }

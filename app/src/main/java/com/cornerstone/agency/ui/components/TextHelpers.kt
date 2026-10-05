@@ -41,3 +41,29 @@ fun relativeTime(epochSeconds: Double, nowSeconds: Double = System.currentTimeMi
         else -> SimpleDateFormat("MMM d", Locale.US).format(Date((epochSeconds * 1000).toLong()))
     }
 }
+
+/**
+ * Chat replies use single newlines as line breaks (lists of numbers, addresses, poems), but
+ * Markdown folds them into spaces. Turn them into hard breaks outside code fences and tables;
+ * blank lines, headings and list items keep their normal Markdown meaning.
+ */
+fun keepLineBreaks(md: String): String {
+    if ('\n' !in md) return md
+    val lines = md.split('\n')
+    val out = StringBuilder(md.length + 32)
+    var fence = false
+    for ((i, line) in lines.withIndex()) {
+        val trimmed = line.trimStart()
+        if (trimmed.startsWith("```") || trimmed.startsWith("~~~")) fence = !fence
+        out.append(line)
+        if (i < lines.lastIndex) {
+            val next = lines[i + 1]
+            val joinable = !fence && line.isNotBlank() && next.isNotBlank() &&
+                !trimmed.startsWith("|") && !next.trimStart().startsWith("|") &&
+                !trimmed.startsWith("```") && !line.endsWith("  ") && !line.endsWith("\\")
+            if (joinable) out.append("  ")
+            out.append('\n')
+        }
+    }
+    return out.toString()
+}

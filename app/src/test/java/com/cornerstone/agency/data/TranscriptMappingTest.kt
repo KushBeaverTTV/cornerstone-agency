@@ -99,4 +99,25 @@ class TranscriptMappingTest {
         assertEquals("4", TranscriptMapping.promptFor(items, "5")?.id)
         assertTrue(TranscriptMapping.fromResume(JsonArray(emptyList()), id).isEmpty())
     }
+
+    @Test
+    fun joiningALiveTurnDoesNotRepeatPersistedInterimText() {
+        val items = listOf(
+            ChatItem("1", ChatKind.User, "Proceed"),
+            ChatItem("2", ChatKind.Tool, "✓ terminal"),
+            ChatItem("3", ChatKind.User, "[injected context]"),
+            ChatItem("4", ChatKind.Assistant, "Adding the glyphs."),
+            ChatItem("5", ChatKind.Tool, "✓ write_file"),
+            ChatItem("6", ChatKind.Assistant, "Now pairing."),
+        )
+        val j = TranscriptMapping.joinLiveTurn(items, "Proceed", "Adding the glyphs.Now pairing.Now the service")
+        assertEquals(0, j.start)
+        assertEquals(null, j.appendPrompt)
+        assertEquals("Now the service", j.partial)
+
+        val fresh = TranscriptMapping.joinLiveTurn(listOf(ChatItem("1", ChatKind.Assistant, "hi")), "new question", "Work")
+        assertEquals(1, fresh.start)
+        assertEquals("new question", fresh.appendPrompt)
+        assertEquals("Work", fresh.partial)
+    }
 }

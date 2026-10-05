@@ -212,6 +212,40 @@ object TranscriptMapping {
 
     fun maxRowId(items: List<ChatItem>): Long? = items.mapNotNull { it.rowId }.maxOrNull()
 
+    /** How to show a turn that was already running when this client joined. */
+    data class LiveJoin(val start: Int?, val appendPrompt: String?, val partial: String)
+
+    /**
+     * [items] is the resume snapshot; [prompt] / [streamed] are the gateway's in-flight turn
+     * (`streamed` is EVERY delta of the turn so far, including text that the snapshot already
+     * holds as persisted interim rows). Finds the turn's prompt in the snapshot (appending it only
+     * when missing) and returns just the text of the bubble that is still being written.
+     */
+    fun joinLiveTurn(items: List<ChatItem>, prompt: String, streamed: String): LiveJoin {
+        val shownPrompt = splitAttachments(prompt).first.trim()
+        val at = if (shownPrompt.isEmpty()) -1
+            else items.indexOfLast { it.kind == ChatKind.User && it.text.trim() == shownPrompt }
+        val start: Int?
+        val append: String?
+        when {
+            at >= 0 -> { start = at; append = null }
+            shownPrompt.isNotEmpty() -> { start = items.size; append = shownPrompt }
+            else -> { start = items.indexOfLast { it.kind == ChatKind.User }.takeIf { it >= 0 }; append = null }
+        }
+        // Drop the interim segments already on screen from the front of the streamed text.
+        var rest = streamed
+        if (start != null && start < items.size) {
+            for (seg in items.subList(start, items.size)) {
+                if (seg.kind != ChatKind.Assistant) continue
+                val s = seg.text.trim()
+                if (s.isEmpty()) continue
+                val idx = rest.indexOf(s)
+                if (idx >= 0) rest = rest.substring(idx + s.length)
+            }
+        }
+        return LiveJoin(start, append, rest.trimStart())
+    }
+
     private fun JsonObject.str(key: String): String? = (this[key] as? JsonPrimitive)?.contentOrNull
     private fun JsonObject.long(key: String): Long? =
         (this[key] as? JsonPrimitive)?.let { it.longOrNull ?: it.contentOrNull?.toLongOrNull() }

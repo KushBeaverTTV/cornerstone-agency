@@ -483,14 +483,14 @@ class ChatRepository(
             // Joined a live turn: show its prompt (if the snapshot does not have it yet) and what
             // the reply has said so far; the deltas that follow continue this bubble.
             val inflight = res["inflight"] as? JsonObject
-            val prompt = inflight?.str("user").orEmpty()
-            var start = list.indexOfLast { it.kind == ChatKind.User }
-            if (prompt.isNotBlank() && list.lastOrNull { it.kind == ChatKind.User }?.text?.trim() != prompt.trim()) {
-                list += ChatItem(nextId(), ChatKind.User, TranscriptMapping.splitAttachments(prompt).first)
-                start = list.size - 1
-            }
-            turnStartIndex = if (start >= 0) start else list.size
-            val partial = inflight?.str("assistant").orEmpty()
+            val plan = TranscriptMapping.joinLiveTurn(
+                list,
+                prompt = inflight?.str("user").orEmpty(),
+                streamed = inflight?.str("assistant").orEmpty(),
+            )
+            if (plan.appendPrompt != null) list += ChatItem(nextId(), ChatKind.User, plan.appendPrompt)
+            turnStartIndex = plan.start ?: list.size
+            val partial = plan.partial
             val id = nextId()
             assistantId = id
             turnAssistantIndex = list.size

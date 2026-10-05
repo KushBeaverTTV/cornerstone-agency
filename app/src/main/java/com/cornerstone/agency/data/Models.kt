@@ -106,7 +106,12 @@ data class SessionSummary(
     // Some server builds attach routing metadata; this one does not — stay tolerant.
     val profile: String? = null,
     @SerialName("profile_name") val profileName: String? = null,
+    /** Last activity (REST /api/sessions rows carry it; session.list rows do not). */
+    @SerialName("last_active") val lastActive: Double = 0.0,
 ) {
+    /** Best known "last touched" time. */
+    val activeAt: Double get() = if (lastActive > 0) lastActive else startedAt
+
     val label: String
         get() = title.ifBlank { preview.lineSequence().firstOrNull()?.take(60) ?: "" }
             .ifBlank { "Session ${id.take(8)}" }

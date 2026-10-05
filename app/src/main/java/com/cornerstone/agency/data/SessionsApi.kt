@@ -38,7 +38,7 @@ internal fun List<SessionSummary>.activityScores(): List<Pair<SessionSummary, Do
     var floor = 0.0
     val out = ArrayList<Pair<SessionSummary, Double>>(size)
     for (s in asReversed()) {
-        floor = maxOf(floor, s.startedAt)
+        floor = maxOf(floor, s.activeAt)
         out += s to floor
     }
     out.reverse()

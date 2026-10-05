@@ -154,8 +154,10 @@ fun ChatsScreen(
         scope.launch {
             val out = HashMap<String, List<SessionSummary>>()
             for (p in profiles) {
-                out[p.name] = runCatching { listProfileSessions(vm.gateway, p.name) }
-                    .getOrDefault(emptyList())
+                val list = runCatching { listProfileSessions(vm.gateway, p.name) }.getOrDefault(emptyList())
+                // session.list has start times only; stamp real last-activity so "1d" means it.
+                val active = runCatching { vm.repo.lastActive(p.name) }.getOrDefault(emptyMap())
+                out[p.name] = if (active.isEmpty()) list else list.map { s -> active[s.id]?.let { s.copy(lastActive = it) } ?: s }
             }
             sessions = out
             loading = false
@@ -326,7 +328,7 @@ fun ChatsScreen(
                         else -> p.subtitle.substringBefore(" — ").ifBlank { "Say hello" }
                     },
                     lineTone = if (waiting) colors.warm else colors.secondary,
-                    time = s?.let { relativeTime(it.startedAt) }.orEmpty(),
+                    time = s?.let { relativeTime(it.activeAt) }.orEmpty(),
                     state = if (waiting) KeystoneState.WAITING else KeystoneState.IDLE,
                     onClick = { if (s != null) onOpenSession(p.name, s.id) else onOpenChat(p.name) },
                     onLongClick = { onOpenBot(p.name) },
@@ -366,7 +368,7 @@ fun ChatsScreen(
                     RecentRow(
                         color = botAvatarColor(p.name, p.isDefault),
                         title = sessionLine(s.title, s.preview).ifBlank { s.label },
-                        time = relativeTime(s.startedAt),
+                        time = relativeTime(s.activeAt),
                         onClick = { onOpenSession(p.name, s.id) },
                         onLongClick = { recentMenu = p to s },
                     )
@@ -514,7 +516,7 @@ fun ChatsScreen(
                             maxLines = 2, overflow = TextOverflow.Ellipsis,
                         )
                         Text(
-                            "${p.title} · ${relativeTime(s.startedAt)}",
+                            "${p.title} · ${relativeTime(s.activeAt)}",
                             style = MaterialTheme.typography.labelMedium, color = colors.tertiary,
                         )
                     }
