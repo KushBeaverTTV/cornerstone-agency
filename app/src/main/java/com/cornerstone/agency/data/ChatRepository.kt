@@ -74,63 +74,18 @@ class OutgoingAttachment(
  * a stored id and returns a runtime `session_id`; prompt, interrupt and event ids are runtime ids.
  */
 class ChatRepository(
-    private val gateway: GatewayLink,
-    val profile: String,
+    gateway: GatewayLink,
+    profile: String,
     /** Live chats sync + cache; a headless writer (Feed) sets this false. */
     private val persistent: Boolean = true,
     private val history: () -> HistorySource? = { GatewayHub.repo },
     dispatcher: CoroutineDispatcher = Dispatchers.Main.immediate,
     private val cacheEnabled: Boolean = persistent && ChatCache.ready,
-) : ChatSource {
-    private val scope = CoroutineScope(SupervisorJob() + dispatcher)
-    private val localId = AtomicLong(0)
-
-    override val linkState: StateFlow<GatewayState> = gateway.state
-
-    private val _items = MutableStateFlow<List<ChatItem>>(emptyList())
-    override val items: StateFlow<List<ChatItem>> = _items.asStateFlow()
-
-    private val _title = MutableStateFlow("")
-    override val title: StateFlow<String> = _title.asStateFlow()
-
-    private val _opening = MutableStateFlow(true)
-    override val opening: StateFlow<Boolean> = _opening.asStateFlow()
-
-    private val _streaming = MutableStateFlow(false)
-    override val streaming: StateFlow<Boolean> = _streaming.asStateFlow()
-
-    /** Transient turn status line ("(◇) orchestrating…") — NOT a transcript row. */
-    private val _statusLine = MutableStateFlow("")
-    override val statusLine: StateFlow<String> = _statusLine.asStateFlow()
-
-    private val _lastError = MutableStateFlow("")
-    override val lastError: StateFlow<String> = _lastError.asStateFlow()
-
-    /** True while the transcript on screen is the on-device copy (not yet refreshed from the PC). */
-    private val _fromCache = MutableStateFlow(false)
-    val fromCache: StateFlow<Boolean> = _fromCache.asStateFlow()
-
-    var storedSessionId: String? = null
-        private set
-    var runtimeSessionId: String? = null
-        private set
-
-    // Turn-scoped render state: one streaming assistant bubble (its list index is the insertion
-    // point for thinking/tool rows so they sit ABOVE the answer), one thinking bubble, one tool.
-    private var assistantId: String? = null
-    private var turnAssistantIndex: Int? = null
-    private var thinkingId: String? = null
-    private var openToolId: String? = null
-
+) : ChatRequestCards(gateway, profile, dispatcher) {
     // The current turn: where its rows start on screen, and the DB row id they will follow.
     private var turnStartIndex: Int? = null
     private var turnBaseRow: Long = 0
     private var lastEventAt = 0L
-
-    // Interactive requests: item id -> expiry job, plus dedupe indexes on both
-    // the wire frame id (srq-…) and the payload request_id.
-    private val reqTimers = HashMap<String, Job>()
-    private val reqIndex = HashMap<String, String>()
 
     // Every runtime id this repo has owned (re-resume mints new ones) — all are
     // "this chat is open" for notification suppression until close().
@@ -242,30 +197,6 @@ class ChatRepository(
         if (persistent) storedSessionId?.let { ChatCache.setLastSession(profile, it) }
     }
 
-    /** session.resume can carry still-open requests (open_requests entries look
-     * like serialized request frames {id, method, params}; pending_* fields are
-     * per-kind payloads). Seeded cards dedupe against live replays by request_id. */
-    private fun seedPendingFromResume(res: JsonObject) {
-        (res["open_requests"] as? JsonArray)?.forEach { el ->
-            val r = el as? JsonObject ?: return@forEach
-            val method = r.str("method") ?: r.str("type")?.removeSuffix(".request")
-                ?: return@forEach
-            val params = (r["params"] as? JsonObject)
-                ?: (r["payload"] as? JsonObject) ?: r
-            val srq = r["id"]?.takeIf {
-                it.jsonPrimitive.contentOrNull?.startsWith("srq-") == true
-            }
-            pushRequest(method, params, srqId = srq)
-        }
-        mapOf(
-            "pending_approval" to "approval", "pending_clarify" to "clarify",
-            "pending_secret" to "secret", "pending_sudo" to "sudo",
-            "pending_mcp_setup" to "mcp.setup",
-        ).forEach { (key, method) ->
-            (res[key] as? JsonObject)?.let { pushRequest(method, it, srqId = null) }
-        }
-    }
-
     private suspend fun create() {
         val res = gateway.call(
             "session.create",
@@ -278,26 +209,6 @@ class ChatRepository(
         startSync()
         seedPendingFromResume(res)
         seedPendingApprovals()
-    }
-
-    /** approval.pending catches requests still open after a reconnect — the
-     * resume snapshot's open_requests is empty when the old transport died. */
-    private suspend fun seedPendingApprovals() {
-        val rt = runtimeSessionId ?: return
-        try {
-            val res = gateway.call(
-                "approval.pending",
-                buildJsonObject { put("session_id", rt) },
-            ).asObj()
-            val list = (res["approvals"] as? JsonArray)
-                ?: (res["pending"] as? JsonArray)
-                ?: JsonArray(emptyList())
-            list.forEach { el ->
-                (el as? JsonObject)?.let { pushRequest("approval", it, srqId = null) }
-            }
-        } catch (_: Exception) {
-            // Older servers may not implement approval.pending.
-        }
     }
 
     suspend fun listSessions(): List<SessionSummary> =
@@ -717,295 +628,6 @@ class ChatRepository(
         }
     }
 
-    // ---- interactive requests ------------------------------------------------
-
-    /** A server→client request frame (srq id) scoped to this session. */
-    private fun onRequestFrame(req: GatewayRequest) {
-        val sid = req.params.str("session_id")
-        if (sid != null && sid != runtimeSessionId && sid != storedSessionId) return
-        pushRequest(req.method, req.params, srqId = req.id)
-    }
-
-    /** Push a request card; dedupe by request_id / srq id; start the TTL timer. */
-    private fun pushRequest(method: String, params: JsonObject, srqId: JsonElement?) {
-        val req = pendingRequestFrom(method, params, srqId)
-        val dedupeKeys = listOfNotNull(req.requestId, srqIdString(req))
-        if (dedupeKeys.any { reqIndex.containsKey(it) }) return
-
-        val id = nextId()
-        reqIndex += dedupeKeys.associateWith { id }
-        append(
-            ChatItem(
-                id = id, kind = ChatKind.Request,
-                text = req.command.ifBlank {
-                    req.questions.firstOrNull()?.question ?: req.prompt.ifBlank { req.title }
-                },
-                request = req,
-            )
-        )
-        reqTimers[id] = scope.launch {
-            val wait = req.expiresAt - System.currentTimeMillis()
-            if (wait > 0) kotlinx.coroutines.delay(wait)
-            patchRequest(id) { it.copy(state = RequestState.Expired, resolution = "timed out") }
-        }
-        reportOpenRequests()
-    }
-
-    private fun patchRequest(itemId: String, f: (PendingRequest) -> PendingRequest) {
-        val item = _items.value.firstOrNull { it.id == itemId } ?: return
-        val req = item.request ?: return
-        val patched = f(req)
-        if (patched.state == RequestState.Resolved || patched.state == RequestState.Expired) {
-            reqTimers.remove(itemId)?.cancel()
-        }
-        mutate(itemId) { it.copy(request = patched) }
-        reportOpenRequests()
-    }
-
-    /** Server-side resolution noticed via request.cancel / *.resolved events. */
-    private fun resolveRequest(requestIdOrSrq: String?, resolution: String) {
-        if (requestIdOrSrq == null) return
-        val itemId = reqIndex[requestIdOrSrq] ?: return
-        com.cornerstone.agency.service.NotificationCenter.resolve(requestIdOrSrq)
-        patchRequest(itemId) {
-            if (it.open) it.copy(state = RequestState.Resolved, resolution = resolution) else it
-        }
-    }
-
-    private fun srqIdString(req: PendingRequest): String? =
-        req.srqId?.jsonPrimitive?.contentOrNull
-
-    private fun reportOpenRequests() {
-        val open = _items.value.count { it.request?.open == true }
-        PendingRequests.report(storedSessionId ?: runtimeSessionId ?: "", profile, open)
-    }
-
-    /** Optimistic respond: mark Resolved immediately, revert to Open on failure. */
-    private suspend fun respond(
-        itemId: String,
-        resolution: String,
-        result: JsonObject,
-        rpcFallback: suspend (PendingRequest) -> Unit,
-    ) {
-        val req = _items.value.firstOrNull { it.id == itemId }?.request ?: return
-        if (req.state != RequestState.Open) return
-        patchRequest(itemId) { it.copy(state = RequestState.Sending, respondError = "") }
-        try {
-            val srq = req.srqId
-            if (srq != null) {
-                if (!gateway.respond(srq, result)) throw java.io.IOException("socket closed")
-            } else {
-                rpcFallback(req)
-            }
-            patchRequest(itemId) {
-                it.copy(state = RequestState.Resolved, resolution = resolution)
-            }
-            com.cornerstone.agency.service.NotificationCenter.resolve(
-                req.requestId ?: req.srqId?.jsonPrimitive?.contentOrNull,
-            )
-        } catch (e: Exception) {
-            patchRequest(itemId) {
-                it.copy(state = RequestState.Open, respondError = friendly(e))
-            }
-        }
-    }
-
-    override suspend fun approveRequest(itemId: String, choice: String) {
-        val resolution = if (choice == "deny") "Denied" else "Approved $choice"
-        respond(
-            itemId, resolution,
-            buildJsonObject { put("choice", choice) },
-        ) { req ->
-            gateway.call(
-                "approval.respond",
-                buildJsonObject {
-                    put("session_id", runtimeSessionId ?: req.sessionId)
-                    put("choice", choice)
-                    req.requestId?.let { put("request_id", it) }
-                },
-            )
-            Unit
-        }
-    }
-
-    /** [answers] maps question qid → answer; a single "" key means {answer}.
-     * Batch requests (the server sent `questions[]` with qids) must close with
-     * {"answers": {qid: …}} — a result without `answers` is a cancel-all. */
-    override suspend fun answerClarify(itemId: String, answers: Map<String, String>) {
-        val req = _items.value.firstOrNull { it.id == itemId }?.request ?: return
-        val batch = req.questions.any { it.qid.isNotEmpty() }
-        val single = answers[""] ?: answers.values.firstOrNull().orEmpty()
-        val result = if (batch) {
-            buildJsonObject {
-                put("answers", buildJsonObject {
-                    answers.forEach { (qid, a) -> put(qid.ifEmpty { "q0" }, a) }
-                })
-            }
-        } else {
-            buildJsonObject { put("answer", single) }
-        }
-        respond(itemId, "Answered: $single", result) { r ->
-            gateway.call(
-                "clarify.respond",
-                buildJsonObject {
-                    r.requestId?.let { put("request_id", it) }
-                    if (batch) {
-                        put("answers", buildJsonObject {
-                            answers.forEach { (qid, a) -> put(qid.ifEmpty { "q0" }, a) }
-                        })
-                    } else {
-                        put("answer", single)
-                        answers.keys.firstOrNull()
-                            ?.takeIf { it.isNotEmpty() }
-                            ?.let { put("question_id", it) }
-                    }
-                },
-            )
-            Unit
-        }
-    }
-
-    /** secret / sudo / vault.* / other one-string prompts. Never logged or persisted. */
-    override suspend fun submitRequestValue(itemId: String, value: String) {
-        respond(itemId, "Sent", buildJsonObject { put("value", value) }) { req ->
-            val rpc = when (req.kind) {
-                RequestKind.Secret -> "secret.respond" to "value"
-                RequestKind.Sudo -> "sudo.respond" to "password"
-                else -> return@respond Unit
-            }
-            gateway.call(
-                rpc.first,
-                buildJsonObject {
-                    req.requestId?.let { put("request_id", it) }
-                    put(rpc.second, value)
-                },
-            )
-            Unit
-        }
-    }
-
-    override suspend fun respondMcp(itemId: String, approved: Boolean) {
-        respond(
-            itemId, if (approved) "Approved" else "Denied",
-            buildJsonObject { put("approved", approved) },
-        ) { req ->
-            gateway.call(
-                "mcp.setup.respond",
-                buildJsonObject {
-                    req.requestId?.let { put("request_id", it) }
-                    put("result", "{\"approved\":$approved}")
-                },
-            )
-            Unit
-        }
-    }
-
-    // ---- item mutation helpers -------------------------------------------------
-
-    private fun nextId() = "i${localId.incrementAndGet()}"
-
-    private fun append(kind: ChatKind, text: String) {
-        append(ChatItem(id = nextId(), kind = kind, text = text))
-    }
-
-    private fun append(item: ChatItem) {
-        _items.value = _items.value + item
-    }
-
-    /**
-     * Insert a row just above the current turn's assistant bubble (keeping
-     * thinking/tool lines visually before the answer) or append if the bubble
-     * doesn't exist yet. Each insert bumps [turnAssistantIndex] so later rows
-     * stay ordered.
-     */
-    private fun insertAboveAssistant(item: ChatItem) {
-        val idx = turnAssistantIndex
-        if (idx != null && idx <= _items.value.size && assistantId != null) {
-            _items.value = _items.value.toMutableList().apply { add(idx, item) }
-            turnAssistantIndex = idx + 1
-        } else {
-            append(item)
-        }
-    }
-
-    private fun mutate(id: String, f: (ChatItem) -> ChatItem) {
-        _items.value = _items.value.map { if (it.id == id) f(it) else it }
-    }
-
-    private fun startAssistant() {
-        thinkingId = null
-        val id = nextId()
-        assistantId = id
-        turnAssistantIndex = _items.value.size
-        append(ChatItem(id = id, kind = ChatKind.Assistant, text = "", streaming = true, done = false))
-        _streaming.value = true
-    }
-
-    private fun appendAssistantDelta(delta: String) {
-        if (delta.isEmpty()) return
-        val id = assistantId ?: run {
-            startAssistant()
-            assistantId!!
-        }
-        mutate(id) { it.copy(text = it.text + delta, streaming = true) }
-    }
-
-    private fun setAssistantText(text: String) {
-        val id = assistantId ?: run {
-            val newId = nextId()
-            assistantId = newId
-            turnAssistantIndex = _items.value.size
-            append(ChatItem(id = newId, kind = ChatKind.Assistant, text = text))
-            newId
-        }
-        mutate(id) { it.copy(text = text, streaming = false, done = true) }
-    }
-
-    /** The bubble is finished but the turn is not (a tool round follows). */
-    private fun closeAssistantBubble() {
-        assistantId?.let { id -> mutate(id) { it.copy(streaming = false, done = true) } }
-        // An empty interim bubble (tool call with no preamble) is noise.
-        _items.value = _items.value.filterNot { it.id == assistantId && it.text.isBlank() }
-        assistantId = null
-        turnAssistantIndex = null
-        thinkingId = null
-    }
-
-    private fun appendThinking(delta: String) {
-        if (delta.isEmpty()) return
-        val id = thinkingId
-        if (id == null) {
-            val newId = nextId()
-            thinkingId = newId
-            insertAboveAssistant(ChatItem(id = newId, kind = ChatKind.Thinking, text = delta))
-        } else {
-            mutate(id) { it.copy(text = it.text + delta) }
-        }
-    }
-
-    private fun setThinking(text: String) {
-        val id = thinkingId
-        if (id == null) {
-            val newId = nextId()
-            thinkingId = newId
-            insertAboveAssistant(ChatItem(id = newId, kind = ChatKind.Thinking, text = text))
-        } else {
-            mutate(id) { it.copy(text = text) }
-        }
-    }
-
-    private fun finalizeStreaming() {
-        _streaming.value = false
-        _statusLine.value = ""
-        _items.value = _items.value
-            .filterNot { it.kind == ChatKind.Assistant && it.text.isBlank() && it.attachments.isEmpty() }
-            .map { if (it.streaming || !it.done) it.copy(streaming = false, done = true) else it }
-        assistantId = null
-        turnAssistantIndex = null
-        thinkingId = null
-        openToolId = null
-    }
-
     /** The turn finished: settle the UI, then swap the live rows for the persisted ones. */
     private fun endTurn() {
         finalizeStreaming()
@@ -1104,12 +726,6 @@ class ChatRepository(
                 }
             }
         }
-    }
-
-    private fun friendly(e: Exception): String = when (e) {
-        is GatewayRpcException -> e.message ?: "rpc error ${e.code}"
-        is java.io.IOException -> "socket unavailable"
-        else -> e.message ?: e.javaClass.simpleName
     }
 }
 
