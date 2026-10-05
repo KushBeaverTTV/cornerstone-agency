@@ -28,7 +28,9 @@ class Config:
         self.laya_dir = os.environ.get(
             "AGENCY_LAYA_DIR", r"C:\Users\antho\laya-model"
         ).strip()
-        self.default_cwd = os.environ.get("AGENCY_PRIMA_CWD", r"C:\Cornerstone").strip()
+        cwd = os.environ.get("AGENCY_PRIMA_CWD", r"C:\Cornerstone").strip()
+        # A missing default folder would make every new Prima session fail to spawn.
+        self.default_cwd = cwd if os.path.isdir(cwd) else str(Path.home())
         self.worker_idle_s = float(os.environ.get("AGENCY_PRIMA_IDLE_S", str(6 * 3600)))
         self.token = os.environ.get(TOKEN_KEY, "").strip() or self._bootstrap_token()
 

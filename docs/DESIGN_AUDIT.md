@@ -2,6 +2,17 @@
 
 Method: four sonnet agents read the source in slices (design system, chat+voice, navigation/IA) and researched Muse and Grok from public sources; the branding board was reviewed directly. NOT done: live screenshots (phone was off USB), so rendering claims (clipping, crowding) are inferred from code. Muse's real screen layout and Grok's mobile voice orb could not be verified from any source found.
 
+## Status (2026-10-05, v1.3.0)
+
+Addressed since this audit: chat-first home with three labelled tabs; full-width assistant text;
+Grok-style composer pill with attach (photos / camera / files), model chip and mic→send→stop;
+one "Thought · N tools" chip per turn; long-press message sheet (tapbacks, copy, select text,
+share, read aloud, quote, edit & resend, regenerate, branch); in-chat search; jump-to-latest;
+empty state with suggestions; animated keystone avatar states (geometry now cached per size);
+full-screen voice with slashed-mic mute; inbox answers every request kind in place (multi-question
+clarify, secret, sudo, MCP); 48 dp targets on new controls. Still open: the tertiary-text
+contrast finding (2.8:1) and the Settings sprawl beyond pairing.
+
 ## What is already the personality (keep)
 - Ink #0A0A0A + signal yellow #FCEE0A, strict two-colour discipline; white only for text/wordmark.
 - Collapse display face for titles/wordmark/empty states only; sans for body.

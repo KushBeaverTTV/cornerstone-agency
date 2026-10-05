@@ -1,7 +1,17 @@
 # Cornerstone Agency Desktop Bridge — design
 
-Status: design (M6). Owner: Agency. Lives in `bridge/` of this repo; runs on the HQ desktop
-next to `hermes serve` (:9119) and the Hermes voice bridge (:8766).
+Status: shipped, bridge 0.2.0 (2026-10-05). Owner: Agency. Lives in `bridge/` of this repo; runs
+on the HQ desktop next to `hermes serve` (:9119) and the Hermes voice bridge (:8766).
+
+What changed since M6 (details in the sections below):
+
+- **Hermes relay** (`/hermes/*`): the phone talks to Hermes *through* the bridge, which forwards
+  to the backend the Hermes desktop app itself spawned. Live turns are shared, so a reply typed
+  on the desktop streams token-by-token onto the phone and vice versa.
+- **QR pairing** (`agency-bridge pair` / `ops/windows/pair-agency-phone.ps1`): one scan signs the
+  phone into the relay, the bridge and the voice bridge. No password on the phone.
+- **Service board** (`/services`) + `Cornerstone-Agency-Watchdog` scheduled task.
+- **Prima**: reopen saved conversations (`/prima/saved`), per-session model, image/file prompts.
 
 ## Why
 
@@ -20,17 +30,64 @@ Two things the phone wants that have no network surface today:
 - Python 3.11+, FastAPI + uvicorn (same stack as `services/hermes-mobile-gateway`), managed
   with `C:\Cornerstone\tools\uv`. Torch + transformers + safetensors for Laya (CPU is fine —
   measured ~0.8 s/prediction on this box; Laya is lazy-loaded on first call).
-- Bind `127.0.0.1:9121` by default. Phone reaches it over `adb reverse tcp:9121 tcp:9121`
-  (USB), or LAN/Tailscale when started with `AGENCY_BRIDGE_HOST=0.0.0.0`.
-- Start script: `bridge/start.cmd` → `uv run agency-bridge`. Should be added to the stack
-  launcher later; not part of M6.
+- Live install binds the PC's tailnet IP (`100.84.54.112:9121`) via
+  `ops/windows/launch-agency-bridge.ps1`. Over USB the loopback forwarder
+  (`agency-usb-forward.py`) + `adb reverse tcp:9121 tcp:9121` gives the phone `127.0.0.1:9121`.
+- All three services start at login from `Cornerstone-Agency-Backend.cmd`. Copies of every
+  launcher live in `ops/windows/`; `install-agency-watchdog.ps1` copies them into
+  `%LOCALAPPDATA%\hermes\scripts` and registers the watchdog task.
+
+### Watchdog
+
+`Cornerstone-Agency-Watchdog` runs `agency-watchdog.ps1` every 5 minutes (per-user task, hidden
+window). A service is relaunched when its port is not listening or after 3 consecutive failed
+health checks. Log: `%LOCALAPPDATA%\hermes\logs\agency-watchdog.log`, capped at 256 KB
+(trimmed to the newest 400 lines).
 
 ## Auth
 
 Single static bearer token. On first start the bridge generates `agb_<token_urlsafe(24)>`
-into `%LOCALAPPDATA%\cornerstone-agency\bridge.env` (owner-only) and prints it once. Phone
-stores it in `SecureStore`; every request carries `Authorization: Bearer agb_…`; WS passes
-`?token=`. `GET /health` is public and never includes the token. No pairing dance in M6.
+into `%LOCALAPPDATA%\cornerstone-agency\bridge.env` (owner-only). Phone stores it in
+`SecureStore`; every request carries an `Authorization: Bearer` header with it; sockets pass
+`?token=` or a one-time `?ticket=` (60 s). `GET /health` is public and never includes the token.
+
+### Pairing
+
+`agency-bridge pair` (or `ops/windows/pair-agency-phone.ps1`) writes a local HTML page with a QR
+for `cornerstone-agency://pair?v=1&bridge=<ip>:9121&token=<t>&voice=<ip>:8766&voice_token=<t>&name=<pc>`
+and opens it. The page is a temp file and is never served. The phone camera opens the link in
+the app (`MainActivity.handlePairing` → `AppViewModel.pair`), which verifies the relay before
+saving anything. The link can also be pasted on the Connect screen.
+
+### Hermes relay (`/hermes/*`)
+
+The phone never holds a Hermes credential. The relay picks its upstream on every request:
+
+1. `desktop-serve` — the backend the Hermes desktop app spawned (port + session token from
+   `~/.local/state/hermes/gateway-locks/host-desktop-serve.{json,token}`, header
+   `X-Hermes-Session-Token`). Live turn streams only exist in this process.
+2. `serve` fallback — the always-on dashboard on :9119 (basic login → cookies / WS tickets),
+   used when the desktop app is closed. Turns made there are caught up from the state DB.
+
+```
+GET  /hermes/status              → {backend:"desktop"|"serve", base, pid, phones}
+POST /hermes/api/auth/ws-ticket  → {ticket}  (one-time, for /hermes/api/ws)
+WS   /hermes/api/ws?ticket=…     → transparent JSON-RPC pipe to the upstream socket
+ANY  /hermes/{path}              → forwarded REST (/api/profiles, /api/sessions, /api/media …)
+```
+
+`/api/auth/me` does not exist on the desktop backend, so the app proves a relay sign-in with
+`/api/profiles` (`ConnectionRepository.verify`).
+
+### How the phone shares a live chat
+
+`session.resume` through the relay joins the desktop's live session as another viewer. If a
+turn is running, `inflight` carries every delta so far; `TranscriptMapping.joinLiveTurn`
+subtracts the interim text already persisted and continues the current bubble. Turns the
+phone did not start ("peer turns") fetch their prompt from the state DB and stream live.
+Each finished turn is swapped for its persisted rows (durable row ids, needed by edit /
+regenerate / react / branch); a 3 s DB poll adds rows written elsewhere (Telegram, cron) and
+rebuilds when rows disappear (undo / rewind on the desktop).
 
 ## HTTP API
 
@@ -47,12 +104,26 @@ disconnects; the bridge kills idle workers after 6 h.
 ```
 GET    /prima/sessions                  → {sessions:[{id, name, cwd, is_streaming,
                                             message_count, created_at, last_activity}]}
-POST   /prima/sessions {cwd?, name?}    → {id}          (spawns worker; default cwd = C:\Cornerstone)
+POST   /prima/sessions {cwd?, name?, session_path?}
+                                        → {id}          (spawns worker; default cwd = C:\Cornerstone;
+                                                         session_path reopens a saved conversation)
+GET    /prima/saved?limit=              → {sessions:[{path, session_id, title, preview, cwd,
+                                            message_count, model, updated_at, open_id}]}
+                                          (~/.prime/agent/sessions/*.jsonl, newest first; desktop
+                                           and phone conversations alike)
+GET    /prima/sessions/{id}/models      → get_available_models
+POST   /prima/sessions/{id}/model {provider, model_id}
+                                        → set_model (switches this session AND becomes Prima's
+                                           defaultModel for new sessions — Prima persists it)
 GET    /prima/sessions/{id}             → get_state passthrough + bridge fields
 GET    /prima/sessions/{id}/messages    → get_messages passthrough (UserMessage /
                                            AssistantMessage / ToolResultMessage list)
-POST   /prima/sessions/{id}/prompt {message, streaming_behavior?: "steer"|"followUp"}
+POST   /prima/sessions/{id}/prompt {message, streaming_behavior?: "steer"|"followUp",
+                                        images?: [{data(base64), mime_type}],
+                                        files?:  [{name, data(base64)}]}
                                         → {accepted:true} | 409 if streaming and no behavior
+                                          (images ride as ImageContent; files are saved to
+                                           ~/.prime/agent/uploads/ and referenced in the message)
 POST   /prima/sessions/{id}/abort       → {ok}
 POST   /prima/sessions/{id}/name {name} → set_session_name
 DELETE /prima/sessions/{id}             → kills worker (sessions stay on disk; prime-agent
@@ -113,6 +184,18 @@ POST /laya/triage {title, body}
 Laya inputs are the caller's text only — the bridge never fetches from Hermes itself, so it
 has no Hermes credentials.
 
+### Services (`/services`)
+
+```
+GET  /services                  → {services:[{name, label, port, ok, pid, restartable}],
+                                   hermes:{backend, phones}, watchdog:[last log lines]}
+POST /services/{name}/restart   → relaunch via its ops/windows launcher
+                                  (restarting "bridge" exits after replying; the launcher
+                                   brings it back)
+```
+
+Listener detection filters by host: the USB forwarder binds the same ports on 127.0.0.1.
+
 ## Phone integration (M6 scope on the Android side)
 
 - More → **Bridge** card: host:port (default `127.0.0.1:9121`), token field, "Test" button
@@ -130,7 +213,10 @@ has no Hermes credentials.
   reachable; `level==2 || needs_human>0.7` → heads-up high priority, else silent channel.
   Failure/unreachable → fall back to today's behaviour.
 
-## Non-goals (M6)
+Since 0.2.0 the Me screen also shows the **PC services** board (status + restart), and the
+Prima sessions screen lists saved conversations from `/prima/saved` for reopening.
 
-No pairing codes, no TLS, no multi-user, no Prima ACP mode, no image attachments, no
-Laya fine-tuning. The bridge is a thin, honest adapter.
+## Non-goals
+
+No TLS (Tailscale carries the traffic), no multi-user, no Prima ACP mode, no Laya
+fine-tuning. The bridge is a thin, honest adapter.
