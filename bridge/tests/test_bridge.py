@@ -114,9 +114,42 @@ def test_prima_model_switch(client):
         f"/prima/sessions/{sid}/model",
         json={"provider": "anthropic", "model_id": "claude-opus-4-8"}, headers=AUTH,
     )
-    assert ok.json() == {"ok": True}
-    cur = client.get(f"/prima/sessions/{sid}/models", headers=AUTH).json()["current"]
-    assert cur == {"provider": "anthropic", "id": "claude-opus-4-8"}
+    # Per-session: the worker is respawned with --model under the SAME id (set_model would
+    # have rewritten Prima's global default).
+    assert ok.json() == {"ok": True, "scope": "session"}
+    assert appmod.prima.sessions[sid].model == "anthropic/claude-opus-4-8"
+    models = client.get(f"/prima/sessions/{sid}/models", headers=AUTH).json()
+    assert models["current"] == {"provider": "anthropic", "id": "claude-opus-4-8"}
+    assert models["scope"] == "session"
+    client.delete(f"/prima/sessions/{sid}", headers=AUTH)
+
+
+def test_prima_saved_sessions_reopen(client, tmp_path, monkeypatch):
+    monkeypatch.setenv("AGENCY_PRIMA_SESSIONS_DIR", str(tmp_path))
+    good = tmp_path / "a.jsonl"
+    good.write_text("\n".join(json.dumps(e) for e in [
+        {"type": "session", "id": "s-a", "cwd": "C:/x"},
+        {"type": "message", "message": {"role": "user", "content": [{"type": "text", "text": "Plan the week"}]}},
+        {"type": "message", "message": {"role": "assistant", "content": [{"type": "text", "text": "Sure."}]}},
+    ]), encoding="utf-8")
+    (tmp_path / "empty.jsonl").write_text(json.dumps({"type": "session", "id": "e"}), encoding="utf-8")
+    archived = tmp_path / "old.jsonl"
+    archived.write_text("\n".join(json.dumps(e) for e in [
+        {"type": "session", "id": "s-o"},
+        {"type": "message", "message": {"role": "user", "content": "hi"}},
+        {"type": "session_state", "state": {"status": "archived"}},
+    ]), encoding="utf-8")
+    rows = client.get("/prima/saved", headers=AUTH).json()["sessions"]
+    assert [r["title"] for r in rows] == ["Plan the week"]
+    assert rows[0]["message_count"] == 2 and rows[0]["open_id"] is None
+
+    sid = client.post("/prima/sessions", headers=AUTH, json={"session_path": rows[0]["path"]}).json()["id"]
+    again = client.post("/prima/sessions", headers=AUTH, json={"session_path": rows[0]["path"]}).json()["id"]
+    assert again == sid  # one worker per saved file
+    assert client.get("/prima/saved", headers=AUTH).json()["sessions"][0]["open_id"] == sid
+    # Anything outside the sessions dir is refused.
+    bad = client.post("/prima/sessions", headers=AUTH, json={"session_path": str(FAKE_WORKER)})
+    assert bad.status_code == 400
     client.delete(f"/prima/sessions/{sid}", headers=AUTH)
 
 

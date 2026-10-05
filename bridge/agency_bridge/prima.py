@@ -25,9 +25,13 @@ class WorkerDead(Exception):
 
 
 class PrimaWorker:
-    def __init__(self, session_id: str, cmd: str, cwd: str, name: str, broadcast):
+    def __init__(self, session_id: str, cmd: str, cwd: str, name: str, broadcast,
+                 model: Optional[str] = None):
         self.id = session_id
         self.cmd = cmd
+        # "provider/model" pinned for THIS worker via --model (does not touch Prima's default).
+        self.model = model
+        self.session_file = ""
         self.cwd = cwd
         self.name = name
         self.created_at = time.time()
@@ -35,6 +39,7 @@ class PrimaWorker:
         self.is_streaming = False
         self.message_count = 0
         self.alive = True
+        self.quiet_exit = False  # set before an intentional respawn: no "exited" frame
         self._proc: Optional[asyncio.subprocess.Process] = None
         self._pending: Dict[str, asyncio.Future] = {}
         self._seq = itertools.count(1)
@@ -53,16 +58,17 @@ class PrimaWorker:
         return [p.strip('"').strip("'") for p in shlex.split(cmd, posix=False)]
 
     @classmethod
-    def _argv(cls, cmd: str) -> List[str]:
+    def _argv(cls, cmd: str, extra: Optional[List[str]] = None) -> List[str]:
         """Build the spawn argv; a multi-word cmd is split (tests use
         `python fake_worker.py`), a bare .cmd/.bat goes through cmd.exe."""
         parts = cls._parts(cmd)
+        tail = ["--mode", "rpc", *(extra or [])]
         if len(parts) == 1 and parts[0].lower().endswith((".cmd", ".bat")):
-            return ["cmd", "/c", parts[0], "--mode", "rpc"]
-        return parts + ["--mode", "rpc"]
+            return ["cmd", "/c", parts[0], *tail]
+        return parts + tail
 
     async def start(self) -> None:
-        argv = self._argv(self.cmd)
+        argv = self._argv(self.cmd, ["--model", self.model] if self.model else None)
         env = dict(os.environ)
         # Force unbuffered UTF-8 so JSONL lines arrive whole and promptly.
         env["PYTHONUNBUFFERED"] = "1"
@@ -118,6 +124,12 @@ class PrimaWorker:
 
     async def set_model(self, provider: str, model_id: str) -> Dict[str, Any]:
         return await self.command("set_model", timeout=30.0, provider=provider, modelId=model_id)
+
+    async def switch_session(self, path: str) -> Dict[str, Any]:
+        resp = await self.command("switch_session", timeout=60.0, sessionPath=path)
+        if resp.get("success"):
+            self.session_file = path
+        return resp
 
     async def abort(self) -> Dict[str, Any]:
         return await self.command("abort", timeout=15.0)
@@ -189,9 +201,10 @@ class PrimaWorker:
                 if not fut.done():
                     fut.set_exception(WorkerDead(f"worker exited ({code})"))
             self._pending.clear()
-            await self._broadcast(
-                {"type": "worker", "session_id": self.id, "state": "exited", "code": code}
-            )
+            if not self.quiet_exit:
+                await self._broadcast(
+                    {"type": "worker", "session_id": self.id, "state": "exited", "code": code}
+                )
 
     async def kill(self) -> None:
         self.alive = False
@@ -217,6 +230,8 @@ class PrimaWorker:
             "created_at": self.created_at,
             "last_activity": self.last_activity,
             "alive": self.alive,
+            "session_file": self.session_file,
+            "model": self.model or "",
         }
 
 
@@ -262,18 +277,64 @@ class PrimaManager:
         for w in list(self.sessions.values()):
             await w.kill()
 
-    async def create(self, cwd: Optional[str] = None, name: str = "") -> PrimaWorker:
-        sid = uuid.uuid4().hex[:12]
+    async def create(
+        self,
+        cwd: Optional[str] = None,
+        name: str = "",
+        session_path: Optional[str] = None,
+        model: Optional[str] = None,
+        sid: Optional[str] = None,
+    ) -> PrimaWorker:
+        """Spawn a worker; ``session_path`` reopens a saved session, ``model`` pins its model."""
+        if session_path and sid is None:
+            for w in self.sessions.values():
+                if w.alive and w.session_file == session_path:
+                    return w  # already open: one worker per session file
+        sid = sid or uuid.uuid4().hex[:12]
         worker = PrimaWorker(
             session_id=sid,
             cmd=self.prima_cmd,
             cwd=cwd or self.default_cwd,
             name=name,
             broadcast=self.broadcast,
+            model=model,
         )
         await worker.start()
+        try:
+            if session_path:
+                resp = await worker.switch_session(session_path)
+                if not resp.get("success") or (resp.get("data") or {}).get("cancelled"):
+                    raise RuntimeError(resp.get("error") or "switch_session refused")
+            else:
+                st = await worker.get_state()
+                worker.session_file = (st.get("data") or {}).get("sessionFile") or ""
+        except Exception:
+            await worker.kill()
+            raise
         self.sessions[sid] = worker
         return worker
+
+    async def restart_with_model(self, sid: str, provider: str, model_id: str) -> PrimaWorker:
+        """Per-session model switch. prime-agent's ``set_model`` also rewrites Prima's global
+        default, so instead the worker is respawned with ``--model`` and reloads the same session
+        file. Same bridge id, so the phone's open chat keeps working."""
+        old = self.get(sid)
+        if old is None:
+            raise WorkerDead(f"worker {sid} is dead")
+        if old.is_streaming:
+            raise RuntimeError("Prima is replying; switch models when it is idle")
+        st = await old.get_state()
+        data = st.get("data") or {}
+        path = data.get("sessionFile") or old.session_file
+        has_history = int(data.get("messageCount") or 0) > 0
+        name, cwd = old.name, old.cwd
+        self.sessions.pop(sid, None)
+        old.quiet_exit = True
+        await old.kill()
+        return await self.create(
+            cwd=cwd, name=name, session_path=path if (path and has_history) else None,
+            model=f"{provider}/{model_id}", sid=sid,
+        )
 
     def get(self, session_id: str) -> Optional[PrimaWorker]:
         w = self.sessions.get(session_id)

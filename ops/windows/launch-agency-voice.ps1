@@ -1,0 +1,1 @@
+Start-Process -WindowStyle Hidden -FilePath 'cmd.exe' -ArgumentList '/c','C:\Cornerstone\projects\cornerstone-agency\voice-bridge\start.cmd' -RedirectStandardOutput "$env:LOCALAPPDATA\hermes\logs\agency-voice.out.log" -RedirectStandardError "$env:LOCALAPPDATA\hermes\logs\agency-voice.err.log"

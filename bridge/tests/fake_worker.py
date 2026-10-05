@@ -13,11 +13,15 @@ if "--version" in sys.argv:
     sys.exit(0)
 
 state = {
-    "model": {"provider": "fake", "modelId": "fake-1"},
+    "model": {"provider": "fake", "id": "fake-1"},
     "isStreaming": False,
     "sessionId": "fake-session",
+    "sessionFile": "fake-new.jsonl",
     "messageCount": 0,
 }
+if "--model" in sys.argv:
+    prov, _, mid = sys.argv[sys.argv.index("--model") + 1].partition("/")
+    state["model"] = {"provider": prov, "id": mid}
 messages = []
 seq = 0
 
@@ -72,6 +76,10 @@ for raw in sys.stdin:
             {"provider": "anthropic", "id": "claude-sonnet-5-5", "name": "Claude Sonnet 5.5"},
             {"provider": "anthropic", "id": "claude-opus-4-8", "name": "Claude Opus 4.8"},
         ]})
+    elif t == "switch_session":
+        state["sessionFile"] = msg.get("sessionPath", "")
+        state["messageCount"] = 2
+        respond(True, {"cancelled": False})
     elif t == "set_model":
         state["model"] = {"provider": msg.get("provider"), "id": msg.get("modelId")}
         respond(True, state["model"])

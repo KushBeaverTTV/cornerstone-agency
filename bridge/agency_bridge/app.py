@@ -1,7 +1,10 @@
 """Cornerstone Agency desktop bridge — FastAPI app.
 
-Bearer auth on everything except /health. WS /prima/ws takes ?token=.
-Mirrors services/hermes-mobile-gateway in layout and logging style.
+Bearer auth on everything except /health. WS /prima/ws takes ?token=; the Hermes relay socket
+(/hermes/api/ws) takes a one-time relay ticket or the token.
+
+Surfaces: /prima (Prime Agent workers + saved sessions), /laya (routing model),
+/hermes (relay to the Hermes backend the desktop app uses), /services (PC stack health).
 """
 from __future__ import annotations
 
@@ -10,6 +13,7 @@ import json
 import logging
 import os
 import sys
+import time
 from typing import Optional
 
 import uvicorn
@@ -17,17 +21,30 @@ from fastapi import Depends, FastAPI, HTTPException, Request, WebSocket, WebSock
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import BaseModel
 
+from pathlib import Path
+
+from fastapi.responses import Response
+
+from . import prima_saved
 from .config import Config
+from .hermes_relay import HermesRelay, RelaySocket
 from .laya import LayaEngine
 from .prima import PrimaManager, WorkerDead
+from .services import ServiceBoard
 
 log = logging.getLogger("agency_bridge")
 
-VERSION = "0.1.0"
+VERSION = "0.2.0"
 
 cfg = Config()
 prima = PrimaManager(cfg.prima_cmd, cfg.default_cwd, cfg.worker_idle_s)
 laya = LayaEngine(cfg.laya_dir)
+relay = HermesRelay(
+    serve_url=os.environ.get("AGENCY_HERMES_SERVE_URL", f"http://{cfg.host}:9119"),
+    creds_file=Path(os.environ.get(
+        "AGENCY_DASHBOARD_ENV", r"C:\Cornerstone\Cornerstone_Secrets\agency-dashboard.env")),
+)
+board = ServiceBoard(cfg.host)
 
 app = FastAPI(title="cornerstone-agency-bridge", version=VERSION)
 _bearer = HTTPBearer(auto_error=False)
@@ -47,6 +64,7 @@ async def require_auth(
 @app.on_event("startup")
 async def _startup() -> None:
     await prima.start()
+    relay.start_watch()
     log.info(
         "agency-bridge %s on %s:%d (token=%s… masked, prima=%s, laya=%s)",
         VERSION, cfg.host, cfg.port, _masked(), cfg.prima_cmd, cfg.laya_dir,
@@ -56,6 +74,7 @@ async def _startup() -> None:
 @app.on_event("shutdown")
 async def _shutdown() -> None:
     await prima.stop()
+    await relay.stop()
 
 
 # -- health ---------------------------------------------------------------
@@ -72,6 +91,7 @@ async def health() -> dict:
             "sessions": len(prima.sessions),
         },
         "laya": laya.status(),
+        "hermes": {"backend": relay.target().kind},
     }
 
 
@@ -80,6 +100,8 @@ async def health() -> dict:
 class NewSession(BaseModel):
     cwd: Optional[str] = None
     name: str = ""
+    # Reopen a saved session (a path from GET /prima/saved).
+    session_path: Optional[str] = None
 
 
 class PromptIn(BaseModel):
@@ -103,12 +125,28 @@ async def create_session(body: NewSession) -> dict:
     cwd = body.cwd or cfg.default_cwd
     if not os.path.isdir(cwd):
         raise HTTPException(400, f"cwd does not exist: {cwd}")
+    if body.session_path and not prima_saved.is_saved_session(body.session_path, prima_saved_dir()):
+        raise HTTPException(400, "session_path is not a saved Prima session")
     try:
-        w = await prima.create(cwd=cwd, name=body.name)
+        w = await prima.create(cwd=cwd, name=body.name, session_path=body.session_path)
     except Exception as e:  # noqa: BLE001
         log.exception("worker spawn failed")
         raise HTTPException(502, f"prime-agent spawn failed: {e}") from e
     return {"id": w.id}
+
+
+def prima_saved_dir() -> Path:
+    return Path(os.environ.get("AGENCY_PRIMA_SESSIONS_DIR", str(prima_saved.DEFAULT_DIR)))
+
+
+@app.get("/prima/saved", dependencies=[Depends(require_auth)])
+async def saved_sessions(limit: int = 50) -> dict:
+    """Prima conversations saved on this PC (desktop and phone alike), newest first."""
+    rows = await asyncio.to_thread(prima_saved.list_saved, prima_saved_dir(), limit)
+    open_by_file = {w.session_file: w.id for w in prima.sessions.values() if w.alive and w.session_file}
+    for r in rows:
+        r["open_id"] = open_by_file.get(r["path"])
+    return {"sessions": rows}
 
 
 @app.get("/prima/sessions/{sid}", dependencies=[Depends(require_auth)])
@@ -194,6 +232,8 @@ async def session_models(sid: str) -> dict:
     models = (avail.get("data") or {}).get("models") or []
     cur = (state.get("data") or {}).get("model") or None
     return {
+        # Picking a model only affects this conversation (the worker is respawned with --model).
+        "scope": "session",
         "current": {"provider": cur.get("provider"), "id": cur.get("id")} if cur else None,
         "models": [
             {"provider": m.get("provider"), "id": m.get("id"), "name": m.get("name") or m.get("id")}
@@ -205,16 +245,19 @@ async def session_models(sid: str) -> dict:
 
 @app.post("/prima/sessions/{sid}/model", dependencies=[Depends(require_auth)])
 async def session_set_model(sid: str, body: ModelIn) -> dict:
-    w = prima.get(sid)
-    if not w:
+    if not prima.get(sid):
         raise HTTPException(404, "session not found or worker dead")
     try:
-        resp = await w.set_model(body.provider, body.model_id)
+        w = await prima.restart_with_model(sid, body.provider, body.model_id)
     except WorkerDead as e:
         raise HTTPException(410, str(e)) from e
-    if not resp.get("success"):
-        raise HTTPException(502, {"detail": "set_model rejected", "response": resp})
-    return {"ok": True}
+    except RuntimeError as e:
+        raise HTTPException(409, str(e)) from e
+    st = await w.get_state()
+    cur = (st.get("data") or {}).get("model") or {}
+    if cur.get("id") and cur.get("id") != body.model_id:
+        raise HTTPException(502, f"Prima stayed on {cur.get('id')}")
+    return {"ok": True, "scope": "session"}
 
 
 @app.delete("/prima/sessions/{sid}", dependencies=[Depends(require_auth)])
@@ -267,6 +310,121 @@ async def prima_ws(ws: WebSocket) -> None:
         pass
     finally:
         prima.unsubscribe(q)
+
+
+# -- hermes relay -----------------------------------------------------------
+
+@app.get("/hermes/status", dependencies=[Depends(require_auth)])
+async def hermes_status() -> dict:
+    return relay.status()
+
+
+@app.post("/hermes/api/auth/ws-ticket", dependencies=[Depends(require_auth)])
+async def hermes_ws_ticket() -> dict:
+    """One-time ticket for /hermes/api/ws (the phone's socket cannot carry a header everywhere)."""
+    return {"ticket": relay.mint_ticket()}
+
+
+@app.api_route(
+    "/hermes/{path:path}", methods=["GET", "POST", "PUT", "PATCH", "DELETE"],
+    dependencies=[Depends(require_auth)],
+)
+async def hermes_proxy(path: str, request: Request) -> Response:
+    qs = request.url.query
+    path_qs = "/" + path + (("?" + qs) if qs else "")
+    try:
+        r = await relay.request(request.method, path_qs, dict(request.headers), await request.body())
+    except Exception as e:  # noqa: BLE001
+        log.warning("relay %s %s failed: %s", request.method, path, e)
+        raise HTTPException(502, f"Hermes backend unreachable: {e}") from e
+    return Response(content=r.content, status_code=r.status_code, headers=relay.response_headers(r))
+
+
+@app.websocket("/hermes/api/ws")
+async def hermes_ws(ws: WebSocket) -> None:
+    import websockets
+
+    ticket = ws.query_params.get("ticket", "")
+    token = ws.query_params.get("token", "")
+    auth = ws.headers.get("authorization", "")
+    ok = relay.redeem_ticket(ticket) if ticket else (token == cfg.token or auth == f"Bearer {cfg.token}")
+    if not ok:
+        await ws.close(code=4401)
+        return
+    try:
+        url, target = await relay.upstream_ws_url()
+        upstream = await websockets.connect(url, max_size=None, ping_interval=20, open_timeout=15)
+    except Exception as e:  # noqa: BLE001
+        log.warning("relay socket: upstream connect failed: %s", e)
+        await ws.close(code=1013)
+        return
+    await ws.accept()
+
+    async def closer(code: int, reason: str) -> None:
+        await upstream.close()
+        await ws.close(code=code, reason=reason)
+
+    rs = RelaySocket(target_key=target.key, closer=closer)
+    relay.sockets.add(rs)
+
+    async def phone_to_hermes() -> None:
+        while True:
+            msg = await ws.receive()
+            if msg.get("type") == "websocket.disconnect":
+                return
+            rs.last_activity = time.monotonic()
+            if msg.get("text") is not None:
+                await upstream.send(msg["text"])
+            elif msg.get("bytes") is not None:
+                await upstream.send(msg["bytes"])
+
+    async def hermes_to_phone() -> None:
+        async for frame in upstream:
+            rs.last_activity = time.monotonic()
+            if isinstance(frame, bytes):
+                await ws.send_bytes(frame)
+            else:
+                await ws.send_text(frame)
+
+    tasks = [asyncio.create_task(phone_to_hermes()), asyncio.create_task(hermes_to_phone())]
+    try:
+        await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+    finally:
+        for t in tasks:
+            t.cancel()
+        relay.sockets.discard(rs)
+        try:
+            await upstream.close()
+        except Exception:  # noqa: BLE001
+            pass
+        try:
+            await ws.close()
+        except Exception:  # noqa: BLE001
+            pass
+
+
+# -- services ---------------------------------------------------------------
+
+@app.get("/services", dependencies=[Depends(require_auth)])
+async def services_status() -> dict:
+    return {
+        "services": await board.status(),
+        "hermes": relay.status(),
+        "watchdog": board.last_watchdog_lines(),
+    }
+
+
+@app.post("/services/{name}/restart", dependencies=[Depends(require_auth)])
+async def services_restart(name: str) -> dict:
+    def exit_soon() -> None:
+        asyncio.get_running_loop().call_later(0.5, lambda: os._exit(0))
+
+    try:
+        return await board.restart(name, on_self_restart=exit_soon)
+    except KeyError as e:
+        raise HTTPException(404, f"unknown or non-restartable service: {name}") from e
+    except FileNotFoundError as e:
+        raise HTTPException(500, f"launch script missing: {e}") from e
 
 
 # -- laya -------------------------------------------------------------------
@@ -324,7 +482,15 @@ def run() -> None:
         level=logging.INFO,
         format="%(asctime)s %(levelname)s %(name)s: %(message)s",
     )
-    uvicorn.run(app, host=cfg.host, port=cfg.port, log_level="info")
+    if len(sys.argv) > 1 and sys.argv[1] == "pair":
+        from .pair import main as pair_main
+
+        sys.argv = [sys.argv[0], *sys.argv[2:]]
+        pair_main()
+        return
+    # No per-request access log: the relay carries every phone REST call and the log file is
+    # not rotated (Start-Process redirect). Warnings and errors still land there.
+    uvicorn.run(app, host=cfg.host, port=cfg.port, log_level="info", access_log=False)
 
 
 if __name__ == "__main__":

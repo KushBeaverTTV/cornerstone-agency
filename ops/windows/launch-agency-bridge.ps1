@@ -1,0 +1,1 @@
+Start-Process powershell -WindowStyle Hidden -ArgumentList '-NoProfile','-ExecutionPolicy','Bypass','-File',"$env:LOCALAPPDATA\hermes\scripts\start-agency-bridge.ps1" -RedirectStandardOutput "$env:LOCALAPPDATA\hermes\logs\agency-bridge.out.log" -RedirectStandardError "$env:LOCALAPPDATA\hermes\logs\agency-bridge.err.log"
