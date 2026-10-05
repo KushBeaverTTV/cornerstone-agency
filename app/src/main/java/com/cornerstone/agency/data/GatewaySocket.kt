@@ -73,7 +73,7 @@ class GatewayRpcException(val code: Int, message: String) : Exception(message)
 class GatewaySocket(
     repo: ConnectionRepository,
     private val scope: CoroutineScope,
-) {
+) : GatewayLink {
     /** Hot-swapped by GatewayHub on Activity recreation so wsTicket()/wsUrl()
      * always ride the freshest ConnectionRepository (cookie jar). */
     @Volatile
@@ -82,13 +82,13 @@ class GatewaySocket(
     private val json = Json { ignoreUnknownKeys = true }
 
     private val _state = MutableStateFlow(GatewayState.CLOSED)
-    val state: StateFlow<GatewayState> = _state.asStateFlow()
+    override val state: StateFlow<GatewayState> = _state.asStateFlow()
 
     private val _events = MutableSharedFlow<GatewayEvent>(extraBufferCapacity = 512)
-    val events: SharedFlow<GatewayEvent> = _events.asSharedFlow()
+    override val events: SharedFlow<GatewayEvent> = _events.asSharedFlow()
 
     private val _requests = MutableSharedFlow<GatewayRequest>(extraBufferCapacity = 64)
-    val requests: SharedFlow<GatewayRequest> = _requests.asSharedFlow()
+    override val requests: SharedFlow<GatewayRequest> = _requests.asSharedFlow()
 
     // WebSocket needs no read timeout (idle is normal) and keepalive pings.
     private val wsClient by lazy {
@@ -131,7 +131,7 @@ class GatewaySocket(
     }
 
     /** Answer a server→client request frame, echoing its raw id. */
-    fun respond(requestId: JsonElement, result: JsonObject): Boolean {
+    override fun respond(requestId: JsonElement, result: JsonObject): Boolean {
         val s = socket ?: return false
         val frame = buildJsonObject {
             put("jsonrpc", "2.0")
@@ -141,7 +141,7 @@ class GatewaySocket(
         return s.send(frame.toString())
     }
 
-    suspend fun call(method: String, params: JsonObject = JsonObject(emptyMap())): JsonElement {
+    override suspend fun call(method: String, params: JsonObject): JsonElement {
         val s = socket
         if (_state.value != GatewayState.OPEN || s == null) {
             throw IOException("gateway socket not open")

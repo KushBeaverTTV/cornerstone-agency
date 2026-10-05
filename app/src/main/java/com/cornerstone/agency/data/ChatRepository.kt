@@ -1,33 +1,37 @@
 package com.cornerstone.agency.data
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.serialization.json.Json
+import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.booleanOrNull
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.contentOrNull
-import kotlinx.serialization.json.decodeFromJsonElement
-import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.longOrNull
 import kotlinx.serialization.json.put
 import java.util.concurrent.atomic.AtomicLong
 
-private val JSON = Json { ignoreUnknownKeys = true }
-
-/** Cadence of the desktop-sync poll (a `sessions.changed` event short-circuits the wait). */
+/** Cadence of the history poll (a `sessions.changed` event short-circuits the wait). */
 private const val SYNC_POLL_MS = 3_000L
 private const val SYNC_FETCH = 200
+
+/** A turn that has produced no event for this long is re-checked against the server. */
+private const val STALL_MS = 90_000L
 
 private val REQUEST_EVENTS = setOf(
     "approval.request", "clarify.request", "secret.request",
@@ -37,20 +41,48 @@ private val REQUEST_EVENTS = setOf(
 /** *.resolved/.expired/.answered/.cancelled/.timeout events close the card they name. */
 private val RESOLVE_SUFFIX = Regex("\\.(resolved|expired|answered|cancelled|canceled|timeout)$")
 
+/** Events that mean "a turn is producing output" — a turn we did not start began elsewhere. */
+private val TURN_EVENTS = setOf(
+    "message.start", "message.delta", "reasoning.delta", "reasoning.available",
+    "tool.start", "tool.generating", "tool.complete", "message.interim",
+)
+
+/** Bytes of one picked attachment, read by the UI (it owns the ContentResolver). */
+class OutgoingAttachment(
+    val name: String,
+    val mime: String,
+    val bytes: ByteArray,
+    val localUri: String,
+) {
+    val isImage: Boolean get() = mime.startsWith("image/")
+}
+
 /**
- * One bot's chat: resolves a live session for [profile], hydrates the transcript
- * via session.resume (stored id → runtime snapshot with messages[]), then renders
- * server-pushed events as ChatItems.
+ * One bot's chat over the Hermes socket.
  *
- * ID discipline (tui_gateway contract): session.list/delete take STORED ids;
- * session.resume takes a stored id and returns a runtime `session_id`; prompt,
- * interrupt and event session_ids are the runtime id.
+ * Sharing a session with the desktop: when the socket reaches the same backend the Hermes desktop
+ * app uses (the bridge relay), `session.resume` joins the LIVE session as another viewer, so every
+ * turn — typed here or on the desktop — streams into both. A turn this client did not start is a
+ * "peer turn": its prompt is fetched from the state DB and the reply streams in live.
+ *
+ * Every finished turn is then reconciled against the state DB: the persisted rows (with durable
+ * row ids, which edit / regenerate / react / branch need) replace the live overlay. A slower poll
+ * appends rows written by other processes (Telegram, cron, a backend the phone is not attached
+ * to) and rebuilds the transcript when rows disappear (undo / rewind elsewhere).
+ *
+ * ID discipline (tui_gateway contract): session.list/delete take STORED ids; session.resume takes
+ * a stored id and returns a runtime `session_id`; prompt, interrupt and event ids are runtime ids.
  */
 class ChatRepository(
-    private val gateway: GatewaySocket,
+    private val gateway: GatewayLink,
     val profile: String,
+    /** Live chats sync + cache; a headless writer (Feed) sets this false. */
+    private val persistent: Boolean = true,
+    private val history: () -> HistorySource? = { GatewayHub.repo },
+    dispatcher: CoroutineDispatcher = Dispatchers.Main.immediate,
+    private val cacheEnabled: Boolean = persistent && ChatCache.ready,
 ) : ChatSource {
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+    private val scope = CoroutineScope(SupervisorJob() + dispatcher)
     private val localId = AtomicLong(0)
 
     override val linkState: StateFlow<GatewayState> = gateway.state
@@ -74,101 +106,41 @@ class ChatRepository(
     private val _lastError = MutableStateFlow("")
     override val lastError: StateFlow<String> = _lastError.asStateFlow()
 
+    /** True while the transcript on screen is the on-device copy (not yet refreshed from the PC). */
+    private val _fromCache = MutableStateFlow(false)
+    val fromCache: StateFlow<Boolean> = _fromCache.asStateFlow()
+
     var storedSessionId: String? = null
         private set
     var runtimeSessionId: String? = null
         private set
 
-    // Turn-scoped render state: one streaming assistant bubble (its list index is
-    // the insertion point for thinking/tool rows so they always sit ABOVE the
-    // answer), one coalesced thinking bubble, one open tool line.
+    // Turn-scoped render state: one streaming assistant bubble (its list index is the insertion
+    // point for thinking/tool rows so they sit ABOVE the answer), one thinking bubble, one tool.
     private var assistantId: String? = null
     private var turnAssistantIndex: Int? = null
     private var thinkingId: String? = null
     private var openToolId: String? = null
 
+    // The current turn: where its rows start on screen, and the DB row id they will follow.
+    private var turnStartIndex: Int? = null
+    private var turnBaseRow: Long = 0
+    private var lastEventAt = 0L
+
     // Interactive requests: item id -> expiry job, plus dedupe indexes on both
     // the wire frame id (srq-…) and the payload request_id.
-    private val reqTimers = HashMap<String, kotlinx.coroutines.Job>()
+    private val reqTimers = HashMap<String, Job>()
     private val reqIndex = HashMap<String, String>()
 
     // Every runtime id this repo has owned (re-resume mints new ones) — all are
     // "this chat is open" for notification suppression until close().
     private val registeredSids = HashSet<String>()
 
-    // ---- live sync with other clients (desktop) --------------------------------
-    // The gateway's runtime session is a snapshot; the desktop app appends to the same stored
-    // session in another process. Poll the state DB (read-only REST) and append whatever is new.
-    // [syncCursor] is the highest message row id already shown (-1 = unknown).
-    private var syncCursor = -1L
-    private var syncJob: kotlinx.coroutines.Job? = null
-    private val syncKick = kotlinx.coroutines.channels.Channel<Unit>(kotlinx.coroutines.channels.Channel.CONFLATED)
-    @Volatile private var localEpoch = 0L
-
-    private fun startSync() {
-        if (syncJob?.isActive == true) return
-        syncJob = scope.launch {
-            var wasStreaming = false
-            while (true) {
-                kotlinx.coroutines.withTimeoutOrNull(SYNC_POLL_MS) { syncKick.receive() }
-                if (!GatewayHub.foregrounded || _opening.value) continue
-                val stored = storedSessionId ?: continue
-                val repo = GatewayHub.repo ?: continue
-                // Our own turn writes these rows too; they are already on screen.
-                if (_streaming.value) { wasStreaming = true; continue }
-                val epoch = localEpoch
-                val tail = runCatching { repo.sessionTail(stored, profile, 1) }.getOrNull() ?: continue
-                val newest = tail.lastOrNull()?.rowId() ?: continue
-                if (wasStreaming || syncCursor < 0) {
-                    // Settle after a local turn / first look: adopt the DB head as "seen".
-                    wasStreaming = false
-                    syncCursor = newest
-                    continue
-                }
-                if (newest <= syncCursor) continue
-                val rows = runCatching { repo.sessionTail(stored, profile, SYNC_FETCH) }.getOrNull() ?: continue
-                if (_streaming.value || epoch != localEpoch) continue
-                val fresh = rows.filter { (it.rowId() ?: 0L) > syncCursor }
-                syncCursor = rows.maxOf { it.rowId() ?: 0L }.coerceAtLeast(syncCursor)
-                val items = fresh.flatMap(::dbRowToItems)
-                if (items.isNotEmpty()) _items.value = _items.value + items
-            }
-        }
-    }
-
-    /** Render one raw state-DB row the way [hydrate] renders the gateway's display projection. */
-    private fun dbRowToItems(m: JsonObject): List<ChatItem> {
-        if (m.str("display_kind") == "hidden") return emptyList()
-        val text = dbText(m["display_content"]).ifBlank { dbText(m["content"]) }
-        return when (m.str("role")) {
-            "user" -> if (text.isBlank() || text.startsWith("[System:")) emptyList()
-            else listOf(ChatItem(id = nextId(), kind = ChatKind.User, text = text))
-
-            "assistant" -> buildList {
-                m.str("reasoning")?.takeIf { it.isNotBlank() && it.trim() != text.trim() }
-                    ?.let { add(ChatItem(id = nextId(), kind = ChatKind.Thinking, text = it)) }
-                if (text.isNotBlank()) add(ChatItem(id = nextId(), kind = ChatKind.Assistant, text = text))
-            }
-
-            "tool" -> listOf(
-                ChatItem(
-                    id = nextId(), kind = ChatKind.Tool,
-                    text = "✓ ${m.str("tool_name") ?: "tool"}",
-                ),
-            )
-
-            else -> emptyList()
-        }
-    }
-
-    private fun dbText(el: kotlinx.serialization.json.JsonElement?): String = when (el) {
-        null -> ""
-        is JsonArray -> el.mapNotNull { (it as? JsonObject)?.str("text") }.joinToString("\n")
-        else -> (el as? kotlinx.serialization.json.JsonPrimitive)?.contentOrNull.orEmpty()
-    }
-
-    private fun JsonObject.rowId(): Long? =
-        (this["id"] as? kotlinx.serialization.json.JsonPrimitive)?.contentOrNull?.toLongOrNull()
+    // Highest state-DB row id reflected on screen (every row <= cursor is shown or hidden on purpose).
+    private var syncCursor = 0L
+    private var pendingReconcile = false
+    private var syncJob: Job? = null
+    private val syncKick = Channel<Unit>(Channel.CONFLATED)
 
     init {
         scope.launch { gateway.events.collect { if (it.type == "sessions.changed") syncKick.trySend(Unit) } }
@@ -185,8 +157,22 @@ class ChatRepository(
     // ---- session resolution ---------------------------------------------
 
     /**
-     * Herald's order: explicit stored id → resume; else session.list{profile}
-     * most-recent → resume; else session.create{profile}.
+     * Show the on-device copy right away (before the socket is even open). [storedId] null means
+     * "whatever this bot had open last".
+     */
+    suspend fun preload(storedId: String?) {
+        if (!cacheEnabled || _items.value.isNotEmpty()) return
+        val id = storedId ?: ChatCache.lastSession(profile) ?: return
+        val cached = ChatCache.loadTranscript(profile, id, ::nextId) ?: return
+        if (_items.value.isNotEmpty()) return
+        _title.value = cached.first
+        _items.value = cached.second
+        _fromCache.value = true
+    }
+
+    /**
+     * Explicit stored id → resume; else this bot's most recently ACTIVE session (session.list is
+     * ordered by last activity) → resume; else session.create.
      */
     override suspend fun open(requestedStoredId: String?) {
         _opening.value = true
@@ -194,8 +180,7 @@ class ChatRepository(
             when {
                 requestedStoredId != null -> resume(requestedStoredId)
                 else -> {
-                    val sessions = listSessions()
-                    val recent = sessions.firstOrNull()
+                    val recent = listSessions().firstOrNull()
                     if (recent != null) {
                         _title.value = recent.title
                         resume(recent.id)
@@ -222,10 +207,6 @@ class ChatRepository(
     }
 
     private suspend fun resume(storedId: String) {
-        // Head of the DB just before the snapshot: anything newer is "not yet shown".
-        val head = runCatching {
-            GatewayHub.repo?.sessionTail(storedId, profile, 1)?.lastOrNull()?.rowId()
-        }.getOrNull()
         val res = gateway.call(
             "session.resume",
             buildJsonObject {
@@ -233,20 +214,32 @@ class ChatRepository(
                 put("profile", profile)
             },
         ).asObj()
+        bindRuntime(res, storedId)
+        hydrate(res)
+        _fromCache.value = false
+        syncCursor = maxOf(TranscriptMapping.maxRowId(_items.value) ?: 0L, dbHead() ?: 0L)
+        if (_streaming.value) {
+            // Joined mid-turn: the turn's rows start at its prompt and land after that row.
+            turnBaseRow = (_items.value.getOrNull(turnStartIndex ?: -1)?.rowId?.minus(1)) ?: syncCursor
+            syncCursor = turnBaseRow
+        }
+        startSync()
+        seedPendingFromResume(res)
+        fetchTitle()
+        seedPendingApprovals()
+        persist()
+    }
+
+    private fun bindRuntime(res: JsonObject, fallbackStored: String?) {
         runtimeSessionId = res.str("session_id") ?: runtimeSessionId
-        storedSessionId = res.str("stored_session_id")
-            ?: res.str("session_key") ?: res.str("resumed") ?: storedId
+        storedSessionId = res.str("stored_session_id") ?: res.str("session_key")
+            ?: res.str("resumed") ?: fallbackStored ?: storedSessionId
         GatewayHub.registerSession(runtimeSessionId, storedSessionId, profile)
         runtimeSessionId?.let {
             registeredSids += it
             GatewayHub.openChats += it
         }
-        hydrate(res)
-        if (head != null) syncCursor = head
-        startSync()
-        seedPendingFromResume(res)
-        fetchTitle()
-        seedPendingApprovals()
+        if (persistent) storedSessionId?.let { ChatCache.setLastSession(profile, it) }
     }
 
     /** session.resume can carry still-open requests (open_requests entries look
@@ -278,14 +271,10 @@ class ChatRepository(
             "session.create",
             buildJsonObject { put("profile", profile) },
         ).asObj()
-        runtimeSessionId = res.str("session_id")
-        storedSessionId = res.str("stored_session_id") ?: storedSessionId
-        GatewayHub.registerSession(runtimeSessionId, storedSessionId, profile)
-        runtimeSessionId?.let {
-            registeredSids += it
-            GatewayHub.openChats += it
-        }
+        bindRuntime(res, null)
         hydrate(res)
+        _fromCache.value = false
+        syncCursor = 0
         startSync()
         seedPendingFromResume(res)
         seedPendingApprovals()
@@ -312,36 +301,104 @@ class ChatRepository(
     }
 
     suspend fun listSessions(): List<SessionSummary> =
-        listProfileSessions(gateway, profile)
+        listProfileSessions(gateway, profile).also { if (persistent) ChatCache.saveSessions(profile, it) }
 
-    // ---- actions ----------------------------------------------------------
+    // ---- sending ----------------------------------------------------------
 
-    override suspend fun send(text: String) {
+    override suspend fun send(text: String) = send(text, emptyList())
+
+    /**
+     * Send a message, optionally with attachments. Images are queued on the session
+     * (`image.attach_bytes`, the model sees them natively); other files are staged into the
+     * session workspace (`file.attach`) and referenced in the text as `@file:` refs.
+     */
+    suspend fun send(text: String, attachments: List<OutgoingAttachment>) {
         val t = text.trim()
-        if (t.isEmpty()) return
-        if (runtimeSessionId == null) {
-            try {
-                create()
-            } catch (e: Exception) {
-                append(ChatKind.Error, "Could not start a session: ${friendly(e)}")
-                return
-            }
+        if (t.isEmpty() && attachments.isEmpty()) return
+        if (!ensureSession()) return
+        val rt = runtimeSessionId ?: return
+        val shown = attachments.map {
+            ChatAttachment(it.name, if (it.isImage) "image" else "file", it.mime, it.localUri, sizeBytes = it.bytes.size.toLong())
         }
-        localEpoch++
-        append(ChatKind.User, t)
+        beginLocalTurn(ChatItem(nextId(), ChatKind.User, t, attachments = shown))
+        val refs = ArrayList<String>()
+        try {
+            for (a in attachments) {
+                if (a.isImage) {
+                    gateway.call("image.attach_bytes", buildJsonObject {
+                        put("session_id", rt)
+                        put("content_base64", android.util.Base64.encodeToString(a.bytes, android.util.Base64.NO_WRAP))
+                        put("filename", a.name)
+                    })
+                } else {
+                    val res = gateway.call("file.attach", buildJsonObject {
+                        put("session_id", rt)
+                        put("name", a.name)
+                        put("data_url", "data:${a.mime.ifBlank { "application/octet-stream" }};base64," +
+                            android.util.Base64.encodeToString(a.bytes, android.util.Base64.NO_WRAP))
+                    }).asObj()
+                    res.str("ref_text")?.let { refs += it }
+                }
+            }
+        } catch (e: Exception) {
+            failTurn("Attachment upload failed: ${friendly(e)}")
+            return
+        }
+        val body = (listOf(t) + refs).filter { it.isNotBlank() }.joinToString("\n")
+            .ifBlank { "What do you see?" }
+        submit(body, truncateBeforeRow = null)
+    }
+
+    private suspend fun ensureSession(): Boolean {
+        if (runtimeSessionId != null) return true
+        return try {
+            create(); true
+        } catch (e: Exception) {
+            append(ChatKind.Error, "Could not start a session: ${friendly(e)}")
+            false
+        }
+    }
+
+    private fun beginLocalTurn(user: ChatItem) {
+        if (!_streaming.value || turnStartIndex == null) {
+            turnStartIndex = _items.value.size
+            turnBaseRow = syncCursor
+        }
+        append(user)
         _streaming.value = true
         _statusLine.value = ""
+        lastEventAt = System.currentTimeMillis()
+    }
+
+    private fun failTurn(message: String) {
+        append(ChatKind.Error, message)
+        finalizeStreaming()
+        turnStartIndex = null
+    }
+
+    private suspend fun submit(text: String, truncateBeforeRow: Long?) {
+        val rt = runtimeSessionId ?: return
+        val userItemId = _items.value.lastOrNull { it.kind == ChatKind.User }?.id
         try {
-            gateway.call(
+            val res = gateway.call(
                 "prompt.submit",
                 buildJsonObject {
-                    put("session_id", runtimeSessionId)
-                    put("text", t)
+                    put("session_id", rt)
+                    put("text", text)
+                    put("surface", "mobile")
+                    if (truncateBeforeRow != null) {
+                        put("confirm_truncate", true)
+                        put("truncate_before_row_id", truncateBeforeRow)
+                    }
                 },
-            )
+            ).asObj()
+            res.long("user_row_id")?.let { row -> userItemId?.let { id -> mutate(id) { it.copy(rowId = row) } } }
+            when (res.str("status")) {
+                "queued" -> append(ChatKind.Status, "Queued — runs after the current reply")
+                "steered" -> append(ChatKind.Status, "Added to the reply in progress")
+            }
         } catch (e: Exception) {
-            _streaming.value = false
-            append(ChatKind.Error, "Send failed: ${friendly(e)}")
+            failTurn("Send failed: ${friendly(e)}")
         }
     }
 
@@ -351,7 +408,75 @@ class ChatRepository(
             gateway.call("session.interrupt", buildJsonObject { put("session_id", rt) })
         } catch (_: Exception) {
         }
-        finalizeStreaming()
+        endTurn()
+    }
+
+    // ---- message actions (Hermes desktop parity) ----------------------------
+
+    /** Re-run the conversation from a user message with new text (drops it and everything after). */
+    suspend fun editAndResend(userItemId: String, newText: String): Boolean {
+        val all = _items.value
+        val idx = all.indexOfFirst { it.id == userItemId }
+        val item = all.getOrNull(idx) ?: return false
+        val row = item.rowId ?: return false
+        if (_streaming.value) return false
+        val t = newText.trim()
+        if (t.isEmpty()) return false
+        _items.value = all.take(idx)
+        turnStartIndex = idx
+        turnBaseRow = syncCursor
+        append(ChatItem(nextId(), ChatKind.User, t))
+        _streaming.value = true
+        lastEventAt = System.currentTimeMillis()
+        submit(t, truncateBeforeRow = row)
+        return true
+    }
+
+    /** Ask again: re-run the prompt that produced [assistantItemId]. */
+    suspend fun regenerate(assistantItemId: String): Boolean {
+        val prompt = TranscriptMapping.promptFor(_items.value, assistantItemId) ?: return false
+        return editAndResend(prompt.id, prompt.text.ifBlank { "Try again." })
+    }
+
+    /** Copy the conversation up to and including [itemId] into a new chat; returns its stored id. */
+    suspend fun branchFrom(itemId: String): String? {
+        val rt = runtimeSessionId ?: return null
+        val count = TranscriptMapping.branchCount(_items.value, itemId)
+        if (count <= 0) return null
+        return try {
+            val res = gateway.call("session.branch", buildJsonObject {
+                put("session_id", rt)
+                put("count", count)
+            }).asObj()
+            res.str("stored_session_id")
+        } catch (e: Exception) {
+            _lastError.value = "Branch failed: ${friendly(e)}"
+            null
+        }
+    }
+
+    /** Tapback: same emoji again clears it. */
+    suspend fun react(itemId: String, emoji: String) {
+        val rt = runtimeSessionId ?: return
+        val item = _items.value.firstOrNull { it.id == itemId } ?: return
+        val row = item.rowId ?: return
+        val mine = item.reactions.firstOrNull { it.author == "user" }?.emoji
+        val next = if (mine == emoji) null else emoji
+        // Optimistic.
+        mutate(itemId) { it.copy(reactions = it.reactions.filter { r -> r.author != "user" } + listOfNotNull(next?.let { e -> Reaction(e) })) }
+        try {
+            val res = gateway.call("message.react", buildJsonObject {
+                put("session_id", rt)
+                put("row_id", row)
+                if (next == null) put("emoji", JsonNull) else put("emoji", next)
+            }).asObj()
+            val list = (res["reactions"] as? JsonArray)?.let { TranscriptMapping.reactionsOf(buildJsonObject { put("reactions", it) }) }
+            if (list != null) mutate(itemId) { it.copy(reactions = list) }
+            persist()
+        } catch (e: Exception) {
+            mutate(itemId) { it.copy(reactions = item.reactions) }
+            _lastError.value = "Reaction failed: ${friendly(e)}"
+        }
     }
 
     override suspend fun newSession() {
@@ -368,7 +493,8 @@ class ChatRepository(
     }
 
     /** Delete, or hide if the gateway still considers it live. True when actually deleted. */
-    suspend fun deleteSession(storedId: String): Boolean = removeStoredSession(gateway, storedId, profile)
+    suspend fun deleteSession(storedId: String): Boolean =
+        removeStoredSession(gateway, storedId, profile).also { ChatCache.forget(profile, storedId) }
 
     override suspend fun rename(newTitle: String) {
         val id = runtimeSessionId ?: storedSessionId ?: return
@@ -382,6 +508,7 @@ class ChatRepository(
             },
         )
         _title.value = t
+        persist()
     }
 
     private suspend fun fetchTitle() {
@@ -399,78 +526,63 @@ class ChatRepository(
         }
     }
 
-    /** Leaving the chat: best-effort interrupt of a live turn, then tear down. */
-    @OptIn(DelicateCoroutinesApi::class)
+    /**
+     * Leaving the chat. The session is SHARED (the desktop may be watching the same turn), so
+     * leaving never interrupts it — Stop does that explicitly.
+     */
     override fun close() {
+        persist()
         reqTimers.values.forEach { it.cancel() }
         reqTimers.clear()
         reqIndex.clear()
         GatewayHub.openChats -= registeredSids
         registeredSids.clear()
         PendingRequests.clear(storedSessionId ?: runtimeSessionId ?: "", profile)
-        if (_streaming.value) {
-            val rt = runtimeSessionId
-            if (rt != null) {
-                // Outlives this repo's scope so the interrupt still reaches the wire.
-                GlobalScope.launch(Dispatchers.IO) {
-                    runCatching {
-                        gateway.call(
-                            "session.interrupt",
-                            buildJsonObject { put("session_id", rt) },
-                        )
-                    }
-                }
-            }
-        }
         scope.cancel()
+    }
+
+    private fun persist() {
+        if (!cacheEnabled) return
+        val stored = storedSessionId ?: return
+        ChatCache.saveTranscript(profile, stored, _title.value, _items.value)
     }
 
     // ---- transcript hydration ----------------------------------------------
 
     private fun hydrate(res: JsonObject) {
-        val msgs = res["messages"] as? JsonArray
-        val list = mutableListOf<ChatItem>()
-        msgs?.forEach { el ->
-            val m = el as? JsonObject ?: return@forEach
-            if (m.str("display_kind") == "hidden") return@forEach
-            when (m.str("role")) {
-                "user" -> list += ChatItem(
-                    id = nextId(), kind = ChatKind.User, text = m.str("text") ?: "",
-                )
-
-                "assistant" -> {
-                    val text = m.str("text") ?: ""
-                    // reasoning.available can carry the final ANSWER verbatim —
-                    // don't render it as a duplicate thinking bubble.
-                    m.str("reasoning")
-                        ?.takeIf { it.isNotBlank() && it.trim() != text.trim() }
-                        ?.let {
-                            list += ChatItem(id = nextId(), kind = ChatKind.Thinking, text = it)
-                        }
-                    list += ChatItem(
-                        id = nextId(), kind = ChatKind.Assistant, text = text,
-                    )
-                }
-
-                "tool" -> list += ChatItem(
-                    id = nextId(), kind = ChatKind.Tool,
-                    text = "✓ ${m.str("name") ?: "tool"}",
-                    meta = m.str("context") ?: "",
-                )
-            }
-        }
-        _items.value = list
+        val list = TranscriptMapping.fromResume(res["messages"] as? JsonArray, ::nextId).toMutableList()
         assistantId = null
         turnAssistantIndex = null
         thinkingId = null
         openToolId = null
+        turnStartIndex = null
         // Hydration replaces the transcript — request cards must be re-seeded
         // from open_requests, so drop the stale dedupe index and timers.
         reqTimers.values.forEach { it.cancel() }
         reqTimers.clear()
         reqIndex.clear()
         _statusLine.value = ""
-        _streaming.value = res["running"]?.jsonPrimitive?.booleanOrNull == true
+        val running = res["running"]?.jsonPrimitive?.booleanOrNull == true
+        if (running) {
+            // Joined a live turn: show its prompt (if the snapshot does not have it yet) and what
+            // the reply has said so far; the deltas that follow continue this bubble.
+            val inflight = res["inflight"] as? JsonObject
+            val prompt = inflight?.str("user").orEmpty()
+            var start = list.indexOfLast { it.kind == ChatKind.User }
+            if (prompt.isNotBlank() && list.lastOrNull { it.kind == ChatKind.User }?.text?.trim() != prompt.trim()) {
+                list += ChatItem(nextId(), ChatKind.User, TranscriptMapping.splitAttachments(prompt).first)
+                start = list.size - 1
+            }
+            turnStartIndex = if (start >= 0) start else list.size
+            val partial = inflight?.str("assistant").orEmpty()
+            val id = nextId()
+            assistantId = id
+            turnAssistantIndex = list.size
+            list += ChatItem(id, ChatKind.Assistant, partial, streaming = true, done = false)
+            lastEventAt = System.currentTimeMillis()
+        }
+        _items.value = list
+        _streaming.value = running
         reportOpenRequests()
     }
 
@@ -480,16 +592,28 @@ class ChatRepository(
         val sid = ev.sessionId
         if (sid != null && sid != runtimeSessionId && sid != storedSessionId) return
         val p = ev.payload
+        // Session-less frames (sessions.changed, legacy request events) never start a turn.
+        if (sid != null && ev.type in TURN_EVENTS || (ev.type == "thinking.delta" && !p?.str("text").isNullOrEmpty())) {
+            lastEventAt = System.currentTimeMillis()
+            if (!_streaming.value) beginPeerTurn()
+        }
         when (ev.type) {
             "message.start" -> startAssistant()
 
             "message.delta" ->
                 appendAssistantDelta(p?.str("delta") ?: p?.str("text") ?: "")
 
-            "message.interim", "message.complete" -> {
+            // interim = the text before a tool round; the turn goes on.
+            "message.interim" -> {
                 val text = p?.str("text")
                 if (!text.isNullOrEmpty()) setAssistantText(text)
-                finalizeStreaming()
+                closeAssistantBubble()
+            }
+
+            "message.complete" -> {
+                val text = p?.str("text")
+                if (!text.isNullOrEmpty()) setAssistantText(text)
+                endTurn()
             }
 
             // thinking.delta carries the turn status line ("(◇) orchestrating…")
@@ -505,7 +629,7 @@ class ChatRepository(
                 val t = p?.str("text") ?: ""
                 val answer = assistantId?.let { id ->
                     _items.value.firstOrNull { it.id == id }?.text
-                } ?: ""
+                } ?: _items.value.lastOrNull { it.kind == ChatKind.Assistant }?.text.orEmpty()
                 if (t.isNotBlank() && t.trim() != answer.trim()) setThinking(t)
             }
 
@@ -515,6 +639,7 @@ class ChatRepository(
                     ChatItem(
                         id = openToolId!!, kind = ChatKind.Tool, done = false,
                         text = "▶ ${p?.str("name") ?: "tool"}",
+                        meta = p?.str("context").orEmpty(),
                     )
                 )
             }
@@ -536,11 +661,11 @@ class ChatRepository(
                 }
             }
 
-            "status.update" -> append(ChatKind.Status, p?.str("text") ?: "")
+            "status.update" -> p?.str("text")?.takeIf { it.isNotBlank() }?.let { append(ChatKind.Status, it) }
 
             "error" -> {
                 append(ChatKind.Error, p?.str("message") ?: p?.str("text") ?: "Unknown error")
-                finalizeStreaming()
+                endTurn()
             }
 
             // Legacy event-style requests (some builds emit *.request events
@@ -560,6 +685,8 @@ class ChatRepository(
                 info?.str("title")?.takeIf { it.isNotBlank() }?.let { _title.value = it }
             }
 
+            "session.title" -> p?.str("title")?.takeIf { it.isNotBlank() }?.let { _title.value = it }
+
             // sessions.changed / everything else: no transcript row.
             else -> {
                 // *.resolved / *.expired / *.answered / *.cancelled / *.timeout
@@ -568,6 +695,25 @@ class ChatRepository(
                     resolveRequest(p?.str("request_id") ?: p?.str("requestId"), "handled elsewhere")
                 }
             }
+        }
+    }
+
+    /** A turn started by another client (the desktop). Show its prompt, then stream its reply. */
+    private fun beginPeerTurn() {
+        turnStartIndex = _items.value.size
+        turnBaseRow = syncCursor
+        _streaming.value = true
+        val stored = storedSessionId ?: return
+        val src = history() ?: return
+        val base = turnBaseRow
+        scope.launch {
+            val rows = runCatching { src.tail(stored, profile, 6) }.getOrNull() ?: return@launch
+            val prompts = rows.filter { (it.long("id") ?: 0) > base && it.str("role") == "user" }
+            val items = TranscriptMapping.fromDbRows(prompts, ::nextId).filter { it.kind == ChatKind.User }
+            val at = turnStartIndex ?: return@launch
+            if (items.isEmpty() || at > _items.value.size) return@launch
+            _items.value = _items.value.toMutableList().apply { addAll(at, items) }
+            turnAssistantIndex = turnAssistantIndex?.plus(items.size)
         }
     }
 
@@ -774,7 +920,7 @@ class ChatRepository(
      */
     private fun insertAboveAssistant(item: ChatItem) {
         val idx = turnAssistantIndex
-        if (idx != null && idx <= _items.value.size) {
+        if (idx != null && idx <= _items.value.size && assistantId != null) {
             _items.value = _items.value.toMutableList().apply { add(idx, item) }
             turnAssistantIndex = idx + 1
         } else {
@@ -791,7 +937,7 @@ class ChatRepository(
         val id = nextId()
         assistantId = id
         turnAssistantIndex = _items.value.size
-        append(ChatItem(id = id, kind = ChatKind.Assistant, text = "", streaming = true))
+        append(ChatItem(id = id, kind = ChatKind.Assistant, text = "", streaming = true, done = false))
         _streaming.value = true
     }
 
@@ -813,6 +959,16 @@ class ChatRepository(
             newId
         }
         mutate(id) { it.copy(text = text, streaming = false, done = true) }
+    }
+
+    /** The bubble is finished but the turn is not (a tool round follows). */
+    private fun closeAssistantBubble() {
+        assistantId?.let { id -> mutate(id) { it.copy(streaming = false, done = true) } }
+        // An empty interim bubble (tool call with no preamble) is noise.
+        _items.value = _items.value.filterNot { it.id == assistantId && it.text.isBlank() }
+        assistantId = null
+        turnAssistantIndex = null
+        thinkingId = null
     }
 
     private fun appendThinking(delta: String) {
@@ -841,13 +997,113 @@ class ChatRepository(
     private fun finalizeStreaming() {
         _streaming.value = false
         _statusLine.value = ""
-        _items.value = _items.value.map {
-            if (it.streaming || !it.done) it.copy(streaming = false, done = true) else it
-        }
+        _items.value = _items.value
+            .filterNot { it.kind == ChatKind.Assistant && it.text.isBlank() && it.attachments.isEmpty() }
+            .map { if (it.streaming || !it.done) it.copy(streaming = false, done = true) else it }
         assistantId = null
         turnAssistantIndex = null
         thinkingId = null
         openToolId = null
+    }
+
+    /** The turn finished: settle the UI, then swap the live rows for the persisted ones. */
+    private fun endTurn() {
+        finalizeStreaming()
+        if (turnStartIndex != null && persistent) {
+            pendingReconcile = true
+            scope.launch {
+                delay(700)
+                reconcileTurn()
+            }
+        } else {
+            turnStartIndex = null
+        }
+        persist()
+    }
+
+    /**
+     * Replace the finished turn's live rows with its persisted rows. The last assistant text must
+     * match before the swap (the final row can land a moment after `message.complete`); until it
+     * does, the poll retries and appends nothing, so nothing is ever shown twice.
+     */
+    private suspend fun reconcileTurn() {
+        if (!pendingReconcile || _streaming.value) return
+        val start = turnStartIndex ?: run { pendingReconcile = false; return }
+        val stored = storedSessionId ?: return
+        val src = history() ?: return
+        val base = turnBaseRow
+        val rows = runCatching { src.tail(stored, profile, SYNC_FETCH) }.getOrNull() ?: return
+        if (_streaming.value || turnStartIndex != start) return
+        val fresh = rows.filter { (it.long("id") ?: 0) > base }
+        val persisted = TranscriptMapping.fromDbRows(fresh, ::nextId)
+        val all = _items.value
+        if (start > all.size) { pendingReconcile = false; turnStartIndex = null; return }
+        val overlay = all.subList(start, all.size)
+        val liveLast = overlay.lastOrNull { it.kind == ChatKind.Assistant }?.text?.trim()
+        val dbLast = persisted.lastOrNull { it.kind == ChatKind.Assistant }?.text?.trim()
+        if (liveLast != null && liveLast != dbLast) return // final row not written yet
+        _items.value = all.subList(0, start) + TranscriptMapping.reconcile(overlay, persisted)
+        syncCursor = maxOf(syncCursor, fresh.mapNotNull { it.long("id") }.maxOrNull() ?: base)
+        pendingReconcile = false
+        turnStartIndex = null
+        persist()
+    }
+
+    // ---- history poll ---------------------------------------------------------
+
+    private suspend fun dbHead(): Long? {
+        val stored = storedSessionId ?: return null
+        return runCatching { history()?.tail(stored, profile, 1)?.lastOrNull()?.long("id") }.getOrNull()
+    }
+
+    private fun startSync() {
+        if (!persistent || syncJob?.isActive == true) return
+        syncJob = scope.launch {
+            var reconcileTries = 0
+            while (true) {
+                withTimeoutOrNull(SYNC_POLL_MS) { syncKick.receive() }
+                if (!GatewayHub.foregrounded || _opening.value) continue
+                if (_streaming.value) {
+                    // A turn that went quiet (missed message.complete across a reconnect): ask again.
+                    if (System.currentTimeMillis() - lastEventAt > STALL_MS && gateway.state.value == GatewayState.OPEN) {
+                        lastEventAt = System.currentTimeMillis()
+                        runCatching { refreshAfterReconnect() }
+                    }
+                    continue
+                }
+                if (pendingReconcile) {
+                    reconcileTurn()
+                    if (pendingReconcile && ++reconcileTries >= 5) {
+                        // Give up on the swap; adopt the DB head so the poll never double-adds.
+                        pendingReconcile = false
+                        turnStartIndex = null
+                        syncCursor = dbHead() ?: syncCursor
+                    }
+                    continue
+                }
+                reconcileTries = 0
+                val stored = storedSessionId ?: continue
+                val src = history() ?: continue
+                val head = runCatching { src.tail(stored, profile, 1) }.getOrNull()
+                    ?.lastOrNull()?.long("id") ?: continue
+                when {
+                    head > syncCursor -> {
+                        val rows = runCatching { src.tail(stored, profile, SYNC_FETCH) }.getOrNull() ?: continue
+                        if (_streaming.value || pendingReconcile) continue
+                        val fresh = rows.filter { (it.long("id") ?: 0) > syncCursor }
+                        syncCursor = maxOf(syncCursor, rows.mapNotNull { it.long("id") }.maxOrNull() ?: syncCursor)
+                        val add = TranscriptMapping.fromDbRows(fresh, ::nextId)
+                        if (add.isNotEmpty()) {
+                            _items.value = _items.value + add
+                            persist()
+                        }
+                    }
+                    // Rows vanished: undone / rewound / edited elsewhere. Rebuild from the server.
+                    head < syncCursor && gateway.state.value == GatewayState.OPEN ->
+                        runCatching { resume(stored) }
+                }
+            }
+        }
     }
 
     private fun friendly(e: Exception): String = when (e) {
@@ -857,85 +1113,11 @@ class ChatRepository(
     }
 }
 
-private fun kotlinx.serialization.json.JsonElement.asObj(): JsonObject =
+private fun JsonElement.asObj(): JsonObject =
     this as? JsonObject ?: JsonObject(emptyMap())
 
 private fun JsonObject.str(key: String): String? =
-    (this[key] as? kotlinx.serialization.json.JsonPrimitive)?.contentOrNull
+    (this[key] as? JsonPrimitive)?.contentOrNull
 
-/** session.list for one profile — the server scopes the listing per profile DB. */
-internal suspend fun listProfileSessions(
-    gateway: GatewaySocket,
-    profile: String,
-    limit: Int = 200,
-    includeHidden: Boolean = false,
-): List<SessionSummary> {
-    val res = gateway.call(
-        "session.list",
-        buildJsonObject {
-            put("profile", profile)
-            put("limit", limit)
-            if (includeHidden) put("include_hidden", true)
-        },
-    )
-    // The server already orders rows by LAST ACTIVITY (newest first). Re-sorting by start time
-    // made the phone open (and list first) the newest-STARTED chat, not the one the user was
-    // actually in on the desktop.
-    return runCatching {
-        JSON.decodeFromJsonElement(SessionListResult.serializer(), res)
-    }.getOrNull()?.sessions ?: emptyList()
-}
-
-/**
- * Cross-bot recency for a list that is already in last-activity order. Rows carry only their
- * start time, but a row can never be less recently active than any row listed after it, so the
- * largest start time at-or-below each row is a safe, monotone stand-in for "last active".
- */
-internal fun List<SessionSummary>.activityScores(): List<Pair<SessionSummary, Double>> {
-    var floor = 0.0
-    val out = ArrayList<Pair<SessionSummary, Double>>(size)
-    for (s in asReversed()) {
-        floor = maxOf(floor, s.startedAt)
-        out += s to floor
-    }
-    out.reverse()
-    return out
-}
-
-internal suspend fun deleteStoredSession(gateway: GatewaySocket, storedId: String, profile: String? = null) {
-    gateway.call(
-        "session.delete",
-        buildJsonObject {
-            put("session_id", storedId)
-            if (!profile.isNullOrBlank()) put("profile", profile)
-        },
-    )
-}
-
-/** Hide (or unhide) a stored session: it leaves every list but stays resumable. */
-internal suspend fun hideStoredSession(gateway: GatewaySocket, storedId: String, profile: String?, hidden: Boolean = true) {
-    gateway.call(
-        "session.set_hidden",
-        buildJsonObject {
-            put("session_id", storedId)
-            put("hidden", hidden)
-            if (!profile.isNullOrBlank()) put("profile", profile)
-        },
-    )
-}
-
-/**
- * Delete a session the user no longer wants. The gateway refuses to delete one that is still
- * live (code 4023), so in that case fall back to hiding it — gone from view either way.
- * Returns true when it was deleted, false when it was only hidden.
- */
-internal suspend fun removeStoredSession(gateway: GatewaySocket, storedId: String, profile: String?): Boolean {
-    try {
-        deleteStoredSession(gateway, storedId, profile)
-        return true
-    } catch (e: GatewayRpcException) {
-        if (e.code != 4023) throw e
-        hideStoredSession(gateway, storedId, profile)
-        return false
-    }
-}
+private fun JsonObject.long(key: String): Long? =
+    (this[key] as? JsonPrimitive)?.let { it.longOrNull ?: it.contentOrNull?.toLongOrNull() }

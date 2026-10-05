@@ -17,6 +17,8 @@ class SecureStore(context: Context) {
         val username: String,
         val password: String,
         val cookie: String,
+        /** Bridge bearer token for the relay connection; empty for a direct dashboard login. */
+        val bearer: String = "",
     )
 
     private val prefs: SharedPreferences = EncryptedSharedPreferences.create(
@@ -34,6 +36,7 @@ class SecureStore(context: Context) {
             username = prefs.getString(KEY_USER, "") ?: "",
             password = prefs.getString(KEY_PASSWORD, "") ?: "",
             cookie = prefs.getString(KEY_COOKIE, "") ?: "",
+            bearer = prefs.getString(KEY_BEARER, "") ?: "",
         )
     }
 
@@ -43,6 +46,7 @@ class SecureStore(context: Context) {
             .putString(KEY_USER, conn.username)
             .putString(KEY_PASSWORD, conn.password)
             .putString(KEY_COOKIE, conn.cookie)
+            .putString(KEY_BEARER, conn.bearer)
             .apply()
     }
 
@@ -72,5 +76,6 @@ class SecureStore(context: Context) {
         private const val KEY_COOKIE = "cookie"
         private const val KEY_BRIDGE_HOST = "bridge_host"
         private const val KEY_BRIDGE_TOKEN = "bridge_token"
+        private const val KEY_BEARER = "relay_bearer"
     }
 }

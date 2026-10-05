@@ -128,7 +128,31 @@ data class ChatItem(
     val done: Boolean = true,
     val meta: String = "",
     val request: PendingRequest? = null,
+    /** Durable `messages.id` once the row is persisted — edit/regenerate/react/branch need it. */
+    val rowId: Long? = null,
+    /** Images / files that ride with this message (local picks or `@image:` refs on the PC). */
+    val attachments: List<ChatAttachment> = emptyList(),
+    /** Emoji reactions on this message (Tapback style, one per author). */
+    val reactions: List<Reaction> = emptyList(),
+    /** Unix seconds; 0 when unknown (live rows before they persist). */
+    val timestamp: Double = 0.0,
 )
+
+@kotlinx.serialization.Serializable
+data class ChatAttachment(
+    val name: String,
+    /** "image" or "file". */
+    val kind: String = "image",
+    val mime: String = "",
+    /** Phone-side content:// or file:// URI for a local pick; empty for PC-side refs. */
+    val localUri: String = "",
+    /** Path on the PC (from an `@image:` ref) — fetched through /api/media for display. */
+    val remotePath: String = "",
+    val sizeBytes: Long = 0,
+)
+
+@kotlinx.serialization.Serializable
+data class Reaction(val emoji: String, val author: String = "user")
 
 // ---- M3: bot settings / model options -------------------------------------
 

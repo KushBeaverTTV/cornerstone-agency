@@ -105,7 +105,7 @@ class FeedWriter private constructor(private val appContext: Context) {
                 return _state.value
             }
         }
-        val chat = ChatRepository(gateway, profile)
+        val chat = ChatRepository(gateway, profile, persistent = false)
         var keepSession = false
         // Captured before cleanup: the UI may dismiss Done → Idle while inally is still deleting the session.
         var result: State = State.Idle

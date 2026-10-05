@@ -16,12 +16,16 @@ import java.util.concurrent.TimeUnit
 class ApiException(val status: Int, message: String) : Exception(message)
 
 /**
- * OkHttp client for the Hermes dashboard ("hermes serve") REST surface.
- * Cookie-session auth: POST /auth/password-login sets hermes_session_* cookies;
- * the jar persists them into SecureStore so the session survives restarts.
- * Any 401 triggers one re-login with stored credentials, then one retry.
+ * OkHttp client for the Hermes REST surface. Two ways in:
+ *
+ *  - **Relay (paired):** `http://<pc>:9121/hermes` — the desktop bridge forwards to the Hermes
+ *    backend the desktop app itself uses (live turns are shared). Auth is the bridge bearer
+ *    token from pairing; there is no password on the phone.
+ *  - **Direct dashboard:** `hermes serve` with cookie-session auth: POST /auth/password-login
+ *    sets hermes_session_* cookies; the jar persists them into SecureStore. Any 401 triggers one
+ *    re-login with stored credentials, then one retry.
  */
-class ConnectionRepository(private val store: SecureStore) {
+class ConnectionRepository(private val store: SecureStore) : HistorySource {
 
     // coerceInputValues: server emits explicit nulls for never-run cron jobs etc.
     private val json = Json { ignoreUnknownKeys = true; coerceInputValues = true }
@@ -31,6 +35,12 @@ class ConnectionRepository(private val store: SecureStore) {
     var username: String = ""
         private set
     private var password: String = ""
+
+    /** Bridge bearer token when connected through the relay (paired); empty for direct. */
+    var bearer: String = ""
+        private set
+
+    val viaRelay: Boolean get() = bearer.isNotEmpty()
 
     /** In-memory cookie jar mirrored to SecureStore on every Set-Cookie. */
     private inner class SessionCookieJar : CookieJar {
@@ -93,6 +103,7 @@ class ConnectionRepository(private val store: SecureStore) {
         baseUrl = conn.baseUrl
         username = conn.username
         password = conn.password
+        bearer = conn.bearer
         val host = runCatching { conn.baseUrl.toHttpUrl().host }.getOrDefault("")
         if (conn.cookie.isNotBlank() && host.isNotEmpty()) {
             jar.seed(conn.cookie, host)
@@ -104,6 +115,42 @@ class ConnectionRepository(private val store: SecureStore) {
         baseUrl = ""
         username = ""
         password = ""
+        bearer = ""
+    }
+
+    /**
+     * Pair through the desktop bridge relay (QR / deep link). Verifies the relay answers with
+     * this token before anything is saved.
+     */
+    suspend fun pairRelay(bridgeHost: String, token: String): SessionInfo {
+        val prev = SecureStore.Connection(baseUrl, username, password, "", bearer)
+        baseUrl = "http://${bridgeHost.trim().removePrefix("http://").trimEnd('/')}/hermes"
+        bearer = token.trim()
+        username = ""
+        password = ""
+        try {
+            profiles() // proves the relay + token + a backend behind it
+        } catch (e: Exception) {
+            attach(prev)
+            throw e
+        }
+        val me = runCatching { me() }.getOrDefault(SessionInfo())
+        username = me.userId
+        store.save(SecureStore.Connection(baseUrl, username, "", "", bearer))
+        return me
+    }
+
+    /** Newest [limit] DB rows of a session (oldest-first); see [HistorySource]. */
+    override suspend fun tail(storedId: String, profile: String, limit: Int) =
+        sessionTail(storedId, profile, limit)
+
+    /** A PC-side image (an `@image:` ref) as raw bytes, via /api/media (data URL). */
+    suspend fun media(path: String): ByteArray? {
+        val text = api("/api/media?path=${enc(path)}")
+        val url = (json.parseToJsonElement(text) as? kotlinx.serialization.json.JsonObject)
+            ?.get("data_url")?.let { (it as? kotlinx.serialization.json.JsonPrimitive)?.content } ?: return null
+        val b64 = url.substringAfter("base64,", "")
+        return if (b64.isEmpty()) null else android.util.Base64.decode(b64, android.util.Base64.DEFAULT)
     }
 
     /** Debug/dev seed: attach a pre-minted session cookie without a password login. */
@@ -121,6 +168,7 @@ class ConnectionRepository(private val store: SecureStore) {
                 .url("$baseUrl$path")
                 .header("Accept", "application/json")
                 .apply {
+                    if (bearer.isNotEmpty()) header("Authorization", "Bearer $bearer")
                     when (method) {
                         "POST" -> post((body ?: "").toRequestBody(JSON_MEDIA))
                         "PUT" -> put((body ?: "").toRequestBody(JSON_MEDIA))
@@ -142,7 +190,7 @@ class ConnectionRepository(private val store: SecureStore) {
         try {
             return execute(path, method, body)
         } catch (e: ApiException) {
-            if (e.status != 401 || password.isEmpty()) throw e
+            if (e.status != 401 || password.isEmpty() || viaRelay) throw e
         }
         // Session lapsed — one silent re-login with stored creds, then retry once.
         loginRaw(username, password)
