@@ -10,11 +10,14 @@ from __future__ import annotations
 
 import asyncio
 import json
+import re
+import secrets
 import logging
 import os
 import sys
 import time
-from typing import Optional
+from typing import Any, Optional
+from urllib.parse import quote
 
 import uvicorn
 from fastapi import Depends, FastAPI, HTTPException, Request, WebSocket, WebSocketDisconnect
@@ -23,9 +26,10 @@ from pydantic import BaseModel
 
 from pathlib import Path
 
-from fastapi.responses import Response
+from fastapi.middleware.gzip import GZipMiddleware
+from fastapi.responses import FileResponse, Response
 
-from . import prima_saved
+from . import lite, prima_saved
 from .config import Config
 from .hermes_relay import HermesRelay, RelaySocket
 from .laya import LayaEngine
@@ -34,7 +38,7 @@ from .services import ServiceBoard
 
 log = logging.getLogger("agency_bridge")
 
-VERSION = "0.2.0"
+VERSION = "0.3.0"
 
 cfg = Config()
 prima = PrimaManager(cfg.prima_cmd, cfg.default_cwd, cfg.worker_idle_s)
@@ -47,6 +51,8 @@ relay = HermesRelay(
 board = ServiceBoard(cfg.host)
 
 app = FastAPI(title="cornerstone-agency-bridge", version=VERSION)
+# The phone is often on cellular: gzip every JSON body over 1 KB (OkHttp asks for it).
+app.add_middleware(GZipMiddleware, minimum_size=1024)
 _bearer = HTTPBearer(auto_error=False)
 
 
@@ -377,6 +383,77 @@ async def hermes_proxy(path: str, request: Request) -> Response:
     return Response(content=r.content, status_code=r.status_code, headers=relay.response_headers(r))
 
 
+# -- phone-sized reads (see lite.py) ----------------------------------------------
+
+async def _relay_json(path_qs: str) -> Any:
+    try:
+        r = await relay.request("GET", path_qs, {"accept": "application/json"}, b"")
+    except Exception as e:  # noqa: BLE001
+        raise HTTPException(502, f"Hermes backend unreachable: {e}") from e
+    if r.status_code != 200:
+        raise HTTPException(r.status_code, r.text[:300])
+    return r.json()
+
+
+@app.get("/lite/sessions/{sid}/messages", dependencies=[Depends(require_auth)])
+async def lite_messages(sid: str, limit: int = 120, profile: Optional[str] = None) -> dict:
+    """Newest `limit` transcript rows, oldest first, stripped to what the phone renders."""
+    qs = f"?limit={max(1, min(limit, 500))}&order=latest&inline_images=false"
+    if profile:
+        qs += f"&profile={quote(profile)}"
+    return lite.compact_messages(await _relay_json(f"/api/sessions/{quote(sid)}/messages{qs}"))
+
+
+@app.get("/lite/sessions", dependencies=[Depends(require_auth)])
+async def lite_sessions(profile: Optional[str] = None, limit: int = 30) -> dict:
+    """A bot's chats by last activity (id, title, preview, times) for the Chats screen."""
+    qs = f"?order=recent&limit={max(1, min(limit, 100))}"
+    if profile:
+        qs += f"&profile={quote(profile)}"
+    return lite.compact_sessions(await _relay_json(f"/api/sessions{qs}"))
+
+
+# -- app updates over Tailscale ---------------------------------------------------
+# The newest signed release in <repo>/dist (cornerstone-agency-X.Y.Z.apk). The app checks
+# /app/latest and downloads with its bearer token; a phone browser can use
+# ?key=<AGENCY_DOWNLOAD_KEY from bridge.env> instead (download-only secret).
+
+DIST = Path(__file__).resolve().parents[2] / "dist"
+_SEMVER = re.compile(r"(\d+)\.(\d+)\.(\d+)")
+
+
+def _latest_apk() -> Optional[Path]:
+    def ver(p: Path) -> tuple:
+        m = _SEMVER.search(p.name)
+        return tuple(int(x) for x in m.groups()) if m else (0, 0, 0)
+
+    apks = sorted(DIST.glob("cornerstone-agency-*.apk"), key=ver)
+    return apks[-1] if apks else None
+
+
+@app.get("/app/latest", dependencies=[Depends(require_auth)])
+async def app_latest() -> dict:
+    apk = _latest_apk()
+    if apk is None:
+        raise HTTPException(404, "no release in dist/")
+    m = _SEMVER.search(apk.name)
+    return {"version_name": ".".join(m.groups()) if m else "", "size": apk.stat().st_size, "file": apk.name}
+
+
+@app.get("/app/latest.apk")
+async def app_latest_apk(request: Request) -> FileResponse:
+    key = request.query_params.get("key", "")
+    auth = request.headers.get("authorization", "")
+    dl_key = cfg.download_key
+    ok = secrets.compare_digest(auth, f"Bearer {cfg.token}") or (dl_key and secrets.compare_digest(key, dl_key))
+    if not ok:
+        raise HTTPException(401, "unauthorized")
+    apk = _latest_apk()
+    if apk is None:
+        raise HTTPException(404, "no release in dist/")
+    return FileResponse(apk, media_type="application/vnd.android.package-archive", filename=apk.name)
+
+
 @app.websocket("/hermes/api/ws")
 async def hermes_ws(ws: WebSocket) -> None:
     import websockets
@@ -519,6 +596,8 @@ def run() -> None:
         level=logging.INFO,
         format="%(asctime)s %(levelname)s %(name)s: %(message)s",
     )
+    # httpx logs every relayed request at INFO (one line per phone poll); the log is not rotated.
+    logging.getLogger("httpx").setLevel(logging.WARNING)
     if len(sys.argv) > 1 and sys.argv[1] == "pair":
         from .pair import main as pair_main
 

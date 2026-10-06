@@ -59,6 +59,19 @@ data class PrimaSaved(
 @Serializable
 private data class PrimaSavedResponse(val sessions: List<PrimaSaved> = emptyList())
 
+/** GET /app/latest — the newest signed release in the repo's dist/. */
+@Serializable
+data class AppRelease(val version_name: String = "", val size: Long = 0, val file: String = "") {
+    /** True when this release is newer than [current] ("1.3.0" style). */
+    fun newerThan(current: String): Boolean {
+        fun parts(v: String) = v.substringBefore('-').split('.').map { it.toIntOrNull() ?: 0 } + listOf(0, 0, 0)
+        val a = parts(version_name)
+        val b = parts(current)
+        for (i in 0 until 3) if (a[i] != b[i]) return a[i] > b[i]
+        return false
+    }
+}
+
 /** One PC service on the Me screen, from GET /services. */
 @Serializable
 data class PcService(
@@ -172,6 +185,37 @@ class BridgeRepository(private val store: SecureStore) {
 
     suspend fun restartService(name: String) {
         api("/services/$name/restart", "POST", "{}")
+    }
+
+    /** Newest release the PC offers (`dist/`), or null when none / older bridge. */
+    suspend fun appLatest(): AppRelease? = runCatching {
+        json.decodeFromString<AppRelease>(api("/app/latest"))
+    }.getOrNull()?.takeIf { it.version_name.isNotBlank() }
+
+    /** Stream the release APK into [dest], reporting 0..1 progress. */
+    suspend fun downloadApk(dest: java.io.File, onProgress: (Float) -> Unit) = withContext(Dispatchers.IO) {
+        val req = Request.Builder().url("${base()}/app/latest.apk").header("Authorization", "Bearer $token").build()
+        client.newCall(req).execute().use { resp ->
+            if (!resp.isSuccessful) throw ApiException(resp.code, "download failed (${resp.code})")
+            val body = resp.body ?: throw ApiException(500, "empty download")
+            val total = body.contentLength().takeIf { it > 0 } ?: -1L
+            dest.parentFile?.mkdirs()
+            val tmp = java.io.File(dest.parentFile, dest.name + ".part")
+            body.byteStream().use { input ->
+                tmp.outputStream().use { out ->
+                    val buf = ByteArray(64 * 1024)
+                    var done = 0L
+                    while (true) {
+                        val n = input.read(buf)
+                        if (n < 0) break
+                        out.write(buf, 0, n)
+                        done += n
+                        if (total > 0) onProgress(done.toFloat() / total)
+                    }
+                }
+            }
+            if (!tmp.renameTo(dest)) { dest.delete(); tmp.renameTo(dest) }
+        }
     }
 
     suspend fun createPrimaSession(cwd: String? = null, name: String = "", sessionPath: String? = null): String {

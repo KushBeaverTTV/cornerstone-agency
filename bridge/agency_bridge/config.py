@@ -15,6 +15,8 @@ log = logging.getLogger("agency_bridge")
 LOCALAPPDATA = Path(os.environ.get("LOCALAPPDATA", Path.home() / "AppData" / "Local"))
 TOKEN_FILE = LOCALAPPDATA / "cornerstone-agency" / "bridge.env"
 TOKEN_KEY = "AGENCY_BRIDGE_TOKEN"
+# Download-only secret for fetching the release APK in a phone browser (GET /app/latest.apk?key=).
+DOWNLOAD_KEY = "AGENCY_DOWNLOAD_KEY"
 
 
 class Config:
@@ -33,6 +35,25 @@ class Config:
         self.default_cwd = cwd if os.path.isdir(cwd) else str(Path.home())
         self.worker_idle_s = float(os.environ.get("AGENCY_PRIMA_IDLE_S", str(6 * 3600)))
         self.token = os.environ.get(TOKEN_KEY, "").strip() or self._bootstrap_token()
+        self.download_key = os.environ.get(DOWNLOAD_KEY, "").strip() or self._env_value(DOWNLOAD_KEY, "dl_")
+
+    def _env_value(self, key: str, prefix: str) -> str:
+        """Read `key` from bridge.env, appending a fresh random value when it is missing."""
+        try:
+            for line in TOKEN_FILE.read_text(encoding="utf-8").splitlines():
+                if line.startswith(key + "="):
+                    val = line.split("=", 1)[1].strip()
+                    if val:
+                        return val
+        except OSError:
+            pass
+        val = prefix + secrets.token_urlsafe(18)
+        try:
+            with TOKEN_FILE.open("a", encoding="utf-8") as f:
+                f.write(f"{key}={val}\n")
+        except OSError:
+            log.warning("could not persist %s to %s", key, TOKEN_FILE)
+        return val
 
     def _bootstrap_token(self) -> str:
         """Load or create the static bearer token."""

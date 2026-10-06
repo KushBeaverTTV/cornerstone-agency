@@ -30,6 +30,9 @@ import java.util.concurrent.atomic.AtomicLong
 private const val SYNC_POLL_MS = 3_000L
 private const val SYNC_FETCH = 200
 
+/** State-DB rows loaded when a chat opens (tool rows included, so ~40-80 visible turns). */
+private const val HYDRATE_ROWS = 200
+
 /** A turn that has produced no event for this long is re-checked against the server. */
 private const val STALL_MS = 90_000L
 
@@ -164,15 +167,35 @@ class ChatRepository(
     }
 
     private suspend fun resume(storedId: String) {
-        val res = gateway.call(
+        val src = history()
+        // Join the live session WITHOUT its transcript: for a long desktop chat that payload is
+        // megabytes (every tool output and reasoning blob), which stalls on cellular and left the
+        // phone on its stale saved copy. The visible tail comes from the compact history read.
+        var res = gateway.call(
             "session.resume",
             buildJsonObject {
                 put("session_id", storedId)
                 put("profile", profile)
+                if (src != null) put("omit_messages", true)
             },
         ).asObj()
         bindRuntime(res, storedId)
-        hydrate(res)
+        val stored = storedSessionId ?: storedId
+        val tail = src?.let { s ->
+            runCatching { TranscriptMapping.fromDbRows(s.tail(stored, profile, HYDRATE_ROWS), ::nextId) }.getOrNull()
+        }
+        if (src != null && tail == null) {
+            // History read failed: fall back to the transcript inside resume.
+            res = gateway.call(
+                "session.resume",
+                buildJsonObject {
+                    put("session_id", storedId)
+                    put("profile", profile)
+                },
+            ).asObj()
+            bindRuntime(res, storedId)
+        }
+        hydrate(res, tail)
         _fromCache.value = false
         syncCursor = maxOf(TranscriptMapping.maxRowId(_items.value) ?: 0L, dbHead() ?: 0L)
         if (_streaming.value) {
@@ -465,8 +488,8 @@ class ChatRepository(
 
     // ---- transcript hydration ----------------------------------------------
 
-    private fun hydrate(res: JsonObject) {
-        val list = TranscriptMapping.fromResume(res["messages"] as? JsonArray, ::nextId).toMutableList()
+    private fun hydrate(res: JsonObject, rows: List<ChatItem>? = null) {
+        val list = (rows ?: TranscriptMapping.fromResume(res["messages"] as? JsonArray, ::nextId)).toMutableList()
         assistantId = null
         turnAssistantIndex = null
         thinkingId = null

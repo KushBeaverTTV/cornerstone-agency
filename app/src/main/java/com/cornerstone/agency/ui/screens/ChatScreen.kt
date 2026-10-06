@@ -417,7 +417,7 @@ fun ChatScreen(
             ?: remember { kotlinx.coroutines.flow.MutableStateFlow(false) }).collectAsState()
 
         // Socket status pill
-        if (socketState != GatewayState.OPEN) {
+        if (socketState != GatewayState.OPEN || (cached && items.isNotEmpty())) {
             Row(
                 Modifier
                     .fillMaxWidth()
@@ -427,10 +427,11 @@ fun ChatScreen(
             ) {
                 Text(
                     when (socketState) {
+                        GatewayState.OPEN -> "Syncing with the PC…"
                         GatewayState.CONNECTING -> "Connecting…"
                         GatewayState.RECONNECTING -> "Reconnecting…"
                         else -> "Disconnected"
-                    } + if (cached && items.isNotEmpty()) " · showing saved copy" else "",
+                    } + if (cached && items.isNotEmpty() && socketState != GatewayState.OPEN) " · showing saved copy" else "",
                     style = MaterialTheme.typography.labelSmall,
                     color = colors.warm,
                 )

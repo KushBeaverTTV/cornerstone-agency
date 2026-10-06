@@ -180,8 +180,21 @@ fun ChatsScreen(
                 .maxByOrNull { it.last_activity }
         } else null
     }
+    // sessions.changed fires on every row a busy desktop chat writes (every ~2 s during a long
+    // turn). Refresh at most once per 8 s, trailing, so the list stays current without
+    // re-downloading every bot's session list over cellular all the time.
     LaunchedEffect(Unit) {
-        vm.gateway.events.collect { ev -> if (ev.type == "sessions.changed") refresh() }
+        var lastRun = 0L
+        var pending: kotlinx.coroutines.Job? = null
+        vm.gateway.events.collect { ev ->
+            if (ev.type != "sessions.changed" || pending?.isActive == true) return@collect
+            pending = launch {
+                val wait = (lastRun + 8_000L - System.currentTimeMillis()).coerceAtLeast(0L)
+                kotlinx.coroutines.delay(wait)
+                lastRun = System.currentTimeMillis()
+                refresh()
+            }
+        }
     }
     LaunchedEffect(Unit) { vm.refreshBridge() }
 

@@ -152,7 +152,8 @@ class ConnectionRepository(private val store: SecureStore) : HistorySource {
 
     /** Session id -> last activity (unix seconds) for a bot's most recent chats. */
     suspend fun lastActive(profile: String, limit: Int = 50): Map<String, Double> {
-        val text = api("/api/sessions?order=recent&limit=$limit&profile=${enc(profile)}")
+        val text = lite("/lite/sessions?profile=${enc(profile)}&limit=$limit")
+            ?: api("/api/sessions?order=recent&limit=$limit&profile=${enc(profile)}")
         val rows = (json.parseToJsonElement(text) as? kotlinx.serialization.json.JsonObject)
             ?.get("sessions") as? kotlinx.serialization.json.JsonArray ?: return emptyMap()
         return rows.mapNotNull { el ->
@@ -185,10 +186,10 @@ class ConnectionRepository(private val store: SecureStore) : HistorySource {
 
     // ---- HTTP -----------------------------------------------------------
 
-    private suspend fun execute(path: String, method: String = "GET", body: String? = null): String =
+    private suspend fun execute(path: String, method: String = "GET", body: String? = null, root: String = baseUrl): String =
         withContext(Dispatchers.IO) {
             val request = Request.Builder()
-                .url("$baseUrl$path")
+                .url("$root$path")
                 .header("Accept", "application/json")
                 .apply {
                     if (bearer.isNotEmpty()) header("Authorization", "Bearer $bearer")
@@ -346,14 +347,31 @@ class ConnectionRepository(private val store: SecureStore) : HistorySource {
      * appends to the same stored session without this process ever hearing about it, so this
      * is how a phone chat catches up. Returned oldest-first.
      */
+    /** Bridge root (relay base without /hermes): phone-sized /lite reads live there. */
+    private val bridgeRoot: String get() = baseUrl.removeSuffix("/hermes")
+
+    /** Set once the bridge answers 404 for /lite (an older bridge); then use the raw routes. */
+    @Volatile
+    private var liteMissing = false
+
+    private suspend fun lite(path: String): String? {
+        if (!viaRelay || liteMissing) return null
+        return try {
+            execute(path, root = bridgeRoot)
+        } catch (e: ApiException) {
+            if (e.status == 404 && !path.contains("/messages")) liteMissing = true
+            if (e.status == 404) null else throw e
+        }
+    }
+
     suspend fun sessionTail(
         storedId: String,
         profile: String,
         limit: Int,
     ): List<kotlinx.serialization.json.JsonObject> {
-        val text = api(
-            "/api/sessions/${enc(storedId)}/messages?limit=$limit&order=latest&profile=${enc(profile)}",
-        )
+        // Via the relay: compact rows (~75x smaller — no reasoning/tool output/inline images).
+        val text = lite("/lite/sessions/${enc(storedId)}/messages?limit=$limit&profile=${enc(profile)}")
+            ?: api("/api/sessions/${enc(storedId)}/messages?limit=$limit&order=latest&profile=${enc(profile)}&inline_images=false")
         val arr = (json.parseToJsonElement(text) as? kotlinx.serialization.json.JsonObject)
             ?.get("messages") as? kotlinx.serialization.json.JsonArray
         return arr?.mapNotNull { it as? kotlinx.serialization.json.JsonObject }.orEmpty()

@@ -340,6 +340,49 @@ fun MoreScreen(
             NavRow(AgencyIcons.Feed, "System", "Host metrics, platforms, usage, plugins", onOpenSystem)
         }
 
+        // ---- app update (release builds from the PC's dist/, over Tailscale) -----------------
+        if (vm.bridge.configured) {
+            val ctx = androidx.compose.ui.platform.LocalContext.current
+            val upScope = androidx.compose.runtime.rememberCoroutineScope()
+            var release by remember { mutableStateOf<com.cornerstone.agency.data.AppRelease?>(null) }
+            var progress by remember { mutableStateOf<Float?>(null) }
+            var updateError by remember { mutableStateOf("") }
+            LaunchedEffect(Unit) { release = vm.bridge.appLatest() }
+            val rel = release
+            if (rel != null && rel.newerThan(BuildConfig.VERSION_NAME)) {
+                Section("Update") {
+                    AgencyCard(Modifier.fillMaxWidth()) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Column(Modifier.weight(1f)) {
+                                Text("Version ${rel.version_name} is ready", style = MaterialTheme.typography.bodyMedium, color = colors.foreground)
+                                Text(
+                                    progress?.let { "Downloading… ${(it * 100).toInt()}%" }
+                                        ?: updateError.ifBlank { "From your PC · ${rel.size / 1_048_576} MB · keeps your sign-in" },
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = if (updateError.isNotBlank()) colors.destructive else colors.tertiary,
+                                )
+                            }
+                            TextButton(enabled = progress == null, onClick = {
+                                updateError = ""
+                                progress = 0f
+                                upScope.launch {
+                                    try {
+                                        val f = updateApkFile(ctx)
+                                        vm.bridge.downloadApk(f) { p -> progress = p }
+                                        progress = null
+                                        if (!installApk(ctx, f)) updateError = "Allow installs from Agency, then tap Update again"
+                                    } catch (e: Exception) {
+                                        progress = null
+                                        updateError = "Download failed: ${e.message ?: "error"}"
+                                    }
+                                }
+                            }) { Text("Update", color = colors.gold) }
+                        }
+                    }
+                }
+            }
+        }
+
         Spacer(Modifier.height(space.xl))
         Text(
             "Cornerstone Agency ${BuildConfig.VERSION_NAME} · build ${BuildConfig.VERSION_CODE}" +
