@@ -26,8 +26,9 @@ $uptime = (Get-Date) - (Get-CimInstance Win32_OperatingSystem).LastBootUpTime
 if ($uptime.TotalSeconds -lt 240) { exit 0 }
 
 $ip = ''
-try { $ip = (& tailscale ip -4 2>$null | Select-Object -First 1).Trim() } catch {}
-if (-not $ip) { Write-Log 'skip: no tailscale ip'; exit 0 }
+if (Get-Command tailscale -ErrorAction SilentlyContinue) { try { $ip = (& tailscale ip -4 2>$null | Select-Object -First 1).Trim() } catch {} }
+# No Tailscale: the services bind 127.0.0.1 and the phone reaches them over `adb reverse`.
+if (-not $ip) { $ip = '127.0.0.1' }
 
 $services = @(
     @{ name = 'dashboard'; port = 9119; health = "http://${ip}:9119/api/health"; launch = 'launch-agency-dashboard.ps1' },

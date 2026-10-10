@@ -4,7 +4,7 @@ setlocal
 cd /d "%~dp0"
 set "PYTHONIOENCODING=utf-8"
 set "HERMES_VOICE_BRIDGE_PORT=8766"
-set "FFMPEG_BINARY=C:\Users\antho\AppData\Local\hermes\tools\ffmpeg-9.0.1-win32-x64\bin\ffmpeg.exe"
+set "FFMPEG_BINARY=%USERPROFILE%\.hermes\tools\ffmpeg-9.0.1-win32-x64\bin\ffmpeg.exe"
 for /f "tokens=*" %%i in ('tailscale ip -4 2^>nul') do if not defined TSIP set "TSIP=%%i"
 if defined TSIP set "AGENCY_VOICE_EXTRA_HOSTS=%TSIP%"
 rem dashboard is bound to the tailnet IP only

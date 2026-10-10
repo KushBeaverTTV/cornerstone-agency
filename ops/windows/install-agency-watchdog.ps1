@@ -6,8 +6,15 @@ $scripts = Join-Path $env:LOCALAPPDATA 'hermes\scripts'
 New-Item -ItemType Directory -Force -Path $scripts | Out-Null
 
 # Launch/start scripts, the USB forwarder, the watchdog and the pairing helper.
-Get-ChildItem $here -File | Where-Object { $_.Extension -in '.ps1', '.py' -and $_.Name -ne 'install-agency-watchdog.ps1' } |
+Get-ChildItem $here -File | Where-Object { $_.Extension -in '.ps1', '.py', '.cmd' -and $_.Name -ne 'install-agency-watchdog.ps1' } |
     ForEach-Object { Copy-Item $_.FullName $scripts -Force }
+
+# Login autostart: a hidden launcher in the user's Startup folder runs Cornerstone-Agency-Backend.cmd.
+$startup = [Environment]::GetFolderPath('Startup')
+$startVbs = Join-Path $startup 'Cornerstone-Agency-Backend.vbs'
+@"
+CreateObject("WScript.Shell").Run "cmd /c """"$scripts\Cornerstone-Agency-Backend.cmd""""", 0, False
+"@ | Set-Content -Path $startVbs -Encoding ascii
 $vbs = Join-Path $scripts 'agency-watchdog.vbs'
 # wscript runs PowerShell with no console window flashing every five minutes.
 @"
