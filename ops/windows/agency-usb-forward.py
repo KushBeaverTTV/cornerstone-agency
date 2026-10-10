@@ -3,13 +3,14 @@
 Only needed when Tailscale is installed (the services then bind the tailnet IP, not loopback).
 Without Tailscale the services already listen on 127.0.0.1 and this script exits at once.
 """
-import asyncio, shutil, subprocess, sys
+import asyncio, os, shutil, subprocess, sys
 
 def tailnet_ip():
-    if not shutil.which("tailscale"):
+    exe = shutil.which("tailscale") or r"C:\Program Files\Tailscale\tailscale.exe"
+    if not os.path.isfile(exe):
         return ""
     try:
-        out = subprocess.run(["tailscale", "ip", "-4"], capture_output=True, text=True, timeout=10)
+        out = subprocess.run([exe, "ip", "-4"], capture_output=True, text=True, timeout=10)
         return (out.stdout or "").strip().splitlines()[0].strip()
     except Exception:
         return ""

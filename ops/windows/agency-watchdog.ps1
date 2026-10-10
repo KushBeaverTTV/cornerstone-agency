@@ -26,7 +26,8 @@ $uptime = (Get-Date) - (Get-CimInstance Win32_OperatingSystem).LastBootUpTime
 if ($uptime.TotalSeconds -lt 240) { exit 0 }
 
 $ip = ''
-if (Get-Command tailscale -ErrorAction SilentlyContinue) { try { $ip = (& tailscale ip -4 2>$null | Select-Object -First 1).Trim() } catch {} }
+$ts = (Get-Command tailscale -ErrorAction SilentlyContinue).Source; if (-not $ts -and (Test-Path 'C:\Program Files\Tailscale\tailscale.exe')) { $ts = 'C:\Program Files\Tailscale\tailscale.exe' }
+if ($ts) { try { $ip = (& $ts ip -4 2>$null | Select-Object -First 1).Trim() } catch {} }
 # No Tailscale: the services bind 127.0.0.1 and the phone reaches them over `adb reverse`.
 if (-not $ip) { $ip = '127.0.0.1' }
 

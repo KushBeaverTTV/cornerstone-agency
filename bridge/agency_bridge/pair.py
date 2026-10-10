@@ -31,10 +31,11 @@ SECRETS = Path(os.environ.get("CORNERSTONE_SECRETS", r"C:\Cornerstone\Cornerston
 
 def _tailscale_ip() -> str:
     """The PC's tailnet IPv4, or "" when Tailscale is absent / logged out."""
-    if not shutil.which("tailscale"):
+    exe = shutil.which("tailscale") or r"C:\Program Files\Tailscale\tailscale.exe"
+    if not os.path.isfile(exe):
         return ""
     try:
-        out = subprocess.run(["tailscale", "ip", "-4"], capture_output=True, text=True, timeout=10)
+        out = subprocess.run([exe, "ip", "-4"], capture_output=True, text=True, timeout=10)
         lines = (out.stdout or "").strip().splitlines()
         return lines[0].strip() if lines else ""
     except Exception:  # noqa: BLE001
