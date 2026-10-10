@@ -29,9 +29,11 @@ phone ──(Tailscale or USB+adb reverse)──► bridge :9121 ──/hermes�
 phone ──► voice bridge :8766
 ```
 
-Sign in by pairing: run `ops/windows/pair-agency-phone.ps1` on the PC and scan the QR with the
-phone camera (or paste the `cornerstone-agency://pair?...` link on the Connect screen). The old
-direct dashboard login (URL + password) still works but does not share live turns.
+Sign-in is automatic: `ops\windows\build-phone.cmd` bakes the PC's addresses and tokens into the
+APK (from `Cornerstone_Secrets/agency-pairing.env`, never committed) and installs it; the app
+finds the PC by itself over USB or Tailscale and keeps the link alive (docs/BRIDGE.md,
+"Auto-connect"). Manual fallbacks: `ops/windows/pair-agency-phone.ps1` (QR) or the direct
+dashboard login (URL + password, no live turns).
 
 ## Build
 

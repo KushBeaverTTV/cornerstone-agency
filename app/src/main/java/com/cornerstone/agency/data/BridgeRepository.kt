@@ -175,6 +175,27 @@ class BridgeRepository(private val store: SecureStore) {
     suspend fun health(): BridgeHealth =
         json.decodeFromString(api("/health", auth = false))
 
+    /** Auto-connect: the PC's current address book (GET /pairing, bearer). */
+    suspend fun pairing(): PairingResponse = json.decodeFromString(api("/pairing"))
+
+    /**
+     * Auto-connect probe: does a bridge at [hostPort] answer `/health` AND accept [token]?
+     * `/hermes/status` is the cheapest authenticated route. Uses a short client so a dead host
+     * fails fast; the caller adds its own overall timeout.
+     */
+    suspend fun probe(hostPort: String, token: String): Boolean = withContext(Dispatchers.IO) {
+        val req = Request.Builder()
+            .url("http://$hostPort/hermes/status")
+            .header("Accept", "application/json")
+            .header("Authorization", "Bearer $token")
+            .build()
+        probeClient.newCall(req).execute().use { it.isSuccessful }
+    }
+
+    private val probeClient by lazy {
+        client.newBuilder().connectTimeout(3, TimeUnit.SECONDS).readTimeout(3, TimeUnit.SECONDS).build()
+    }
+
     suspend fun primaSessions(): List<PrimaSession> =
         json.decodeFromString<PrimaSessionsResponse>(api("/prima/sessions")).sessions
 

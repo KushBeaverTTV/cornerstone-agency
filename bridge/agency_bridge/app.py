@@ -362,6 +362,17 @@ async def hermes_status() -> dict:
     return relay.status()
 
 
+# -- auto-connect -----------------------------------------------------------
+
+@app.get("/pairing", dependencies=[Depends(require_auth)])
+async def pairing() -> dict:
+    """The phone's address book: every host this PC answers on (USB loopback, tailnet) plus the
+    voice token. A paired phone refreshes this after each connection, so an address learned over
+    the cable works later on cellular without rebuilding the app."""
+    from .pair import pairing_info
+    return pairing_info(cfg)
+
+
 @app.post("/hermes/api/auth/ws-ticket", dependencies=[Depends(require_auth)])
 async def hermes_ws_ticket() -> dict:
     """One-time ticket for /hermes/api/ws (the phone's socket cannot carry a header everywhere)."""

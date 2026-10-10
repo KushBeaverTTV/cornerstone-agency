@@ -200,6 +200,37 @@ fun MoreScreen(
             }
         }
 
+        // ---- auto-connect ------------------------------------------------------------
+        if (vm.hasKnownPc) {
+            Section("Auto-connect") {
+                AgencyCard(Modifier.fillMaxWidth()) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Column(Modifier.weight(1f)) {
+                            Text(ui.knownPcName.ifBlank { "Your PC" }, style = MaterialTheme.typography.bodyMedium, color = colors.foreground)
+                            Text(
+                                if (ui.autoStatus.isNotBlank()) ui.autoStatus
+                                else if (vm.repo.viaRelay) "Connected over ${com.cornerstone.agency.data.AutoConnect.pathLabel(vm.bridge.host)} · ${vm.bridge.host}"
+                                else "Not connected through the PC",
+                                style = MaterialTheme.typography.labelSmall, color = colors.tertiary,
+                                maxLines = 2, overflow = TextOverflow.Ellipsis,
+                            )
+                        }
+                        Pill(
+                            text = if (vm.repo.viaRelay && ui.reachable) "Linked" else "Searching",
+                            tone = if (vm.repo.viaRelay && ui.reachable) colors.success else colors.tertiary,
+                        )
+                        TextButton(onClick = { vm.reconnectNow() }) { Text("Reconnect", color = colors.gold) }
+                    }
+                    Spacer(Modifier.height(space.sm))
+                    Text(
+                        "The phone finds the PC by itself over USB or Tailscale and keeps the link alive. " +
+                            "Nothing to type, scan or paste.",
+                        style = MaterialTheme.typography.labelSmall, color = colors.tertiary,
+                    )
+                }
+            }
+        }
+
         // ---- desktop bridge ----------------------------------------------------------
         Section("Desktop bridge", action = if (editBridge) null else "Edit", onAction = { editBridge = true }) {
             AgencyCard(Modifier.fillMaxWidth()) {

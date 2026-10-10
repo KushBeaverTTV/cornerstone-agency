@@ -67,11 +67,32 @@ fun ConnectScreen(vm: AppViewModel) {
         )
         Spacer(Modifier.height(space.sm))
         Text(
-            text = "Pair with your PC, or connect to a Hermes dashboard.",
+            text = if (vm.hasKnownPc) "This phone knows ${ui.knownPcName.ifBlank { "your PC" }} — it connects by itself."
+                else "Pair with your PC, or connect to a Hermes dashboard.",
             style = MaterialTheme.typography.bodyMedium,
             color = colors.secondary,
         )
         Spacer(Modifier.height(space.xl))
+
+        // Auto-connect: a build that knows the PC needs no human step. Show what it is doing and
+        // a retry; the manual paths below stay as the fallback.
+        if (vm.hasKnownPc) {
+            SectionKicker("Auto-connect")
+            Spacer(Modifier.height(space.xs))
+            Text(
+                text = ui.autoStatus.ifBlank { "Idle" },
+                style = MaterialTheme.typography.bodyMedium,
+                color = if (ui.autoStatus.contains("not reachable") || ui.autoStatus.contains("refused")) colors.destructive else colors.foreground,
+            )
+            Spacer(Modifier.height(space.sm))
+            PrimaryButton(
+                label = "Connect now",
+                loading = ui.connectBusy || ui.autoStatus.endsWith("…"),
+                onClick = { vm.reconnectNow() },
+                modifier = Modifier.fillMaxWidth(),
+            )
+            Spacer(Modifier.height(space.xl))
+        }
 
         // Pairing (preferred): `agency-bridge pair` on the PC shows a QR; the phone camera opens
         // it straight into the app. Pasting the link works too.

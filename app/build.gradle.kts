@@ -12,8 +12,26 @@ android {
         applicationId = "com.cornerstone.agency"
         minSdk = 26
         targetSdk = 35
-        versionCode = 14
-        versionName = "1.3.1"
+        versionCode = 15
+        versionName = "1.4.0"
+
+        // Auto-connect: the PC's address book + tokens are baked in at build time from
+        // Cornerstone_Secrets/agency-pairing.env (written by `agency-bridge pair --write-env`).
+        // Nothing is committed; a build without the file simply has no known PC.
+        val pairing = (System.getenv("AGENCY_PAIRING_ENV")?.takeIf { it.isNotBlank() }
+            ?: "C:/Cornerstone/Cornerstone_Secrets/agency-pairing.env")
+            .let { file(it) }
+            .takeIf { it.isFile }
+            ?.readLines()
+            ?.mapNotNull { l -> l.split("=", limit = 2).takeIf { it.size == 2 && !l.startsWith("#") }?.let { it[0].trim() to it[1].trim() } }
+            ?.toMap()
+            .orEmpty()
+        fun baked(key: String) = "\"${pairing[key].orEmpty().replace("\\", "\\\\").replace("\"", "\\\"")}\""
+        buildConfigField("String", "AGENCY_PC_NAME", baked("AGENCY_PC_NAME"))
+        buildConfigField("String", "AGENCY_PC_HOSTS", baked("AGENCY_PC_HOSTS"))
+        buildConfigField("String", "AGENCY_BRIDGE_TOKEN", baked("AGENCY_BRIDGE_TOKEN"))
+        buildConfigField("String", "AGENCY_VOICE_PORT", baked("AGENCY_VOICE_PORT"))
+        buildConfigField("String", "AGENCY_VOICE_TOKEN", baked("AGENCY_VOICE_TOKEN"))
     }
 
     // Release signing reuses the KBP release key. Values come from the environment

@@ -66,6 +66,32 @@ def test_health_public(client):
     assert "prima" in body and "laya" in body
 
 
+def test_pairing_address_book(client, monkeypatch):
+    import agency_bridge.pair as pair
+    assert client.get("/pairing").status_code == 401
+    monkeypatch.setattr(pair, "_tailscale_ip", lambda: "100.64.0.9")
+    monkeypatch.delenv("AGENCY_BRIDGE_HOST", raising=False)
+    body = client.get("/pairing", headers=AUTH).json()
+    assert body["hosts"] == ["127.0.0.1", "100.64.0.9"]  # USB cable first, tailnet second
+    assert body["token"] == appmod.cfg.token
+    assert body["bridge_port"] == appmod.cfg.port and body["voice_port"] == 8766
+    monkeypatch.setattr(pair, "_tailscale_ip", lambda: "")
+    assert client.get("/pairing", headers=AUTH).json()["hosts"] == ["127.0.0.1"]
+
+
+def test_write_pairing_env(tmp_path, monkeypatch):
+    import agency_bridge.pair as pair
+    monkeypatch.setattr(pair, "_tailscale_ip", lambda: "100.64.0.9")
+    monkeypatch.delenv("AGENCY_BRIDGE_HOST", raising=False)
+    monkeypatch.setattr(pair, "SECRETS", tmp_path)
+    (tmp_path / "agency-voice.env").write_text("HERMES_VOICE_BRIDGE_TOKEN=agv_test\n")
+    out = pair.write_pairing_env(tmp_path / "agency-pairing.env", appmod.cfg)
+    env = dict(l.split("=", 1) for l in out.read_text().splitlines())
+    assert env["AGENCY_PC_HOSTS"] == f"127.0.0.1:{appmod.cfg.port},100.64.0.9:{appmod.cfg.port}"
+    assert env["AGENCY_BRIDGE_TOKEN"] == appmod.cfg.token
+    assert env["AGENCY_VOICE_TOKEN"] == "agv_test"
+
+
 def test_auth_required(client):
     assert client.get("/prima/sessions").status_code == 401
     assert client.post("/laya/route", json={"text": "x", "bots": []}).status_code == 401

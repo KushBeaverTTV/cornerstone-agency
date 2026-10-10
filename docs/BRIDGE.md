@@ -51,7 +51,23 @@ into `%LOCALAPPDATA%\cornerstone-agency\bridge.env` (owner-only). Phone stores i
 `SecureStore`; every request carries an `Authorization: Bearer` header with it; sockets pass
 `?token=` or a one-time `?ticket=` (60 s). `GET /health` is public and never includes the token.
 
-### Pairing
+### Auto-connect (the normal path)
+
+The phone needs no human step. `ops/windows/build-phone.cmd` runs `agency-bridge pair --write-env`,
+which writes `Cornerstone_Secrets/agency-pairing.env` (PC name, every `host:9121` the PC answers
+on — `127.0.0.1` for the USB cable, the tailnet IP when Tailscale is signed in — plus the bridge
+and voice tokens). `app/build.gradle.kts` bakes that file into `BuildConfig`; nothing is committed.
+
+On the phone (`data/AutoConnect.kt`, `AppViewModel.autoConnect`): on cold start, on every return
+to the foreground and whenever the socket has been reconnecting for 20 s, the app probes every
+known host in parallel (`GET /hermes/status` with the token, 4 s cap), takes the best-ranked one
+that answers and pairs through the same code the QR link uses. Auto-pairing switches "Stay
+connected" on. After each connection it fetches `GET /pairing` (bearer) — the PC's current host
+list and voice token — and keeps it in `SecureStore`, so an address learned over USB works later
+on cellular without a rebuild. A learned book whose token differs from the baked one is tried
+last, so a fresh build with a rotated token always wins.
+
+### Pairing (manual fallback)
 
 `agency-bridge pair` (or `ops/windows/pair-agency-phone.ps1`) writes a local HTML page with a QR
 for `cornerstone-agency://pair?v=1&bridge=<ip>:9121&token=<t>&voice=<ip>:8766&voice_token=<t>&name=<pc>`

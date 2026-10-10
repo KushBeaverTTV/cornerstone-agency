@@ -68,6 +68,12 @@ class SecureStore(context: Context) {
         get() = prefs.getString(KEY_BRIDGE_TOKEN, "") ?: ""
         set(v) = prefs.edit().putString(KEY_BRIDGE_TOKEN, v).apply()
 
+    // -- auto-connect address book (learned from GET /pairing) ---------------
+
+    var knownPc: KnownPc?
+        get() = prefs.getString(KEY_KNOWN_PC, null)?.let { KnownPc.fromJson(it) }
+        set(v) = prefs.edit().putString(KEY_KNOWN_PC, v?.let { KnownPc.toJson(it) }).apply()
+
     companion object {
         private const val FILE = "agency_connection"
         private const val KEY_URL = "base_url"
@@ -77,5 +83,6 @@ class SecureStore(context: Context) {
         private const val KEY_BRIDGE_HOST = "bridge_host"
         private const val KEY_BRIDGE_TOKEN = "bridge_token"
         private const val KEY_BEARER = "relay_bearer"
+        private const val KEY_KNOWN_PC = "known_pc"
     }
 }

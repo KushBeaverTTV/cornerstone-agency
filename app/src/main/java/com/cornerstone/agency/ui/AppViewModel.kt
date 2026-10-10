@@ -1,13 +1,18 @@
 package com.cornerstone.agency.ui
 
 import android.app.Application
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.lifecycle.viewModelScope
+import com.cornerstone.agency.BuildConfig
 import com.cornerstone.agency.data.ApiException
+import com.cornerstone.agency.data.AutoConnect
+import com.cornerstone.agency.data.KnownPc
+import com.cornerstone.agency.data.GatewayState
 import com.cornerstone.agency.data.BotProfile
 import com.cornerstone.agency.data.CompanionRepository
 import com.cornerstone.agency.data.ConnectionRepository
@@ -46,6 +51,11 @@ data class UiState(
     val profilesLoading: Boolean = false,
     val profilesError: String = "",
     val status: StatusPayload? = null,
+    // auto-connect
+    /** What auto-connect is doing right now ("Looking for KUSH-PC…"); empty when idle. */
+    val autoStatus: String = "",
+    /** Name of the PC this build / address book knows, or empty. */
+    val knownPcName: String = "",
 )
 
 /** A notification/intent asking the nav host to open a specific chat. */
@@ -56,6 +66,15 @@ class AppViewModel(private val app: Application) : AndroidViewModel(app) {
     private val store = SecureStore(app)
     internal val repo = ConnectionRepository(store)
     private val prefs = Prefs(app)
+
+    /** The PC baked into this build (Cornerstone_Secrets/agency-pairing.env), if any. */
+    private val bakedPc: KnownPc? = KnownPc.fromBaked(
+        BuildConfig.AGENCY_PC_NAME, BuildConfig.AGENCY_PC_HOSTS, BuildConfig.AGENCY_BRIDGE_TOKEN,
+        BuildConfig.AGENCY_VOICE_PORT, BuildConfig.AGENCY_VOICE_TOKEN,
+    )
+    // Declared before `init`: the cold-start sweep launched there touches both.
+    private val autoConnectLock = kotlinx.coroutines.sync.Mutex()
+    private var lastAutoConnectAt = 0L
 
     /** Local-first store for the Feed / Goals / Artifacts tabs (process singleton). */
     val companion = CompanionRepository.get(app)
@@ -262,6 +281,8 @@ class AppViewModel(private val app: Application) : AndroidViewModel(app) {
                 foregrounded = true
                 GatewayHub.foregrounded = true
                 syncBackgroundWork()
+                // Coming back to the app: if the stored PC is gone, find it on another path.
+                if (!_ui.value.booting) autoConnectAsync(AutoConnect.Reason.FOREGROUND)
             }
 
             override fun onStop(owner: LifecycleOwner) {
@@ -270,6 +291,7 @@ class AppViewModel(private val app: Application) : AndroidViewModel(app) {
                 syncBackgroundWork()
             }
         })
+        _ui.update { it.copy(knownPcName = (store.knownPc ?: bakedPc)?.name.orEmpty()) }
         viewModelScope.launch {
             if (repo.restore()) {
                 try {
@@ -277,10 +299,124 @@ class AppViewModel(private val app: Application) : AndroidViewModel(app) {
                     enterShell(me)
                     return@launch
                 } catch (_: Exception) {
-                    // Stored session is dead — fall through to the connect screen.
+                    // Stored session is dead — fall through to auto-connect / the connect screen.
                 }
             }
-            _ui.update { it.copy(booting = false) }
+            if (!autoConnect(AutoConnect.Reason.COLD_START)) _ui.update { it.copy(booting = false) }
+        }
+        watchSocket()
+    }
+
+    // -- auto-connect ----------------------------------------------------------
+
+    /** True when there is a PC to auto-connect to at all. */
+    val hasKnownPc: Boolean get() = store.knownPc != null || bakedPc != null
+
+    /** Me screen "Reconnect now". */
+    fun reconnectNow() { autoConnectAsync(AutoConnect.Reason.USER) }
+
+    /** Fire-and-forget variant; the result lands in [UiState]. */
+    private fun autoConnectAsync(reason: AutoConnect.Reason) {
+        viewModelScope.launch { autoConnect(reason) }
+    }
+
+    /**
+     * Find the PC on whichever path answers (USB loopback, tailnet) and pair with it through the
+     * same code the QR link uses. Returns true when the app ended up connected. Never asks the
+     * user for anything; when nothing answers it leaves a one-line status and the existing
+     * connection (if any) untouched.
+     */
+    private suspend fun autoConnect(reason: AutoConnect.Reason): Boolean {
+        val candidates = AutoConnect.candidates(store.knownPc, bakedPc)
+        if (candidates.isEmpty()) return false
+        if (!autoConnectLock.tryLock()) return _ui.value.connected
+        try {
+            // Foreground/socket triggers can fire in bursts; USER always runs.
+            val now = System.currentTimeMillis()
+            if (reason != AutoConnect.Reason.USER && reason != AutoConnect.Reason.COLD_START &&
+                now - lastAutoConnectAt < AUTO_CONNECT_MIN_INTERVAL_MS
+            ) return _ui.value.connected
+            lastAutoConnectAt = now
+            // Already attached and healthy on a live path: nothing to do.
+            if (_ui.value.connected && reason != AutoConnect.Reason.USER && reason != AutoConnect.Reason.SOCKET_DOWN) {
+                val alive = runCatching { repo.verify(); true }.getOrDefault(false)
+                if (alive) {
+                    refreshAddressBook() // the PC may have gained a tailnet address since last time
+                    return true
+                }
+            }
+            val pcName = candidates.first().second.name.ifBlank { "your PC" }
+            _ui.update { it.copy(autoStatus = "Looking for $pcName…", connectError = "") }
+            Log.i(TAG, "auto-connect ($reason): probing ${candidates.map { it.first }}")
+            val hit = AutoConnect.pickReachable(candidates) { (host, pc) -> bridge.probe(host, pc.token) }
+            if (hit == null) {
+                Log.i(TAG, "auto-connect ($reason): no path to $pcName")
+                _ui.update { it.copy(autoStatus = "$pcName is not reachable right now") }
+                return _ui.value.connected
+            }
+            val (host, pc) = hit
+            val current = _ui.value.baseUrl.removePrefix("http://").substringBefore('/')
+            if (_ui.value.connected && current == host && repo.viaRelay) {
+                _ui.update { it.copy(autoStatus = "") }
+                return true
+            }
+            _ui.update { it.copy(autoStatus = "Connecting to $pcName over ${AutoConnect.pathLabel(host)}…") }
+            val ok = pairSilently(pc.linkFor(host))
+            _ui.update { it.copy(autoStatus = if (ok) "" else "$pcName answered but refused the pairing") }
+            if (ok) {
+                Log.i(TAG, "auto-connect ($reason): paired with $pcName via ${AutoConnect.pathLabel(host)} ($host)")
+                if (!stayConnected.value) setStayConnected(true)
+            }
+            return ok
+        } finally {
+            autoConnectLock.unlock()
+        }
+    }
+
+    /** [pair] without the UI error strings; returns success. */
+    private suspend fun pairSilently(link: com.cornerstone.agency.data.PairingLink): Boolean = try {
+        val me = repo.pairRelay(link.bridge, link.token)
+        bridge.host = link.bridge
+        bridge.token = link.token
+        bridge.save()
+        if (link.voice.isNotEmpty()) prefs.setVoiceBridge(link.voice)
+        if (link.voiceToken.isNotEmpty()) prefs.setVoiceToken(link.voiceToken)
+        refreshBridge()
+        if (_ui.value.connected) gateway.disconnect()
+        enterShell(me)
+        true
+    } catch (e: Exception) {
+        Log.w(TAG, "auto-connect pairing failed at ${link.bridge}: ${e.message}")
+        false
+    }
+
+    /** After any relay connection: pull the PC's current address book so the next path is known. */
+    private fun refreshAddressBook() {
+        if (!repo.viaRelay || !bridge.configured) return
+        viewModelScope.launch {
+            runCatching { KnownPc.fromPairingResponse(bridge.pairing()) }.getOrNull()?.let { pc ->
+                store.knownPc = pc
+                _ui.update { it.copy(knownPcName = pc.name) }
+                Log.i(TAG, "address book: ${pc.name} ${pc.hosts}")
+            }
+        }
+    }
+
+    /** The socket stuck in RECONNECTING for a while means the current path died: try the others. */
+    private fun watchSocket() {
+        viewModelScope.launch {
+            var downSince = 0L
+            while (true) {
+                delay(5_000)
+                if (!_ui.value.connected || !hasKnownPc) { downSince = 0; continue }
+                val state = gateway.state.value
+                if (state == GatewayState.OPEN || state == GatewayState.CLOSED) { downSince = 0; continue }
+                if (downSince == 0L) downSince = System.currentTimeMillis()
+                if (System.currentTimeMillis() - downSince >= SOCKET_DOWN_GRACE_MS) {
+                    downSince = 0
+                    autoConnectAsync(AutoConnect.Reason.SOCKET_DOWN)
+                }
+            }
         }
     }
 
@@ -436,6 +572,7 @@ class AppViewModel(private val app: Application) : AndroidViewModel(app) {
         NotificationCenter.bind(app, gateway)
         viewModelScope.launch { NotificationCenter.warmCronFilter() }
         refreshProfiles()
+        refreshAddressBook()
         refreshStatus()
         refreshBridge()
         syncBackgroundWork()
@@ -504,6 +641,11 @@ class AppViewModel(private val app: Application) : AndroidViewModel(app) {
     }
 
     companion object {
+        private const val TAG = "AutoConnect"
         private const val BACKGROUND_GRACE_MS = 3 * 60 * 1000L
+        /** Foreground/socket-triggered sweeps are rate-limited to this. */
+        private const val AUTO_CONNECT_MIN_INTERVAL_MS = 10_000L
+        /** Socket stuck reconnecting this long -> look for the PC on another path. */
+        private const val SOCKET_DOWN_GRACE_MS = 20_000L
     }
 }
